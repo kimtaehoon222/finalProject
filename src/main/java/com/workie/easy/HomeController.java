@@ -1,4 +1,4 @@
-package com.workie.2asy;
+package com.workie.easy;
 
 import java.text.DateFormat;
 import java.util.Date;
