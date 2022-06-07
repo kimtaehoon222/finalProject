@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name = "driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		 <property name = "url" value="jdbc:oracle:thin:@192.168.219.111:40000:xe"/>
+		<property name = "username" value="EASYWORK"/>
+		<property name = "password" value="EASYWORK"/>
+		<property name = "defaultAutoCommit" value="false"/>
+	</bean>
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="realDataSource"/><!-- 생산자 주입 -->
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE"/>
+				<!-- 쿼리문이 길어지면  MULTI_LINE을 써서 인식할 수 있게 줄바꿈-->
+				<property name="sqlPrefix" value="[SQL] "/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+	<!-- transaction에 어노테이션으로 사용하기 위해 annotation-driven을 사용
+		 transaction-manager에 빈으로 등록한 transactionManager을 주입-->
+	
+	<!-- ============================================================== -->
+	
+	<!-- tx:method - 트랜잭션을 설정할 메소드 및 트랜잭션 속성을 설정
+		   name - 트랜잭션이 적용될 메소드명을 명시 
+		   propagation - 트랜잭션 전파규칙을 설정
+		   isolation - 격리 레벨을 설정 
+		   rollback-for - 롤백할 예외 타입을 설정  
+		   
+		   
+   ** propagation**
+    REQUIRED	트랜잭션 상황에서 실행되어야 한다. 진행 중인 트랜잭션이 있다면 이 트랜잭션에서 실행된다. 없는 경우에는 트랜잭션이 새로 시작된다.
+	MANDATORY	호출 전에 반드시 진행 중인 트랜잭션이 존재해야 한다. 진행 중인 트랜잭션이 존재하지 않을 경우 예외 발생
+	REQUIRED_NEW	자신만의 트랜잭션 상황에서 실행되어야 한다. 이미 진행 중인 트랜잭션이 있으면 그 트랜잭션은 해당 메소드가 반환되기 전에 잠시 중단된다.
+	SUPPORTS	진행 중인 트랜잭션이 없더라도 실행 가능하고, 트랜잭션이 있는 경우에는 이 트랜잭션 상황에서 실행된다.
+	NOT_SUPPORTED	트랜잭션이 없는 상황에서 실행 만약 진행 중인 트랜잭션이 있다면 해당 메소드가 반환되기 전까지 잠시 중단한다.
+	NEVER	트랜잭션 진행 상황에서 실행 될 수 없다. 만약 이미 진행 중인 트랜잭션이 존재하면 예외 발생
+	NESTED	이미 진행 중인 트랜잭션이 존재하면 중첩된 트랜잭션에서 실행되어야 함을 나타낸다. 중첩된 트랜잭션은 본 트랜잭션과 독립적으로 커밋되거나 롤백될 수 있다. 만약 본 트랜잭션이 없는 상황이라면 이는 REQUIRED와 동일하게 작동한다. 그러나 이 전파방식은 DB 벤더 의존적이며, 지원이 안되는 경우도 많다.
+	@Transactional의 경우 REQUIRED이 기본값이다.
+-->
+	 <tx:advice id= "txAdvice" transaction-manager="transactionManager">
+		<tx:attributes><!--<tx:attributes>태그 안에서 지정하고 싶은 메소드 넣어서 쓴다  -->
+		<tx:method name="select*" read-only="true" rollback-for="Exception"/> 
+		<!-- select* 메소드 이름에 select가 앞에 붙으면 인식 됨 , read-only: 읽기만 할건지 속성중 하나, rollback-for="Exception" 에러 일어나면 롤백해주라-->
+		<tx:method name="insert*" rollback-for="Exception"/>
+		<tx:method name="update*" rollback-for="Exception"/>
+		<tx:method name="delete*" rollback-for="Exception"/>
+		<tx:method name="*" propagation="REQUIRED" rollback-for="Exception"/>
+		<!--모든 메소드에 에러가 일어나면 롤백 해줘라, name="*":모든 거 ,propagation: 전파규칙-->
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config><!--aop에 tx:advice가 등록,적용(위빙)을 시켜줌, 적용되는 시점을 pointcut이라고 함  -->
+	<aop:pointcut expression="execution(* com.workie.easy..*ServiceImpl*.*(..))" id="serviceMethod"/>
+	<aop:advisor id= "transactionAdvisor" pointcut-ref = "serviceMethod" advice-ref="txAdvice"/>
+	</aop:config>
+	
+	<!-- maxUploadSize : 최대 업로드 가능한 바이트 크기, -1은 제한이 없음을 의미한다. 기본 값은 -1이다. -->
+   	<!-- maxInMemorySize : 디스크에 임시 파일을 생성하기 전에 메모리에 보관할 수 있는 최대 바이트 크기, 기본 값은 10240 바이트이다. --> 
+	<!-- "MultipartResolver가 Muiltpart객체를 컨트롤러에 전달하는 역할을 한다"
+		//반드시 파일 업로드를 할 때는 jsp의 form 태그안에 enctype = multipart/form-data로 작성해야하고, method = post여야 한다.
+		//=> 그래야 MultipartResolver가 multipartFile객체를 컨트롤러에 전달할 수 있다. -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<property name="maxUploadSize" value="100000000" />
+			<property name="maxInMemorySize" value="100000000" />
+		</bean>
+	
+</beans>
