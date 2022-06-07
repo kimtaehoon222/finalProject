@@ -8,6 +8,8 @@ public class test {
 		System.out.println("김지수"); 
 
 		System.out.println("김재호");
+		
+		System.out.println("임현빈");
 
 	}
 
