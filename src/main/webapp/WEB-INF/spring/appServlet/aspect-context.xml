@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<aop:aspectj-autoproxy/><!-- 빈에 메소드를 호출하고 어드바이스를 수행할 수 있도록 프록시설정   -->
+	
+	<bean id = "LoggerAspect1" class = "com.workie.easy.common.aop.LoggerAspect"/>
+		<!--  -->
+		<aop:config>
+		<aop:aspect id = "LoggerAspect" ref="LoggerAspect1">
+		<aop:pointcut expression="execution(* com.workie.easy.employee..*(..))" id="pcForAll"/>
+		<aop:around method="aroundLogAdvice" pointcut-ref="pcForAll"/>
+		
+		</aop:aspect>
+		</aop:config>
+	
+	<!--
+	
+		* AOP(Aspect Oriented Programming) - ppt에도 설명되어있으니 참고 바람
+		- 관점 지향 프로그래밍이다. 
+		    관심사의 분리(Seperation of Concerns)해서 필요한 주 업무에 모듈 형식
+		< AOP 관련 용어 >
+		 ===============================================================
+		 # 관점(Aspect)
+		 - 구현하고자 하는 횡단 관심사의 기능, 클래스 단위
+		 - 한 개 이상의 Pointcut(어느 시점에 적용할지)과 Advice(보조기능)의 조합으로 만들어진다. 
+		 
+		 선언적 AOP에서 사용하는 advisor는 하나의 advice(보조기능)와 
+		 하나의 pointcut(advice를 어디에 적용할지 결정)의 조합을 가리킴
+		 ===============================================================
+		 # Joinpoint
+		 - 관점(Aspect)를 삽입해서 Advice가 적용될 수 있는 위치를 말한다. 
+		 - 횡단 관심 모듈의 기능이 삽입되어 동작할 수 있는 시행 가능한 특정 위치
+		 
+		 - 대표적인 Joinpoint
+		 => 메소드가 호출되는 부분 또는 리턴되는 부분
+		 => 인스턴스가 만들어지는 지점
+		 => 예외가 던져지는 지점
+		 => 클래스가 초기화 되는 곳
+		 ===============================================================
+		# Pointcut
+		 - 어느클래스의 어떤 메소드, 어느 Joinpoint를 사용할 것인가 (Jointpoint 선정 룰과 같은 개념)
+		 - AOP에서는 포인트컷을 수행할 수 잇는 다양한 접근 방법 제공, AspectJ에서는 와일드 카드를 이용한
+		      메소드 시그니처를 사용한다. 
+		 ===============================================================
+		 # Advice
+		 - 각 조인포인트에 삽입되어져 동작할 수 있는 코드
+		 - 주로 메소드 단위로 구성된 어드바이스는 포인트 컷에 의해 결정된 모듈의 조인 포인트에서 호출되어 사용됨
+		 - 일반적
+			===============================================================
+		 # Weaving(= Cross-Cutting)
+		 - pointcut에 의해 결정된 joinpoint에 지정된 advice를 삽입하는 과정
+		 - Weaving은 AOP가 기존의 핵심관심 모듈의 코드에 전혀 영향을 주지 않으며 필요한 횡단 관심 기능을 추가할 수 있게
+		      해주는 핵심적인 처리 과정
+		 
+		 - Weaving 하는 3가지 방법 -  Spring AOP는 기본적으로 무조건 Run-time weaving으로 동작한다.
+		 => 컴파일시에 weaving 하기
+		 => 클래스 로딩 시에 weaving하기
+		 => 런타임시에 weaving 하기(spring)
+	
+	 -->
+		
+</beans>
