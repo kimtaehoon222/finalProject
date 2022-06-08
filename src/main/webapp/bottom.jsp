@@ -7,36 +7,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-				<!-- end dashboard inner -->
-            </div>
-         </div>
+    </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
       </div>
-      
-                
-               
-      <!-- jQuery -->
-      <script src="../resources/js/jquery.min.js"></script>
-      <script src="../resources/js/popper.min.js"></script>
-      <script src="../resources/js/bootstrap.min.js"></script>
-      <!-- wow animation -->
-      <script src="../resources/js/animate.js"></script>
-      <!-- select country -->
-      <script src="../resources/js/bootstrap-select.js"></script>
-      <!-- owl carousel -->
-      <script src="../resources/js/owl.carousel.js"></script> 
-      <!-- chart js -->
-      <script src="../resources/js/Chart.min.js"></script>
-      <script src="../resources/js/Chart.bundle.min.js"></script>
-      <script src="../resources/js/utils.js"></script>
-      <script src="../resources/js/analyser.js"></script>
-      <!-- nice scrollbar -->
-      <script src="../resources/js/perfect-scrollbar.min.js"></script>
-      <script>
-         var ps = new PerfectScrollbar('#sidebar');
-      </script>
-      <!-- custom js -->
-      <script src="../resources/js/custom.js"></script>
-      <script src="../resources/js/chart_custom_style1.js"></script>
-      
+
+     
+    </div>
+    <!-- / Layout wrapper -->
+
+
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/popper/popper.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/vendor/js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="${pageContext.request.contextPath}/resources/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="${pageContext.request.contextPath}/resources/assets/js/dashboards-analytics.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
