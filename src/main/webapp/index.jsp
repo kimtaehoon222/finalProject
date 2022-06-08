@@ -17,7 +17,7 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <!-- site icon -->
-      <link rel="icon" href="../resources/images/fevicon.png" type="image/png" />
+      <link rel="icon" href="../resources/../resources/images/fevicon.png" type="image/png" />
       <!-- bootstrap css -->
       <link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
       <!-- site css -->
@@ -37,7 +37,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
    </head>
-   <body class="dashboard dashboard_1">
+  <body class="dashboard dashboard_1">
       <div class="full_container">
          <div class="inner_container">
             <!-- Sidebar  -->
@@ -45,25 +45,20 @@
                <div class="sidebar_blog_1">
                   <div class="sidebar-header">
                      <div class="logo_section">
-                        <a href="index.html"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                        <a href="index.html"><img class="logo_icon img-responsive" src="../resources/../resources/images/logo/W.png" alt="#" /></a>
                      </div>
                   </div>
                   <div class="sidebar_user_info">
                      <div class="icon_setting"></div>
                      <div class="user_profle_side">
-                        <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
-                        <div class="user_info">
-                           <h6>John David</h6>
-                           <p><span class="online_animation"></span> Online</p>
-                        </div>
+                        <div class="user_img"><img class="img-responsive" src="../resources/../resources/images/logo/logo_1.png" alt="#" /></div>
                      </div>
                   </div>
                </div>
                <div class="sidebar_blog_2">
-                  <h4>General</h4>
                   <ul class="list-unstyled components">
                      <li class="active">
-                        <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
+                        <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-dashboard yellow_color"></i> <span>HOME</span></a>
                         <ul class="collapse list-unstyled" id="dashboard">
                            <li>
                               <a href="dashboard.html">> <span>Default Dashboard</span></a>
@@ -73,32 +68,17 @@
                            </li>
                         </ul>
                      </li>
-                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>Widgets</span></a></li>
-                     <li>
-                        <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
-                        <ul class="collapse list-unstyled" id="element">
-                           <li><a href="general_elements.html">> <span>General Elements</span></a></li>
-                           <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                           <li><a href="icons.html">> <span>Icons</span></a></li>
-                           <li><a href="invoice.html">> <span>Invoice</span></a></li>
-                        </ul>
-                     </li>
-                     <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
-                     <li>
-                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
-                        <ul class="collapse list-unstyled" id="apps">
-                           <li><a href="email.html">> <span>Email</span></a></li>
-                           <li><a href="calendar.html">> <span>Calendar</span></a></li>
-                           <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                        </ul>
-                     </li>
-                     <li><a href="price.html"><i class="fa fa-briefcase blue1_color"></i> <span>Pricing Tables</span></a></li>
-                     <li>
-                        <a href="contact.html">
-                        <i class="fa fa-paper-plane red_color"></i> <span>Contact</span></a>
-                     </li>
+                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>전자 결재</span></a></li>
+                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>회의실 예약</span></a></li>
+                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>근태 관리</span></a></li>
+                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>채팅</span></a></li>
+                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>일정 관리</span></a></li>
+                     <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>회계 관리</span></a></li>
+                     <li><a href="map.html"><i class="fa fa-map purple_color2"></i> <span>메일</span></a></li>
+                     <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>커뮤니티</span></a></li>
+                     <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>공지사항</span></a></li>
                      <li class="active">
-                        <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Additional Pages</span></a>
+                        <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>부서 정보</span></a>
                         <ul class="collapse list-unstyled" id="additional_page">
                            <li>
                               <a href="profile.html">> <span>Profile</span></a>
@@ -114,9 +94,8 @@
                            </li>
                         </ul>
                      </li>
-                     <li><a href="map.html"><i class="fa fa-map purple_color2"></i> <span>Map</span></a></li>
-                     <li><a href="charts.html"><i class="fa fa-bar-chart-o green_color"></i> <span>Charts</span></a></li>
-                     <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>
+                     <li><a href="charts.html"><i class="fa fa-bar-chart-o green_color"></i> <span>통계</span></a></li>
+                     
                   </ul>
                </div>
             </nav>
@@ -129,7 +108,6 @@
                      <div class="full">
                         <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                         <div class="logo_section">
-                           <a href="index.html"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
                         </div>
                         <div class="right_topbar">
                            <div class="icon_info">
@@ -140,7 +118,7 @@
                               </ul>
                               <ul class="user_profile_dd">
                                  <li>
-                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="../resources/images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
                                     <div class="dropdown-menu">
                                        <a class="dropdown-item" href="profile.html">My Profile</a>
                                        <a class="dropdown-item" href="settings.html">Settings</a>
@@ -161,7 +139,7 @@
                      <div class="row column_title">
                         <div class="col-md-12">
                            <div class="page_title">
-                              <h2>Dashboard</h2>
+                              <h2>TITLE</h2>
                            </div>
                         </div>
                      </div>
@@ -346,17 +324,17 @@
                                              <!-- Wrapper for carousel items -->
                                              <div class="carousel-inner">
                                                 <div class="item carousel-item active">
-                                                   <div class="img-box"><img src="images/layout_img/user_img.jpg" alt=""></div>
+                                                   <div class="img-box"><img src="../resources/images/layout_img/user_img.jpg" alt=""></div>
                                                    <p class="testimonial">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae..</p>
                                                    <p class="overview"><b>Michael Stuart</b>Seo Founder</p>
                                                 </div>
                                                 <div class="item carousel-item">
-                                                   <div class="img-box"><img src="images/layout_img/user_img.jpg" alt=""></div>
+                                                   <div class="img-box"><img src="../resources/images/layout_img/user_img.jpg" alt=""></div>
                                                    <p class="testimonial">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae..</p>
                                                    <p class="overview"><b>Michael Stuart</b>Seo Founder</p>
                                                 </div>
                                                 <div class="item carousel-item">
-                                                   <div class="img-box"><img src="images/layout_img/user_img.jpg" alt=""></div>
+                                                   <div class="img-box"><img src="../resources/images/layout_img/user_img.jpg" alt=""></div>
                                                    <p class="testimonial">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae..</p>
                                                    <p class="overview"><b>Michael Stuart</b>Seo Founder</p>
                                                 </div>
@@ -459,7 +437,7 @@
                                  <div class="msg_list_main">
                                     <ul class="msg_list">
                                        <li>
-                                          <span><img src="images/layout_img/msg2.png" class="img-responsive" alt="#" /></span>
+                                          <span><img src="../resources/images/layout_img/msg2.png" class="img-responsive" alt="#" /></span>
                                           <span>
                                           <span class="name_user">Herman Beck</span>
                                           <span class="msg_user">Sed ut perspiciatis unde omnis.</span>
@@ -467,7 +445,7 @@
                                           </span>
                                        </li>
                                        <li>
-                                          <span><img src="images/layout_img/msg3.png" class="img-responsive" alt="#" /></span>
+                                          <span><img src="../resources/images/layout_img/msg3.png" class="img-responsive" alt="#" /></span>
                                           <span>
                                           <span class="name_user">John Smith</span>
                                           <span class="msg_user">On the other hand, we denounce.</span>
@@ -475,7 +453,7 @@
                                           </span>
                                        </li>
                                        <li>
-                                          <span><img src="images/layout_img/msg2.png" class="img-responsive" alt="#" /></span>
+                                          <span><img src="../resources/images/layout_img/msg2.png" class="img-responsive" alt="#" /></span>
                                           <span>
                                           <span class="name_user">John Smith</span>
                                           <span class="msg_user">Sed ut perspiciatis unde omnis.</span>
@@ -483,7 +461,7 @@
                                           </span>
                                        </li>
                                        <li>
-                                          <span><img src="images/layout_img/msg3.png" class="img-responsive" alt="#" /></span>
+                                          <span><img src="../resources/images/layout_img/msg3.png" class="img-responsive" alt="#" /></span>
                                           <span>
                                           <span class="name_user">John Smith</span>
                                           <span class="msg_user">On the other hand, we denounce.</span>
