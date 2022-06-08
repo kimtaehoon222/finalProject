@@ -10,7 +10,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <!-- mobile metas -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <meta name="viewport" content="inaitial-scale=1, maximum-scale=1">
       <!-- site metas -->
       <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
       <meta name="keywords" content="">
