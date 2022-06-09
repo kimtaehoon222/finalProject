@@ -1,0 +1,135 @@
+/*************************************
+                공통
+*************************************/
+/* 배경 색상 */
+body {
+    background-color: rgb(124, 127, 251);
+}
+
+/* 기타 위치 관련*/
+.login-background{
+    height: 0px;
+}
+
+.authentication-wrapper.authentication-basic {
+    margin-top: 20px;
+    align-items: unset;
+    justify-content: right;
+    overflow: hidden;
+  }
+
+/* 상단 로고 */
+.layout-navbar{
+    padding: 5px;
+    height: 50px;
+}
+
+.layout-navbar>img{
+    margin-left: 5px;
+    height: 100%;
+}
+
+/* 배경 글 */
+.title-text{
+    color: rgb(43, 43, 43);
+    font-weight: bolder;
+}
+
+.content-text>*{
+    color: rgb(59, 59, 59);
+    font-weight: bolder;
+    padding-left: 15px;
+}
+
+
+/* 배경 이미지 */
+.logo-img{
+    padding: 20px;
+    width: 360px;
+    height: 360px;
+    position:relative;
+}
+
+.text-div{
+    margin-left: 210px;
+    position:absolute;
+    top: 220px;
+}
+
+/*************************************
+                로그인
+*************************************/
+/* 로그인 박스 */
+.login-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    height: 415px;
+    word-wrap: break-word;
+    background-color: rgba(206, 206, 206, 0.77);
+    background-clip: border-box;
+    border: 0 solid #d9dee3;
+    border-radius: 25%;
+}
+
+/* 로그인 제목 */
+.text-body{
+    color: rgb(81, 81, 81) !important;
+}
+
+/* 로그인 박스 내용물 */
+.login-input{
+    height: 250px;
+    position: relative;
+}
+
+/* 인풋 박스 */
+/* .form-control{
+    background-color: rgba(255, 255, 255, 0.37);
+} */
+
+/* 로그인 버튼 */
+.login-buttons{
+    /* justify-content: ; */
+    position: absolute;
+    bottom:0px
+}
+
+.login-buttons >button{
+    margin: 0px 7.5px;
+    width:133px;
+    height: 40px;
+}
+
+/*************************************
+                회원가입
+*************************************/
+
+.welcome-div{
+    margin-left: 340px;
+    top: 130px;
+}
+
+.join-input{
+    /* height: 250px; */
+    position: relative;
+}
+
+.join-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    height: 540px;
+    word-wrap: break-word;
+    background-color: rgba(206, 206, 206, 0.77);
+    background-clip: border-box;
+    border: 0 solid #d9dee3;
+    border-radius: 25%;
+}
+
+.join-buttons{
+    position: absolute;
+    bottom:0px
+}
