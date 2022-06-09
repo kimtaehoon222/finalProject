@@ -69,7 +69,12 @@
     <style>
 	#enrollForm>table{width:50%;}
     #enrollForm>table *{ margin:5px;}
-
+	#center {
+			   text-align: center;
+			   margin: auto;
+			   justify-content: center;
+			   display: flex;
+			}
 	</style>
   </head>
 
@@ -162,8 +167,11 @@
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">전자결재</div>
               </a>
-
               <ul class="menu-sub">
+				<li class="menu-item">
+                 <a href="signView.jsp" class="btn btn-sm btn-outline-primary" id="center" style="margin:10px; padding:5px">결재 함 바로가기 </a>
+                  </a>
+                </li>              
                 <li class="menu-item">
                   <a href="layouts-without-menu.html" class="menu-link">
                     <div data-i18n="Without menu">1</div>
