@@ -91,7 +91,7 @@
 	            <div class="mb-3 col-md-4">
 	              <input type="checkbox" class="form-check-warning" id="ckbox">
 	              <label class="form-label" for="country">예약메일</label>
-	              <div><input type="date" class="form-control" id=""></div>
+	              <div><input type="date" class="form-control" id="calendar"></div>
 	            </div>
 	            <div class="mb-3 col-md-7">
 	              <label class="form-label" for="">파일첨부<i class="bi bi-upload"></i></label>
@@ -164,15 +164,16 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$(#ckbox).on('click', function () {
+			$("#calendar").hide();
+			$("#ckbox").on('click', function () {
 				if($(this).prop('checked')){
-					$(#calendar).show();
+					$("#calendar").show();
 				}else{
-					$(#calendar).hide();
+					$("#calendar").hide();
 				}
 			});
 		});
-	
+
 	</script>
 	<!-- bottom -->
 	<jsp:include page="bottom.jsp" />
