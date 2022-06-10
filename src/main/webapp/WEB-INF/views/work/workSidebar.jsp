@@ -10,8 +10,8 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/favicon.png">
 <!-- Custom CSS -->
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/dist/css/style.min.css"
+ <link
+	 href="${ pageContext.servletContext.contextPath }/resources/kth_dist/css/style.min.css"
 	rel="stylesheet">
 <!-- summernote -->
 <link rel="stylesheet"
@@ -23,7 +23,7 @@
 
 <style>
 	.inner:hover{
-		color: rgb(124, 127, 251);
+		color: rgb(95,118,232);
 		cursor: pointer;
 	}
 	
@@ -33,7 +33,7 @@
 	}
 	
 	.selects1:hover, .selects2:hover, .selects3:hover, .selects4:hover, .selects5:hover{
-		background-color: rgb(124, 127, 251);
+		background-color: rgba(95,118,232, 0.1);
 	}
 	
 	.week, .selects1, .selects2, .selects3, .selects4, .selects5{
@@ -45,26 +45,32 @@
 <body onload="printClock()">
 	
 	<h3>근태관리</h3>
-	<div>
-		
+		<div>
+		<c:set var="today" value="<%= new java.util.Date() %>"/>
 		<p style="font-size:14px"><fmt:formatDate value="${today}" type="date" pattern="yyyy-MM-dd (E)"/></p>
 		<p id="clock" style="font-size:40px"></p>
 		<div>
 			<div class="d-flex" style="font-size: 12px">
 				<p class="col-6" style="padding:0px;">출근시간</p>
-				
+				<c:choose>
+					<c:when test="${empty w.startTime }">
 						<p class="col-6 text-right" style="padding:0px;">미등록</p>
-					
+					</c:when>
+					<c:otherwise>
 						<p class="col-6 text-right" style="padding:0px;">출근시간</p>
-					
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="d-flex" style="font-size: 12px">
 				<p class="col-6" style="padding:0px;">퇴근시간</p>
-				
+				<c:choose>
+					<c:when test="${empty w.endTime }">
 						<p class="col-6 text-right" style="padding:0px;">미등록</p>
-					
+					</c:when>
+					<c:otherwise>
 						<p class="col-6 text-right" style="padding:0px;">퇴근시간</p>
-				
+					</c:otherwise>
+				</c:choose>
 			</div>
 		
 		</div>
@@ -73,12 +79,24 @@
 	<br>
 	<form method="get" action="change.hr">
 		<div class="d-flex align-items-center">
-
-		<!-- 출근하기, 퇴근하기 버튼 -->
+		<!-- 출근시간 없으면 출근가능, 퇴근 불가능 -->
+		<!-- 출근 시간이 있으면, 출근 불가능, 퇴근 가능 -->
+		<!-- 출근시간, 퇴근시간이 있으면, 출근 불가능, 퇴근 불가능 -->
 		<!-- 버튼 속성 disable 주기 -->
-		<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="1" name="status">출근하기</button>
-		<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="2" name="status" disabled>퇴근하기</button>
-			
+		<c:choose>
+			<c:when test="${empty w.startTime }">
+				<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="1" name="status">출근하기</button>
+				<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="2" name="status" disabled>퇴근하기</button>
+			</c:when>
+			<c:when test="${not empty w.startTime && empty w.endTime}">
+				<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="1" name="status" disabled>출근하기</button>
+				<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="2" name="status">퇴근하기</button>
+			</c:when>
+			<c:otherwise>
+				<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="1" name="status" disabled>출근하기</button>
+				<button type="submit" class="btn btn-rounded btn-outline-primary col-6" style="margin:2px" value="2" name="status" disabled>퇴근하기</button>
+			</c:otherwise>
+		</c:choose>
 		</div>
 		<div class="d-flex align-items-center">
 			<button type="button" id="selectStatus" class="btn btn-rounded btn-outline-primary col-12" style="margin:2px 2px 0px 2px;">근무상태변경<i data-feather="chevron-down" class="feather-icon"></i></button>
@@ -88,14 +106,11 @@
 			<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="5" name="status">외출중</button>
 			<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="6" name="status">출장중</button>
 		</div>
-		<input type="hidden" name="wNo" value="">
+		<input type="hidden" name="wNo" value="${w.WNo }">
 		<input type="hidden" name="main" value="0">
 	</form>
 	<br>
 
-            
-
-    
     
  <script>
 		$(function(){
@@ -137,7 +152,7 @@
 		    if(currentHours >= 18 && currentMinute >= 00 && currentSeconds >= 00){// 퇴근시간 18시 이상이면 빨간색으로 색 변경
 		    	currentHours = '<span style="color:#de1951;">'+currentHours+'</span>'
 		    	currentMinute = '<span style="color:#de1951;">'+currentMinute+'</span>'
-		        currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
+		    	currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
 		     }
 
 		    
@@ -168,9 +183,9 @@
 	<!-- apps -->
 	<!-- apps -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/app-style-switcher.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/app-style-switcher.js"></script>
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/feather.min.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/feather.min.js"></script>
 	<!-- slimscrollbar scrollbar JavaScript -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
@@ -180,10 +195,10 @@
 	<!-- themejs -->
 	<!--Menu sidebar -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/sidebarmenu.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/sidebarmenu.js"></script>
 	<!--Custom JavaScript -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/custom.min.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/custom.min.js"></script>
 	<!--  -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/summernote/summernote-lite.js"></script>

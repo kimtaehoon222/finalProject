@@ -11,15 +11,13 @@
 	href="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/favicon.png">
 <!-- Custom CSS -->
 <link
-	href="${ pageContext.servletContext.contextPath }/resources/dist/css/style.min.css"
+	href="${ pageContext.servletContext.contextPath }/resources/kth_dist/css/style.min.css"
 	rel="stylesheet">
-<!-- summernote -->
-<link rel="stylesheet"
-	href="${ pageContext.servletContext.contextPath }/resources/summernote/summernote-lite.css">
+
 
 <title>근태 현황</title>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <style>
 	.inner:hover{
@@ -123,36 +121,37 @@
 									<!-- 이번주 근무현황 -->
 									<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
 										<p class="text-center m-auto" style="font-size:12px">이번주 누적</p>
-										<p class="text-center m-auto text-primary">8h 12m 38s</p>
+										<p class="text-center m-auto text-primary">3h 27m 32s</p>
 									</div>
 									<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
 									<p class="text-center m-auto" style="font-size:12px">이번주 초과</p>
-										<p class="text-center m-auto text-primary">0h 0m 0s</p>
+										<p class="text-center m-auto text-primary">3h 27m 32s</p>
 									</div>
 									<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
 										<p class="text-center m-auto" style="font-size:12px">이번주 잔여</p>
-										<p class="text-center m-auto text-primary">31h 47m 22s</p>
+										<p class="text-center m-auto text-primary">3h 27m 32s</p>
 									</div>
 									<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
 										<p class="text-center m-auto" style="font-size:12px">이번달 누적</p>
-										<p class="text-center m-auto">8h 12m 38s</p>
+										<p class="text-center m-auto">3h 27m 32s</p>
 									</div>
 									<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
 										<p class="text-center m-auto" style="font-size:12px">이번달 연장</p>
-										<p class="text-center m-auto">0h 0m 0s</p>
+										<p class="text-center m-auto">3h 27m 32s</p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<br><br>
 						
-						
+
+
 							<div class="row" style="border-bottom: 2px solid rgba(0,0,0,.125);">
 								<!-- 주차 표시 -->
 								<div class="d-flex col-12" style="padding: 0px 10px; border-bottom: 2px solid rgba(0,0,0,.125);">
 									<div class="text-left col-2">
-										<!-- 접었을때  아이콘  -->
-										<h5 class="chevron cl" id="chevron${week }"><i data-feather="chevron-down" class="feather-icon inner"></i>&nbsp;&nbsp;${week }주차</h5>
+										<!-- 접었다 펼때 아이콘 바뀜 -->
+										<h5 class="chevron cl" id="chevron"><i data-feather="chevron-down" class="feather-icon inner"></i>&nbsp;&nbsp;${week }주차</h5>
 									</div>
 									<!-- <div class="text-right col-10">
 										<span>누적 근무시간 00h 00m 00s (초과 근무시간 00h 00m 00s)</span>
@@ -176,12 +175,34 @@
 								</div>
 								
 								
+								<!-- 일자 표시 (7일) -->
 							
+								<div class="col-12 selects${week }">
+									  <div class="col-1 text-center">
+										<span class="date" id="${date.WDate}"><fmt:formatDate value="" type="date" pattern="dd"/>1일</span>
+									</div>
+									<div class="col-2">
+												<span class="startTime">09:00:00</span>
+									</div>
+									<div class="col-2">
+												<span class="endTime">18:00:00</span>
+									</div>
+									<div class="col-2">
+												<span id="total${date.WNo }">00h 00m 00s</span>
+									</div>
+									
+
+								</div>
+
+								<c:set var="begin" value=""/>
+								<c:set var="end" value=""/>
 							</div>
 							<br>
+
 						
-						
-						
+						<script>
+		
+						</script>
 					</div>
 				</div>
 			</div>
@@ -228,9 +249,9 @@
 	<!-- apps -->
 	<!-- apps -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/app-style-switcher.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/app-style-switcher.js"></script>
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/feather.min.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/feather.min.js"></script>
 	<!-- slimscrollbar scrollbar JavaScript -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
@@ -240,15 +261,12 @@
 	<!-- themejs -->
 	<!--Menu sidebar -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/sidebarmenu.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/sidebarmenu.js"></script>
 	<!--Custom JavaScript -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/custom.min.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/custom.min.js"></script>
 	<!--  -->
-	<script
-		src="${ pageContext.servletContext.contextPath }/resources/summernote/summernote-lite.js"></script>
-	<script
-		src="${ pageContext.servletContext.contextPath }/resources/summernote/lang/summernote-ko-KR.js"></script>
+	
 
 </body>
 </html>

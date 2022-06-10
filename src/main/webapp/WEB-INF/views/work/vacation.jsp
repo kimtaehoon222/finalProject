@@ -13,7 +13,7 @@
 	href="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/favicon.png">
 <!-- Custom CSS -->
 <link
-	href="${ pageContext.servletContext.contextPath }/resources/dist/css/style.min.css"
+	href="${ pageContext.servletContext.contextPath }/resources/kth_dist/css/style.min.css"
 	rel="stylesheet">
 <!-- summernote -->
 <link rel="stylesheet"
@@ -21,11 +21,11 @@
 
 <title>연차 조회</title>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <style>
 	.inner:hover{
-		color: rgb(124, 127, 251);
+		color: rgb(95,118,232);
 	}
 	
 	#status{
@@ -248,9 +248,9 @@
 	<!-- apps -->
 	<!-- apps -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/app-style-switcher.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/app-style-switcher.js"></script>
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/feather.min.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/feather.min.js"></script>
 	<!-- slimscrollbar scrollbar JavaScript -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
@@ -260,10 +260,10 @@
 	<!-- themejs -->
 	<!--Menu sidebar -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/sidebarmenu.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/sidebarmenu.js"></script>
 	<!--Custom JavaScript -->
 	<script
-		src="${ pageContext.servletContext.contextPath }/resources/dist/js/custom.min.js"></script>
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/custom.min.js"></script>
 	<!--  -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/summernote/summernote-lite.js"></script>
