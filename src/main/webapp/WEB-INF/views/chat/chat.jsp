@@ -17,13 +17,22 @@
     <title>채팅</title>
     <!-- This page css -->
     <!-- Custom CSS -->
-    <link href="../resources/dist/css/style.min.css" rel="stylesheet">
+    <link href="../resources/kth_dist/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+     <style>
+     	#message{
+     		background: rgb(124, 127, 251);
+     		color: white;
+     		width: 100px;
+     		height: 40px;
+     		
+     	}
+     </style>
 </head>
 
 <body>
@@ -124,7 +133,7 @@
                                                     <!-- Message -->
                                                     <a href="javascript:void(0)"
                                                         class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                        <div class="user-img"><img src="../resources/kth_assets/images/users/2.jpg"
+                                                        <div class="user-img"><img src="../resources/kth_assets/images/users/7.jpg"
                                                                 alt="user" class="img-fluid rounded-circle"
                                                                 width="40px"> <span
                                                                 class="profile-status busy float-right"></span>
@@ -205,7 +214,7 @@
 													<br>
 													<span id="dept" style="font-size: 12px;"> 인사부
 													</span>
-													<br><br><hr>
+													<br><br>
 													
 
 													<!--  <span style="font-size: 14px;"><i class="icon-clock"></i>
@@ -250,8 +259,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-3">
-                                                <a class="btn-circle btn-lg btn-cyan float-right text-white"
-                                                    href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>
+                                                <!--  <a class="btn-circle btn-lg btn-cyan float-right text-white"
+                                                    href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>-->
+                                                 <!--  <button id = "message">전송</button>-->
+                                                 <button type="button" class="btn btn-primary">전송</button>
                                             </div>
                                         </div>
                                     </div>
@@ -284,12 +295,12 @@
     <script src="../resources/kth_assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->
     <!-- apps -->
-    <script src="../resources/dist/js/app-style-switcher.js"></script>
-    <script src="../resources/dist/js/feather.min.js"></script>
+    <script src="../resources/kth_dist/js/app-style-switcher.js"></script>
+    <script src="../resources/kth_dist/js/feather.min.js"></script>
     <script src="../resources/kth_assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../resources/dist/js/sidebarmenu.js"></script>
+    <script src="../resources/kth_dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="../resources/dist/js/custom.min.js"></script>
+    <script src="../resources/kth_dist/js/custom.min.js"></script>
     <!--This page JavaScript -->
     <script>
         $(function () {
