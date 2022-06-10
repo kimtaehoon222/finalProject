@@ -106,8 +106,8 @@ data-template="vertical-menu-template-free"
                         <input
                         type="text"
                         class="form-control"
-                        id="email"
-                        name="email-username"
+                        id="emp_id"
+                        name="emp_id"
                         placeholder="ID"
                         autofocus
                         />
@@ -116,9 +116,9 @@ data-template="vertical-menu-template-free"
                         <div class="input-group input-group-merge">
                         <input
                             type="password"
-                            id="password"
                             class="form-control"
-                            name="password"
+                            id="emp_pwd"
+                            name="emp_pwd"
                             placeholder="Pwd"
                             aria-describedby="password"
                         />

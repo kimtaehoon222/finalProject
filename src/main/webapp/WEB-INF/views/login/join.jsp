@@ -29,7 +29,7 @@ data-template="vertical-menu-template-free"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login</title>
+    <title>Join</title>
 
     <meta name="description" content="" />
 
@@ -98,7 +98,7 @@ data-template="vertical-menu-template-free"
             <div class="card-body">
                 <!-- Logo -->
                 <div class="app-brand justify-content-center">
-                <span class="app-brand-text demo text-body fw-bolder m-2 mb-4">Join</span>
+                <span class="app-brand-text demo text-body fw-bolder m-2 mb-2">Join</span>
                 </div>
 
                 <form id="formAuthentication" class="m-3 join-input" action="index.html" method="POST">
@@ -106,29 +106,39 @@ data-template="vertical-menu-template-free"
                         <input
                           type="text"
                           class="form-control"
-                          id="username"
-                          name="username"
+                          id="emp_name"
+                          name="emp_name"
                           placeholder="Name"
                           autofocus
                         />
                     </div>
                     <div class="mb-2">
                         <input
-                          type="text"
+                          type="tel"
                           class="form-control"
-                          id="Phone"
-                          name="Phone"
+                          id="phone"
+                          name="phone"
                           placeholder="Phone"
                           autofocus
                         />
                     </div>
                     <div class="mb-2">
                         <input
-                        type="text"
+                        type="email"
                         class="form-control"
-                        id="email"
-                        name="email-username"
+                        id="emp_id"
+                        name="emp_id"
                         placeholder="ID"
+                        autofocus
+                        />
+                    </div>
+                    <div class="mb-2">
+                        <input
+                        type="email"
+                        class="form-control"
+                        id="emp_reg"
+                        name="emp_reg"
+                        placeholder="Persnal Number"
                         autofocus
                         />
                     </div>
@@ -136,9 +146,9 @@ data-template="vertical-menu-template-free"
                         <div class="input-group input-group-merge">
                         <input
                             type="password"
-                            id="password"
                             class="form-control"
-                            name="password"
+                            id="emp_pwd"
+                            name="emp_pwd"
                             placeholder="Pwd"
                             aria-describedby="password"
                         />
@@ -149,37 +159,30 @@ data-template="vertical-menu-template-free"
                         <input
                           type="text"
                           class="form-control"
-                          id=""
-                          name=""
+                          id="address"
+                          name="address"
                           placeholder="Address"
                           autofocus
                         />
                     </div>
                     <div class="mb-2">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id=""
-                          name=""
-                          placeholder="Department"
-                          autofocus
-                        />
+                        <select id="dept_code" name="dept_code" class="form-select" autofocus>
+                            <option>Department</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                     </div>
                     <div class="mb-2">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id=""
-                          name=""
-                          placeholder="Job"
-                          autofocus
-                        />
+                        <select id="job_code" name="job_code" class="form-select" autofocus>
+                            <option>Job</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                     </div>
-                    
-
                     <!--로그인, 회원가입 버튼-->
                     <div class="join-buttons">
-                        <!-- <button class="btn btn-primary w-50" type="submit">Sign in</button> -->
                         <button class="btn rounded-pill btn-primary" type="submit">Submit</button>
                         <button class="btn rounded-pill btn-secondary" type="button">Reset</button>
                     </div>
