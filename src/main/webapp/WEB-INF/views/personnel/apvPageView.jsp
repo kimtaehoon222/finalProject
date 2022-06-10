@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
    
+   
     
     <meta name="description" content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!" />
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
@@ -102,7 +103,19 @@
           </div>
    </form>
        <script>
-   
+   	
+       $(function(){
+           // 파일 input 하는 부분은 숨겼음
+           console.log("확인");
+           $("#fileArea").hide();
+
+
+           // 위에 이미지 부분을 클릭하면 숨겨놓은 input 버튼 클릭되게 구현
+           $("#titleImg").click(function(){
+              $("#file").click();
+           });
+        });
+
        function loadImg(inputFile){
            if(inputFile.files.length == 1){
               //readAsDataURL : 파일의 읽어서 리더에 업로드 동작이 되면서 파일 읽기가 완료가 되면 이미지 src를 URL에 담아주는 방식
