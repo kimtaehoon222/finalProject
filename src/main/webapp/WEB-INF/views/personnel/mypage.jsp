@@ -90,7 +90,7 @@ picture-area{
 					<h3 name="name"> 부서 :  </h3>
 					<h3  name="name"> 직위 : </h3>
 					<h3  name="name"> 내선번호 :  </h3>
-					<h3  name="name"> 생년월일 : </h3>
+					<h3  name=a"name"> 생년월일 : </h3>
                     </div>
 					</div>
                             <div class="update hidden d-block align-items-center">
@@ -159,7 +159,7 @@ picture-area{
           
         </div>
     
-      <jsp:include page="../../../bottom.jsp"/>
+      <jsp:include page="bottom.jsp"/>
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>

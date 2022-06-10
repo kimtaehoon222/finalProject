@@ -38,8 +38,9 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                          <h2>인사 관리</h2>
+                          <h2>직원 목록</h2>
                           <hr>
+                          
                         </div>
                         
                         <div class="card-body">
@@ -142,9 +143,9 @@
 
          
         </div>
-        <jsp:include page="bottom.jsp"/>
+        
     </div>
-    
+    <jsp:include page="bottom.jsp"/>
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>
 
