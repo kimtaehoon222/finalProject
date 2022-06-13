@@ -2,6 +2,8 @@ package com.workie.easy.mail.model.dto;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public class Mail {
 	private String typeNo;
 	private String reserveYn;
 	private Date createDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date sendDate;
 	private Date cancelDate;
 	private String receiveCheck;
@@ -30,8 +33,8 @@ public class Mail {
 	//mail 테이블과 join하는 mail_info 테이블의 컬럼
 	private String title;
 	private String content;
-	private int to; //수신인
-	private int from; //발신인
-	private int cc; //참조인
+	private int toMail; //수신인
+	private int fromMail; //발신인
+	private int ccMail; //참조인
 	
 }

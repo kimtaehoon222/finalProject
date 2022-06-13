@@ -53,34 +53,31 @@
 					<div class="sidebar">
 						<div class="sidebar-content email-app-sidebar d-flex">
 
-
 							<!-- email-app-menu start -->
 							<div class="email-app-menu">
 								<div class="form-group form-group-compose">
 									<!-- 작성하기 버튼  -->
-									<button type="button"
-										class="btn btn-primary btn-block my-4 compose-btn">
-										작성하기</button>
+									<a href="mailSendForm.do" class="btn btn-primary btn-block my-4 compose-btn" id="center">작성하기</a>
 								</div>
 
 								<div class="sidebar-menu-list ps">
 									<!-- 메일 사이드바 시작 -->
 									<div class="list-group list-group-messages">
-										<a href="#" class="list-group-item text-primary">
+										<a href="receiveMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
                                         		</svg>
 											</div> 받은 메일함
 										</a> 
-										<a href="#" class="list-group-item">
+										<a href="sendMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#archive" />
                                        			</svg>
 											</div> 보낸 메일함
 										</a> 
-										<a href="#" class="list-group-item">
+										<a href="reserveMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em"
 													fill="currentColor">
@@ -88,7 +85,7 @@
                                         		</svg>
 											</div> 예약 메일함 
 										</a> 
-										<a href="#" class="list-group-item">
+										<a href="deleteMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />

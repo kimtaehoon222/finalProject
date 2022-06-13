@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -68,19 +69,19 @@
 	          <div class="row">
 	            <div class="mb-3 col-md-11">
 	              <label for="to" class="form-label">받는사람</label>
-	              <input class="form-control" type="text" name="to" id="to" placeholder="주소록을 통해 입력하세요." value="" required/>
+	              <input class="form-control" type="text" name="toMail" id="toMail" placeholder="주소록을 통해 입력하세요." value="" readonly required/>
 	            </div>
 	            <div class="mb-3 col-md-1">
 	              <label for="addressList" class="form-label">&nbsp;</label>
-	              <input class="form-control btn-primary" type="button" name="" id="addressList1" value="주소록" data-toggle="modal" data-target="#myModal"/>
+	              <input class="form-control btn-primary" type="button" name="" id="addressList1" value="주소록" data-toggle="modal" data-target="#myModal1"/>
 	            </div>
 	            <div class="mb-3 col-md-11">
 	              <label for="cc" class="form-label">참조</label>
-	              <input class="form-control" type="text" name="cc" id="cc" placeholder="주소록을 통해 입력하세요." value="" required/>
+	              <input class="form-control" type="text" name="ccMail" id="ccMail" placeholder="주소록을 통해 입력하세요." value="" readonly/>
 	            </div>
 	            <div class="mb-3 col-md-1">
 	              <label for="addressList" class="form-label">&nbsp;</label>
-	              <input class="form-control btn-primary" type="button" name="" id="addressList2" value="주소록" data-toggle="modal" data-target="#myModal"/>
+	              <input class="form-control btn-primary" type="button" name="" id="addressList2" value="주소록" data-toggle="modal" data-target="#myModal2"/>
 	            </div>
 	            <div class="mb-3 col-md-3">
 	              <label class="form-label" for="typeNo">분류(일반/중요)</label>
@@ -132,8 +133,8 @@
 	<!-- 컨테이너 끝 -->
 	
 
-	<!-- 주소록 클릭시 나오는 모달창 -->
-	<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false">
+	<!-- 주소록 클릭시 나오는 모달창 시작 : 받는사람용 -->
+	<div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false">
     	<div class="modal-dialog modal-xl modal-dialog-centered">
 	      <div class="modal-content">
 	      
@@ -147,24 +148,101 @@
 	        <div class="modal-body">
 				<!--<button onclick="javascript:window.returnValue='음훼훼';window.close()">부모창 폼에 값넘기기</button>  -->
 				  <label class="form-label" for="add">받는사람선택</label>
-	              <select id="add" class="select2 form-select">
-					<option>전재은</option>
-					<option>김태훈</option>
-					<option>김재호</option>
-					<option>임현빈</option>
+	              <select id="insertAddress1" class="select2 form-select">
+					<option value="1">전재은</option>
+					<option value="2">김태훈</option>
+					<option value="3">김재호</option>
+					<option value="4">임현빈</option>
 				</select>
 			</div>
 	        
 	        <!-- Modal footer -->
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	          <button type="button" class="btn btn-secondary" onclick="insertAddress1();" data-dismiss="modal">선택완료</button>
+	          <button type="button" class="btn btn-secondary" onclick="deleteAddress1();" data-dismiss="modal">선택취소</button>
 	        </div>
 	        
 	      </div>
 	    </div>
 	</div>
+	<!-- 주소록 클릭시 나오는 모달창 끝 : 받는사람용-->
+	
+	<!-- 주소록 클릭시 나오는 모달창 시작 : 참조인용 -->
+	<div class="modal fade" id="myModal2" data-backdrop="static" data-keyboard="false">
+    	<div class="modal-dialog modal-xl modal-dialog-centered">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h4 class="modal-title">주소록</h4>
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+				<!--<button onclick="javascript:window.returnValue='음훼훼';window.close()">부모창 폼에 값넘기기</button>  -->
+				  <label class="form-label" for="add">참조인선택</label>
+	              <table>
+	              	<tr>
+						<td>
+							<input type="checkbox" id="insertAddress2" name="insertAddress2" value="1">
+							<label for="">전재은</label>
+							
+							<input type="checkbox" id="insertAddress2" name="insertAddress2" value="2">
+							<label for="">김태훈</label>
+							
+							<input type="checkbox" id="insertAddress2" name="insertAddress2" value="3">
+							<label for="">김재호</label>
+							
+							<input type="checkbox" id="insertAddress2" name="insertAddress2" value="4">
+							<label for="">임현빈</label>
+						</td>
+					</tr>
+	              </table>
+			</div>
+	        
+	        <!-- Modal footer -->
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" onclick="insertAddress2();" data-dismiss="modal">선택완료</button>
+	          <button type="button" class="btn btn-secondary" onclick="deleteAddress2();" data-dismiss="modal">선택취소</button>
+	        </div>
+	        
+	      </div>
+	    </div>
+	</div>
+	<!-- 주소록 클릭시 나오는 모달창 끝 : 참조인용 -->
+	
 	
 	<script type="text/javascript">
+		/* 받는사람 선택 */
+		function insertAddress1() {
+			var value = $('#insertAddress1').val();
+			$('#toMail').val(value);
+		}
+		
+		/* 받는사람 선택 취소 */
+		function deleteAddress1() {
+			$('#toMail').val("");
+		}
+		
+		/* 참조인 선택  */
+		function insertAddress2() {
+			
+			var value = [];
+			$('input[name=insertAddress2]:checked').each(function () {
+				var v = $(this).val();
+				value.push(v);
+			})
+			$('#ccMail').val(value);
+			
+		}
+		
+		/* 참조인 선택 취소  */
+		function deleteAddress2() {
+			$('#ccMail').val("");
+		}
+		
+		/* 예약여부 선택에 따른 달력 표시 */ 	
 		$(document).ready(function () {
 			$("#sendDate").hide();
 			$('#reserveYn').val('N');
@@ -172,12 +250,14 @@
 			
 			$("#ckbox").on('click', function () {
 				if($(this).prop('checked')){
+					alert('예약 메일은 보낸 메일함이 아닌 예약 메일함에서 확인이 가능합니다.');
 					$('#reserveYn').val('Y');
 					$('#sendDate').attr('required', 'required');
 					$("#sendDate").show();
 				}else{
 					$('#reserveYn').val('N');
 					$('#sendDate').attr('required', false);
+					$("#sendDate").val("");
 					$("#sendDate").hide();
 				}
 			});
@@ -185,7 +265,7 @@
 		
 		function insertMailValidate() {
 			console.log('확인');
-			if($('#to').val() == null){
+			if($('#toMail').val() == null){
 				alert('받는 사람을 선택해주세요.');
 				return false;
 			}
