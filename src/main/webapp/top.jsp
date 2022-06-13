@@ -174,28 +174,28 @@
                   </a>
                 </li>              
                 <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">1</div>
+                  <a href="signWaitingView.jsp" class="menu-link">
+                    <div data-i18n="Without menu">요청 결재함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">2</div>
+                  <a href="signGoView.jsp" class="menu-link">
+                    <div data-i18n="Without navbar">결재 진행함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">3</div>
+                  <a href="signBackView.jsp" class="menu-link">
+                    <div data-i18n="Container">반려 문서함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">4</div>
+                  <a href="signEndView.jsp" class="menu-link">
+                    <div data-i18n="Fluid">완료 문서함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">5</div>
+                  <a href="documentView.jsp" class="menu-link">
+                    <div data-i18n="Blank">문서 양식 보관함</div>
                   </a>
                 </li>
               </ul>
