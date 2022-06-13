@@ -19,6 +19,14 @@ public class MailController {
 		return "mail/mailHomeView"; 
 	}
 	
+	@RequestMapping("mailSendForm.do")
+	public String insertMailForm() {
+		return "mail/mailSendForm"; 
+	}
+	
+	
+	
+	
 	@RequestMapping("receiveMailList.do")
 	public String selectReceiveMailList() {
 		return "mail/mailReceiveListView";
