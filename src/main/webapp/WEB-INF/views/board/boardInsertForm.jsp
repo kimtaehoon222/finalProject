@@ -43,7 +43,7 @@
 	        <div class="mb-3">
 	          <label for="formFile" class="form-label text-primary">Image File</label>
 	          <input class="form-control" type="file" id="formFile">
-	          <label for="formFile" class="form-label text-danger">*게시글의 타이틀 이미지를 첨부해주세요.&nbsp;jpg, png 파일만 가능합니다.</label>
+	          <label for="" class="form-label text-danger">*게시글의 타이틀 이미지를 첨부해주세요.&nbsp;jpg, png 파일만 가능합니다.</label>
 	        </div>
 		    <div>
 		    	<button type="submit" class="btn btn-success">작성하기</button>

@@ -22,7 +22,7 @@
 
 <body>
 	<!-- top -->
-	<jsp:include page="top.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
 
 	<!-- 컨테이너 시작 -->
 	<div class="container-xxl flex-grow-1 container-p-y">
@@ -61,50 +61,53 @@
 	      
 	      <!-- 보내는 영역 시작 -->
 	      <div class="card-body">
+	      
 	      	<!-- form 시작 -->
-	        <form id="formAccountSettings" method="POST" onsubmit="return false">
+	        <form id="formAccountSettings" action="insertMail.do" enctype="multipart/form-data" onsubmit="return insertMailValidate();">
 	          <!-- 메일 정보 영역 시작 -->
 	          <div class="row">
 	            <div class="mb-3 col-md-11">
-	              <label for="firstName" class="form-label">받는사람</label>
-	              <input class="form-control" type="text" id="" name="" value="" placeholder="주소록을 통해 입력하세요." readonly/>
-	            </div>
-	             <div class="mb-3 col-md-1">
-	              <label for="firstName" class="form-label">&nbsp;</label>
-	              <input class="form-control btn-primary" type="button" name="" id="addressList" value="주소록" data-toggle="modal" data-target="#myModal"/>
-	            </div>
-	            <div class="mb-3 col-md-11">
-	              <label for="lastName" class="form-label">참조</label>
-	              <input class="form-control" type="text" name="" id="" value="hoho123@easy.co.kr" readonly />
+	              <label for="to" class="form-label">받는사람</label>
+	              <input class="form-control" type="text" name="to" id="to" placeholder="주소록을 통해 입력하세요." value="" required/>
 	            </div>
 	            <div class="mb-3 col-md-1">
-	              <label for="firstName" class="form-label">&nbsp;</label>
-	              <input class="form-control btn-primary" type="button" name="" id="addressList" value="주소록" data-toggle="modal" data-target="#myModal"/>
+	              <label for="addressList" class="form-label">&nbsp;</label>
+	              <input class="form-control btn-primary" type="button" name="" id="addressList1" value="주소록" data-toggle="modal" data-target="#myModal"/>
+	            </div>
+	            <div class="mb-3 col-md-11">
+	              <label for="cc" class="form-label">참조</label>
+	              <input class="form-control" type="text" name="cc" id="cc" placeholder="주소록을 통해 입력하세요." value="" required/>
+	            </div>
+	            <div class="mb-3 col-md-1">
+	              <label for="addressList" class="form-label">&nbsp;</label>
+	              <input class="form-control btn-primary" type="button" name="" id="addressList2" value="주소록" data-toggle="modal" data-target="#myModal"/>
 	            </div>
 	            <div class="mb-3 col-md-3">
-	              <label class="form-label" for="country">분류(일반/중요)</label>
-	              <select id="country" class="select2 form-select">
+	              <label class="form-label" for="typeNo">분류(일반/중요)</label>
+	              <select name="typeNo" id="typeNo" class="select2 form-select" required>
 	                <option value="N">일반</option>
 	                <option value="E">중요</option>
 	              </select>
 	            </div>
 	            <div class="mb-3 col-md-4">
-	              <input type="checkbox" class="form-check-warning" id="ckbox">
-	              <label class="form-label" for="country">예약메일</label>
-	              <div><input type="date" class="form-control" id="calendar"></div>
+	              <input type="checkbox" class="form-check-warning" name="ckbox" id="ckbox">
+	              <!-- 예약 메일 여부에 대한 y/n 데이터를 넘겨주는 hidden input -->
+	              <input type="hidden" name="reserveYn" id="reserveYn" required>
+	              <label class="form-label" for="calendar">예약메일</label>
+	              <div><input type="date" class="form-control" name="sendDate" id="sendDate"></div>
 	            </div>
 	            <div class="mb-3 col-md-7">
-	              <label class="form-label" for="">파일첨부<i class="bi bi-upload"></i></label>
-	              <div><input type="file" class="form-control" id="inputGroupFile01" name="" id="" value="" /></div>
+	              <label class="form-label" for="upfile">파일첨부<i class="bi bi-upload"></i></label>
+	              <div><input type="file" class="form-control" name="uploadFile" id="upfile" /></div>
 	            </div>
 	            <div class="mb-3 col-md-12">
-	              <label class="form-label" for="country">제목</label>
-	              <input class="form-control" type="text" name="" id="" value="" placeholder="제목을 작성하세요"/>
+	              <label class="form-label" for="title">제목</label>
+	              <input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성하세요" maxlength="33" required/>
 	            </div>
 	            <div class="mb-3 col-md-12">
-	              <label class="form-label" for="country">내용</label>
+	              <label class="form-label" for="content">내용</label>
 	              <div>
-	              	<textarea class="form-control" id="exampleFormControlTextarea1" rows="10" cols="150"></textarea>
+	              	<textarea class="form-control" name="content" id="content" rows="10" cols="150" required></textarea>
 	              </div>
 	            </div>
 	          </div>
@@ -115,6 +118,7 @@
 	          </div>
 	        </form>
 	        <!-- form 끝 -->
+	        
 	      </div>
 	      <!-- 보내는 영역 끝 -->
 	    </div>
@@ -124,8 +128,6 @@
 	</div>
 	<!-- 행 끝 -->
 
-
-           
 	</div>
 	<!-- 컨테이너 끝 -->
 	
@@ -164,22 +166,53 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#calendar").hide();
+			$("#sendDate").hide();
+			$('#reserveYn').val('N');
+			$('#sendDate').attr('required', false);
+			
 			$("#ckbox").on('click', function () {
 				if($(this).prop('checked')){
-					$("#calendar").show();
+					$('#reserveYn').val('Y');
+					$('#sendDate').attr('required', 'required');
+					$("#sendDate").show();
 				}else{
-					$("#calendar").hide();
+					$('#reserveYn').val('N');
+					$('#sendDate').attr('required', false);
+					$("#sendDate").hide();
 				}
 			});
 		});
-
+		
+		function insertMailValidate() {
+			console.log('확인');
+			if($('#to').val() == null){
+				alert('받는 사람을 선택해주세요.');
+				return false;
+			}
+			if($('#title').val() == null){
+				alert('제목을 입력해주세요.');
+				return false;
+			}
+			if($('#content').val() == null){
+				alert('내용을 입력해주세요.');
+				return false;
+			}
+			
+			return true;
+		}
+		
+		$(document).ready(function(){
+		    $('#title').keyup(function(){
+		        if ($(this).val().length > $(this).attr('maxlength')) {
+		            alert('제한길이 초과');
+		            //chrome에선 maxlength가 5라면 한글이 6자까지 들어가게 되므로 필히 keyup에서 substr을 통해 maxlength의 글자까지 끊어줘야 한다.
+		            $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+		        }
+		    });
+		});
 	</script>
 	<!-- bottom -->
-	<jsp:include page="bottom.jsp" />
-	
-	
-	
+	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
 	
 	
 </body>
