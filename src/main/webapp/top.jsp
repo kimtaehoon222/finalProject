@@ -259,14 +259,27 @@
                 <div data-i18n="Extended UI">메일</div>
               </a>
               <ul class="menu-sub">
+				<li class="menu-item">
+                 <a href="mailHome.do" class="btn btn-sm btn-outline-primary" id="center" style="margin:10px; padding:5px">메일 홈 바로가기 </a>
+                </li>              
                 <li class="menu-item">
-                  <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-                    <div data-i18n="Perfect Scrollbar">1</div>
+                  <a href="receiveMailList.do" class="menu-link">
+                    <div data-i18n="Without menu">받은 메일함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="extended-ui-text-divider.html" class="menu-link">
-                    <div data-i18n="Text Divider">2</div>
+                  <a href="sendMailList.do" class="menu-link">
+                    <div data-i18n="Without navbar">보낸 메일함</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="reserveMailList.do" class="menu-link">
+                    <div data-i18n="Container">예약 메일함</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="deleteMailList.do" class="menu-link">
+                    <div data-i18n="Fluid">휴지통</div>
                   </a>
                 </li>
               </ul>

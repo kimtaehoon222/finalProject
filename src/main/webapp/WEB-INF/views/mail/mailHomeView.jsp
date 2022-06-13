@@ -28,7 +28,7 @@
 
 </head>
 <body>
-	<jsp:include page="top.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
 
 	<div class="container-xxl flex-grow-1 container-p-y">
 
@@ -336,6 +336,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
 
-	<jsp:include page="bottom.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
+	
 </body>
 </html>
