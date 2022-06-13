@@ -124,7 +124,7 @@ data-template="vertical-menu-template-free"
                     </div>
                     <div class="mb-2">
                         <input
-                        type="email"
+                        type="text"
                         class="form-control"
                         id="emp_id"
                         name="emp_id"
