@@ -60,9 +60,7 @@
 							<div class="email-app-menu">
 								<div class="form-group form-group-compose">
 									<!-- 작성하기 버튼  -->
-									<button type="button"
-										class="btn btn-primary btn-block my-4 compose-btn">
-										작성하기</button>
+									<a href="mailSendForm.do" class="btn btn-primary btn-block my-4 compose-btn" id="center">작성하기</a>
 								</div>
 
 								<div class="sidebar-menu-list ps">
