@@ -37,7 +37,7 @@
 
 <body>
 
-<jsp:include page="top.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -103,11 +103,11 @@
                                 <div class="col-lg-3 col-xl-2 border-right">
                                     <div class="card-body border-bottom">
                                         <form>
-                                            <input class="form-control" type="text" placeholder="이름을 입력해 주세요">
+                                            <input class="form-control" type="text" placeholder="이름을 입력해 주세요" id="searchName">
                                         </form>
                                     </div>
                                     <div class="scrollable position-relative" style="height: calc(100vh - 111px);">
-                                        <ul class="mailbox list-style-none">
+                                        <ul class="mailbox list-style-none" id="contectList">
                                             <li>
                                                   <!-- 주소록 상세 영역 -->
                                                 <div class="message-center">
@@ -254,7 +254,7 @@
                                         <div class="row">
                                             <div class="col-9">
                                                 <div class="input-field mt-0 mb-0">
-                                                    <input id="textarea1" placeholder="내용을 입력해 주세요"
+                                                    <input id="message" placeholder="내용을 입력해 주세요"
                                                         class="form-control border-0" type="text">
                                                 </div>
                                             </div>
@@ -262,7 +262,7 @@
                                                 <!--  <a class="btn-circle btn-lg btn-cyan float-right text-white"
                                                     href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>-->
                                                  <!--  <button id = "message">전송</button>-->
-                                                 <button type="button" class="btn btn-primary">전송</button>
+                                                 <button type="button" class="btn btn-primary" id="sendBtn">전송</button>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@
         <!-- ============================================================== -->
 
     </div>
-                        	<jsp:include page="bottom.jsp"/>
+     <jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->

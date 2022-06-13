@@ -214,18 +214,13 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">1</div>
+                  <a href="work.do" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">내 근태 현황</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">2</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">3</div>
+                  <a href="vacation.do" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">내 연차 조회</div>
                   </a>
                 </li>
               </ul>

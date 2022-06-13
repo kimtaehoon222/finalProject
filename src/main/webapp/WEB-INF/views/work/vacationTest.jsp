@@ -80,7 +80,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body onload="printClock()">
-	<jsp:include page="top.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
 
 	<div class="container-xxl flex-grow-1 container-p-y">
 
@@ -135,6 +135,8 @@
 													</div>
 		
 												</div>
+												<!-- 근태 상태변경 form 시작  -->
+												<form method="get" action="change.do">
 													<div class="d-flex align-items-center">
 									
 											
@@ -150,6 +152,8 @@
 														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="5" name="status">외출중</button>
 														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="6" name="status">출장중</button>
 													</div>
+												</form>
+												<!-- 근태 상태변경 form 끝 -->
 											</div> 
 										
 					
@@ -365,6 +369,6 @@
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/summernote/lang/summernote-ko-KR.js"></script>
 
-	<jsp:include page="bottom.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
 </body>
 </html>

@@ -83,7 +83,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body onload="printClock()">
-	<jsp:include page="top.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
 
 	<div class="container-xxl flex-grow-1 container-p-y">
 
@@ -116,11 +116,11 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 								<div class="form-group form-group-compose">
 									<c:set var="today" value="<%= new java.util.Date() %>"/>
 								<p style="font-size:14px"><fmt:formatDate value="${today}" type="date" pattern="yyyy-MM-dd (E)"/></p>
-								<p id="clock" style="font-size:40px">12:00:00</p>
+								<p id="clock" style="font-size:40px"></p>
 								</div>
 
 								<div class="sidebar-menu-list ps">
-									<!-- 메일 사이드바 시작 -->
+									<!-- 근태 사이드바 시작 -->
 									<div class="list-group list-group-messages">
 										
 											<div class="fonticon-wrap d-inline me-3">
@@ -136,6 +136,7 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 													</div>
 		
 												</div>
+												<form method="get" action="change.do">
 													<div class="d-flex align-items-center">
 													
 													
@@ -155,11 +156,12 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="4" name="status">외출중</button>
 														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="5" name="status">출장중</button>
 													</div>
+												</form>
 											</div> 
 										
 					
 									</div>
-									<!-- 메일 사이드바 끝 -->
+									<!-- 근태 사이드바 끝 -->
 								</div>
 
 							</div>
@@ -181,11 +183,11 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 								<!-- Email list Area -->
 								<div class="email-app-list-wrapper">
 									<div class="email-app-list">
-						    <div class="m-auto">
-								<span><i data-feather="chevron-left" class="feather-icon" id="before"></i></span>
-								<span>2022.06</span>
-								<span><i data-feather="chevron-right" class="feather-icon" id="after"></i></span>
-							</div>
+									    <div class="m-auto">
+											<span class="ab" id="before"><i data-feather="chevron-left" class="feather-icon" id="before"></i></span>
+											<span>2022.06</span>
+											<span class="ab" id="after"><i data-feather="chevron-right" class="feather-icon" id="after"></i></span>
+										</div>
 										<!-- 근태 상세 정보 상단 시작 -->
 								<div class="email-action">
 									<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
@@ -474,6 +476,6 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/custom.min.js"></script>
 	
-	<jsp:include page="bottom.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
 </body>
 </html>

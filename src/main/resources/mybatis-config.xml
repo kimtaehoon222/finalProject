@@ -10,11 +10,19 @@
 	</settings>
 	
 	<typeAliases>
-	
+		<typeAlias type="com.workie.easy.work.model.dto.Work" alias="Work"/>
+		<typeAlias type="com.workie.easy.work.model.dto.WorkSInfo" alias="WorkSInfo"/>
+		<typeAlias type="com.workie.easy.work.model.dto.VacationInfo" alias="VacationInfo"/>
+		<typeAlias type="com.workie.easy.work.model.dto.EmpVacation" alias="EmpVacation"/>
+		
+		<typeAlias type="com.workie.easy.mail.model.dto.Mail" alias="Mail"/>
+	    <typeAlias type="com.workie.easy.mail.model.dto.MailPageInfo" alias="MailPageInfo"/>
+	    <typeAlias type="com.workie.easy.mail.model.dto.MailPagination" alias="MailPagination"/>
 	</typeAliases>
 		
 	<mappers>
-
+		<mapper resource="/mappers/work-mapper.xml"/>
+		<mapper resource="/mappers/mail-mapper.xml"/>
 	</mappers>
 	
 </configuration>
