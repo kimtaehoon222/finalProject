@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
@@ -54,7 +55,7 @@
 						<div class="sidebar-content email-app-sidebar d-flex">
 
 
-							<!-- email-app-menu start -->
+							<!-- 이메일 메뉴바 시작 -->
 							<div class="email-app-menu">
 								<div class="form-group form-group-compose">
 									<!-- 작성하기 버튼  -->
@@ -96,15 +97,14 @@
 											</div> 휴지통
 										</a>
 									</div>
-									<!-- 메일 사이드바 끝 -->
+									
 								</div>
 
 							</div>
-							<!-- email-app-menu end -->
+							<!-- 이메일 메뉴바 끝 -->
 
 						</div>
 					</div>
-					<!-- sidebar end -->
 				</div>
 				<!-- 좌측 : 메일 사이드바 끝 -->
 
@@ -124,11 +124,9 @@
 											<div class="action-left d-flex align-items-center">
 
 												<!-- 체크박스(전체선택) -->
-												<div
-													class="checkbox checkbox-shadow checkbox-sm selectAll me-3">
-													<input type="checkbox" id="checkboxsmall"
-														class='form-check-input'> <label
-														for="checkboxsmall"></label>
+												<div class="checkbox checkbox-shadow checkbox-sm selectAll me-3">
+													<input type="checkbox" id="checked-all" class='form-check-input'> 
+													<label for="checkboxsmall"></label>
 												</div>
 
 												<!-- 버튼 리스트 -->
@@ -153,14 +151,11 @@
 												<div class="email-fixed-search flex-grow-1">
 													<div
 														class="form-group position-relative  mb-0 has-icon-left">
-														<input type="text" class="form-control"
-															placeholder="Searched Title..">
+														<input type="text" class="form-control" placeholder="Searched Title..">
 														<div class="form-control-icon">
-															<svg class="bi" width="1.5em" height="1.5em"
-																fill="currentColor">
-                                                        <use
-																	xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
-                                                    </svg>
+															<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+                                                        		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
+                                                   			</svg>
 														</div>
 													</div>
 												</div>
@@ -200,8 +195,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" class='form-check-input' name="email-check">
 															</div>
 														</div>
 														<span class="favorite text-primary">수신</span>
@@ -241,8 +235,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" class='form-check-input' name="email-check">
 															</div>
 														</div>
 														<span class="favorite text-success">발신</span>
@@ -282,8 +275,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" class='form-check-input' name="email-check">
 															</div>
 														</div>
 														<span class="favorite text-success">발신</span>
@@ -323,8 +315,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" class='form-check-input' name="email-check">
 															</div>
 														</div>
 														<span class="favorite text-primary">수신</span>
@@ -389,13 +380,27 @@
 		</div>
 	</div>
 
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			//전체선택 체크박스 요소를 클릭하면
+			$('#checked-all').click(function () {
+				//해당 요소의 값이 checked인 경우
+				if($('#checked-all').is(":checked")){
+					//이름이 email-check인 input 요소의 값을 checked=true
+					$('input[name=email-check]').prop("checked", true);
+				}else{
+					//이름이 email-check인 input 요소의 값을 checked=false
+					$('input[name=email-check]').prop("checked", false);
+				}
+			})
+			
+		})
+	</script>
 
 	<jsp:include page="bottom.jsp" />
+	
 </body>
 </html>

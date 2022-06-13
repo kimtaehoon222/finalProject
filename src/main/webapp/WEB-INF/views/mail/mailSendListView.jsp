@@ -126,9 +126,8 @@
 												<!-- 체크박스(전체선택) -->
 												<div
 													class="checkbox checkbox-shadow checkbox-sm selectAll me-3">
-													<input type="checkbox" id="checkboxsmall"
-														class='form-check-input'> <label
-														for="checkboxsmall"></label>
+													<input type="checkbox" id="checked-all" class='form-check-input'> 
+													<label for="checkboxsmall"></label>
 												</div>
 
 												<!-- 버튼 리스트 -->
@@ -142,8 +141,7 @@
 															data-toggle="tooltip">
 															<span class="fonticon-wrap"> <svg class="bi"
 																	width="1.5em" height="1.5em" fill="currentColor">
-                                                            <use
-																		xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
+                                                            <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
                                                         </svg>
 															</span>
 														</button>
@@ -164,8 +162,7 @@
 														<div class="form-control-icon">
 															<svg class="bi" width="1.5em" height="1.5em"
 																fill="currentColor">
-                                                        <use
-																	xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
+                                                        <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
                                                     </svg>
 														</div>
 													</div>
@@ -178,16 +175,14 @@
 													class="btn btn-icon email-pagination-prev d-none d-sm-block">
 													<svg class="bi" width="1.5em" height="1.5em"
 														fill="currentColor">
-                                                <use
-															xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-left" />
+                                                <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-left" />
                                             </svg>
 												</button>
 												<button
 													class="btn btn-icon email-pagination-next d-none d-sm-block">
 													<svg class="bi" width="1.5em" height="1.5em"
 														fill="currentColor">
-                                                <use
-															xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-right" />
+                                                <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-right" />
                                             </svg>
 												</button>
 
@@ -206,8 +201,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
 															</div>
 														</div>
 														<span class="favorite text-light">일반</span>
@@ -256,8 +250,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
 															</div>
 														</div>
 														<span class="favorite text-danger">중요</span>
@@ -307,8 +300,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
 															</div>
 														</div>
 														<span class="favorite text-danger">중요</span>
@@ -358,8 +350,7 @@
 													<div class="user-action">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1"
-																	class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
 															</div>
 														</div>
 														<span class="favorite text-light">일반</span>
@@ -433,13 +424,27 @@
 		</div>
 	</div>
 
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function () {
+			//전체선택 체크박스 요소를 클릭하면
+			$('#checked-all').click(function () {
+				//해당 요소의 값이 checked인 경우
+				if($('#checked-all').is(":checked")){
+					//이름이 email-check인 input 요소의 값을 checked=true
+					$('input[name=email-check]').prop("checked", true);
+				}else{
+					//이름이 email-check인 input 요소의 값을 checked=false
+					$('input[name=email-check]').prop("checked", false);
+				}
+			})
+		})
+	</script>
+	
 	<jsp:include page="bottom.jsp" />
+	
 </body>
 </html>

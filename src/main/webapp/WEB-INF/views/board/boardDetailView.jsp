@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -38,6 +39,7 @@
             <div class="col-lg-8">
                 <!-- 게시글 상세 영역 시작 -->
                 <div class="pb-3">
+                	<!-- 날짜 표기 동그라미 -->
                     <div class="position-relative">
                         <img class="img-fluid w-100" src="${pageContext.request.contextPath}/resources/kjs_assets/images/samples/bg-mountain.jpg" alt="">
                         <div class="position-absolute bg-primary d-flex flex-column align-items-center justify-content-center rounded-circle" style="width: 60px; height: 60px; bottom: -30px; right: 30px;">
@@ -45,6 +47,7 @@
                             <small class="text-white text-uppercase">June</small>
                         </div>
                     </div>
+                    <!-- 게시글 정보 -->
                     <div class="bg-light mb-3" style="padding: 30px;">
                         <div class="d-flex mb-3">
                             <div class="d-flex align-items-center">
@@ -60,7 +63,9 @@
                                 <a class="text-muted ml-2" href="">3</a>
                             </div>
                         </div>
+                        <!-- 제목 -->
                         <h4 class="font-weight-bold mb-3">등산 가고싶네요~</h4>
+                        <!-- 내용 -->
                         <p> 올해 국제 산의 날 주제는 '지속가능한 산악관광'입니다. 
                          	산지의 지속가능한 관광은 인근 주민들의 생계를 위한 대안적 방안이 될 수 있을 뿐만 아니라 빈곤을 줄이고 사회적 통합을 높이며 나아가 경관 보존, 
                          	생물다양성 보존에도 기여할 수 있을 것입니다.
@@ -73,44 +78,58 @@
                 <!-- 댓글 영역 시작 -->
                 <div class="bg-light" style="padding: 30px; margin-bottom: 30px;">
                     <h3 class="mb-4"><i class="far fa-comment text-primary"></i>&nbsp;3 Comments</h3>
-                    <!-- 댓글 시작 -->
-                    <div class="media mb-4">
-                        <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                        <div class="media-body">
-                            <h6><a href="">김태훈</a><small><i>10 June 2022</i></small></h6>
-                            <span>우와~산에 대해 정말 많은 걸 알고계시네요!</span>
-                            <button class="btn btn-sm btn-primary">→댓글</button>
-                            <!-- 대댓글 시작 -->
-                            <div class="media mt-2">
-	                        <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/5.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-	                        <div class="media-body">
-	                            <h6><a href="">임현빈</a> <small><i>10 June 2022</i></small></h6>
-	                            <span>공감이요! 산 전문가시네요 재호님</span>
-	                            <button class="btn btn-sm btn-primary">→댓글</button>
-	                        </div>
-	                        <!-- 대댓글 끝 -->
-                    </div>
-                        </div>
-                    </div>
-                    <!-- 댓글 끝 -->
-                    <!-- 댓글 시작 -->
-                    <div class="media mb-4">
-                        <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/6.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                        <div class="media-body">
-                            <h6><a href="">전재은</a> <small><i>10 June 2022</i></small></h6>
-                            <span>굿굿!</span>
-                            <button class="btn btn-sm btn-primary">→댓글</button>
-                    	</div>
-                   </div>
-                   <div class="row">
-		              <label class="form-label" for="country">댓글 작성</label>
+                    <!-- 댓글 작성란 시작 -->
+                    <div class="row mb-4" id="reply-div">
+		              <label class="form-label" for="">댓글 작성</label>
 		              <div class="col-lg-10">
 		              	<input class="form-control" type="text" name="" id="" value="" placeholder="댓글을 작성하세요"/>
 		              </div>
 		              <div class="col-lg-2">
-		              	<input type="button" class="btn btn-primary" value="작성"/>
+		              	<button class="btn btn-primary">작성</button>
 		              </div>
-		           </div>    
+		           	</div> 
+		           	<!-- 댓글 작성란 끝 -->
+                    <!-- 댓글 시작 -->
+                    <div class="media mb-4">
+                        <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                        <div class="media-body">
+                            <h6><span class="text-primary">김태훈</span>
+                            	<small><i>10 June 2022</i> 
+                            	</small>
+                            </h6>
+                            <span>우와~산에 대해 정말 많은 걸 알고계시네요!</span>
+                            <button class="btn btn-sm btn-primary">→댓글</button>
+                            <button class="btn btn-sm btn-primary">수정</button>
+                            <button class="btn btn-sm btn-primary">삭제</button>
+                           
+                        </div>
+                    </div>
+                    <!-- 대댓글 시작 -->
+                    <div class="media mb-4">
+                     <!-- 댓글 레벨에 따른 깊이 조절. 일단 임시 상태. -->
+                     <img src="" alt="" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                     <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/5.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+	                     <div class="media-body">
+	                         <h6><span class="text-primary">임현빈</span>
+	                          <small><i>10 June 2022</i>
+	                          </small>
+	                         </h6>
+	                         <span>공감해요! 재호님 대단하시네용!</span>
+	                         <button class="btn btn-sm btn-primary">→댓글</button>
+	                     </div>
+               		</div>
+               		<!-- 대댓글 끝 -->
+                    <!-- 댓글 시작 -->
+                    <div class="media mb-4">
+                        <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/6.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                        <div class="media-body">
+                            <h6><span class="text-primary">전재은</span>
+                            	<small><i>10 June 2022</i></small>
+                            </h6>
+                            <span>굿굿!</span>
+                            <button class="btn btn-sm btn-primary">→댓글</button>
+                    	</div>
+                   </div>
                 </div>
                 <!-- 댓글 영역 끝 -->
 
