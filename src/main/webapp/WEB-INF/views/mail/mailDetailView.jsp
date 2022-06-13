@@ -27,7 +27,7 @@
 	type="image/x-icon">
 </head>
 <body>
-	<jsp:include page="top.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
 
 	<div class="container-xxl flex-grow-1 container-p-y">
 
@@ -54,7 +54,6 @@
 					<div class="sidebar">
 						<div class="sidebar-content email-app-sidebar d-flex">
 
-
 							<!-- email-app-menu start -->
 							<div class="email-app-menu">
 								<div class="form-group form-group-compose">
@@ -67,21 +66,21 @@
 								<div class="sidebar-menu-list ps">
 									<!-- 메일 사이드바 시작 -->
 									<div class="list-group list-group-messages">
-										<a href="#" class="list-group-item text-primary">
+										<a href="receiveMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
                                         		</svg>
 											</div> 받은 메일함
 										</a> 
-										<a href="#" class="list-group-item">
+										<a href="sendMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#archive" />
                                        			</svg>
 											</div> 보낸 메일함
 										</a> 
-										<a href="#" class="list-group-item">
+										<a href="reserveMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em"
 													fill="currentColor">
@@ -89,7 +88,7 @@
                                         		</svg>
 											</div> 예약 메일함 
 										</a> 
-										<a href="#" class="list-group-item">
+										<a href="deleteMailList.do" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
@@ -219,6 +218,6 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
 
-	<jsp:include page="bottom.jsp" />
+	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
 </body>
 </html>
