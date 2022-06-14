@@ -364,8 +364,8 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="form-layouts-vertical.html" class="menu-link">
-                    <div data-i18n="Vertical Form">1</div>
+                  <a href="empList.do" class="menu-link">
+                    <div data-i18n="Vertical Form" >직원 목록</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -446,10 +446,11 @@
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
+                    
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a href="myPage.do" class="dropdown-item" href="#">
                         <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">마이페이지</span>
+                        <span href="myPage.do"class="align-middle">마이페이지</span>
                       </a>
                     </li>
                     <li>

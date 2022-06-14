@@ -20,7 +20,7 @@
 		<result property="apvYN" column="APV_YN"/>
 		<result property="entYN" column="ENT_YN"/>
 		<result property="ctgNo" column="CTG_NO"/>
-		<result property="deptName" column="DEPT_NAME"/>
+	  <result property="deptName" column="DEPT_NAME"/>
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="jobVacation" column="JOB_VACATION"/>
 	</resultMap>
@@ -47,5 +47,4 @@
 		                      , DEFAULT, DEFAULT
 		                      )
 	</insert>
-	
 </mapper>
