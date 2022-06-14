@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -70,7 +71,13 @@ data-template="vertical-menu-template-free"
 </head>
 
 <body>
-
+	<c:if test="${ !empty msg }">
+		<script>
+			alert("${msg}");
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
     <nav class="layout-navbar">
         <img src="${pageContext.request.contextPath}/resources/assets/img/logo/logo_1.png"/>
     </nav>
@@ -101,27 +108,13 @@ data-template="vertical-menu-template-free"
                 <div class="app-brand justify-content-center">
                 <span class="app-brand-text demo text-body fw-bolder m-2 mb-4">Login</span>
                 </div>
-                <form id="formAuthentication" class="m-3 login-input" action="index.html" method="POST">
+                <form id="formAuthentication" class="m-3 login-input" action="login.do" method="POST">
                     <div class="mb-5">
-                        <input
-                        type="text"
-                        class="form-control"
-                        id="emp_id"
-                        name="emp_id"
-                        placeholder="ID"
-                        autofocus
-                        />
+                        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required/>
                     </div>
                     <div class="mb-5 form-password-toggle">
                         <div class="input-group input-group-merge">
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="emp_pwd"
-                            name="emp_pwd"
-                            placeholder="Pwd"
-                            aria-describedby="password"
-                        />
+                        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required/>
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
                     </div>
