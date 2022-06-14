@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="personnelMapper">
+
+	<resultMap type="Employee" id="personnelResult">
+		<result property="empNo" column="EMP_NO"/>
+		<result property="empName" column="EMP_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="empId" column="EMP_ID"/>
+		<result property="empReg" column="EMP_REG"/>
+		<result property="gender" column="GENDER"/>
+		<result property="empPwd" column="EMP_PWD"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="deptCode" column="DEPT_CODE"/>
+		<result property="jobCode" column="JOB_CODE"/>
+		<result property="disabledYN" column="DISABLE_YN"/>
+		<result property="empNote" column="EMP_NOTE"/>
+		<result property="hireDate" column="HIRE_DATE"/>
+		<result property="entDate" column="ENT_DATE"/>
+		<result property="apvYN" column="APV_YN"/>
+		<result property="entYN" column="ENT_YN"/>
+		<result property="ctgNo" column="CTG_NO"/>
+		<result property="jobName" column="JOB_NAME"/>
+		<result property="deptName" column="DEPT_NAME"/>
+	</resultMap>
+	
+	  <update id="updateEmp" parameterType="Employee">
+      UPDATE EMPLOYEE SET 
+      EMP_ID= #{empId}, 
+      PHONE= #{phone}, 
+      ADDRESS= #{address},
+      WHERE EMP_NO= #{empNo}
+   
+   </update>
+
+	 <select id="selectListEmp" resultMap="personnelResult">
+		SELECT 
+		*
+		FROM EMPLOYEE A
+		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
+		WHERE APV_YN= 'Y'
+        ORDER BY EMP_NAME
+        </select>
+</mapper>

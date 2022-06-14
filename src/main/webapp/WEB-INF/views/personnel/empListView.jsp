@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>DataTable - Mazer Admin Dashboard</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
 </head>
 
 <body>
-	<jsp:include page="top.jsp"/>
+	<jsp:include page="../common/top.jsp" />
     <div id="app">
        
         <div id="main">
@@ -38,7 +38,7 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                          <h2>퇴사자 목록</h2>
+                          <h2>직원 목록</h2>
                           <hr>
                           
                         </div>
@@ -50,8 +50,8 @@
                                         <th>이름</th>
                                         <th>이메일</th>
                                         <th>핸드폰</th>
-                                        <th>퇴사전 부서</th>
-                                        <th>퇴사전 직위</th>
+                                        <th>부서</th>
+                                        <th>직위</th>
                                         
                                     </tr>
                                 </thead>
@@ -60,9 +60,9 @@
                                     <tr>
                                         <td>${e.empName}</td>
                                         <td>${e.empId}</td>
-                                        <td>076 4820 8838</td>
-                                        <td>인사과</td>
-                                       	<td>부장</td>
+                                        <td> ${e.phone}</td>
+                                        <td>${e.deptName}</td>
+                                       	<td>${e.jobName}</td>
                                     </tr>
                                 
                                    </c:forEach> 
@@ -78,7 +78,7 @@
         </div>
         
     </div>
-    <jsp:include page="bottom.jsp"/>
+    <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>
 

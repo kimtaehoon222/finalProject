@@ -30,7 +30,7 @@ data-template="vertical-menu-template-free"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Join</title>
+    <title>Login</title>
 
     <meta name="description" content="" />
 
@@ -83,15 +83,16 @@ data-template="vertical-menu-template-free"
     </nav>
     <div class="login-background">
         <img class="logo-img" src="${pageContext.request.contextPath}/resources/assets/img/logo/W3.png"/>
-        <div class="text-div welcome-div">
-            <div class="display-1 title-text">
-                Welcome !
+        <div class="text-div">
+            <div class="display-3 login-text title-text">
+		                업무를 더욱 편리하게 !<br>
+		                그룹웨어 2asy Work !
             </div>
-            <div class="content-text mt-2">
-                <h3>
-                    2asy Work의<br>
-                   	새로운 회원을 환영합니다.   
-                </h3>
+            <div class="content-text mt-4">
+                <h4>
+                    2asy Work에서 제공하는 편리한 기능으로<br>
+                 	업무 만족도와 효율을 높이세요!
+                </h4>
             </div>
         </div>
     </div>
@@ -101,55 +102,29 @@ data-template="vertical-menu-template-free"
             <div class="authentication-wrapper authentication-basic container-p-y">
         <!-- <div class="authentication-inner"> -->
             <!-- Register -->
-            <div class="join-card">
+            <div class="login-card">
             <div class="card-body">
                 <!-- Logo -->
                 <div class="app-brand justify-content-center">
-                <span class="app-brand-text demo text-body fw-bolder m-2 mb-2">Join</span>
+                <span class="app-brand-text demo text-body fw-bolder m-2 mb-4">Login</span>
                 </div>
-
-                <form id="formAuthentication" class="m-3 join-input" action="insertEmp.do" method="POST">
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="empName" name="empName" placeholder="Name" autofocus />
+                <form id="formAuthentication" class="m-3 login-input" action="login.do" method="POST">
+                    <div class="mb-5">
+                        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required/>
                     </div>
-                    <div class="mb-2">
-                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" autofocus />
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus />
-                    </div>
-                    <div class="mb-2">
-                        <input type="email" class="form-control" id="empReg" name="empReg" placeholder="Persnal Number" autofocus />
-                    </div>
-                    <div class="mb-2 form-password-toggle">
+                    <div class="mb-5 form-password-toggle">
                         <div class="input-group input-group-merge">
-                        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" />
+                        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required/>
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
                     </div>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus />
-                    </div>
-                    <div class="mb-2">
-                        <select id="deptCode" name="deptCode" class="form-select" autofocus>
-                            <option>Department</option>
-                            <option value="D1">One</option>
-                            <option value="D2">Two</option>
-                            <option value="D3">Three</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <select id="jobCode" name="jobCode" class="form-select" autofocus>
-                            <option>Job</option>
-                            <option value="J1">One</option>
-                            <option value="J2">Two</option>
-                            <option value="J3">Three</option>
-                        </select>
-                    </div>
+
                     <!--로그인, 회원가입 버튼-->
-                    <div class="join-buttons">
-                        <button class="btn rounded-pill btn-primary" type="submit">Submit</button>
-                        <button class="btn rounded-pill btn-secondary" type="button">Reset</button>
+                    <div class="login-buttons">
+                        <!-- <button class="btn btn-primary w-50" type="submit">Sign in</button> -->
+                        <button class="btn rounded-pill btn-primary" type="submit">Sign in</button>
+                        <button class="btn rounded-pill btn-secondary" type="button" onclick="location.href='joinForm.do'">Join</button>
+                    	
                     </div>
                 </form>
             </div>

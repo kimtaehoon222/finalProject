@@ -10,7 +10,7 @@
 <title>sked_detail</title>
 </head>
 <body>
-	<jsp:include page="${pageContext.request.contextPath}/top.jsp"/>
+	<jsp:include page="../common/top.jsp"/>
 	
 	<!----------------------------------------------------------------------------------------------------------->
 	<link href='${pageContext.request.contextPath}/resources/jje_css/jje_acct.css' rel='stylesheet' />
@@ -344,6 +344,6 @@
 	</div>
 	<!----------------------------------------------------------------------------------------------------------->
 	
-	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp"/>
+	<jsp:include page="../common/bottom.jsp"/>
 </body>
 </html>
