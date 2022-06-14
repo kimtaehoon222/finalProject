@@ -69,7 +69,7 @@
 
   <body>
   			
-  			<jsp:include page="top.jsp"/>
+  			<jsp:include page="WEB-INF/views/common/top.jsp"/> 
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
@@ -624,6 +624,6 @@
             <!-- / Footer -->
 
 
-         	<jsp:include page="bottom.jsp"/>
+         	<jsp:include page="WEB-INF/views/common/bottom.jsp"/> 
   </body>
 </html>
