@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="employeeMapper">
+
+	<resultMap type="Employee" id="employeeResultSet">
+		<result property="empNo" column="USER_ID"/>
+		<result property="empName" column="USER_PWD"/>
+		<result property="phone" column="USER_NAME"/>
+		<result property="empId" column="EMAIL"/>
+		<result property="empReg" column="GENDER"/>
+		<result property="gender" column="AGE"/>
+		<result property="empPwd" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="deptCode" column="ENROLL_DATE"/>
+		<result property="jobCode" column="MODIFY_DATE"/>
+		<result property="disabledYN" column="STATUS"/>
+		<result property="empNote" column="STATUS"/>
+		<result property="hireDate" column="STATUS"/>
+		<result property="disabledYN" column="STATUS"/>
+		<result property="disabledYN" column="STATUS"/>
+		<result property="disabledYN" column="STATUS"/>
+	</resultMap>
+	
+</mapper>
