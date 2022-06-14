@@ -49,6 +49,7 @@
 		<c:set var="today" value="<%= new java.util.Date() %>"/>
 		<p style="font-size:14px"><fmt:formatDate value="${today}" type="date" pattern="yyyy-MM-dd (E)"/></p>
 		<p id="clock" style="font-size:40px"></p>
+
 		<div>
 			<div class="d-flex" style="font-size: 12px">
 				<p class="col-6" style="padding:0px;">출근시간</p>
@@ -106,7 +107,7 @@
 			<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="5" name="status">외출중</button>
 			<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="6" name="status">출장중</button>
 		</div>
-		<input type="hidden" name="wNo" value="${w.WNo }">
+		<input type="hidden" name="wNo" value="${w.WorkNo }">
 		<input type="hidden" name="main" value="0">
 	</form>
 	<br>

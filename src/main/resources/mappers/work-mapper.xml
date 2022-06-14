@@ -13,7 +13,8 @@
 	
 	<resultMap type="WorkSInfo" id="workSInfoResultSet">
 		<id property="sNo" column="S_NO"/>
-		<result property="empNo" column="EMP_NO"/>
+		<!--  <result property="empNo" column="EMP_NO"/>-->
+		<result property="workNo" column="WORK_NO"/>
 		<result property="sCode" column="S_CODE"/>
 		<result property="sName" column="S_NAME"/>
 	</resultMap>
@@ -35,6 +36,27 @@
 			, SUBSTR(END_TIME, 11, LENGTH(END_TIME)) END_TIME
 		  FROM
 		    WORK
-		 WHERE EMP_NO = #{empNo} AND TO_CHAR(WORK_DATE, 'yy/MM/dd') = TO_CHAR(CURRENT_DATE, 'yy/MM/dd')
+		 WHERE EMP_NO = 21 AND TO_CHAR(WORK_DATE, 'yy/MM/dd') = TO_CHAR(CURRENT_DATE, 'yy/MM/dd')
 	</select>
+	
+	<insert id="insertWork" parameterType="_int">
+		INSERT INTO WORK
+		(WORK_NO, EMP_NO, WORK_DATE, START_TIME)
+		VALUES
+		('W'||#{empNo}||'-'||TO_CHAR(CURRENT_DATE, 'yyyyMMdd'), #{empNo}, CURRENT_DATE, TO_CHAR(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH24:MI:SS'))
+	
+	</insert>
+	
+	<update id="updateWork" parameterType="string">
+		UPDATE WORK
+		SET END_TIME=TO_CHAR(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH24:MI:SS')
+		WHERE W_NO=#{wNo}
+	</update>
+	
+	<insert id="insertWorkStatus" parameterType="WorkSInfo">
+		INSERT INTO WORK
+		VALUES
+		(SEQ_WSNO, #{workNo}, #{sCode})
+	
+	</insert>
 </mapper>
