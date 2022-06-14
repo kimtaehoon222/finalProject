@@ -30,7 +30,7 @@ data-template="vertical-menu-template-free"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login</title>
+    <title>Join</title>
 
     <meta name="description" content="" />
 
@@ -79,20 +79,24 @@ data-template="vertical-menu-template-free"
 	</c:if>
 	
     <nav class="layout-navbar">
-        <img src="${pageContext.request.contextPath}/resources/assets/img/logo/logo_1.png"/>
+        <img src="${pageContext.request.contextPath}/resources/assets/img/logo/logo_1.png" style="cursor: pointer" onclick="login()"/>
+        <script>
+        	function login(){
+        		location.href="loginForm.do";
+        	}
+        </script>
     </nav>
     <div class="login-background">
         <img class="logo-img" src="${pageContext.request.contextPath}/resources/assets/img/logo/W3.png"/>
-        <div class="text-div">
-            <div class="display-3 login-text title-text">
-                업무를 더욱 편리하게 !<br>
-                그룹웨어 2asy Work !
+        <div class="text-div welcome-div">
+            <div class="display-1 title-text">
+                Welcome !
             </div>
-            <div class="content-text mt-4">
-                <h4>
-                    2asy Work에서 제공하는 편리한 기능으로<br>
-                    업무 만족도와 효율을 높이세요!
-                </h4>
+            <div class="content-text mt-2">
+                <h3>
+                    2asy Work의<br>
+                   	새로운 회원을 환영합니다.   
+                </h3>
             </div>
         </div>
     </div>
@@ -102,28 +106,64 @@ data-template="vertical-menu-template-free"
             <div class="authentication-wrapper authentication-basic container-p-y">
         <!-- <div class="authentication-inner"> -->
             <!-- Register -->
-            <div class="login-card">
+            <div class="join-card">
             <div class="card-body">
                 <!-- Logo -->
                 <div class="app-brand justify-content-center">
-                <span class="app-brand-text demo text-body fw-bolder m-2 mb-4">Login</span>
+                <span class="app-brand-text demo text-body fw-bolder m-2 mb-2">Join</span>
                 </div>
-                <form id="formAuthentication" class="m-3 login-input" action="login.do" method="POST">
-                    <div class="mb-5">
+
+                <form id="formAuthentication" class="m-3 join-input" action="insertEmp.do" method="POST">
+                    <div class="mb-2">
+                        <input type="text" class="form-control" id="empName" name="empName" placeholder="Name" autofocus required/>
+                    </div>
+                    <div class="mb-2">
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" autofocus required/>
+                    </div>
+                    <div class="mb-2">
                         <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required/>
                     </div>
-                    <div class="mb-5 form-password-toggle">
+                    <div class="mb-2">
+                        <input type="text" class="form-control" id="empReg" name="empReg" placeholder="Persnal Number" autofocus required/>
+                    </div>
+                    <div class="mb-2 form-password-toggle">
                         <div class="input-group input-group-merge">
                         <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required/>
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
                     </div>
-
+                    <div class="mb-2">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus required/>
+                    </div>
+                    <!-- <div class="mb-2">
+                        <select id="deptCode" name="deptCode" class="form-select" autofocus>
+                            <option>Department</option>
+                            <option value="D1">인사관리부</option>
+                            <option value="D2">회계관리부</option>
+                            <option value="D3">마게팅부</option>
+                            <option value="D4">자재관리부</option>
+                            <option value="D5">기획영업부</option>
+                            <option value="D6">경영관리부</option>
+                            <option value="D7">기술개발부</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select id="jobCode" name="jobCode" class="form-select" autofocus>
+                            <option>Job</option>
+                            <option value="J1">대표</option>
+                            <option value="J2">부사장</option>
+                            <option value="J3">부장</option>
+                            <option value="J4">차장</option>
+                            <option value="J5">과장</option>
+                            <option value="J6">대리</option>
+                            <option value="J7">사원</option>
+                            <option value="J8">인턴</option>
+                        </select>
+                    </div> -->
                     <!--로그인, 회원가입 버튼-->
-                    <div class="login-buttons">
-                        <!-- <button class="btn btn-primary w-50" type="submit">Sign in</button> -->
-                        <button class="btn rounded-pill btn-primary" type="submit">Sign in</button>
-                        <button class="btn rounded-pill btn-secondary" type="button">Join</button>
+                    <div class="join-buttons">
+                        <button class="btn rounded-pill btn-primary" type="submit">Submit</button>
+                        <button class="btn rounded-pill btn-secondary" type="button">Reset</button>
                     </div>
                 </form>
             </div>

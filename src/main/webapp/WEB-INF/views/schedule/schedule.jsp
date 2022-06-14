@@ -14,7 +14,7 @@
 <!-------------------------------------------------------------------------------------------------------------->
 </head>
 <body>
-	<jsp:include page="${pageContext.request.contextPath}/top.jsp"/>
+	<jsp:include page="../common/top.jsp"/>
 	
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<!-- Layout Demo -->
@@ -328,6 +328,6 @@
 	<!-- / Footer -->
 	<!----------------------------------------------------------------------------------------------------------->
 	
-	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp"/>
+	<jsp:include page="../common/bottom.jsp"/>
 </body>
 </html>

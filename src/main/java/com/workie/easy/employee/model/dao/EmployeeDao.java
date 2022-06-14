@@ -10,15 +10,14 @@ public class EmployeeDao {
 
 	public Employee loginEmp(SqlSessionTemplate sqlSession, Employee emp) {
 		
-		Employee loginEmp = sqlSession.selectOne("employeeMapper.loginEmp",emp);
-		
-		return loginEmp;
+		return sqlSession.selectOne("employeeMapper.loginEmp",emp);
 		
 	}
 
 	public int insertEmp(SqlSessionTemplate sqlSession, Employee emp) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.insert("employeeMapper.insertEmp",emp);
+		
 	}
 
 }
