@@ -184,7 +184,7 @@
               </a>
               <ul class="menu-sub">
 				<li class="menu-item">
-                 <a href="signView.jsp" class="btn btn-sm btn-outline-primary" id="center" style="margin:10px; padding:5px">결재 함 바로가기 </a>
+                 <a href="signView.do" class="btn btn-sm btn-outline-primary" id="center" style="margin:10px; padding:5px">결재 함 바로가기 </a>
                   </a>
                 </li>              
                 <li class="menu-item">
