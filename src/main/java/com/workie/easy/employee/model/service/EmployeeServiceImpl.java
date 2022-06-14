@@ -22,12 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee loginEmp(BCryptPasswordEncoder bCryptPasswordEncoder, Employee emp) {
 
 		Employee loginEmp = empDao.loginEmp(sqlSession, emp);
+
 		if(loginEmp == null) {
-			throw new CommException("loginUser 확인");
+			throw new CommException("로그인에 실패했습니다. 가입 미승인 또는 없는 아이디입니다.");
 		}
 		
 		if(!bCryptPasswordEncoder.matches(emp.getEmpPwd(), loginEmp.getEmpPwd())) {
-			throw new CommException("암호 불일치");
+			throw new CommException("로그인에 실패했습니다. 암호가 불일치합니다.");
 		}
 		
 		return loginEmp;
@@ -37,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void insertEmp(Employee emp) {
 		int result = empDao.insertEmp(sqlSession, emp);
 		
-		if(result <0) {
+		if(result<0) {
 			throw new CommException("회원가입에 실패하였습니다.");
 		}
 	}
