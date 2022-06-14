@@ -112,7 +112,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 450px;
-    height: 540px;
+    height: 470px;
     word-wrap: break-word;
     background-color: rgba(206, 206, 206, 0.77);
     background-clip: border-box;
@@ -121,7 +121,7 @@ body {
 }
 
 .join-input{
-    height: 430px;
+    height: 85%;
     position: relative;
 }
 

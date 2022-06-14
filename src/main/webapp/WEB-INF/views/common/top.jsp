@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-<% String contextPath = request.getContextPath(); %>     
+    pageEncoding="UTF-8" import="com.workie.easy.employee.model.dto.Employee" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  <!-- jstl cdn -->
+<%
+	String contextPath = request.getContextPath();
+	Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+%>     
 
 <!DOCTYPE html>
 
@@ -85,6 +87,13 @@
   </head>
 
   <body>
+	<c:if test="${ !empty msg }">
+		<script>
+			alert("${msg}");
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+  
   <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -92,7 +101,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="/" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -161,7 +170,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">홈</div>
               </a>
@@ -170,7 +179,7 @@
             <!-- Layouts -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Layouts">전자결재</div>
               </a>
               <ul class="menu-sub">
@@ -207,14 +216,14 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <a href="javascript:void(0);" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-bookmarks"></i>
                 <div>회의실 예약</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <i class="menu-icon tf-icons bx bx-briefcase-alt-2"></i>
                 <div data-i18n="Authentications">근태관리</div>
               </a>
               <ul class="menu-sub">
@@ -232,22 +241,22 @@
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                <i class="menu-icon tf-icons bx bx-chat"></i>
                 <div data-i18n="Misc">채팅</div>
               </a>
             </li>
          
             <!-- Cards -->
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+              <a href="/" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Basic">일정 관리</div>
               </a>
             </li>
             <!-- User interface -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
+              <a href="/" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-credit-card"></i>
                 <div data-i18n="User interface">회계 관리</div>
               </a>
             </li>
@@ -255,7 +264,7 @@
             <!-- Extended components -->
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-copy"></i>
+                <i class="menu-icon tf-icons bx bx-envelope"></i>
                 <div data-i18n="Extended UI">메일</div>
               </a>
               <ul class="menu-sub">
@@ -287,7 +296,7 @@
 
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-copy"></i>
+                <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Extended UI">커뮤니티</div>
               </a>
               <ul class="menu-sub">
@@ -307,7 +316,7 @@
             <!-- Forms -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon tf-icons bx bx-notepad"></i>
                 <div data-i18n="Form Elements">공지사항</div>
               </a>
               <ul class="menu-sub">
@@ -325,7 +334,7 @@
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon tf-icons bx bx-buildings"></i>
                 <div data-i18n="Form Layouts">부서정보</div>
               </a>
               <ul class="menu-sub">
@@ -344,13 +353,13 @@
             <!-- Tables -->
             <li class="menu-item">
               <a href="tables-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
+                <i class="menu-icon tf-icons bx bx-line-chart"></i>
                 <div data-i18n="Tables">통계</div>
               </a>
             </li>
            <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon tf-icons bx bxs-group"></i>
                 <div data-i18n="Form Layouts">인사관리</div>
               </a>
               <ul class="menu-sub">
@@ -397,7 +406,7 @@
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
                 <li class="nav-item lh-1 me-3">
-                  <a
+                  <!-- <a
                     class="github-button"
                     href="https://github.com/themeselection/sneat-html-admin-template-free"
                     data-icon="octicon-star"
@@ -405,7 +414,10 @@
                     data-show-count="true"
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
                     >Star</a
-                  >
+                  > -->
+                  <i class='bx bx-message-rounded-dots bx-md bx-tada-hover'></i>
+                  <i class='bx bx-envelope bx-md bx-tada-hover' ></i>
+                  <i class='bx bxs-help-circle bx-md bx-tada-hover'></i>
                 </li>
 
                 <!-- User -->
@@ -425,8 +437,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">김재호</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block"><%=loginEmp.getEmpName()%></span>
+                            <small class="text-muted"><%=loginEmp.getDeptName()%> <%=loginEmp.getJobName()%></small>
                           </div>
                         </div>
                       </a>
@@ -445,7 +457,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" href="logout.do">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">로그아웃</span>
                       </a>

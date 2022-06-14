@@ -20,14 +20,31 @@
 		<result property="apvYN" column="APV_YN"/>
 		<result property="entYN" column="ENT_YN"/>
 		<result property="ctgNo" column="CTG_NO"/>
+	  <result property="deptName" column="DEPT_NAME"/>
+		<result property="jobName" column="JOB_NAME"/>
+		<result property="jobVacation" column="JOB_VACATION"/>
 	</resultMap>
 	
-	  <update id="updateEmp" parameterType="Employee">
-      UPDATE EMPLOYEE SET 
-      EMP_ID= #{empId}, 
-      PHONE= #{phone}, 
-      ADDRESS= #{address},
-      WHERE EMP_NO= #{empNo}
-   
-   </update>
+	<select id="loginEmp" parameterType="Employee" resultMap="employeeResultSet">
+		SELECT
+		       A.EMP_NO ,A.EMP_NAME ,A.PHONE ,A.EMP_ID ,A.EMP_REG
+		      ,A.GENDER ,A.EMP_PWD ,A.ADDRESS ,DEPT_CODE ,JOB_CODE
+		      ,A.DISABLE_YN ,A.EMP_NOTE ,A.HIRE_DATE, A.ENT_DATE, A.APV_YN
+		      ,A.ENT_YN, A.CTG_NO, B.DEPT_NAME, C.JOB_NAME, C.JOB_VACATION
+		  FROM EMPLOYEE A
+		  LEFT JOIN DEPARTMENT B USING(DEPT_CODE)
+		  LEFT JOIN JOB C USING(JOB_CODE)
+		 WHERE EMP_ID = #{empId}
+		   AND APV_YN = 'Y'
+		   AND ENT_YN = 'Y'
+	</select>
+	
+	<insert id="insertEmp" parameterType="Employee">
+		INSERT
+		  INTO EMPLOYEE VALUES(SEQ_EMNO.NEXTVAL, #{empName}, #{phone}, #{empId}, #{empReg}
+		                      , #{gender}, #{empPwd}, #{address}, NULL, NULL
+		                      , DEFAULT, NULL, SYSDATE, NULL, DEFAULT
+		                      , DEFAULT, DEFAULT
+		                      )
+	</insert>
 </mapper>

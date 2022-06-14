@@ -10,6 +10,8 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.workie.easy.employee.model.dto.Employee" alias="Employee"/>
+		
 		<typeAlias type="com.workie.easy.work.model.dto.Work" alias="Work"/>
 		<typeAlias type="com.workie.easy.work.model.dto.WorkSInfo" alias="WorkSInfo"/>
 		<typeAlias type="com.workie.easy.work.model.dto.VacationInfo" alias="VacationInfo"/>
@@ -23,6 +25,7 @@
 	</typeAliases>
 		
 	<mappers>
+		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/work-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>
 		<mapper resource="/mappers/employee-mapper.xml"/>
