@@ -2,5 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 
+	<insert id="insertMail" parameterType="Mail">
+		INSERT ALL
+      	 INTO MAIL
+    	    VALUES (SEQ_ENO.NEXTVAL, #{reserveYn}, DEFAULT, NVL(TO_DATE(#{sendDate}, 'YYYY-MM-DD'), SYSDATE) 
+    	    	 , #{cancelDate}, DEFAULT, DEFAULT, DEFAULT, #{typeNo}, DEFAULT)
+    INTO MAIL_INFO
+   			VALUES (SEQ_ENO.CURRVAL, #{title}, #{content}, #{toMail}, #{fromMail}, #{ccMail})       
+	<if test="originName != null">
+	INTO ATTACHMENT
+   			VALUES (SEQ_FNO.NEXTVAL, SEQ_ENO.CURRVAL, 'M', #{originName}, #{changeName}, #{filePath}, SYSDATE, DEFAULT)       
+	</if>
+		    SELECT * 
+	      FROM DUAL
+	</insert>
 	
 </mapper>
