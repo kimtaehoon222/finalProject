@@ -70,7 +70,7 @@ picture-area{
 </style>
 
 <body>
-	<jsp:include page="top.jsp"/>
+	<jsp:include page="../common/top.jsp" />
    	<br>
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -82,47 +82,50 @@ picture-area{
                         <h1 class="mypage">마이 페이지</h1>
                         
                         <hr>	  
-            
+            		
          		    <div id="topPage" >
+         		    <form action="updateEmp.do" method="post">
          		    <img id="mainImg" src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" height="250" width="300"/>
                     <div id="title">
-					<h3  name="empName"> 이름 : </h3>
-					<h3 name="name"> 부서 :  </h3>
-					<h3  name="name"> 직위 : </h3>
-					<h3  name="name"> 내선번호 :  </h3>
-					<h3  name=a"name"> 생년월일 : </h3>
+					<h3  name="empName">이름 : ${loginUser.empName} </h3>
+					<h3 name="deptName"> 부서 :  ${loginUser.deptName}</h3>
+					<h3  name="jobName"> 직위 : ${loginUser.jobName}</h3>
+					<h3  name="telNo"> 내선번호 :  ${loginUser.telNo}</h3>
+					<h3  name="empReg"> 생년월일 : ${loginUser.empReg}</h3>
                     </div>
 					</div>
+
                             <div class="update hidden d-block align-items-center">
                             <hr>
-                            	<form class="updateForm" action="update.me" method="post">
+                       
                             	
 								<ul class="ref navbar-nav">
 									<li>
-                            			<div class="card-body">
-											<h3 class="card-title"> 이메일 </h3>
-											<input type="text" class="form-control phone" name="empId" value="">
+                            			<div class="card-body" >
+								
+											<h3 class="card-title">이메일 </h3>
+											<input type="text" class="form-control phone" name="empId" value="${loginUser.empId}">
 										</div>
                             		</li>
                             		<li>
                             			<div class="card-body">
 											<h3 class="card-title"> 연락처 </h3>
-											<input type="text" class="form-control phone" name="phone" value="">
+											<input type="text" class="form-control phone" name="phone" value="${loginUser.phone}">
 										</div>
                             		</li>
                             		<li>
                             			<div class="card-body">
 											<h3 class="card-title"> 주소 </h3>
-											<input type="text" class="form-control phone" name="address" value="">
+											<input type="text" class="form-control phone" name="address" value="${loginUser.address}">
 										</div>
                             		</li>
                             		
                             	
                             	</ul>
                             	
-                            		</form>
+                            		
                             </div>
-                            
+                            </form>
                              <div class="updatePwd hidden d-block align-items-center">
                             	<form class="updatePwdForm" action="updatePassword.me" method="post">
                             	<input type="text" class="form-control empName" value="" readonly style="display:none;"> 
@@ -159,7 +162,7 @@ picture-area{
           
         </div>
     
-      <jsp:include page="bottom.jsp"/>
+      <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
