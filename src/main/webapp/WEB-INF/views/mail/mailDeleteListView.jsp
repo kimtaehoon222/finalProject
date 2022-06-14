@@ -13,7 +13,7 @@
 	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/${pageContext.request.contextPath}/resources/kjs_assets/css/bootstrap.css">
+	href="${pageContext.request.contextPath}/resources/kjs_assets/css/bootstrap.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/kjs_assets/css/pages/email.css">
 <link rel="stylesheet"
@@ -27,7 +27,8 @@
 	type="image/x-icon">
 </head>
 <body>
-	<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
+
+   <jsp:include page="../common/top.jsp"/>
 
 	<div class="container-xxl flex-grow-1 container-p-y">
 
@@ -398,7 +399,7 @@
 		})
 	</script>
 
-	<jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
+   <jsp:include page="../common/bottom.jsp"/>
 	
 </body>
 </html>

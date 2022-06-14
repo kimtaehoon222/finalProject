@@ -1,13 +1,10 @@
 package com.workie.easy.mail.model.service;
 
-import java.util.ArrayList;
-
 import com.workie.easy.mail.model.dto.Mail;
-import com.workie.easy.mail.model.dto.MailPageInfo;
 
 public interface MailService {
 
-	//void insertMail(Mail m);
+	void insertMail(Mail mail);
 
 	//int selectListCount(); //메일 개수 조회
 	

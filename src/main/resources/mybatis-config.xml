@@ -18,11 +18,14 @@
 		<typeAlias type="com.workie.easy.mail.model.dto.Mail" alias="Mail"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPageInfo" alias="MailPageInfo"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPagination" alias="MailPagination"/>
+	    
+	    <typeAlias type="com.workie.easy.common.model.dto.Attachment" alias="Attachment"/>
 	</typeAliases>
 		
 	<mappers>
 		<mapper resource="/mappers/work-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>
+		<mapper resource="/mappers/attachment-mapper.xml"/>
 	</mappers>
 	
 </configuration>
