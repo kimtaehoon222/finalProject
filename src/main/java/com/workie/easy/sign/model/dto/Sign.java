@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class Sign {
 	private int signNo; //결재번호
-	private String typeCode; //유형코드 품의 : AA, 현조 : BB, 휴가 : CC
+	private String typeCode; //유형코드 (품의 : AA, 현조 : BB, 휴가 : CC)
 	private String signTitle; //결재제목
 	private int empNo; //사원번호
 	private Date createDate; //기안일

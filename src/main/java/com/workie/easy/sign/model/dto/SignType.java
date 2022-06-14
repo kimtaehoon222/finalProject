@@ -11,9 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SignStatus {
+public class SignType {
 
-	private String statusCode; //처리 상태코드 (W :대기, P :진행, A, :승인,  R :반려)
-	private String statusName; //처리 상태명
-	
+	private String typeCode; //유형코드 (품의 : AA, 협조: BB, 휴가: CC)
+	private String typeName; //유형명 (품의, 협조, 휴가)
 }

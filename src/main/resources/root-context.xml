@@ -20,7 +20,7 @@
 	
   <bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name = "driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name = "url" value="jdbc:oracle:thin:@172.18.80.1:40000:xe"/>
+		   <property name = "url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
 		<property name = "username" value="EASYWORK"/>
 		<property name = "password" value="EASYWORK"/>
 		<property name = "defaultAutoCommit" value="false"/>
