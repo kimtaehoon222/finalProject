@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Account settings - Account | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
-    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="description" content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!" />
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <!-- Canonical SEO -->
@@ -55,7 +55,7 @@
 #home{background-color: rgb(144, 145, 191);}
 </style>
 <body>
-<jsp:include page="top.jsp"/>
+<jsp:include page="../common/top.jsp" />
 
   <div class="layout-container">
 
@@ -85,9 +85,9 @@
           <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="150" width="200" id="uploadedAvatar" />
       		 <div id="topPage" >
                     <div id="title">
-					<h5  name="empName"> 이름 : 김재호</h5>
-					<h5 name="email"> 이메일 : shslove22@nate.com </h5>
-					<h5 name= phone>전화번호 : 010-888-8888</h5>
+					<h5  name="empName"> 이름 : ${e.empName}</h5>
+					<h5 name="empId"> 이메일 : ${e.empId}</h5>
+					<h5 name= phone>전화번호 : ${e.phone}</h5>
                     </div>
 					</div>
         </div>
@@ -98,11 +98,11 @@
           <div class="row">
            		<div class="mb-3 col-md-6">
               <label for="lastName" class="form-label">내선 번호</label>
-              <input class="form-control" type="text" name="telNo"  value="02-888-8888" />
+              <input class="form-control" type="text" name="telNo"  value="${e.telNo}" />
             </div>
              <div class="mb-3 col-md-6">
               <label for="address" class="form-label">주소</label>
-              <input type="text" class="form-control" id="address" name="address" value="면목동" />
+              <input type="text" class="form-control" id="address" name="address" value="${e.address}" readonly/>
             </div>
                <div class="mb-3 col-md-6">
               <label for="deptName" class="form-label">부서</label>
@@ -124,12 +124,12 @@
 
             <div class="mb-3 col-md-6">
               <label for="organization" class="form-label">생년월일</label>
-              <input type="text" class="form-control" id="empReg" name="empReg" value="960305" />
+              <input type="text" class="form-control" id="empReg" name="empReg" value="${e.empReg}" readonly/>
             </div>
           
             <div class="mb-3 col-md-6">
               <label for="address" class="form-label">입사일</label>
-              <input type="text" class="form-control" id="hireDate" name="hireDate" value="1996-03-05" />
+              <input type="text" class="form-control" id="hireDate" name="hireDate" value="${e.hireDate}" readonly/>
             </div>
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
@@ -147,7 +147,7 @@
             </div>
            <div class="mb-3 col-md-6">
               <label for="organization" class="form-label">특이사항</label>
-              <input type="text" class="form-control" id="empNote" name="empNote" value="대통령 비서 출신" />
+              <input type="text" class="form-control" id="empNote" name="empNote" value=" ${e.empNote}" />
             </div> 
          
           </div>
@@ -183,7 +183,7 @@
   
     
     
-	<jsp:include page="bottom.jsp"/>
+	<jsp:include page="../common/bottom.jsp" />
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>
