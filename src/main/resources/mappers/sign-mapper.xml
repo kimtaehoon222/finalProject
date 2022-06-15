@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+	<mapper namespace="signMapper">
+	
+	<resultMap type="Sign" id="singResultSet">
+		<id property="signNo" column="SIGN_NO"/>
+		<result property="typeCode" column="TYPE_CODE"/>
+		<result property="signTitle" column="SING_TITLE"/>
+		<result property="empNo" column="EMP_NO"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="firstApprover" column="FIRST_APPROVER"/>
+		<result property="finalApprover" column="FINAL_APPROVER"/>
+		<result property="firstSignDate" column="FIRST_SIGN_DATE"/>
+		<result property="FINAL_SIGN_DATE" column="finalSignDate"/>
+		<result property="rejectDate" column="REJECT_DATE"/>
+		<result property="statusCode" column="STATUS_CODE"/>
+		<result property="status" column="STATUS"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+	</resultMap>
+	
+	</mapper>
