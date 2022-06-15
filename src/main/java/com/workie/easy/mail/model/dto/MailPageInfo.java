@@ -5,26 +5,26 @@ public class MailPageInfo {
 	private int currentPage;
 	private int listCount;
 
-	private int startPage;
-	private int endPage;
+	//private int startPage;
+	//private int endPage;
 	private int maxPage;
-	private int pageLimit;
+	//private int pageLimit;
 
-	private int boardLimit;
+	private int mailLimit;
 	
 	public MailPageInfo() {
 		
 	}
 	
-	public MailPageInfo(int currentPage, int listCount,int startPage, int endPage,  int maxPage, int pageLimit, int boardLimit) {
+	public MailPageInfo(int currentPage, int listCount, int maxPage, int mailLimit) {
 		super();
 		this.currentPage = currentPage;
 		this.listCount = listCount;
-		this.pageLimit = pageLimit;
+		//this.pageLimit = pageLimit;
 		this.maxPage = maxPage;
-		this.startPage = startPage;
-		this.endPage = endPage;
-		this.boardLimit = boardLimit;
+		//this.startPage = startPage;
+		//this.endPage = endPage;
+		this.mailLimit = mailLimit;
 	}
 
 	public int getCurrentPage() {
@@ -43,13 +43,13 @@ public class MailPageInfo {
 		this.listCount = listCount;
 	}
 
-	public int getPageLimit() {
+	/*public int getPageLimit() {
 		return pageLimit;
 	}
 
 	public void setPageLimit(int pageLimit) {
 		this.pageLimit = pageLimit;
-	}
+	}*/
 
 	public int getMaxPage() {
 		return maxPage;
@@ -59,7 +59,7 @@ public class MailPageInfo {
 		this.maxPage = maxPage;
 	}
 
-	public int getStartPage() {
+	/*public int getStartPage() {
 		return startPage;
 	}
 
@@ -73,20 +73,20 @@ public class MailPageInfo {
 
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
+	}*/
+
+	public int getMailLimit() {
+		return mailLimit;
 	}
 
-	public int getBoardLimit() {
-		return boardLimit;
-	}
-
-	public void setBoardLimit(int boardLimit) {
-		this.boardLimit = boardLimit;
+	public void setMailLimit(int mailLimit) {
+		this.mailLimit = mailLimit;
 	}
 
 	@Override
 	public String toString() {
-		return "PageInfo [currentPage=" + currentPage + ", listCount=" + listCount + ", pageLimit=" + pageLimit
-				+ ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage=" + endPage + ", boardLimit="
-				+ boardLimit + "]";
+		return "PageInfo [currentPage=" + currentPage + ", listCount=" + listCount + /*", pageLimit=" + pageLimit
+				+*/ ", maxPage=" + maxPage + /*", startPage=" + startPage + ", endPage=" + endPage + */ ", mailLimit="
+				+ mailLimit + "]";
 	}
 }

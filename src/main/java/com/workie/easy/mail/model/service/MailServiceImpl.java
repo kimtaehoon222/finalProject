@@ -1,13 +1,16 @@
 package com.workie.easy.mail.model.service;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.workie.easy.common.CommException;
-import com.workie.easy.common.model.dto.Attachment;
 import com.workie.easy.mail.model.dao.MailDao;
 import com.workie.easy.mail.model.dto.Mail;
+import com.workie.easy.mail.model.dto.MailPageInfo;
+import com.workie.easy.mail.model.dto.MailType;
 
 /*
 * <pre>
@@ -35,12 +38,40 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void insertMail(Mail mail) {
 		
-		System.out.println("서비스 mail 확인" + mail);
-		
 		int result = mailDao.insertMail(sqlSession, mail);
 
 		if(result < 0) {
 			throw new CommException("메일 전송에 실패하였습니다. 관리자에게 문의 바랍니다.");
 		}
+	}
+
+	@Override
+	public int selectMailListCount(MailType mailType) {
+
+		return mailDao.selectMailListCount(sqlSession, mailType);
+	}
+
+	@Override
+	public ArrayList<Mail> selectReceiveMailList(int toMail, MailPageInfo mpi) {
+
+		return mailDao.selectReceiveMailList(sqlSession, toMail, mpi);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSendMailList(int fromMail, MailPageInfo mpi) {
+
+		return mailDao.selectSendMailList(sqlSession, fromMail, mpi);
+	}
+
+	@Override
+	public ArrayList<Mail> selectReserveMailList(int fromMail, MailPageInfo mpi) {
+		
+		return mailDao.selectReserveMailList(sqlSession, fromMail, mpi);
+	}
+
+	@Override
+	public ArrayList<Mail> selectDeleteMailList(int toFromMail, MailPageInfo mpi) {
+		
+		return mailDao.selectDeleteMailList(sqlSession, toFromMail, mpi);
 	}
 }

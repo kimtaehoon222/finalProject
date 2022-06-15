@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>     
+    pageEncoding="UTF-8" import="com.workie.easy.employee.model.dto.Employee" %>     
+<%
+	String contextPath = request.getContextPath();
+	Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+%>     
 <!DOCTYPE html>
 <html>
 
@@ -41,7 +45,7 @@
     
        <!-- 메일 영역 시작 -->
        <div class="card mb-4">
-         <h5 class="card-header">김지수 jisu123@easy.co.kr</h5>
+         <h5 class="card-header"><%=loginEmp.getEmpName()%> <%=loginEmp.getEmpId()%>@easy.co.kr</h5>
          <!-- 보내는 사람 정보 영역 시작 -->
          <div class="card-body">
            <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -52,7 +56,7 @@
                  <!-- 내 정보 수정하기 페이지로 이동 -->
                  <span class="d-none d-sm-block">내 정보 수정하기</span>
                </label>
-               <p class="text-muted mb-0">부서 : 기획팀</p>
+               <p class="text-muted mb-0">부서 : <%=loginEmp.getDeptName() %></p>
                <p class="text-muted mb-0">내선번호 : 02-123-4567</p>
              </div>
            </div>
@@ -67,7 +71,7 @@
             <!-- form 시작 -->
            <form id="formAccountSettings" action="insertMail.do" method="post" enctype="multipart/form-data" onsubmit="return insertMailValidate();">
              <!-- 메일 정보 영역 시작 -->
-             <input type="hidden" name="fromMail" value="5">
+             <input type="hidden" name="fromMail" value="<%= loginEmp.getEmpNo()%>">
              <div class="row">
                <div class="mb-3 col-md-11">
                  <label for="to" class="form-label">받는사람</label>
@@ -236,6 +240,7 @@
             var v = $(this).val();
             value.push(v);
          })
+         
          $('#ccMail').val(value);
          
       }

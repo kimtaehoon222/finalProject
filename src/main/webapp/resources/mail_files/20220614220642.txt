@@ -1,0 +1,78 @@
+--- PowerShell
+docker build -t test5 
+
+docker run -p 82:8090 -it springio/gs-spring-boot-docker
+http://localhost:82/
+
+도커 허브 리파짓토리로 이동?
+docker image tag test5:latest jiisuu/test5
+docker push jiisuu/test5
+
+docker에서 LOCAL 말고 REMOTE REPOSITORIES에 해당 이미지가 있는 지 확인하고 진
+
+--- IntelliJ
+1. 프로젝트에서 우측 BootJar 더블클릭 
+2. 프로젝트의 libs 디렉토리에 .jar 파일 생성된 것 확인 
+3. Dockerfile 생성(아래는 파일 내용)
+FROM openjdk:11-jre-slim
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"] 
+
+--- PowerShell
+1. 생성된 jar 파일 경로 복사해놓기 
+2. cd jar 파일 경로로 이동 
+cd C:\FWORK\boot2\build\libs
+3. jar 파일 읽기 
+java -jar boot2-0.0.1-SNAPSHOT.jar
+4. 해당 jar 파일에 해당하는 Dockerfile이 있는 경로 빌드
+docker build C:\FWORK\boot2
+
+--- putty & puttyGen 
+puttyGen 실행 
+1. load 클릭 -> ppk 열기 -> ok 
+2. save private key 
+
+여기서부터는 putty 실행 
+1. SSH -> AUTH -> Browse 에서 ppk 열기 
+2. Session -> Host Name 란에 AWS 인스턴스에서 부여한 퍼블릭 IPv4 주소 입력
+3. Saved Sessions -> 세션이름 생성(탄력적 IP로 등록하지 않은 경우 실행시마다 생성해야 함) 
+4. 3번에서 생성한 세션 이름 Save 후 더블 클릭 
+
+--- 프로그램을 돌리기 위한 명령 프롬프트 켜질 것 
+1. ubuntu
+2. sudo apt-get update && sudo apt-get upgrade
+3. sudo apt-get install openjdk-11-jdk
+4. java -version
+5. javac -version
+
+6. vim ~/.bashrc
+
+7. 컬러풀한 화면 나오면 키보드 방향키로 맨 하단으로 이동(마우스 옮기지 말 것)
+  i 입력 후 엔터 치면 INSERT 모드로 변환되는 것 확인 후 fi 바깥(밑)에 아래 두 코드 입력
+  export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+  export PATH=$PATH:$JAVA_HOME/bin
+
+8. 여기서 esc 로 벗어난다음 아래 명령어(:wq) 직접입력(복사금지)
+   :wq
+
+9. source ~/.bashrc
+10. echo $JAVA_HOME
+11. curl -fsSL https://get.docker.com/ | sudo sh
+12. sudo usermod -aG docker $USER
+13. sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+14. sudo chmod +x /usr/local/bin/docker-compose
+15. docker version
+16. docker-compose version
+
+아래 코드는 오류난 후 재 실행시에만 사용하면 됨
+(sudo reboot)
+
+17. docker login 
+여기서 login Sucess 되는지 잘 보고 다음 단계로 넘어갈 것!
+
+18. sudo docker pull jiisuu/test5
+19. docker run --name my_second_spring-boot -p 80:8090 jiisuu/test5
+
+20. 브라우저 url에서 AWS 인스턴스에서 부여한 퍼블릭 IPv4 주소 입력 후 실행되는지 확인 
+    (putty 를 끄면 세션이 만료되므로 서버 접속이 안된다.)
