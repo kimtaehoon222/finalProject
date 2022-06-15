@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,7 +122,7 @@
 		</button>
 	</div>
 	
-<!-- submodal 1 품의 -->		
+<!-- submodal 1 품의 및 결재선 지정 -->		
 <div class="modal" tabindex="-1" id="submodal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -135,40 +137,43 @@
       	<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
 
 		<hr>
+		<c:forEach items="${ list }" ver="s">
 		
-        <p style="color:rgb(124, 127, 251)"><b>총무팀</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
 			
-        <p>홍길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+       <p> <input type="checkbox"name="ch">&nbsp홍길동 과장 &nbsp
+           <input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
+           <input type="checkbox"name="ch">&nbsp홍길금 부장 &nbsp </p>
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>인사팀</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
           
-           <p>청길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+           <p><input type="checkbox"name="ch">&nbsp청길동 과장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp청길금 부장 &nbsp</p>
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>기획팀</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
           	
-          	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+          	<p><input type="checkbox"name="ch">&nbsp고길동 과장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp고길은 차장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp고길금 부장 &nbsp</p>
+         	
+          <hr>
           
-          <hr>	
+          </c:forEach>	
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">저장</button> <!-- 저장 누르면 다시 품의로 이동되도록 설정 -->
       </div>
     </div>
   </div>
 </div>
 
-<!-- submodal 2 품의-->		
+<!-- submodal 2 품의 수신처 지정-->		
 <div class="modal" tabindex="-1" id="submodal2">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -184,7 +189,7 @@
 
 		<hr>
 		
-        <p style="color:rgb(124, 127, 251)"><b>총무팀</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
 			
         <p>홍길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp홍길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -192,7 +197,7 @@
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>인사팀</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
           
            <p>청길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp청길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -200,7 +205,7 @@
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>기획팀</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
           	
           	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -209,7 +214,7 @@
           <hr>	
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">저장</button>
       </div>
     </div>
@@ -217,7 +222,7 @@
 </div>
 
 
-<!-- submodal 3 협조 -->		
+<!-- submodal3 협조 결재선 지정 -->		
 <div class="modal" tabindex="-1" id="submodal3">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -233,32 +238,32 @@
 
 		<hr>
 		
-        <p style="color:rgb(124, 127, 251)"><b>총무팀</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
 			
-        <p>홍길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+        <p><input type="checkbox"name="ch">&nbsp홍길동 과장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp홍길금 부장 &nbsp</p>
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>인사팀</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
           
-           <p>청길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+           <p><input type="checkbox"name="ch">&nbsp청길동 과장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp청길금 부장 &nbsp</p>
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>기획팀</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
           	
-          	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+          	<p><input type="checkbox"name="ch">&nbsp고길동 과장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp고길은 차장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp고길금 부장 &nbsp</p>
           
           <hr>	
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">저장</button> <!-- 저장 누르면 다시 협조로 이동되도록 설정 -->
       </div>
     </div>
@@ -282,23 +287,23 @@
 
 		<hr>
 		
-        <p style="color:rgb(124, 127, 251)"><b>총무팀</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
 			
-        <p>홍길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+        <p><input type="checkbox"name="ch">홍길동 과장 &nbsp
+         	<input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
+         	<input type="checkbox"name="ch"><p>&nbsp홍길금 부장 &nbsp
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>인사팀</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
           
-           <p>청길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길금 부장 &nbsp<input type="checkbox"name="ch"><p>
+           <input type="checkbox"name="ch"><p>청길동 과장 &nbsp
+           <input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
+           <input type="checkbox"name="ch">&nbsp청길금 부장 &nbsp<p>
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>기획팀</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
           	
           	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -307,7 +312,7 @@
           <hr>	
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">저장</button> <!-- 저장 누르면 다시 휴가원으로 이동되도록 설정 -->
       </div>
     </div>
@@ -398,7 +403,7 @@
 
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
 						<button type="button" class="btn btn-primary">상신</button>
 					</div>
@@ -493,7 +498,7 @@
 
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
 						<button type="button" class="btn btn-primary">상신</button>
 					</div>
@@ -593,7 +598,7 @@
 
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
 						<button type="button" class="btn btn-primary">상신</button>
 					</div>
