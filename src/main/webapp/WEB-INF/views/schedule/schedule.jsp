@@ -60,7 +60,7 @@
 			      </ul>
 			      <!-------------------모달------------------->
 			      <!-- Modal -->
-			      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="schedule.html" method="POST">
+			      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="skedInsert.do"  onsubmit="sked_submit()"method="POST">
 			          <div class="modal-dialog modal-l" role="document">
 			          <div class="modal-content">
 			              <!-- 모달 헤더 -->

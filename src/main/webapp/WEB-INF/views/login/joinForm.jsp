@@ -163,7 +163,7 @@ data-template="vertical-menu-template-free"
                     <!--로그인, 회원가입 버튼-->
                     <div class="join-buttons">
                         <button class="btn rounded-pill btn-primary" type="submit">Submit</button>
-                        <button class="btn rounded-pill btn-secondary" type="button">Reset</button>
+                        <button class="btn rounded-pill btn-secondary" type="reset">Reset</button>
                     </div>
                 </form>
             </div>
