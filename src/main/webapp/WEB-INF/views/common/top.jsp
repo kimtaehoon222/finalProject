@@ -272,22 +272,22 @@
                  <a href="mailHome.do" class="btn btn-sm btn-outline-primary" id="center" style="margin:10px; padding:5px">메일 홈 바로가기 </a>
                 </li>              
                 <li class="menu-item">
-                  <a href="receiveMailList.do" class="menu-link">
+                  <a href="receiveMailList.do?receive=r" class="menu-link">
                     <div data-i18n="Without menu">받은 메일함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="sendMailList.do" class="menu-link">
+                  <a href="sendMailList.do?send=s" class="menu-link">
                     <div data-i18n="Without navbar">보낸 메일함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="reserveMailList.do" class="menu-link">
+                  <a href="reserveMailList.do?reserve=re" class="menu-link">
                     <div data-i18n="Container">예약 메일함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="deleteMailList.do" class="menu-link">
+                  <a href="deleteMailList.do?delete=d" class="menu-link">
                     <div data-i18n="Fluid">휴지통</div>
                   </a>
                 </li>

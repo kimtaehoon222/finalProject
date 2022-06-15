@@ -40,4 +40,10 @@ public class Mail {
 	private String originName;
 	private String changeName;
 	private String filePath;
+	
+	/* join시 사용하는 필드*/
+	private String typeName;
+	private String empName;
+	private String stateName;
+	
 }

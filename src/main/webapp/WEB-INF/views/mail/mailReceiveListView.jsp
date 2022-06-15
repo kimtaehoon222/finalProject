@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>받은 메일함</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,7 +13,7 @@
 	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/${pageContext.request.contextPath}/resources/kjs_assets/css/bootstrap.css">
+	href="${pageContext.request.contextPath}/resources/kjs_assets/css/bootstrap.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/kjs_assets/css/pages/email.css">
 <link rel="stylesheet"
@@ -64,21 +65,21 @@
 								<div class="sidebar-menu-list ps">
 									<!-- 메일 사이드바 시작 -->
 									<div class="list-group list-group-messages">
-										<a href="receiveMailList.do" class="list-group-item">
+										<a href="receiveMailList.do?receive=r" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
                                         		</svg>
 											</div> 받은 메일함
 										</a> 
-										<a href="sendMailList.do" class="list-group-item">
+										<a href="sendMailList.do?send=s" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#archive" />
                                        			</svg>
 											</div> 보낸 메일함
 										</a> 
-										<a href="reserveMailList.do" class="list-group-item">
+										<a href="reserveMailList.do?reserve=re" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em"
 													fill="currentColor">
@@ -86,7 +87,7 @@
                                         		</svg>
 											</div> 예약 메일함 
 										</a> 
-										<a href="deleteMailList.do" class="list-group-item">
+										<a href="deleteMailList.do?delete=d" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
@@ -136,8 +137,7 @@
 															data-toggle="tooltip">
 															<span class="fonticon-wrap"> <svg class="bi"
 																	width="1.5em" height="1.5em" fill="currentColor">
-                                                            <use
-																		xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
+                                                            <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
                                                         </svg>
 															</span>
 														</button>
@@ -166,24 +166,43 @@
 												</div>
 												<!-- 검색창 끝 -->
 
-												<!-- 페이징 처리 -->
-												<span class="d-none d-sm-block">1-10 of 653</span>
-												<button
-													class="btn btn-icon email-pagination-prev d-none d-sm-block">
-													<svg class="bi" width="1.5em" height="1.5em"
-														fill="currentColor">
-                                                <use
-															xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-left" />
-                                            </svg>
-												</button>
-												<button
-													class="btn btn-icon email-pagination-next d-none d-sm-block">
-													<svg class="bi" width="1.5em" height="1.5em"
-														fill="currentColor">
-                                                <use
-															xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-right" />
-                                            </svg>
-												</button>
+												<!-- 페이징 처리 시작 -->
+												<span class="d-none d-sm-block">${ mpi.currentPage*5-4 }-${ mpi.currentPage*5 } of ${ mpi.listCount } </span>
+												<c:choose>
+													<c:when test="${mpi.currentPage ne 1 }">
+													<a class="btn btn-icon btn-primary email-pagination-prev d-none d-sm-block" 
+													   href="receiveMailList.do?currentPage=${ mpi.currentPage-1 }">
+														<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+	                                                		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-left" />
+	                                            		</svg>
+													</a>
+													</c:when>
+													<c:otherwise>
+														<a class="btn btn-icon email-pagination-prev d-none d-sm-block" hidden="true">
+															<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+	                                                			<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-left" />
+	                                            			</svg>
+														</a>
+													</c:otherwise>
+												</c:choose>
+												<c:choose>
+													<c:when test="${ mpi.currentPage ne mpi.maxPage && mpi.listCount ne 0}">
+														<a class="btn btn-icon btn-primary email-pagination-next d-none d-sm-block"
+														    href="receiveMailList.do?currentPage=${ mpi.currentPage+1 }">
+															<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+		                                                		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-right" />
+		                                           			</svg>
+														</a>
+	                                           		</c:when>	
+	                                           		<c:otherwise>
+	                                           			<a class="btn btn-icon email-pagination-next d-none d-sm-block" hidden="true">
+															<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+		                                                		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-right" />
+		                                           			</svg>
+														</a>
+	                                           		</c:otherwise>
+												</c:choose>
+												<!-- 페이징 처리 끝 -->
 
 											</div>
 										</div>
@@ -191,9 +210,11 @@
 
 										<!-- 메일 리스트 하단 시작 -->
 										<div class="email-user-list list-group ps ps--active-y">
+											<c:if test="${ !empty list  }">
 											<!-- 메일 리스트 시작 -->
 											<ul class="users-list-wrapper media-list">
 												<!-- 메일 1개 시작 -->
+												<c:forEach items="${ list }" var="mail">
 												<li class="media mail-read">
 													<!-- 체크박스 및 중요표시 -->
 													<div class="user-action">
@@ -202,191 +223,67 @@
 																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
 															</div>
 														</div>
-														<span class="favorite text-danger">중요</span>
-													</div> <!-- 보낸 사람 표시 -->
+														<c:if test="${ mail.typeName == '중요' }">
+															<span class="favorite text-danger">${ mail.typeName }</span>
+														</c:if>
+														<c:if test="${ mail.typeName == '일반' }">
+															<span class="favorite">${ mail.typeName }</span>
+														</c:if>														
+													</div> 
+													<!-- 받는 사람 이미지 -->
 													<div class="pr-50">
 														<div class="avatar">
-															<img
-																src="${pageContext.request.contextPath}/resources/kjs_assets/images/faces/1.jpg"
-																alt="avtar img holder">
+															<img src="${pageContext.request.contextPath}/resources/kjs_assets/images/faces/1.jpg" alt="avtar img holder">
 														</div>
-													</div> <!-- 메일 내용 표시 -->
+													</div>
+													<!-- 받는 사람 이름 -->
+													<div class="">
+														${ mail.empName }
+													</div> 
+													<!-- 메일 내용 표시 -->
 													<div class="media-body">
 														<!-- 내용의 상단 -->
 														<div class="user-details">
 															<!-- 메일 제목 -->
 															<div class="mail-items">
-																<span class="list-group-item-text text-truncate">안녕하세요.
-																	신입사원 전재은 입니다. </span>
+																<span class="list-group-item-text text-truncate">${ mail.title }</span>
 															</div>
 															<!-- 메일 보낸 날짜 및 시간 -->
 															<div class="mail-meta-item">
 																<span class="float-right"> <span
-																	class="mail-date">2022-06-09 4:14 AM</span>
+																	class="mail-date">${ mail.sendDate }</span>
 																</span>
 															</div>
 														</div>
 														<!-- 내용의 하단 -->
 														<div class="mail-message">
 															<!-- 메일 내용 -->
-															<p class="list-group-item-text truncate mb-0">앞으로 잘
-																부탁드립니다. ^^</p>
+															<p class="list-group-item-text truncate mb-0">${ mail.content }</p>
 															<!-- 첨부파일 표시 -->
 															<div class="mail-meta-item">
 																<span class="float-right d-flex align-items-center">
-																	<i class="bx bx-paperclip me-3"></i>
+																	<c:if test="${ !empty mail.changeName }">
+																		<i class="bx bx-paperclip me-3"></i>
+																	</c:if>
+																	<c:if test="${ empty mail.changeName }">
+																		<i class="">&nbsp;</i>
+																	</c:if>
 																</span>
 															</div>
 														</div>
 													</div>
 												</li>
+												</c:forEach>
 												<!-- 메일 1개 끝 -->
-												<!-- 메일 1개 시작 -->
-												<li class="media mail-read">
-													<!-- 체크박스 및 중요표시 -->
-													<div class="user-action">
-														<div class="checkbox-con me-3">
-															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
-															</div>
-														</div>
-														<span class="favorite text-Light">일반</span>
-													</div> <!-- 보낸 사람 표시 -->
-													<div class="pr-50">
-														<div class="avatar">
-															<img
-																src="${pageContext.request.contextPath}/resources/kjs_assets/images/faces/1.jpg"
-																alt="avtar img holder">
-														</div>
-													</div> <!-- 메일 내용 표시 -->
-													<div class="media-body">
-														<!-- 내용의 상단 -->
-														<div class="user-details">
-															<!-- 메일 제목 -->
-															<div class="mail-items">
-																<span class="list-group-item-text text-truncate">안녕하세요.
-																	신입사원 김태훈 입니다. </span>
-															</div>
-															<!-- 메일 보낸 날짜 및 시간 -->
-															<div class="mail-meta-item">
-																<span class="float-right"> <span
-																	class="mail-date">2022-06-08 5:14 PM</span>
-																</span>
-															</div>
-														</div>
-														<!-- 내용의 하단 -->
-														<div class="mail-message">
-															<!-- 메일 내용 -->
-															<p class="list-group-item-text truncate mb-0">앞으로 잘
-																부탁드립니다. ^^</p>
-															<!-- 첨부파일 표시 -->
-															<div class="mail-meta-item">
-																<span class="float-right d-flex align-items-center">
-																	<!-- <i class="bx bx-paperclip me-3"></i> -->
-																</span>
-															</div>
-														</div>
-													</div>
-												</li>
-												<!-- 메일 1개 끝 -->
-												<!-- 메일 1개 시작 -->
-												<li class="media mail-read">
-													<!-- 체크박스 및 중요표시 -->
-													<div class="user-action">
-														<div class="checkbox-con me-3">
-															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
-															</div>
-														</div>
-														<span class="favorite text-Light">일반</span>
-													</div> <!-- 보낸 사람 표시 -->
-													<div class="pr-50">
-														<div class="avatar">
-															<img
-																src="${pageContext.request.contextPath}/resources/kjs_assets/images/faces/1.jpg"
-																alt="avtar img holder">
-														</div>
-													</div> <!-- 메일 내용 표시 -->
-													<div class="media-body">
-														<!-- 내용의 상단 -->
-														<div class="user-details">
-															<!-- 메일 제목 -->
-															<div class="mail-items">
-																<span class="list-group-item-text text-truncate">안녕하세요.
-																	신입사원 임현빈 입니다. </span>
-															</div>
-															<!-- 메일 보낸 날짜 및 시간 -->
-															<div class="mail-meta-item">
-																<span class="float-right"> <span
-																	class="mail-date">2022-06-03 2:14 AM</span>
-																</span>
-															</div>
-														</div>
-														<!-- 내용의 하단 -->
-														<div class="mail-message">
-															<!-- 메일 내용 -->
-															<p class="list-group-item-text truncate mb-0">앞으로 잘
-																부탁드립니다. ^^</p>
-															<!-- 첨부파일 표시 -->
-															<div class="mail-meta-item">
-																<span class="float-right d-flex align-items-center">
-																	<i class="bx bx-paperclip me-3"></i>
-																</span>
-															</div>
-														</div>
-													</div>
-												</li>
-												<!-- 메일 1개 끝 -->
-												<!-- 메일 1개 시작 -->
-												<li class="media mail-read">
-													<!-- 체크박스 및 중요표시 -->
-													<div class="user-action">
-														<div class="checkbox-con me-3">
-															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
-															</div>
-														</div>
-														<span class="favorite text-danger">중요</span>
-													</div> <!-- 보낸 사람 표시 -->
-													<div class="pr-50">
-														<div class="avatar">
-															<img
-																src="${pageContext.request.contextPath}/resources/kjs_assets/images/faces/1.jpg"
-																alt="avtar img holder">
-														</div>
-													</div> <!-- 메일 내용 표시 -->
-													<div class="media-body">
-														<!-- 내용의 상단 -->
-														<div class="user-details">
-															<!-- 메일 제목 -->
-															<div class="mail-items">
-																<span class="list-group-item-text text-truncate">안녕하세요.
-																	신입사원 김재호 입니다. </span>
-															</div>
-															<!-- 메일 보낸 날짜 및 시간 -->
-															<div class="mail-meta-item">
-																<span class="float-right"> <span
-																	class="mail-date">2022-06-01 3:14 AM</span>
-																</span>
-															</div>
-														</div>
-														<!-- 내용의 하단 -->
-														<div class="mail-message">
-															<!-- 메일 내용 -->
-															<p class="list-group-item-text truncate mb-0">앞으로 잘
-																부탁드립니다. ^^</p>
-															<!-- 첨부파일 표시 -->
-															<div class="mail-meta-item">
-																<span class="float-right d-flex align-items-center">
-																	<!-- <i class="bx bx-paperclip me-3"></i> -->
-																</span>
-															</div>
-														</div>
-													</div>
-												</li>
-												<!-- 메일 1개 끝 -->
+												
 											</ul>
 											<!-- 메일 리스트 끝 -->
+											</c:if>
+											<c:if test="${ empty list  }">
+												<ul class="users-list-wrapper media-list">
+													<li class="media mail-read">조회 가능한 메일이 없습니다.</li>
+												</ul>
+											</c:if>
 
 											<!-- no result when nothing to show on list -->
 											<div class="no-results">

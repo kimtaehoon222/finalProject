@@ -2,19 +2,134 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 
+	<!-- 메일 전송(등록) -->
 	<insert id="insertMail" parameterType="Mail">
 		INSERT ALL
-      	 INTO MAIL
-    	    VALUES (SEQ_ENO.NEXTVAL, #{reserveYn}, DEFAULT, NVL(TO_DATE(#{sendDate}, 'YYYY-MM-DD'), SYSDATE) 
-    	    	 , #{cancelDate}, DEFAULT, DEFAULT, DEFAULT, #{typeNo}, DEFAULT)
-    INTO MAIL_INFO
-   			VALUES (SEQ_ENO.CURRVAL, #{title}, #{content}, #{toMail}, #{fromMail}, #{ccMail})       
-	<if test="originName != null">
-	INTO ATTACHMENT
-   			VALUES (SEQ_FNO.NEXTVAL, SEQ_ENO.CURRVAL, 'M', #{originName}, #{changeName}, #{filePath}, SYSDATE, DEFAULT)       
-	</if>
-		    SELECT * 
+      	  INTO EASYWORK.MAIL
+    	VALUES (SEQ_ENO.NEXTVAL, #{reserveYn}, DEFAULT, NVL(TO_DATE(#{sendDate}, 'YYYY-MM-DD'), SYSDATE) 
+    	     , #{cancelDate}, DEFAULT, DEFAULT, DEFAULT, #{typeNo}, DEFAULT)
+          INTO EASYWORK.MAIL_INFO
+   		VALUES (SEQ_ENO.CURRVAL, #{title}, #{content}, #{toMail}, #{fromMail}, #{ccMail})       
+		<if test="originName != null">
+	      INTO EASYWORK.ATTACHMENT
+   		VALUES (SEQ_FNO.NEXTVAL, SEQ_ENO.CURRVAL, 'M', #{originName}, #{changeName}, #{filePath}, SYSDATE, DEFAULT)       
+		</if>
+		SELECT * 
 	      FROM DUAL
 	</insert>
 	
+	<!-- 메일 리스트 개수 조회 -->
+	<select id="selectMailListCount" parameterType="MailType" resultType="_int">
+		SELECT COUNT(*)
+		  FROM EASYWORK.MAIL_INFO A
+     LEFT JOIN EASYWORK.MAIL B ON A.MAIL_NO = B.MAIL_NO
+		 <trim prefix="WHERE" prefixOverrides="AND|OR">
+		 	<choose>
+		 		<when test="receive != null">
+		 			A.TO_MAIL = #{mailEmpNo} 
+		 		</when> 
+		 		<when test="send != null">
+		 			A.FROM_MAIL = #{mailEmpNo} 
+		 			AND B.RESERVE_YN = 'N'
+		 		</when>
+		 		<when test="reserve != null">
+		 			A.FROM_MAIL = #{mailEmpNo} 
+		 			AND B.RESERVE_YN = 'Y'
+		 			AND B.STATE_CODE IN('EP', 'CN') 
+		 		</when>
+		 		<when test="delete != null">
+		 			(A.TO_MAIL = #{mailEmpNo} OR A.FROM_MAIL = #{mailEmpNo})
+		 		</when>
+		 	</choose>
+		 	<choose>
+		 		<when test="delete != null">
+		 			AND B.STATUS = 'N'
+		 		</when>
+		 		<otherwise>
+		 			AND B.STATUS = 'Y'
+		 		</otherwise>
+		 	</choose>
+		 </trim>
+	</select>
+	
+   <!-- 메일 리스트 개수 조회
+   <select id="selectReceiveMailListCount" parameterType="_int" resultType="_int">
+      SELECT COUNT(*)
+        FROM EASYWORK.MAIL_INFO A
+        JOIN EASYWORK.MAIL B ON A.MAIL_NO = B.MAIL_NO
+       WHERE A.TO_MAIL = #{toMail} 
+         AND B.STATUS = 'Y'
+   </select> -->
+	
+	<resultMap type="Mail" id="mailResultSet">
+		<id property="mailNo" column="MAIL_NO"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="empName" column="EMP_NAME"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="stateCode" column="STATE_CODE"/>
+		<result property="stateName" column="STATE_NAME"/>
+	</resultMap>
+	
+	<!-- 메일 리스트 조회(받은 메일함) -->
+	<select id="selectReceiveMailList" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+		  FROM EASYWORK.MAIL_INFO A
+     LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.FROM_MAIL AND B.ENT_YN = 'Y'
+     LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
+     LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
+     LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+         WHERE A.TO_MAIL = #{toMail} 
+           AND C.STATUS = 'Y'
+      ORDER BY C.SEND_DATE DESC
+	</select>
+	
+	<!-- 메일 리스트 조회(보낸 메일함) -->
+	<select id="selectSendMailList" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
+		     , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE
+		     , E.CHANGE_NAME, DECODE(C.RECEIVE_CHECK, 'Y', '읽음', '읽지않음') AS STATE_CODE
+		  FROM EASYWORK.MAIL_INFO A
+     LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
+     LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO
+     LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
+     LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+	  	 WHERE A.FROM_MAIL = #{fromMail}
+		   AND C.STATE_CODE = 'FN'
+		   AND C.STATUS = 'Y'
+		   AND C.RESERVE_YN = 'N'
+	  ORDER BY C.SEND_DATE DESC
+	</select>
+	
+	<!-- 메일 리스트 조회(예약 메일함) -->
+	<select id="selectReserveMailList" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
+     		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+     		 , C.STATE_CODE, F.STATE_NAME
+		  FROM EASYWORK.MAIL_INFO A
+	 LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
+	 LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO
+	 LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
+	 LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+	 LEFT JOIN EASYWORK.MAIL_STATE F ON F.STATE_CODE = C.STATE_CODE
+	     WHERE A.FROM_MAIL = #{fromMail}
+	       AND C.RESERVE_YN = 'Y'
+	       AND C.STATE_CODE IN('EP', 'CN') 
+	       AND C.STATUS = 'Y'
+	  ORDER BY C.SEND_DATE DESC
+	</select>
+	
+	<!-- 메일 리스트 조회(휴지통) -->
+	<select id="selectDeleteMailList" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.MAIL_NO, DECODE(A.TO_MAIL, #{toFromMail}, '수신', '발신') AS STATE_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+		  FROM EASYWORK.MAIL_INFO A
+	 LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
+	 LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
+	 LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+	     WHERE C.STATUS = 'N'
+	       AND (A.FROM_MAIL = #{toFromMail} OR A.TO_MAIL = #{toFromMail})
+	  ORDER BY C.SEND_DATE DESC
+	</select>
 </mapper>

@@ -16,7 +16,7 @@
 		<typeAlias type="com.workie.easy.work.model.dto.WorkSInfo" alias="WorkSInfo"/>
 		<typeAlias type="com.workie.easy.work.model.dto.VacationInfo" alias="VacationInfo"/>
 		<typeAlias type="com.workie.easy.work.model.dto.EmpVacation" alias="EmpVacation"/>
-		
+	    <typeAlias type="com.workie.easy.mail.model.dto.MailType" alias="MailType"/>
 		<typeAlias type="com.workie.easy.mail.model.dto.Mail" alias="Mail"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPageInfo" alias="MailPageInfo"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPagination" alias="MailPagination"/>

@@ -2,24 +2,27 @@ package com.workie.easy.mail.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workie.easy.common.CommException;
-import com.workie.easy.common.model.dto.Attachment;
+import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.mail.model.dto.Mail;
+import com.workie.easy.mail.model.dto.MailPageInfo;
+import com.workie.easy.mail.model.dto.MailPagination;
+import com.workie.easy.mail.model.dto.MailType;
 import com.workie.easy.mail.model.service.MailService;
 
 /*
@@ -59,8 +62,6 @@ public class MailController {
 	@RequestMapping("insertMail.do")
 	public String insertMail(@ModelAttribute Mail mail, HttpServletRequest request, 
 							 @RequestParam(name="uploadFile", required=false) MultipartFile file) {
-		
-		System.out.println("컨트롤러 mail 확인" + mail);
 		
 		/* 파일 첨부여부 확인 */
 		if(!file.getOriginalFilename().equals("")) {
@@ -108,29 +109,111 @@ public class MailController {
 			file.transferTo(new File(savePath+changeName));
 		} catch (IllegalStateException | IOException e) { 
 			e.printStackTrace();
-			throw new CommException("file Upload Error");
+			throw new CommException("파일 업로드에 실패 하였습니다. 관리자에게 문의 바랍니다.");
 		}
 		
 		return changeName; 
 	}
 	
+	/* 받은 메일함 조회*/ 
 	@RequestMapping("receiveMailList.do")
-	public String selectReceiveMailList() {
+	public String selectReceiveMailList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage, 
+										@RequestParam(value="receive", defaultValue="r") String receive, Model model, HttpSession session) {
+
+		/* 쿼리에서 받는사람 기준이 될 변수 */
+		int toMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		/* 해다 요청의 타입을 결정할 dto */
+		MailType mailType = new MailType();
+		mailType.setReceive(receive);
+		mailType.setMailEmpNo(toMail);
+
+		/* 페이징 처리를 위한 받은 메일함 개수 조회 */
+		int listCount = mailService.selectMailListCount(mailType);
+
+		int mailLimit = 5;
+		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
+		
+		/* 화면에 뿌려줄 리스트 조회 */
+		ArrayList<Mail> list = mailService.selectReceiveMailList(toMail, mpi); 
+		
+		model.addAttribute("mpi", mpi);
+		model.addAttribute("list", list);
+		
 		return "mail/mailReceiveListView";
 	}
 	
+	/* 보낸 메일함 조회*/ 
 	@RequestMapping("sendMailList.do")
-	public String selectSendMailList() {
+	public String selectSendMailList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage, 
+									 @RequestParam(value="send", defaultValue="s") String send, Model model, HttpSession session) {
+		
+		/* 쿼리에서 보낸사람 기준이 될 변수 */
+		int fromMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		MailType mailType = new MailType();
+		mailType.setSend(send);
+		mailType.setMailEmpNo(fromMail);
+		
+		int listCount = mailService.selectMailListCount(mailType);
+		
+		int mailLimit = 5;
+		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
+
+		/* 화면에 뿌려줄 리스트 조회 */
+		ArrayList<Mail> list = mailService.selectSendMailList(fromMail, mpi); 
+		
+		model.addAttribute("mpi", mpi);
+		model.addAttribute("list", list);
+		
 		return "mail/mailSendListView"; 
 	}
 
+	/* 예약 메일함 조회*/
 	@RequestMapping("reserveMailList.do")
-	public String selectReserveMailList() {
+	public String selectReserveMailList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage, 
+			 							@RequestParam(value="reserve", defaultValue="re") String reserve, Model model, HttpSession session) {
+		
+		int fromMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		MailType mailType = new MailType();
+		mailType.setReserve(reserve);
+		mailType.setMailEmpNo(fromMail);
+		
+		int listCount = mailService.selectMailListCount(mailType);
+		
+		int mailLimit = 5;
+		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
+
+		ArrayList<Mail> list = mailService.selectReserveMailList(fromMail, mpi); 
+		
+		model.addAttribute("mpi", mpi);
+		model.addAttribute("list", list);
+		
 		return "mail/mailReserveListView"; 
 	}
 
+	/* 삭제 메일함(휴지통) 조회*/
 	@RequestMapping("deleteMailList.do")
-	public String selectDeleteMailList() {
+	public String selectDeleteMailList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage, 
+									   @RequestParam(value="delete", defaultValue="d") String delete, Model model, HttpSession session) {
+		
+		int toFromMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		MailType mailType = new MailType();
+		mailType.setDelete(delete);
+		mailType.setMailEmpNo(toFromMail);
+		
+		int listCount = mailService.selectMailListCount(mailType);
+		
+		int mailLimit = 5;
+		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
+
+		ArrayList<Mail> list = mailService.selectDeleteMailList(toFromMail, mpi); 
+		
+		model.addAttribute("mpi", mpi);
+		model.addAttribute("list", list);
+		
 		return "mail/mailDeleteListView"; 
 	}
 	
