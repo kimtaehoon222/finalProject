@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.workie.easy.work.model.dto.VacationInfo" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +40,7 @@ a {
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
+<body onload="printClock()">
 	<jsp:include page="../common/top.jsp"/>
  
 
@@ -60,7 +63,9 @@ a {
 			<!-- 영역 :왼쪽 근태관리 사이드 바  ,  오른쪽 근태 상세 정보 -->
 			<section class="section content-area-wrapper">
 			<div>
-				<jsp:include page="../work/workSidebarView.jsp"/>
+				<jsp:include page="../work/workSidebarView.jsp" >
+					<jsp:param value="${w}" name="w"/>
+				</jsp:include>
 			
 			</div>
 
@@ -211,7 +216,7 @@ a {
 	
 
 
-	
+
 	
 	<jsp:include page="../common/bottom.jsp"/>
 </body>

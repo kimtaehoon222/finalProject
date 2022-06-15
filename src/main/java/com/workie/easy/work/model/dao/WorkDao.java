@@ -1,5 +1,7 @@
 package com.workie.easy.work.model.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +29,11 @@ public class WorkDao {
 	public int insertWorkStatus(SqlSession sqlSession, WorkSInfo wsi) {
 	
 		return sqlSession.insert("workMapper.insertWorkStatus", wsi);
+	}
+
+	public ArrayList<Work> selectWorkList(SqlSession sqlSession, Work work) {
+		
+		return (ArrayList)sqlSession.selectList("workMapper.selectWorkList", work);
 	}
 
 }

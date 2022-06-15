@@ -3,12 +3,13 @@
 <mapper namespace="workMapper">
 
 	<resultMap type="Work" id="workResultSet">
-		<id property="wNo" column="WORK_NO"/>
+		<id property="workNo" column="WORK_NO"/>
 		<result property="empNo" column="EMP_NO"/>
 		<result property="workDate" column="WORK_DATE"/>
 		<result property="startTime" column="START_TIME"/>
 		<result property="endTime" column="END_TIME"/>
 		<result property="totalTime" column="TOTAL_TIME"/>
+		<result property="strDate" column="STR_DATE"/>
 	</resultMap>
 	
 	<resultMap type="WorkSInfo" id="workSInfoResultSet">
@@ -29,14 +30,14 @@
 	
 	<select id="selectWork" parameterType="_int" resultMap="workResultSet">
 		SELECT
-			  W_NO
+			  WORK_NO
 			, EMP_NO
-			, W_DATE
-			, SUBSTR(START_TIME, 11, LENGTH(START_TIME)) START_TIME,
+			, WORK_DATE
+			, SUBSTR(START_TIME, 11, LENGTH(START_TIME)) START_TIME
 			, SUBSTR(END_TIME, 11, LENGTH(END_TIME)) END_TIME
 		  FROM
 		    WORK
-		 WHERE EMP_NO = 21 AND TO_CHAR(WORK_DATE, 'yy/MM/dd') = TO_CHAR(CURRENT_DATE, 'yy/MM/dd')
+		 WHERE EMP_NO = #{empNo} AND TO_CHAR(WORK_DATE, 'yy/MM/dd') = TO_CHAR(CURRENT_DATE, 'yy/MM/dd')
 	</select>
 	
 	<insert id="insertWork" parameterType="_int">
@@ -50,13 +51,42 @@
 	<update id="updateWork" parameterType="string">
 		UPDATE WORK
 		SET END_TIME=TO_CHAR(CURRENT_TIMESTAMP, 'yyyy-MM-dd HH24:MI:SS')
-		WHERE W_NO=#{wNo}
+		WHERE WORK_NO=#{wNo}
 	</update>
 	
 	<insert id="insertWorkStatus" parameterType="WorkSInfo">
-		INSERT INTO WORK
+		INSERT INTO WORK_STATUS_INFO 
 		VALUES
-		(SEQ_WSNO, #{workNo}, #{sCode})
-	
+		(SEQ_WSNO.NEXTVAL, #{sCode},#{workNo})
 	</insert>
+	
+	
+	<select id="selectWorkList" parameterType="Work" resultMap="workResultSet">
+		<![CDATA[
+			SELECT 
+			    WORK_NO,
+			    EMP_NO,
+			    TO_DATE(TO_CHAR(WORK_DATE, 'YYMMDD'), 'YY/MM/DD') WORK_DATE,
+			    CASE
+			        WHEN START_TIME = NULL THEN NULL
+			        ELSE SUBSTR(TO_TIMESTAMP(START_TIME, 'yyyy/MM/dd hh24:MI:ss'), 10, 8)
+			    END START_TIME,
+			    CASE
+			        WHEN END_TIME = NULL THEN NULL
+			        ELSE SUBSTR(TO_TIMESTAMP(END_TIME, 'yyyy/MM/dd hh24:MI:ss'), 10, 8) 
+			    END END_TIME,
+			    TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24)
+			    || 'h '
+			    || TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24*60
+			    - TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24)*60) 
+			    || 'm '
+			    || TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24*60*60
+			    - TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24*60)*60)
+			    || 's' TOTAL_TIME
+			FROM
+			    WORK
+			WHERE EMP_NO = #{empNo}
+			
+		]]>
+	</select>
 </mapper>

@@ -105,11 +105,25 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 												<div>
 													<div class="d-flex" style="font-size: 12px">
 														<p class="col-6" style="padding:0px;">출근시간</p>
-														<p class="col-6 text-right" style="padding:0px;">미등록</p>
+														<c:choose>
+															<c:when test="${empty w.startTime }">
+																<p class="col-6 text-right" style="padding:0px;">미등록</p>
+															</c:when>
+															<c:otherwise>
+																<p class="col-6 text-right" style="padding:0px;">${w.startTime}</p>
+															</c:otherwise>
+														</c:choose>
 													</div>
 													<div class="d-flex" style="font-size: 12px">
 														<p class="col-6" style="padding:0px;">퇴근시간</p>
-														<p class="col-6 text-right" style="padding:0px;">미등록</p>
+															<c:choose>
+															<c:when test="${empty w.endTime }">
+																<p class="col-6 text-right" style="padding:0px;">미등록</p>
+															</c:when>
+															<c:otherwise>
+																<p class="col-6 text-right" style="padding:0px;">${w.endTime}</p>
+															</c:otherwise>
+														</c:choose>
 														
 													</div>
 		
@@ -146,10 +160,14 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="4" name="status">외출중</button>
 														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="5" name="status">출장중</button>
 													</div>
-													<input type="hidden" name="workNo" value="${w.workNo }">
+													<input type="hidden" name="workNo" value="${w.workNo}">
 												</form>
 											</div> 
-										
+						<div class="list-group"> 
+		<a href="work.do" class="list-group-item">내 근태 현황</a>
+	    <a href="vacation.do" class="list-group-item">내 연차 내역</a>  
+    </div>					
+					
 					
 									</div>
 									<!-- 근태 사이드바 끝 -->
