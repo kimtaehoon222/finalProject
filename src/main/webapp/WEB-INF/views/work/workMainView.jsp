@@ -38,9 +38,62 @@
 			<!-- 영역 :왼쪽 근태관리 사이드 바  ,  오른쪽 근태 상세 정보 -->
 			<section class="section content-area-wrapper">
 			<div>
-				<jsp:include page="../work/workSidebarView.jsp"/>
-		<!--  	<jsp:param value="${w}" name="w"/>-->
+				<jsp:include page="../work/workSidebarView.jsp">
+				<jsp:param value="${w}" name="w"/>
+				</jsp:include>
 			</div>
+			
+			<script>
+
+		
+
+			
+			$(function(){
+				var currentDate = new Date();
+				
+				var year = currentDate.getFullYear();	//이번년도
+				var month = currentDate.getMonth() + 1;	//이번달
+				
+				var empNo = "${sessionScope.loginEmp.empNo}";	//로그인유저 사번
+				
+				$.ajax({
+					type: "POST", 
+					url:"selectWorkList.do",
+					dataType:"html",	//html 방식
+					data: { 
+							year:year, 
+							month: month, 
+							empNo: empNo
+						},
+					success : function(result){
+						
+						$('#workList').html(result);	//html태그 넣기
+					},
+					error : function(){
+						
+						alert("근무정보를 조회할 수 없습니다. \n관리자에게 문의하세요.");
+					}
+				});
+			})
+			
+			
+		$('.ab').click(function(){
+			if($(this).attr('id') == 'before'){
+				month = month - 1;
+				if(month < 1){
+					year = year - 1;
+					month = 12;
+				}
+			}
+			else{
+				month = month + 1;
+				if(month > 12){
+					year = year + 1;
+					month = 1;
+				}
+			}
+		})
+		</script>
 				<!-- 근태 상세 정보 시작  -->
 				<div class="content-right">
 					<div class="content-wrapper">
@@ -53,7 +106,7 @@
 									<div class="email-app-list" id="workList">
 									    <div class="m-auto">
 											<span class="ab" id="before"><i data-feather="chevron-left" class="feather-icon" id="before"></i></span>
-											<span>2022.06</span>
+											<span>${year }.${month }</span>
 											<span class="ab" id="after"><i data-feather="chevron-right" class="feather-icon" id="after"></i></span>
 										</div>
 										<!-- 근태 상세 정보 상단 시작 -->
@@ -99,7 +152,7 @@
 													<c:set var="weekNum" value="5"/>
 												</c:otherwise>
 											</c:choose>
-											<c:forEach var="week" begin ="1" end ="${weekNum }">
+
 												<div class="row" style="border-bottom: 2px solid rgba(0,0,0,.125);">
 													<!-- 주차 표시 -->
 													<div class="d-flex col-12" style="padding: 0px 10px; border-bottom: 2px solid rgba(0,0,0,.125);">
@@ -136,9 +189,10 @@
 													
 													<!-- 주  상세 정보(일별) 시작 -->
 													<!-- 이런식으로 일자로 표시(7일) for문 돌리면서 넣으면 될듯?-->
+													
 													<div class="col-12 selects${week }">
 														  <div class="col-1 text-center">
-															<span class="date" id="${date.WDate}"><fmt:formatDate value="" type="date" pattern="dd"/>1일</span>
+															<span class="date" id="${date.workDate}"><fmt:formatDate value="" type="date" pattern="dd"/>1일</span>
 														</div>
 														
 														<div class="col-2">
@@ -171,7 +225,7 @@
 													</div>
 													<!-- 주  상세 정보(일별) 끝 -->
 						
-													</c:forEach>
+
 													<c:set var="begin" value="${begin+7 }"/>
 													<c:set var="end" value="${end+7 }"/>
 											</div>
@@ -214,6 +268,7 @@
 	
 	
 	<script>
+	
 		//주 차(일) 상세 보기
 		$(function(){
 			
@@ -250,7 +305,37 @@
 		
 	</script>
 	
-
+<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/popper.js/dist/umd/popper.min.js"></script>
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- apps -->
+	<!-- apps -->
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/app-style-switcher.js"></script>
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/feather.min.js"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/extra-libs/sparkline/sparkline.js"></script>
+	<!--Wave Effects -->
+	<!-- themejs -->
+	<!--Menu sidebar -->
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/custom.min.js"></script>
+	<!--  -->
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/summernote/summernote-lite.js"></script>
+	<script
+		src="${ pageContext.servletContext.contextPath }/resources/summernote/lang/summernote-ko-KR.js"></script>
 
 	
 	

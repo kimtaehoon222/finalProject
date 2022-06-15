@@ -1,5 +1,7 @@
 package com.workie.easy.work.model.service;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,11 @@ public class WorkServiceImpl implements WorkService {
 	public void insertWorkStatus(WorkSInfo wsi) {
 		int result = workdao.insertWorkStatus(sqlSession, wsi);
 		
+	}
+
+	@Override
+	public ArrayList<Work> selectWorkList(Work work) {
+		ArrayList<Work> wList = workdao.selectWorkList(sqlSession, work);
+		return wList;
 	}
 }

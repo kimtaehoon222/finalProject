@@ -14,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Work {
+
 	//private int workNo;
 	private String workNo;
 	private int empNo;
@@ -22,4 +23,10 @@ public class Work {
 	private String endTime;
 	private String totalTime;
 	private String strDate;
+	
+	public Work(int empNo, String strDate) {
+		super();
+		this.empNo = empNo;
+		this.strDate = strDate;
+	}
 }
