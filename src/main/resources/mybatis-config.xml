@@ -24,6 +24,9 @@
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPagination" alias="MailPagination"/>
 	    <typeAlias type="com.workie.easy.common.model.dto.Attachment" alias="Attachment"/>
 	    <typeAlias type="com.workie.easy.employee.model.dto.Employee" alias="Employee"/>
+	    
+	    <typeAlias type="com.workie.easy.schedule.model.dto.Schedule" alias="Schedule"/>
+	    
 	</typeAliases>
 		
 	<mappers>
@@ -34,6 +37,7 @@
 		<mapper resource="/mappers/attachment-mapper.xml"/>
 		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/personnel-mapper.xml"/>
+		<mapper resource="/mappers/schedule-mapper.xml"/>
 	</mappers>
 	
 </configuration>

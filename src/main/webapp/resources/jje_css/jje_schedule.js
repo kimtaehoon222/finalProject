@@ -86,8 +86,8 @@ const getDateDiff = (d1, d2) => {
     return Math.abs(diffDate / (1000 * 3600 * 24));
 }
 
-var sked_insert = document.getElementById("sked_insert_btn");
-sked_insert.addEventListener('click',function(e){
+/*submit*/
+function sked_submit(){
     var start_date = document.getElementById('start_date').value;
     var end_date = document.getElementById('end_date').value;
     var start_time = document.getElementById('start_time').value;
@@ -95,29 +95,46 @@ sked_insert.addEventListener('click',function(e){
     
     if(start_date && !end_date){ //시작일만 있는 경우(종료일은 없는 경우)
         if(start_time && !fin_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
+            console.log("시작일 "+start_date+" "+start_time);
         }
         if(!start_time && fin_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
             alert("시작 시간 누락");
+            return false;
         }
         if(start_time && fin_time){ //시작시간과 종료시간 둘 다 있는경우
             if(start_time>=fin_time){ //시작시간이 종료시간보다 더 크면 안됨
                 alert("종료시간은 시작시간보다 늦어야합니다.");
+                return false;
             }else{
                 var time1 = new Date(start_date+" "+start_time); //시작일+시작시간
                 // var time2 = new Date(start_date+" "+fin_time); //시작일+종료시간
                 var time = getTimeDiff(start_date, fin_time, time1);
                 console.log(time);
+                
+                console.log("시작시간 "+start_date+" "+start_time);
+                console.log("종료시간 "+start_date+" "+fin_time);
+            }
+        }else{
+            if(!start_time){//시작 시간도 없는 경우
+                console.log("시작일 "+start_date);
             }
         }
     }else{ //시작일과 종료일이 둘 다 있는 경우
         if(start_date>=end_date){ //종료일이 시작일보다 이른경우
-            alert("종료일은 시작일보다 늦어야합니다.")
+            alert("종료일은 시작일보다 늦어야합니다.");
+            return false;
         }else{
+            if(!start_time){//시작 시간은 없는 경우
+                console.log("시작일 "+start_date);
+                console.log("종료일 "+end_date);
+            }
             if(start_time && !fin_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
-                
+                console.log("시작일 "+start_date+" "+start_time);
+                console.log("종료일 "+end_date+" "+start_time);
             }
             if(!start_time && fin_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
                 alert("시작 시간 누락");
+                return false;
             }
             if(start_time && fin_time){ //시작시간과 종료시간 둘 다 있는경우
                 var time1 = new Date(start_date+" "+start_time); //시작일+시작시간
@@ -127,7 +144,10 @@ sked_insert.addEventListener('click',function(e){
                 var date = getDateDiff(start_date, end_date);
     
                 console.log(date+"일 "+time);
+                console.log("시작일 "+start_date+" "+start_time);
+                console.log("시작일 "+end_date+" "+fin_time);
             }
         }
     }
-});
+
+}

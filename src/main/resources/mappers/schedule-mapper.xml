@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="skedMapper">
+	<resultMap type="Schedule" id="scheduleResultSet">
+		<result property="skedNo" column="SKED_NO"/>
+		<result property="skedCode" column="SKED_CODE"/>
+		<result property="empNo" column="EMP_NO"/>
+		<result property="colorCode" column="COLOR_CODE"/>
+		<result property="skedTitle" column="SKED_TITLE"/>
+		<result property="skedContent" column="SKED_CONTENT"/>
+		<result property="skedStatus" column="SKED_STATUS"/>
+		<result property="skedPlace" column="SKED_PLACE"/>
+		<result property="skedMemo" column="SKED_MEMO"/>
+		<result property="skedStart" column="SKED_START"/>
+		<result property="skedEnd" column="SKED_END"/>
+		<result property="skedCName" column="SKED_C_NAME"/>
+		<result property="rgbCode" column="RGB_CODE"/>
+		<result property="colorName" column="COLOR_NAME"/>
+	</resultMap>
+	
+	<select id="scheduleList" resultMap="scheduleResultSet">
+		SELECT * FROM SCHEDULE
+	</select>
+</mapper>
