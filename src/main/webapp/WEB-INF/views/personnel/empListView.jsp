@@ -55,15 +55,16 @@
                                         
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                 <c:forEach items="${ list }" var="e">
                                     <tr>
+                                     <input type="hidden" name="empNo" value ="${e.empNo}">
                                         <td>${e.empName}</td>
                                         <td>${e.empId}</td>
                                         <td> ${e.phone}</td>
                                         <td>${e.deptName}</td>
                                        	<td>${e.jobName}</td>
-                                    </tr>
+                                  </tr>
                                 
                                    </c:forEach> 
                                 </tbody>
@@ -78,6 +79,18 @@
         </div>
         
     </div>
+
+    <!--  -->
+      <script>
+      $(function(){
+  		$("#empList").click(function(){
+  			var eId = $(this).children().eq(0).val();
+  		
+  			location.href="detailEmp.do?eId="+eId;  
+  		});
+    	});
+    </script>
+ 
     <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>

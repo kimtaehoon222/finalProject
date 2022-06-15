@@ -15,9 +15,20 @@ public class PersonnelDao {
 		return sqlSession.update("personnelMapper.updateEmp", e);
 	}
 
-	public ArrayList<Employee> selectListEmp(SqlSessionTemplate sqlSession) {
+	public ArrayList<Employee> selectEmpList(SqlSessionTemplate sqlSession) {
 		
-		return (ArrayList)sqlSession.selectList("personnelMapper.selectListEmp");
+		return (ArrayList)sqlSession.selectList("personnelMapper.selectEmpList");
+	}
+
+
+	public int updatePwd(SqlSessionTemplate sqlSession, Employee e) {
+		
+		return sqlSession.update("personnelMapper.updatePwd", e);
+	}
+
+	public Employee selectEmp(int eId, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("personnelMapper.selectEmp", eId);
 	}
 
 }

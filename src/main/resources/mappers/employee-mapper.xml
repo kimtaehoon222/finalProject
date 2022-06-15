@@ -23,6 +23,7 @@
 	  <result property="deptName" column="DEPT_NAME"/>
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="jobVacation" column="JOB_VACATION"/>
+		<result property="telNo" column="TEL_NO"/>
 	</resultMap>
 	
 	<select id="loginEmp" parameterType="Employee" resultMap="employeeResultSet">

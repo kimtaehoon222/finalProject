@@ -22,18 +22,26 @@
 		<result property="ctgNo" column="CTG_NO"/>
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="deptName" column="DEPT_NAME"/>
+		<result property="telNo" column="TEL_NO"/>
 	</resultMap>
+	
 	
 	  <update id="updateEmp" parameterType="Employee">
       UPDATE EMPLOYEE SET 
       EMP_ID= #{empId}, 
       PHONE= #{phone}, 
-      ADDRESS= #{address},
-      WHERE EMP_NO= #{empNo}
+      ADDRESS= #{address}
+      WHERE EMP_ID = #{empId}
    
    </update>
-
-	 <select id="selectListEmp" resultMap="personnelResult">
+	
+	<update id="updatePwd" parameterType="Employee">
+      UPDATE EMPLOYEE SET 
+      EMP_PWD = #{empPwd}
+      WHERE EMP_ID = #{empId}
+   
+   </update>
+	 <select id="selectEmpList" resultMap="personnelResult">
 		SELECT 
 		*
 		FROM EMPLOYEE A
@@ -43,4 +51,16 @@
 		WHERE APV_YN= 'Y'
         ORDER BY EMP_NAME
         </select>
+        
+        <select id="selectEmp" resultMap="personnelResult">
+		SELECT 
+		*
+		FROM EMPLOYEE A
+		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
+		WHERE A.EMP_NO = #{eId}
+        AND ENT_YN= 'Y'
+        </select>
+       
 </mapper>

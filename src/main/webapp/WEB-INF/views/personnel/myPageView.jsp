@@ -87,11 +87,11 @@ picture-area{
          		    <form action="updateEmp.do" method="post">
          		    <img id="mainImg" src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" height="250" width="300"/>
                     <div id="title">
-					<h3  name="empName">이름 : ${loginUser.empName} </h3>
-					<h3 name="deptName"> 부서 :  ${loginUser.deptName}</h3>
-					<h3  name="jobName"> 직위 : ${loginUser.jobName}</h3>
-					<h3  name="telNo"> 내선번호 :  ${loginUser.telNo}</h3>
-					<h3  name="empReg"> 생년월일 : ${loginUser.empReg}</h3>
+					<h3  name="empName">이름 : ${loginEmp.empName} </h3>
+					<h3 name="deptName"> 부서 :  ${loginEmp.deptName}</h3>
+					<h3  name="jobName"> 직위 : ${loginEmp.jobName}</h3>
+					<h3  name="telNo"> 내선번호 :  ${loginEmp.telNo}</h3>
+					<h3  name="empReg"> 생년월일 : ${loginEmp.empReg}</h3>
                     </div>
 					</div>
 
@@ -104,19 +104,19 @@ picture-area{
                             			<div class="card-body" >
 								
 											<h3 class="card-title">이메일 </h3>
-											<input type="text" class="form-control phone" name="empId" value="${loginUser.empId}">
+											<input type="text" class="form-control phone" name="empId" value="${loginEmp.empId}">
 										</div>
                             		</li>
                             		<li>
                             			<div class="card-body">
 											<h3 class="card-title"> 연락처 </h3>
-											<input type="text" class="form-control phone" name="phone" value="${loginUser.phone}">
+											<input type="text" class="form-control phone" name="phone" value="${loginEmp.phone}">
 										</div>
                             		</li>
                             		<li>
                             			<div class="card-body">
 											<h3 class="card-title"> 주소 </h3>
-											<input type="text" class="form-control phone" name="address" value="${loginUser.address}">
+											<input type="text" class="form-control phone" name="address" value="${loginEmp.address}">
 										</div>
                             		</li>
                             		
@@ -125,33 +125,40 @@ picture-area{
                             	
                             		
                             </div>
-                            </form>
-                             <div class="updatePwd hidden d-block align-items-center">
-                            	<form class="updatePwdForm" action="updatePassword.me" method="post">
-                            	<input type="text" class="form-control empName" value="" readonly style="display:none;"> 
-								<ul class="ref navbar-nav">
-                            		<li>
-                            			<div class="card-body">
-											<h3 class="card-title"> 새로운 비밀번호 </h3>
-											<input type="text" class="form-control newPwd" placeholder="새로운 비밀번호" name="newPwd">
-										</div>
-                            		</li>
-                            		<li>
-                            			<div class="card-body">
-											<h3 class="card-title"> 새로운 비밀번호 확인 </h3>
-											<input type="text" class="form-control newPwdCheck" placeholder="새로운 비밀번호 확인" name="newPwdCheck">
-										</div>
-                            		</li>
-                            		
-                            	</ul>
                             	<div id=allButton>
+                            		<a data-toggle="modal" data-target="#passModal">비밀번호 수정하기</a>
                             		<button type="submit" class="off btn waves-effect waves-light btn-success"> 수정하기 </button>
-									<button type="button" class="cancle btn waves-effect waves-light btn-danger"> 목록으로</button>
+									<button type="button" class="cancle btn waves-effect waves-light btn-danger"> 목록으로</button>    
                             		</div>
-                            		</form>
-                            </div>
-         	   	<br>
-         	   	<br>
+                            	</form>
+             <div class="modal fade" id="passModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">비밀번호 수정하기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+
+            <form action="updatePwd.do" method="post">
+          
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <label for="origin" class="mr-sm-2">수정 전 비밀번호</label>
+                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="원래 비밀번호를 입력하세요." id="originPwd" name="originPwd"> <br>
+                    <label for="update" class="mr-sm-2">수정 할 비밀번호</label>
+                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="수정할 비밀번호를 입력하세요." id="updatePwd" name="updatePwd">
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">수정하기</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
                     </div>
                   
                 </div>

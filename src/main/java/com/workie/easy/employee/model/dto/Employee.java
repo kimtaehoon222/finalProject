@@ -36,5 +36,6 @@ public class Employee {
 	private String deptName;//부서명
 	private String jobName;//직위명
 	private int jobVacation;//보유연차
+	private String telNo;//내선 번호
 		
 }
