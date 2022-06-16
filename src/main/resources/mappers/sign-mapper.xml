@@ -17,5 +17,53 @@
 		<result property="status" column="STATUS"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
 	</resultMap>
+
+		<resultMap type="Employee" id="employeeResultSet">
+		<result property="empNo" column="EMP_NO"/>
+		<result property="empName" column="EMP_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="empId" column="EMP_ID"/>
+		<result property="empReg" column="EMP_REG"/>
+		<result property="gender" column="GENDER"/>
+		<result property="empPwd" column="EMP_PWD"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="deptCode" column="DEPT_CODE"/>
+		<result property="jobCode" column="JOB_CODE"/>
+		<result property="disabledYN" column="DISABLE_YN"/>
+		<result property="empNote" column="EMP_NOTE"/>
+		<result property="hireDate" column="HIRE_DATE"/>
+		<result property="entDate" column="ENT_DATE"/>
+		<result property="apvYN" column="APV_YN"/>
+		<result property="entYN" column="ENT_YN"/>
+		<result property="ctgNo" column="CTG_NO"/>
+	  <result property="deptName" column="DEPT_NAME"/>
+		<result property="jobName" column="JOB_NAME"/>
+		<result property="jobVacation" column="JOB_VACATION"/>
+		<result property="telNo" column="TEL_NO"/>
+	</resultMap>
 	
+	
+	<select id="selectList" resultMap="employeeResultSet">
+			SELECT
+			A.EMP_NAME
+			,
+			B.DEPT_NAME
+			,
+			A.JOB_CODE
+			FROM
+			 EMPLOYEE A
+			JOIN DEPARTMENT B ON A.DEPT_CODE = B.DEPT_CODE
+			WHERE A.JOB_CODE IN ( 'J5', 'J4', 'J3' )
+			AND B.DEPT_NAME IN ( '기획영업부', '마케팅부', '인사관리부')
+			ORDER BY B.DEPT_NAME, A.JOB_CODE DESC
+			
+		</select>
+		
+		
+		
+		
+		
+		
 	</mapper>
+
+		

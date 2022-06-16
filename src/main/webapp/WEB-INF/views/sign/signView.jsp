@@ -3,6 +3,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,6 @@
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-
 
 
 <title>Insert title here</title>
@@ -122,7 +123,7 @@
 		</button>
 	</div>
 	
-<!-- submodal 1 품의 및 결재선 지정 -->		
+<!-- submodal 1 품의 및 결재선 지정 		
 <div class="modal" tabindex="-1" id="submodal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -137,17 +138,18 @@
       	<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
 
 		<hr>
-		<c:forEach items="${ list }" ver="s">
+
 		
-        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
+        <p style="color:rgb(124, 127, 251)"><b> 기획영업부 </b></p>
 			
-       <p> <input type="checkbox"name="ch">&nbsp홍길동 과장 &nbsp
+       <p> <input type="checkbox"name="ch">&nbsp 홍길동 과장 &nbsp
+	
            <input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
            <input type="checkbox"name="ch">&nbsp홍길금 부장 &nbsp </p>
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
           
            <p><input type="checkbox"name="ch">&nbsp청길동 과장 &nbsp
          	<input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
@@ -155,7 +157,7 @@
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
           	
           	<p><input type="checkbox"name="ch">&nbsp고길동 과장 &nbsp
          	<input type="checkbox"name="ch">&nbsp고길은 차장 &nbsp
@@ -163,17 +165,17 @@
          	
           <hr>
           
-          </c:forEach>	
+         
       </div>
       <div class="modal-footer">
         <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">저장</button> <!-- 저장 누르면 다시 품의로 이동되도록 설정 -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">저장</button> <!-- 저장 누르면 다시 품의로 이동되도록 설정
       </div>
     </div>
   </div>
 </div>
-
-<!-- submodal 2 품의 수신처 지정-->		
+-->
+<!-- submodal 2 품의 수신처 지정		
 <div class="modal" tabindex="-1" id="submodal2">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -189,7 +191,7 @@
 
 		<hr>
 		
-        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
 			
         <p>홍길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp홍길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -197,7 +199,7 @@
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
           
            <p>청길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp청길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -205,7 +207,7 @@
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
           	
           	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -220,9 +222,9 @@
     </div>
   </div>
 </div>
+-->
 
-
-<!-- submodal3 협조 결재선 지정 -->		
+<!-- submodal3 협조 결재선 지정 		
 <div class="modal" tabindex="-1" id="submodal3">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -238,7 +240,7 @@
 
 		<hr>
 		
-        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
 			
         <p><input type="checkbox"name="ch">&nbsp홍길동 과장 &nbsp
          	<input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
@@ -246,7 +248,7 @@
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
           
            <p><input type="checkbox"name="ch">&nbsp청길동 과장 &nbsp
          	<input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
@@ -254,7 +256,7 @@
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
           	
           	<p><input type="checkbox"name="ch">&nbsp고길동 과장 &nbsp
          	<input type="checkbox"name="ch">&nbsp고길은 차장 &nbsp
@@ -264,14 +266,14 @@
       </div>
       <div class="modal-footer">
         <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">저장</button> <!-- 저장 누르면 다시 협조로 이동되도록 설정 -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">저장</button> <!-- 저장 누르면 다시 협조로 이동되도록 설정 
       </div>
     </div>
   </div>
 </div>
 		
-
-<!-- submodal 4 휴가원 -->		
+-->
+<!-- submodal 4 휴가원	
 <div class="modal" tabindex="-1" id="submodal4">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -287,7 +289,7 @@
 
 		<hr>
 		
-        <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
+        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
 			
         <p><input type="checkbox"name="ch">홍길동 과장 &nbsp
          	<input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
@@ -295,7 +297,7 @@
          
          <hr>
          
-         <p style="color:rgb(124, 127, 251)"><b>회계관리부</b></p>	
+         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
           
            <input type="checkbox"name="ch"><p>청길동 과장 &nbsp
            <input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
@@ -303,7 +305,7 @@
          	
          <hr>
          	
-          <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>
+          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
           	
           	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
          	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
@@ -313,14 +315,14 @@
       </div>
       <div class="modal-footer">
         <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">저장</button> <!-- 저장 누르면 다시 휴가원으로 이동되도록 설정 -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">저장</button> <!-- 저장 누르면 다시 휴가원으로 이동되도록 설정
       </div>
     </div>
   </div>
 </div>
-
+ -->
 		
-		<!--                                  품의                                                                   -->
+		<!--                                  품의                                ko                              -->
 		<!-- main modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -339,11 +341,100 @@
 					</div>
 
 					<div class="col-md-12">
+					<div id="center">
+				<input type="checkbox" class="form-check-warning" name="ckbox" id="ckbox" style="float:left">
+				    <input type="hidden" name="reserveYn" id="reserveYn" required>
+                 <label class="form-label" style="float:left; margin:-2px; color:rgb(124, 127, 251)">&nbsp&nbsp<b>결재선 지정</b></label>
+                  </div>
+					<div id="hideTest">	
+                 <!-- 예약 메일 여부에 대한 y/n 데이터를 넘겨주는 hidden input -->
+             		<br>
+             		<br>
+             		
+             		<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
 
-						<button type="button" class="btn btn-primary btn-sm"
-							style="width: 30%; height: 30px; float: left; margin: 22px;" data-bs-toggle="modal" data-bs-target="#submodal">결재선
-							지정 </button>
- 
+						<hr>
+						
+				        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
+							
+				        <p>홍길동 과장
+				         	<input type="checkbox"name="ch" >&nbsp홍길은 차장 &nbsp
+				         	<input type="checkbox"name="ch" ><p>&nbsp홍길금 부장 &nbsp
+				         
+				         <hr>
+				         
+				         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
+				          
+				           <p><input type="checkbox"name="ch" >청길동 과장 &nbsp
+				         	<input type="checkbox"name="ch" >&nbsp청길은 차장 &nbsp
+				         	<input type="checkbox"name="ch" >&nbsp청길금 부장 &nbsp<p/>
+				         	
+				         <hr>
+				         	
+				          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
+				          	
+				          	<p>고길동 과장 &nbsp<input type="checkbox"name="ch" >
+				         	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch" >
+				         	&nbsp고길금 부장 &nbsp<input type="checkbox"name="ch" ><p>
+				          
+				          <hr>	
+				<script>    		
+			             		
+					$(document).ready(function () { //ㅇㅇ
+						 $("#hideTest").val(" ");
+					   $("#hideTest").hide();
+					   $('#reserveYn').val('N');
+					   $('#hideTest').attr('required', false);
+					   
+					   $("#ckbox").on('click', function () {
+					      if($(this).prop('checked')){
+					         alert('결재선 지정은 최대 2명까지 가능합니다.');
+					         $('#reserveYn').val('Y');
+					        // $('#test').attr('required', 'required');
+					         $("#hideTest").show();
+					         
+					         $.ajax({
+					        			url: "selectList.do",
+					        			
+					        			type: "POST",
+					        			
+					        			data:{
+					        				list : list
+					        			},
+					        			
+					        			success: function(data){
+					        				if (data.Code == 0) {
+					        						for ( i = 0; i < data.data.length; i++) {
+					        							var tag = "<tr>" +
+					        												"<td>" + data.data[i]
+					        						}
+					        				}
+					        				alert("조회완료")
+					        			},
+					        			error: function(e){
+					        				console.log(e)
+					        			} // error 닫는 괄호
+					        			
+					         }); //ajax 닫는 괄호
+					      
+					      }else{
+					         $('#reserveYn').val('N');
+					         $('#hideTest').attr('required', false);
+					         $("#hideTest").val(" ");
+					         $("#hideTest").hide();
+					      }
+					   });
+					});
+		</script>       		
+               		
+ </div>
+
+               <!--    <input type="date" class="form-control" name="sendDate" id="sendDate"></div> -->
+					<!--  
+						<a href="selectList.do" class="btn btn-primary btn-sm"
+							style="width: 30%; height: 30px; float: left; margin: 22px;">결재선
+							지정 </a>
+ 							-->		
 						<fieldset style="width: 30%; float: right; margin: 22px;">
 							<p>
 								<b>문서 보존 기한</b>
@@ -355,8 +446,6 @@
 
 						</fieldset>
 					</div>
-
-
 
 
 					<div class="col-md-4">
@@ -772,8 +861,30 @@
 
 	
 <script>
+/*
+$(document).ready(function () { //ㅇㅇ
+	 $("#hideTest").val(" ");
+    $("#hideTest").hide();
+    $('#reserveYn').val('N');
+    $('#hideTest').attr('required', false);
+    
+    $("#ckbox").on('click', function () {
+       if($(this).prop('checked')){
+          alert('결재선 지정은 최대 2명까지 가능합니다.');
+          $('#reserveYn').val('Y');
+         // $('#test').attr('required', 'required');
+          $("#hideTest").show();
+       }else{
+          $('#reserveYn').val('N');
+          $('#hideTest').attr('required', false);
+          $("#hideTest").val(" ");
+          $("#hideTest").hide();
+       }
+    });
+ });
+*/
 
-       
+
 </script>
 	
 	<jsp:include page="../common/bottom.jsp" />
