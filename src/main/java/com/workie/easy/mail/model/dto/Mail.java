@@ -45,5 +45,11 @@ public class Mail {
 	private String typeName;
 	private String empName;
 	private String stateName;
+	private String toName;
+	private String fromName;
+	private String ccName;
+	private String fromId;
+	private String toId;
+	
 	
 }

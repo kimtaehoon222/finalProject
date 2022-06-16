@@ -75,7 +75,7 @@
              <div class="row">
                <div class="mb-3 col-md-11">
                  <label for="to" class="form-label">받는사람</label>
-                 <input class="form-control" type="text" name="toMail" id="toMail" placeholder="주소록을 통해 입력하세요." value="" readonly required/>
+                 <input class="form-control" type="text" name="toMail" id="toMail" placeholder="주소록을 통해 입력하세요." value="${ toReply}" readonly required/>
                </div>
                <div class="mb-3 col-md-1">
                  <label for="addressList" class="form-label">&nbsp;</label>
@@ -83,7 +83,7 @@
                </div>
                <div class="mb-3 col-md-11">
                  <label for="cc" class="form-label">참조</label>
-                 <input class="form-control" type="text" name="ccMail" id="ccMail" placeholder="주소록을 통해 입력하세요." value="" readonly/>
+                 <input class="form-control" type="text" name="ccMail" id="ccMail" placeholder="주소록을 통해 입력하세요." value="${ ccMail }" readonly/>
                </div>
                <div class="mb-3 col-md-1">
                  <label for="addressList" class="form-label">&nbsp;</label>
@@ -109,12 +109,14 @@
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="title">제목</label>
-                 <input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성하세요" maxlength="33" required/>
+                 <input class="form-control" type="text" name="title" id="title" value="${ ccTitle }" placeholder="제목을 작성하세요" maxlength="33" required/>
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="content">내용</label>
                  <div>
-                    <textarea class="form-control" name="content" id="content" rows="10" cols="150" required></textarea>
+                    <textarea class="form-control" name="content" id="content" rows="10" cols="150" required>
+                    	${ ccContent }
+                    </textarea>
                  </div>
                </div>
              </div>
@@ -155,9 +157,9 @@
             <!--<button onclick="javascript:window.returnValue='음훼훼';window.close()">부모창 폼에 값넘기기</button>  -->
               <label class="form-label" for="add">받는사람선택</label>
                  <select id="insertAddress1" class="select2 form-select">
-               <option value="1">전재은</option>
-               <option value="2">김태훈</option>
-               <option value="3">김재호</option>
+               <option value="5">전재은</option>
+               <option value="3">김태훈</option>
+               <option value="1">김재호</option>
                <option value="4">임현빈</option>
             </select>
          </div>
@@ -191,13 +193,13 @@
                  <table>
                     <tr>
                   <td>
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="1">
+                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="5">
                      <label for="">전재은</label>
                      
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="2">
+                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="3">
                      <label for="">김태훈</label>
                      
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="3">
+                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="1">
                      <label for="">김재호</label>
                      
                      <input type="checkbox" id="insertAddress2" name="insertAddress2" value="4">
@@ -236,6 +238,7 @@
       function insertAddress2() {
          
          var value = [];
+         
          $('input[name=insertAddress2]:checked').each(function () {
             var v = $(this).val();
             value.push(v);

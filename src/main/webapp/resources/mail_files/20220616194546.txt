@@ -1,0 +1,29 @@
+<script type="text/javascript">
+
+	    $(document).ready(function(){
+	        
+	    	var empNo = <%=loginEmp.getEmpNo()%>;
+	    	var fromMail = $('#fromMail').val();
+	    	
+	    	if(empNo == fromMail){
+				$('#replyMail').hide();
+			}
+	    	
+	    });
+	    
+		$('#replyMail').click(function () {
+		
+			var empNo = <%=loginEmp.getEmpNo()%>;
+			var fromMail = $('#fromMail').val();
+			
+			var mailNo = $('#mailNo').val();
+
+			if(empNo == fromMail){
+				alert('발신 메일이므로 답장이 불가능합니다.');
+			}else{
+				location.href="mailReplyForm.do?mailNo="+mailNo;
+			}
+			
+		})
+		
+	</script>

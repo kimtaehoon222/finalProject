@@ -7,7 +7,7 @@
 		INSERT ALL
       	  INTO EASYWORK.MAIL
     	VALUES (SEQ_ENO.NEXTVAL, #{reserveYn}, DEFAULT, NVL(TO_DATE(#{sendDate}, 'YYYY-MM-DD'), SYSDATE) 
-    	     , #{cancelDate}, DEFAULT, DEFAULT, DEFAULT, #{typeNo}, DEFAULT)
+    	     , #{cancelDate}, DEFAULT, DEFAULT, #{stateCode}, #{typeNo}, DEFAULT)
           INTO EASYWORK.MAIL_INFO
    		VALUES (SEQ_ENO.CURRVAL, #{title}, #{content}, #{toMail}, #{fromMail}, #{ccMail})       
 		<if test="originName != null">
@@ -67,8 +67,17 @@
 		<result property="empName" column="EMP_NAME"/>
 		<result property="sendDate" column="SEND_DATE"/>
 		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
 		<result property="stateCode" column="STATE_CODE"/>
 		<result property="stateName" column="STATE_NAME"/>
+		<result property="toName" column="TO_NAME"/>
+		<result property="fromName" column="FROM_NAME"/>
+		<result property="toMail" column="TO_MAIL"/>
+		<result property="fromMail" column="FROM_MAIL"/>
+		<result property="ccMail" column="CC_MAIL"/>
+		<result property="ccName" column="CC_NAME"/>
+		<result property="fromId" column="FROM_ID"/>
 	</resultMap>
 	
 	<!-- 메일 리스트 조회(받은 메일함) -->
@@ -132,4 +141,89 @@
 	       AND (A.FROM_MAIL = #{toFromMail} OR A.TO_MAIL = #{toFromMail})
 	  ORDER BY C.SEND_DATE DESC
 	</select>
+	
+	<!-- 메일 상세조회시 수신확인처리 -->
+	<update id="updateReceiveCheck" parameterType="_int">
+		UPDATE EASYWORK.MAIL
+		   SET RECEIVE_CHECK = 'Y'
+		 WHERE MAIL_NO = #{mailNo}
+		   AND RECEIVE_CHECK = 'N'
+		   AND STATUS ='Y'
+	</update>
+	
+	<!-- 메일 상세 조회  : 받은, 보낸, 예약 -->
+	<select id="selectDetailMail" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.MAIL_NO, C.TYPE_NAME, A.TITLE, B.SEND_DATE
+		     , (SELECT EMP_NAME 
+		        FROM EMPLOYEE
+		        WHERE EMP_NO = TO_MAIL AND ENT_YN = 'Y') AS TO_NAME
+		     , (SELECT EMP_NAME  
+		        FROM EMPLOYEE
+		        WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_NAME
+		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT, D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH
+		  FROM EASYWORK.MAIL_INFO A
+	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
+	 LEFT JOIN EASYWORK.TYPE C ON C.TYPE_CODE = B.TYPE_NO
+	 LEFT JOIN EASYWORK.ATTACHMENT D ON D.CTG_NO = B.CTG_NO AND D.REF_NO = B.MAIL_NO AND D.STATUS = 'Y'
+	     WHERE A.MAIL_NO = #{mailNo}
+		   AND B.STATUS = 'Y'
+	</select>
+	
+	<!-- 참조인 조회 -->
+	<select id="selectCcMembers" resultMap="mailResultSet">
+		<![CDATA[
+		SELECT TO_CHAR(EMP_NO) AS CC_MAIL, EMP_NAME AS CC_NAME
+		  FROM EASYWORK.EMPLOYEE
+		 WHERE EMP_NO IN(
+		SELECT REGEXP_SUBSTR(#{ccMail}, '[^,]', 1, LEVEL)
+		  FROM DUAL
+    CONNECT BY LEVEL <= 5)
+		]]>
+	</select>
+	
+	<!-- 수신인 번호 조회 -->
+	<select id="selectToMail" resultType="_int">
+		SELECT TO_MAIL
+	   	  FROM EASYWORK.MAIL_INFO
+		 WHERE MAIL_NO = #{mailNo}
+	</select>
+	
+	<!-- 메일 상세 조회 : 휴지통 -->
+	<select id="selectDetailDeleteMail" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.MAIL_NO, C.TYPE_NAME, A.TITLE, B.SEND_DATE
+		     , (SELECT EMP_NAME 
+		        FROM EMPLOYEE
+		        WHERE EMP_NO = TO_MAIL AND ENT_YN = 'Y') AS TO_NAME
+		     , (SELECT EMP_NAME  
+		        FROM EMPLOYEE
+		        WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_NAME
+		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT, D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH
+		  FROM EASYWORK.MAIL_INFO A
+	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
+	 LEFT JOIN EASYWORK.TYPE C ON C.TYPE_CODE = B.TYPE_NO
+	 LEFT JOIN EASYWORK.ATTACHMENT D ON D.CTG_NO = B.CTG_NO AND D.REF_NO = B.MAIL_NO AND D.STATUS = 'Y'
+	     WHERE A.MAIL_NO = #{mailNo}
+		   AND B.STATUS = 'N'
+	</select>
+	
+	<select id="selectDetailMailForReply" parameterType="_int" resultMap="mailResultSet">
+		SELECT A.*, B.SEND_DATE
+		     , (SELECT CONCAT(EMP_ID, '@easy.co.kr')
+		        FROM EASYWORK.EMPLOYEE
+		        WHERE EMP_NO = TO_MAIL) AS TO_ID
+		     , (SELECT CONCAT(EMP_ID, '@easy.co.kr')
+		        FROM EASYWORK.EMPLOYEE
+		        WHERE EMP_NO = FROM_MAIL)AS FROM_ID
+		     , (SELECT EMP_NAME
+		        FROM EASYWORK.EMPLOYEE
+		        WHERE EMP_NO = TO_MAIL) AS TO_NAME
+		     , (SELECT EMP_NAME 
+		        FROM EASYWORK.EMPLOYEE
+		        WHERE EMP_NO = FROM_MAIL)AS FROM_NAME
+		  FROM EASYWORK.MAIL_INFO A
+	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
+		 WHERE A.MAIL_NO = 29
+		   AND B.STATUS = 'Y';
+	</select>
+	
 </mapper>

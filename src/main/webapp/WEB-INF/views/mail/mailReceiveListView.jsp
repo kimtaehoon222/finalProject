@@ -65,7 +65,7 @@
 								<div class="sidebar-menu-list ps">
 									<!-- 메일 사이드바 시작 -->
 									<div class="list-group list-group-messages">
-										<a href="receiveMailList.do?receive=r" class="list-group-item">
+										<a href="receiveMailList.do?receive=r" class="list-group-item text-primary">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
@@ -209,13 +209,14 @@
 										<!-- 메일 리스트 상단 끝 -->
 
 										<!-- 메일 리스트 하단 시작 -->
-										<div class="email-user-list list-group ps ps--active-y">
+										<div class="email-user-list list-group ps ps--active-y" id="mailList">
 											<c:if test="${ !empty list  }">
 											<!-- 메일 리스트 시작 -->
 											<ul class="users-list-wrapper media-list">
 												<!-- 메일 1개 시작 -->
 												<c:forEach items="${ list }" var="mail">
 												<li class="media mail-read">
+												<input type="hidden" value="${ mail.mailNo }">
 													<!-- 체크박스 및 중요표시 -->
 													<div class="user-action">
 														<div class="checkbox-con me-3">
@@ -316,6 +317,7 @@
 	<script src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	
 	<script type="text/javascript">
 		$(document).ready(function () {
 			//전체선택 체크박스 요소를 클릭하면
@@ -330,6 +332,12 @@
 				}
 			})
 			
+		})
+		
+		$(function () {
+			$('#mailList ul li').click(function () {
+				location.href="detailMail.do?mailNo="+$(this).children().eq(0).val();
+			})
 		})
 	</script>
 	
