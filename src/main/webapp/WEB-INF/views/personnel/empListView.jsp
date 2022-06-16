@@ -58,15 +58,13 @@
                                 <tbody >
                                 <c:forEach items="${ list }" var="e">
                                     <tr>
-                                     <input type="hidden" name="empNo" value ="${e.empNo}">
                                         <td>${e.empName}</td>
                                         <td>${e.empId}</td>
                                         <td> ${e.phone}</td>
                                         <td>${e.deptName}</td>
                                        	<td>${e.jobName}</td>
-                                  </tr>
-                                
-                                   </c:forEach> 
+                                   </tr>
+                                 </c:forEach> 
                                 </tbody>
                             </table>
                         </div>
@@ -80,13 +78,11 @@
         
     </div>
 
-    <!--  -->
+    <!--이름은 동명이인이 있을 수 있어서 id로 -->
       <script>
       $(function(){
-  		$("#empList").click(function(){
-  			var eId = $(this).children().eq(0).val();
-  		
-  			location.href="detailEmp.do?eId="+eId;  
+  		$("#table1 tbody tr").click(function(){
+  	      location.href="detailEmp.do?eId=" + $(this).children().eq(1).text();
   		});
     	});
     </script>
