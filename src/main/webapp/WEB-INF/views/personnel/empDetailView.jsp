@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed " dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free">
 
@@ -85,46 +85,36 @@
           <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="150" width="200" id="uploadedAvatar" />
       		 <div id="topPage" >
                     <div id="title">
-					<h5  name="empName"> 이름 : ${e.empName}</h5>
-					<h5 name="empId"> 이메일 : ${e.empId}</h5>
-					<h5 name= phone>전화번호 : ${e.phone}</h5>
+                    <h5>이메일 : ${e.empId}@easy.co.kr</h5>
+					<h5>전화번호 : ${e.phone}</h5>
+					<h5>생년월일 : ${e.empReg}</h5>
                     </div>
 					</div>
         </div>
       </div>
       <hr class="my-0">
       <div class="card-body">
-        <form id="formAccountSettings" method="POST" onsubmit="return false">
           <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="empName" class="form-label">이름 </label>
+              <input type="text" class="form-control" id="empName" name="empName" value="${e.empName}" readonly/>
+            </div>
            		<div class="mb-3 col-md-6">
               <label for="lastName" class="form-label">내선 번호</label>
-              <input class="form-control" type="text" name="telNo"  value="${e.telNo}" />
-            </div>
-             <div class="mb-3 col-md-6">
-              <label for="address" class="form-label">주소</label>
-              <input type="text" class="form-control" id="address" name="address" value="${e.address}" readonly/>
+              <input class="form-control" type="text" name="telNo"  value="${e.telNo}" readonly/>
             </div>
                <div class="mb-3 col-md-6">
               <label for="deptName" class="form-label">부서</label>
-              <select id="deptName" class="select2 form-select">
-                <option value="">총무부</option>
-                <option value="-12">법무부</option>
-                <option value="-12">총무부</option>
-              </select>
+              <input class="form-control" type="text" name="deptName"  value="${e.deptName}" readonly/>
             </div>
             <div class="mb-3 col-md-6">
               <label for="jobName" class="form-label">직위</label>
-              <select id="jobName" class="select2 form-select">
-                <option value="">부장</option>
-                <option value="-12">부장</option>
-                <option value="-12">차장</option>
-                <option value="-12">사원</option>
-              </select>
+              <input class="form-control" type="text" name="jobName"  value="${e.jobName}" readonly/>
             </div>
 
             <div class="mb-3 col-md-6">
-              <label for="organization" class="form-label">생년월일</label>
-              <input type="text" class="form-control" id="empReg" name="empReg" value="${e.empReg}" readonly/>
+              <label for="organization" class="form-label">주소</label>
+              <input type="text" class="form-control" id="address" name="address" value="${e.address}" readonly/>
             </div>
           
             <div class="mb-3 col-md-6">
@@ -133,30 +123,37 @@
             </div>
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
-              <select id="disabledYN" class="select2 form-select">
-    		   <option value="">N</option>
-    		 <option value="-12">Y</option>
-           	 </select>
+              <input type="text" class="form-control" id="disabledYN" name="disabledYN" value="${e.disabledYN}" readonly/>
             </div>
-                <div class="mb-3 col-md-6">
-              <label for="entYN" class="form-label">재직 여부</label>
-              <select id="entYN" class="select2 form-select">
-    		    <option value="-12">Y</option>
-    		   <option value="">N</option>
-           	 </select>
-            </div>
+               
            <div class="mb-3 col-md-6">
               <label for="organization" class="form-label">특이사항</label>
-              <input type="text" class="form-control" id="empNote" name="empNote" value=" ${e.empNote}" />
+              <input type="text" class="form-control" id="empNote" name="empNote" value=" ${e.empNote}" readonly/>
             </div> 
          
           </div>
           <div class="mt-2">
           <button type="submit" id="home" class="btn btn-primary me-3">목록으로</button>
-            <button type="submit" class="btn btn-primary me-2">수정하기</button>
-            <button type="reset" class="btn btn-outline-secondary">삭제하기</button>
+         
+            <button type="submit" class="btn btn-primary me-2" onclick="postFormSubmit(1);">수정하기</button>
+            <button type="reset" id ="o_butt" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">퇴사하기</button>
           </div>
-        </form>
+              
+			 <form id="postForm" action="" method="post">
+               <input type="hidden" name="eId" value="${e.empId}">
+            </form>
+		   <script>
+               function postFormSubmit(num){
+                  var postForm = $("#postForm");
+                  
+                  if(num == 1){
+                     postForm.attr("action", "updateEmpform.do");
+                  }else{
+                     postForm.attr("action", "retiredEmp.do");
+                  }
+                  postForm.submit();
+               }
+            </script>
       </div>
       <!-- /Account -->
     </div>
@@ -165,25 +162,15 @@
     </div>
   </div>
 </div>
-
-
-            
-          </div>
-
-
-          
+                 </div>
           <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
       </div>
       <!-- / Layout page -->
-   
-    
-    <!-- Overlay -->
-  
     
     
-	<jsp:include page="../common/bottom.jsp" />
+  <jsp:include page="../common/bottom.jsp" />
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>

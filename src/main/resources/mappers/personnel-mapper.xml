@@ -48,7 +48,7 @@
 		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
 		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
 		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
-		WHERE APV_YN= 'Y'
+		WHERE ENT_YN= 'Y'
         ORDER BY EMP_NAME
         </select>
         
@@ -59,8 +59,22 @@
 		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
 		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
 		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
-		WHERE A.EMP_NO = #{eId}
+		WHERE EMP_ID = #{eId}
         AND ENT_YN= 'Y'
         </select>
        
+       	<update id="updateEmpInfo" parameterType="Employee">
+		  UPDATE EMPLOYEE SET 
+	      EMP_ID= #{empId}, 
+	      PHONE= #{phone}, 
+	      ADDRESS= #{address}
+	      WHERE EMP_NO = #{empNo}
+      </update>
+      
+      <update id="deleteEmp" parameterType="string">
+		  UPDATE EMPLOYEE SET 
+	      ENT_DATE = NULL,
+	      ENT_YN = 'N'
+	      WHERE EMP_ID = #{eId}
+      </update>
 </mapper>

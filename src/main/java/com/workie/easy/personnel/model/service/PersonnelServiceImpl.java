@@ -46,23 +46,59 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 
 	@Override
-	public Employee updatePwd(Employee e) {
+	public Employee updatePwd(BCryptPasswordEncoder bCryptPasswordEncoder, Employee e, String originPwd,
+			String updatePwd) {
+		Employee selectEmp = empDao.loginEmp(sqlSession,e);	
+		//우선 직원부터 조회해오고
+		System.out.println("서비스 직원 조회 값" + selectEmp);
 		
-		int result = personnelDao.updatePwd(sqlSession, e);
-		System.out.println("kimkim" + result);
-		if(result > 0) { //업데이트가 성공적으로 되었다면
-			return e; //객체 e 반환
-		}else { //업데이트 실패시
-			throw new CommException("비밀번호 변경에 실패하였습니다."); 
+		if(!bCryptPasswordEncoder.matches(originPwd, selectEmp.getEmpPwd())){
+			/*rawPassword 평문 ,encodedPassword(암호화된 패스워드) 
+			  originPwd,selectEmp.getEmpPwd()비교해서 true,false로 나눠줌*/
+			throw new CommException("암호 불일치합니다.");
+		}
+		String encPwd = bCryptPasswordEncoder.encode(updatePwd);
+		selectEmp.setEmpPwd(encPwd);//암호화 된 새로운 비밀 번호를 넣어주고
+		
+		int result = personnelDao.updatePwd(sqlSession,selectEmp);
+		System.out.println("서비스 바뀐 비번 값" + result);
+	    if(result > 0 ) {
+			
+	    	Employee updateEmp = empDao.loginEmp(sqlSession,e);
+	    	System.out.println("서비스 바뀐 직원 모든 값" + updateEmp);
+			//새로 업데이트한 비번 담아 와서
+			return updateEmp;
+		}else{
+			throw new CommException("비밀번호 변경에 실패하였습니다.");
 		}
 	}
 
 	@Override
-	public Employee selectEmp(int eId) {
+	public Employee selectEmp(String eId) {
 		
 		Employee e = personnelDao.selectEmp(eId, sqlSession);
 		System.out.println("직원 상세 페이지 서비스" + e);
 		return e;
+	}
+
+	@Override
+	public void updateEmpInfo(Employee e) {
+		
+       int result = personnelDao.updateEmpInfo(e,sqlSession);
+		
+		if(result < 0 ) {
+			throw new CommException("직원 정보 수정에 실패하였습니다");
+		}
+	}
+
+	@Override
+	public void deleteEmp(String eId) {
+        
+		int result = personnelDao.deleteEmp(eId,sqlSession);
+		
+		if(result < 0 ) {
+			throw new CommException("직원 삭제에 실패하였습니다");
+		}
 	}
 
 }

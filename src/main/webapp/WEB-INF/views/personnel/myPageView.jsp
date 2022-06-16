@@ -131,31 +131,7 @@ picture-area{
 									<button type="button" class="cancle btn waves-effect waves-light btn-danger"> 목록으로</button>    
                             		</div>
                             	</form>
-             <div class="modal fade" id="passModal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">비밀번호 수정하기</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button> 
-            </div>
-
-            <form action="updatePwd.do" method="post">
-          
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <label for="origin" class="mr-sm-2">수정 전 비밀번호</label>
-                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="원래 비밀번호를 입력하세요." id="originPwd" name="originPwd"> <br>
-                    <label for="update" class="mr-sm-2">수정 할 비밀번호</label>
-                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="수정할 비밀번호를 입력하세요." id="updatePwd" name="updatePwd">
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
-                </div>
-            </form>
+            
             </div>
         </div>
     </div>

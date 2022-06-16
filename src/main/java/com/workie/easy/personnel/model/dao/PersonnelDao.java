@@ -21,14 +21,24 @@ public class PersonnelDao {
 	}
 
 
-	public int updatePwd(SqlSessionTemplate sqlSession, Employee e) {
+	public int updatePwd(SqlSessionTemplate sqlSession, Employee selectEmp) {
 		
-		return sqlSession.update("personnelMapper.updatePwd", e);
+		return sqlSession.update("personnelMapper.updatePwd", selectEmp);
 	}
 
-	public Employee selectEmp(int eId, SqlSessionTemplate sqlSession) {
+	public Employee selectEmp(String eId, SqlSessionTemplate sqlSession) {
 		
 		return sqlSession.selectOne("personnelMapper.selectEmp", eId);
+	}
+
+	public int updateEmpInfo(Employee e, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.update("personnelMapper.updateEmpInfo", e);
+	}
+
+	public int deleteEmp(String eId, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.update("personnelMapper.deleteEmp", eId);
 	}
 
 }

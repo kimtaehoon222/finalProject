@@ -38,32 +38,23 @@ public class PersonnelController {
 			                Model model) {
 		
 		Employee empInfo = personnelService.updateEmp(e);
-		
+
 		model.addAttribute("loginEmp", empInfo);
 		
 		 return "personnel/myPageView";//수정후 다시 마이페이지로
 	}
 	
 	 @RequestMapping(value="updatePwd.do",method=RequestMethod.POST)//비번 수정 페이지
-	 public String updatePwd(@RequestParam("originPwd") String originPwd,
+	 public String updatePwd(HttpSession session,
+			  				 @RequestParam("originPwd") String originPwd,
 			                 @RequestParam("updatePwd") String updatePwd, 
-			                 HttpSession session, Model model) {
-		  
-		 Employee e = (Employee)session.getAttribute("loginEmp");
-		 	System.out.println("jaehojaeho"+ e);
-		    //e.getEmpPwd(): db에 저장되어있는 현재 암호화된 비밀번호  originPwd : 입력한 비밀번호 
-			if(!bCryptPasswordEncoder.matches(originPwd, e.getEmpPwd())) {
-				//일치하지 않는 경우 
-				throw new CommException("비밀번호가 불일치 했습니다.");
-			}
-			
-			//originPwd 와 m.getUserPwd()가 일치한다면(위의 if문 pass시)
-			//새로운 비밀번호(updatePwd)를 암호화해준다. 
-			String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
+			                 Model model) {
 		    
-			e.setEmpPwd(updateEncPwd);
-			
-			Employee emp = personnelService.updatePwd(e);
+		    Employee e = (Employee) session.getAttribute("loginEmp");
+		    System.out.println("비밀번호 변경 세선 확인 " + e );
+		    System.out.println("비밀번호 변경 세선 확인 " + originPwd );
+		    System.out.println("비밀번호 변경 세선 확인 " + updatePwd );
+		    Employee emp = personnelService.updatePwd(bCryptPasswordEncoder,e,originPwd,updatePwd);
 			
 			model.addAttribute("loginEmp", emp);
 		    return "personnel/myPageView";
@@ -79,12 +70,36 @@ public class PersonnelController {
 	}
 	 
 	 @RequestMapping("detailEmp.do") 
-     public ModelAndView selectEmp(int eId , ModelAndView mv) {
-		
+     public ModelAndView selectEmp(String eId , ModelAndView mv) {
+		 
 		 Employee e = personnelService.selectEmp(eId);
 		 System.out.println("직원 상세 페이지 값"+ e);
 		 mv.addObject("e",e).setViewName("personnel/empDetailView");
 
 		 return mv;	
+	 }
+
+		  @RequestMapping("updateEmpform.do")//화면전환용
+	   public ModelAndView updateForm(String eId , ModelAndView mv) {
+		   
+		   mv.addObject("e", personnelService.selectEmp(eId))
+		   .setViewName("personnel/empUpdateForm");
+		   
+		   return mv;
+	   }
+	 @RequestMapping("updateEmpInfo.do")
+	 public ModelAndView updateEmpInfo(Employee e, ModelAndView mv) {
+		 
+		 personnelService.updateEmpInfo(e);
+		 return null;
+		 
+	 }
+	 
+	 @RequestMapping("retiredEmp.do")
+	 public String deleteEmp(String eId) {
+		 
+		 personnelService.deleteEmp(eId);
+		 
+		 return "redirect:empList.do";
 	 }
 }
