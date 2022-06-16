@@ -248,7 +248,7 @@
          
             <!-- Cards -->
             <li class="menu-item">
-              <a href="/" class="menu-link">
+              <a href="schedule.do" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Basic">일정 관리</div>
               </a>
@@ -439,6 +439,8 @@
                           <div class="flex-grow-1">
                             <span class="fw-semibold d-block"><%=loginEmp.getEmpName()%></span>
                             <small class="text-muted"><%=loginEmp.getDeptName()%> <%=loginEmp.getJobName()%></small>
+                            <!-- <span class="fw-semibold d-block">${loginEmp.empName}</span>
+                            <small class="text-muted">${loginEmp.deptName} ${loginEmp.jobName}</small> -->
                           </div>
                         </div>
                       </a>
