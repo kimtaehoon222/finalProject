@@ -101,18 +101,18 @@ a {
 												alt="user" class="rounded-circle" width="65">
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
 											
-													<p class="text-center m-auto" style="font-size:12px">김재호 사원</p>
+													<p class="text-center m-auto" style="font-size:18px">${loginEmp.empName} ${loginEmp.jobName}</p>
 												</div>
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
-													<p class="text-center m-auto" style="font-size:12px">총 연차</p>
+													<p class="text-center m-auto" style="font-size:18px">총 연차</p>
 													<p class="text-center m-auto text-primary">15</p>
 												</div>
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
-													<p class="text-center m-auto" style="font-size:12px">사용 연차</p>
+													<p class="text-center m-auto" style="font-size:18px">사용 연차</p>
 													<p class="text-center m-auto text-primary">0</p>
 												</div>
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
-													<p class="text-center m-auto" style="font-size:12px">잔여 연차</p>
+													<p class="text-center m-auto" style="font-size:18px">잔여 연차</p>
 													<p class="text-center m-auto text-primary">15</p>
 												</div>
 										
