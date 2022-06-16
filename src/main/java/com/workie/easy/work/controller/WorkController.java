@@ -33,7 +33,7 @@ public class WorkController {
 		Work w = workService.selectWork(empNo);
 		
 		mv.addObject("w", w);
-		mv.setViewName("work/workMainView");
+		mv.setViewName("work/workMainView2");
 
 		return mv;
 		
@@ -62,7 +62,7 @@ public class WorkController {
 		
 	}
 	
-	@ResponseBody
+
 	@RequestMapping("selectWorkList.do")
 	public ModelAndView selectWorkList2(HttpSession session, ModelAndView mv
 										, @RequestParam("year") int year
@@ -93,7 +93,7 @@ public class WorkController {
 		mv.addObject("year", year);
 		mv.addObject("month", month);
 		
-		mv.setViewName("work/workListView");
+		mv.setViewName("work/workListView2");
 		
 		return mv;
 	}

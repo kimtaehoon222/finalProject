@@ -62,7 +62,7 @@
 	
 	
 	<select id="selectWorkList" parameterType="Work" resultMap="workResultSet">
-		<![CDATA[
+			<![CDATA[
 			SELECT 
 			    WORK_NO,
 			    EMP_NO,
@@ -86,7 +86,33 @@
 			FROM
 			    WORK
 			WHERE EMP_NO = #{empNo}
+			AND (WORK_DATE BETWEEN NEXT_DAY((TRUNC(TO_DATE(#{strDate}, 'yy/MM/dd'),'MONTH')-7),'월') AND NEXT_DAY(LAST_DAY(TO_DATE(#{strDate}, 'yy/MM/dd'))-1, '일'))
 			
+			UNION
+			
+			SELECT 
+			    NULL,
+			    NULL,
+			    YMD WORK_DATE,
+			    NULL,
+			    NULL,
+			    NULL
+			FROM 
+			    (
+			    SELECT 
+			        NEXT_DAY((TRUNC(TO_DATE(#{strDate}, 'yy/MM/dd'),'MONTH')-7),'월')+(LEVEL - 1) YMD
+			    FROM 
+			        DUAL
+			    CONNECT BY NEXT_DAY((TRUNC(TO_DATE(#{strDate}, 'yy/MM/dd'),'MONTH')-7),'월')+(LEVEL-1) <= NEXT_DAY(LAST_DAY(TO_DATE(#{strDate}, 'yy/MM/dd'))-1, '일')
+			    )
+			WHERE YMD NOT IN (
+			    SELECT
+			        TO_CHAR(WORK_DATE,'YY/MM/DD')
+			    FROM
+			        WORK
+			    WHERE EMP_NO = #{empNo}
+			)
+			ORDER BY WORK_DATE
 		]]>
 	</select>
 </mapper>
