@@ -1,5 +1,6 @@
 package com.workie.easy.schedule.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +21,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleDao skedDao;
 
 	@Override
-	public List<Map<String, Schedule>> scheduleList() {
+	public ArrayList<Schedule> scheduleList(int empNo) {
 		
-		return skedDao.scheduleList(sqlSession);
+		return skedDao.scheduleList(sqlSession, empNo);
 	}
 	
 	@Override
-	public List<Schedule> scheduleList2() {
+	public ArrayList<Schedule> scheduleList2() {
 		
 		return skedDao.scheduleList2(sqlSession);
 	}

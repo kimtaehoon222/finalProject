@@ -1,64 +1,73 @@
 //<!---------------------------------------------달력----------------------------------------------------------------->
-var initialLocaleCode = 'ko';
-var calendarEl = document.getElementById('comb_calendar');
-// var pCalendarEl = document.getElementById('p_calendar');
-
-var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
-        center: '',
-        end: 'today dayGridMonth,timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
-    },
-    locale: initialLocaleCode,
-    slotMinTime: '08:00',
-    slotMaxTime: '24:00:00',
-    businessHours: true,
-    // navLinks: true,
-    editable: true,
-    droppable: true, // this allows things to be dropped onto the calendar
-    drop: function(info) {
-        // is the "remove after drop" checkbox checked?
-        if (checkbox.checked) {
-        // if so, remove the element from the "Draggable Events" list
-        info.draggedEl.parentNode.removeChild(info.draggedEl);
-        }
-    },
-    dateClick: function(e) { //날짜 클릭 이벤트
-        // alert('a day has been clicked!');
-        console.log(e.dateStr);//선택한 날짜 콘솔에 출력 -> 상세조회 가능할듯
-    },
-    eventClick:function(e){
-        console.log(e.event.title); //클릭한 이벤트의 제목
-        console.log(e.event.id); //클릭한 이벤트의 id -> 일정 숫자로 지정해야겠음
-    },
-
-    // timeZone: 'UTC',
-    //임의로 이벤트 추가1
-    events: [
-        {id: 'a', title: '테스트2', start: '2022-06-12'}
-    ]
-});
-
-// var pCalendar = new FullCalendar.Calendar(pCalendarEl, {
-//     initialView: 'listDay',
-// });
-
-//아이디가 'a'인 이벤트 발생하면 콘솔창에 이벤트 시작 시간 출력
-var event = calendar.getEventById('a') // an event object!
-var start = event.start // a property (a Date object)
-console.log(start.toISOString()) // "2018-09-01T00:00:00.000Z"
-
-
-//임의로 이벤트 추가2
-calendar.addEvent( {'title':'테스트', 'start':'2022-06-10', 'end':'2022-06-11'});
-
-calendar.on('dateClick', function(info) { //날짜 클릭 후 콘솔 출력
-    console.log('clicked on ' + info.dateStr);
-});
-
-//캘린더 랜더링
-calendar.render();
+//var initialLocaleCode = 'ko';
+//var calendarEl = document.getElementById('comb_calendar');
+//// var pCalendarEl = document.getElementById('p_calendar');
+//
+//var calendar = new FullCalendar.Calendar(calendarEl, {
+//    initialView: 'dayGridMonth',
+//    headerToolbar: {
+//        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
+//        center: '',
+//        end: 'today dayGridMonth,timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
+//    },
+//    locale: initialLocaleCode,
+//    slotMinTime: '08:00',
+//    slotMaxTime: '24:00:00',
+//    businessHours: true,
+//    // navLinks: true,
+//    editable: true,
+//    droppable: true, // this allows things to be dropped onto the calendar
+//    drop: function(info) {
+//        // is the "remove after drop" checkbox checked?
+//        if (checkbox.checked) {
+//        // if so, remove the element from the "Draggable Events" list
+//        info.draggedEl.parentNode.removeChild(info.draggedEl);
+//        }
+//    },
+//    dateClick: function(e) { //날짜 클릭 이벤트
+//        // alert('a day has been clicked!');
+//        console.log(e.dateStr);//선택한 날짜 콘솔에 출력 -> 상세조회 가능할듯
+//    },
+//    eventClick:function(e){
+//        console.log(e.event.title); //클릭한 이벤트의 제목
+//        console.log(e.event.id); //클릭한 이벤트의 id -> 일정 숫자로 지정해야겠음
+//    },
+//
+//    // timeZone: 'UTC',
+//    //임의로 이벤트 추가1
+//    events: [
+//    	<%ArrayList<Schedule> ScheduleList = (ArrayList<Schedule>)request.getAttribute("schedule");%>
+//    	<%if (ScheduleList != null) {%>
+//	        <%for (Schedule s : ScheduleList) {%>
+//		        {
+//		        	title : '<%=s.getskedTitle()%>',
+//		            start : '<%=s.getskedStart()%>',
+//		            end : '<%=s.getskedEnd()%>'
+//		         },
+//			<%}
+//		}%>
+//    ]
+//});
+//
+//// var pCalendar = new FullCalendar.Calendar(pCalendarEl, {
+////     initialView: 'listDay',
+//// });
+//
+////아이디가 'a'인 이벤트 발생하면 콘솔창에 이벤트 시작 시간 출력
+//var event = calendar.getEventById('a') // an event object!
+//var start = event.start // a property (a Date object)
+//console.log(start.toISOString()) // "2018-09-01T00:00:00.000Z"
+//
+//
+////임의로 이벤트 추가2
+//calendar.addEvent( {'title':'테스트', 'start':'2022-06-10', 'end':'2022-06-11'});
+//
+//calendar.on('dateClick', function(info) { //날짜 클릭 후 콘솔 출력
+//    console.log('clicked on ' + info.dateStr);
+//});
+//
+////캘린더 랜더링
+//calendar.render();
 //<!---------------------------------------------달력----------------------------------------------------------------->
 
 

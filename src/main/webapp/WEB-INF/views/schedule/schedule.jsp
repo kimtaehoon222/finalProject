@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList" import="com.workie.easy.schedule.model.dto.Schedule"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +14,10 @@
 
 <link href='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.css' rel='stylesheet' />
 <!-------------------------------------------------------------------------------------------------------------->
+
 </head>
 <body>
 	<jsp:include page="../common/top.jsp"/>
-	
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<!-- Layout Demo -->
 		<!------------------------------------------------------------------->
@@ -158,7 +160,7 @@
 			                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                       			취소
 			                  </button>
-			                  <button type="submit" class="btn btn-primary" id="sked_insert_btn">등록</button>
+			                  <button type="button" class="btn btn-primary" id="sked_insert_btn" onclick="sked_submit()">등록</button>
 			              </div>
 			          </div>
 			          </div>
@@ -287,6 +289,81 @@
 		<!-- Pills -->
 		<!-----------------------------달력 스크립트-------------------------------------->
 		<script src='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.js'></script>
+		
+		<script>
+			var skedList;
+			$.ajax({
+				  url: "skedSelectList.do?empNo=${loginEmp.empNo}",
+				  //url: "${pageContext.request.contextPath}/resources/jje_css/test.json",
+				  type: "GET",
+				  dataType: "JSON",
+				  success : function(sked){
+					  //alert("연결됨");
+					  skedList = sked;
+					  console.log(skedList);
+				  },
+				  error : function(sked){
+					    //alert(xhr.responseText);
+					  alert('데이터 로딩 실패<br>새로고침 해주세요');
+				  }
+			});
+			
+			document.addEventListener('DOMContentLoaded', function() {
+				var calendarEl = document.getElementById('comb_calendar');
+				// var pCalendarEl = document.getElementById('p_calendar');
+			
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+				    initialView: 'dayGridMonth',
+				    headerToolbar: {
+				        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
+				        center: '',
+				        end: 'today dayGridMonth,timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
+				    },
+				    locale: 'ko',
+				    slotMinTime: '08:00',
+				    slotMaxTime: '24:00:00',
+				    businessHours: true,
+				    dayMaxEventRows: true,
+				    dateClick: function(e) { //날짜 클릭 이벤트
+				        //skedDayList(e);	//선택 일자 간편 조회 이벤트 
+				        console.log(e.dateStr);//선택한 날짜 콘솔에 출력 -> 상세조회 가능할듯
+				    },
+				    eventClick:function(e){
+				    	//skedDetail(e);	//선택일정 상세조회 모달 이벤트
+				        console.log(e.event.title); //클릭한 이벤트의 제목
+				        console.log(e.event.id); //클릭한 이벤트의 id -> 일정 숫자로 지정해야겠음
+				    },
+				    events:skedList
+				    /*[
+				    	<c:if test="${not empty scheduleList}">
+				    		<c:forEach items="${scheduleList}" var="s">
+				    	{
+					    	id: '${s.skedNo}',
+					    	title: '${s.skedTitle}',
+					    	start: '${s.skedStart}',
+					    	end: '${s.skedEnd}',
+					    	color: 'rgb(${s.rgbCode})',
+				    	},
+				    		</c:forEach>
+				    	</c:if>
+				    ]*/
+				});
+			
+				//아이디가 'a'인 이벤트 발생하면 콘솔창에 이벤트 시작 시간 출력
+				//var event = calendar.getEventById('a') // an event object!
+				//var start = event.start // a property (a Date object)
+				//console.log(start.toISOString()) // "2018-09-01T00:00:00.000Z"
+			
+				calendar.on('dateClick', function(info) { //날짜 클릭 후 콘솔 출력
+				    console.log('clicked on ' + info.dateStr);
+				});
+			
+				//캘린더 랜더링
+				calendar.render();
+			});
+			
+		</script>
+		
 		<!-----------------------------달력 스크립트-------------------------------------->
 	
 	<!------------------------------------------------------------------->

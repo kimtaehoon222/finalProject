@@ -1,5 +1,6 @@
 package com.workie.easy.schedule.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,15 +12,15 @@ import com.workie.easy.schedule.model.dto.Schedule;
 @Repository
 public class ScheduleDao {
 
-	public List<Map<String, Schedule>> scheduleList(SqlSessionTemplate sqlSession) {
+	public ArrayList<Schedule> scheduleList(SqlSessionTemplate sqlSession, int empNo) {
 		
-//		return sqlSession.selectList("skedMapper.scheduleList");
-		return null;
+		return (ArrayList)sqlSession.selectList("skedMapper.scheduleList", empNo);
+//		return null;
 		
 	}
 
-	public List<Schedule> scheduleList2(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectList("skedMapper.scheduleList");
+	public ArrayList<Schedule> scheduleList2(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("skedMapper.scheduleList");
 	}
 
 }

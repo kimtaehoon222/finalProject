@@ -27,18 +27,60 @@ html, body {
 .fc .fc-toolbar-title{
     display: inline-block;
     vertical-align: middle;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child){
     margin: 0px 5px;
     
 }
+
+.fc .fc-header-toolbar .fc-prev-button{
+	font-size: 10px;
+    width: 23px;
+    height: 25px;
+    padding: 0;
+    text-align: center;
+}
+.fc .fc-header-toolbar .fc-next-button{
+	font-size: 10px;
+    width: 23px;
+    height: 25px;
+    padding: 0;
+    text-align: center;
+}
+
 .fc .fc-button{
     /* width: 35px; */
-    height: 35px;
+    height: 33px;
     padding: 0px 5px;
 }
+
+
+/*.fc .fc-dayGridMonth-button,.fc .fc-timeGridWeek-button,.fc .fc-listWeek-button{
+     color: #cb7b7b;
+    background-color: #ffffff;
+    border-color: #c3c3c3;
+}
+.fc .fc-button-primary:hover {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: #1e2b37;
+    background-color: var(--fc-button-hover-bg-color, #1e2b37);
+    border-color: #1a252f;
+    border-color: var(--fc-button-hover-border-color, #1a252f);
+}
+
+.fc .fc-button-primary:hover {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: #1e2b37;
+    background-color: var(--fc-button-hover-bg-color, #1e2b37);
+    border-color: #1a252f;
+    border-color: var(--fc-button-hover-border-color, #1a252f);
+}
+
+*/
 
 /* 달력 날짜 위치 */
 .fc .fc-daygrid-day-top {

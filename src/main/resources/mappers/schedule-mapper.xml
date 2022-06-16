@@ -12,13 +12,32 @@
 		<result property="skedPlace" column="SKED_PLACE"/>
 		<result property="skedMemo" column="SKED_MEMO"/>
 		<result property="skedStart" column="SKED_START"/>
+		<result property="skedStartTime" column="SKED_START_TIME"/>
 		<result property="skedEnd" column="SKED_END"/>
+		<result property="skedEndTime" column="SKED_END_TIME"/>
 		<result property="skedCName" column="SKED_C_NAME"/>
 		<result property="rgbCode" column="RGB_CODE"/>
 		<result property="colorName" column="COLOR_NAME"/>
 	</resultMap>
 	
-	<select id="scheduleList" resultMap="scheduleResultSet">
-		SELECT * FROM SCHEDULE
+	<select id="scheduleList" parameterType="_int" resultMap="scheduleResultSet">
+		SELECT
+		       A.SKED_NO
+		     , A.SKED_CODE
+		     , A.SKED_TITLE
+		     , A.SKED_CONTENT
+		     , A.SKED_STATUS
+		     , A.SKED_PLACE
+		     , A.SKED_MEMO
+		     , TO_CHAR(B.SKED_START, 'YYYY-MM-DD') AS SKED_START
+		     , B.SKED_START_TIME
+		     , TO_CHAR(B.SKED_END, 'YYYY-MM-DD') AS SKED_END
+		     , B.SKED_END_TIME
+		     , C.RGB_CODE
+		  FROM SCHEDULE A
+		  JOIN SCHEDULE_INFO B ON(A.SKED_NO=B.SKED_NO)
+		  JOIN SCHEDULE_COLOR C ON(A.COLOR_CODE=C.COLOR_CODE)
+		 WHERE A.SKED_STATUS = 'Y'
+		   AND A.EMP_NO = #{empNo}
 	</select>
 </mapper>
