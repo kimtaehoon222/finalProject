@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.workie.easy.employee.model.dto.Employee" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+	String contextPath = request.getContextPath();
+	Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>메일 상세보기</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -30,6 +34,7 @@
 
    <jsp:include page="../common/top.jsp"/>
 
+	<form>
 	<div class="container-xxl flex-grow-1 container-p-y">
 
 		<div class="page-heading email-application">
@@ -59,9 +64,7 @@
 							<div class="email-app-menu">
 								<div class="form-group form-group-compose">
 									<!-- 작성하기 버튼  -->
-									<button type="button"
-										class="btn btn-primary btn-block my-4 compose-btn">
-										작성하기</button>
+									<a href="mailSendForm.do" class="btn btn-primary btn-block my-4 compose-btn" id="center">작성하기</a>
 								</div>
 
 								<div class="sidebar-menu-list ps">
@@ -128,15 +131,9 @@
 												<ul class="list-inline m-0 d-flex">
 													<li class="list-inline-item mail-delete">
 														<!-- 발송취소 및 삭제(휴지통) 버튼 -->
-														<button type="button" class="btn action-icon ">
-                                                            	답장
-														</button>
-														<button type="button" class="btn action-icon">
-                                                            	전달
-														</button>
-														<button type="button" class="btn action-icon">
-                                                            	삭제
-														</button>
+														<button type="button" class="btn btn-outline-primary mt-2" id="replyMail">답장</button>
+														<button type="button" class="btn btn-outline-primary mt-2" id="forwardMail">전달</button>
+														<button type="button" class="btn btn-outline-primary mt-2">삭제</button>
 													</li>
 												</ul>
 											</div>
@@ -151,45 +148,57 @@
         <form id="formAccountSettings" method="POST" onsubmit="return false">
         
           <!-- 메일 정보 영역 시작 -->
+		  <input type="hidden" id="mailNo" name="mailNo" value="${ mail.mailNo }">
           <div class="row">
           	<div class="col-md-12">
-              <b class="text-danger">[중요]</b>
+              <b class="text-danger">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
             </div>
             
             <!-- 제목 영역 -->
-          	<h3>안녕하세요. 신입사원 김태훈 입니다.</h3>
-          	
+          	<h3>${ mail.title }</h3>
           	<hr>
           	
           	<!-- 발신인/수신인/참조인 영역 -->
-            <div class="mb-1 col-md-12">
-              <label for="firstName" class="form-label">보낸사람 : </label>
-              <span>tae123@easy.co.kr</span>
+            <div class="mb-1 col-md-12 toFromMaill">
+              <label for="firstName" class="form-label">발신 : </label>
+              <span class="badge rounded-pill bg-label-info">
+              	${ mail.fromName }
+              <input type="hidden" name="" id="fromMail" value="${ mail.fromMail}"/>
+              </span>
             </div>
-            <div class="mb-1 col-md-12">
-              <label for="firstName" class="form-label">받는사람 : </label>
-              <span>jisu123@easy.co.kr</span>
+            <div class="mb-1 col-md-12 toFromMaill">
+              <label for="firstName" class="form-label">수신 : </label>
+              <span class="badge rounded-pill bg-label-primary">
+                 ${ mail.toName }
+                 <input type="hidden" name="" id="toMail" value="${ mail.toMail}"/>
+              </span>
             </div>
             <div class="mb-1 col-md-12">
               <label for="lastName" class="form-label">참조 : </label>
-              <span>je123@easy.co.kr, bin123@easy.co.kr, hoho123@easy.co.kr</span>
+              <c:forEach items="${ ccList }" var="cc">
+              	<span class="badge rounded-pill bg-label-warning">
+              		${ cc.ccName }
+              		<input type="hidden" name="" value="${ cc.ccMail}"/>
+              	</span>
+              </c:forEach>
             </div>
+            <input type="hidden" name="" id="ccMail" value="${ mail.ccMail}"/>
             
             <hr>
             <!-- 내용 영역 -->
-            <div class="mb-2 col-md-2" style="height: 300px;">
-            	잘 부탁드립니다. ^^
+            <div class="mb-2 col-md-12" style="height: 300px;">
+            	${ mail.content }
             </div>
            
            	<hr>
-            <div class="mb-2 col-md-2">
-            <!-- <c:if test="${ !empty b.originName }">
-            	<a href="${ pageContext.servletContext.contextPath }/resources/upload_files/${b.changeName}" download="${ b.originName }">${ b.originName }</a>
-            </c:if>
-            <c:if test="${ empty b.originName }">
-            	첨부파일이 없습니다.
-            </c:if> -->
-           		 첨부파일이 없습니다.
+           	
+            <div class="mb-2 col-md-12">
+	            <c:if test="${ !empty mail.changeName }">
+	            	<a href="${ pageContext.servletContext.contextPath }/resources/mail_files/${mail.changeName}" download="${ mail.changeName }"> ${ mail.originName }</a>
+	            </c:if>
+	            <c:if test="${ empty mail.changeName }">
+	            	첨부파일이 없습니다.
+	            </c:if> 
             </div>
             
           </div>
@@ -211,6 +220,7 @@
 			</section>
 		</div>
 	</div>
+	</form>
 
 	<script
 		src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -218,6 +228,25 @@
 		src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	
+	<script type="text/javascript">
+
+		$('#replyMail').click(function () {
+		      
+	       var mailNo = $('#mailNo').val();
+           location.href="mailReplyForm.do?mailNo="+mailNo;
+	        
+	     })
+	     
+		$('#forwardMail').click(function () {
+		      
+	       var mailNo = $('#mailNo').val();
+           location.href="mailForwardForm.do?mailNo="+mailNo;
+	        
+	     })
+		
+	</script>
+
 
    <jsp:include page="../common/bottom.jsp"/>
    

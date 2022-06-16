@@ -88,7 +88,7 @@
                                         		</svg>
 											</div> 예약 메일함 
 										</a> 
-										<a href="deleteMailList.do?delete=d" class="list-group-item">
+										<a href="deleteMailList.do?delete=d" class="list-group-item text-primary">
 											<div class="fonticon-wrap d-inline me-3">
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
@@ -204,13 +204,14 @@
 										<!-- 메일 리스트 상단 끝 -->
 
 										<!-- 메일 리스트 하단 시작 -->
-										<div class="email-user-list list-group ps ps--active-y">
+										<div class="email-user-list list-group ps ps--active-y" id="mailList">
 											<c:if test="${ !empty list  }">
 											<!-- 메일 리스트 시작 -->
 											<ul class="users-list-wrapper media-list">
 												<!-- 메일 1개 시작 -->
 												<c:forEach items="${ list }" var="mail">
 												<li class="media mail-read">
+												<input type="hidden" value="${ mail.mailNo }">
 													<!-- 체크박스 및 중요표시 -->
 													<div class="user-action">
 														<div class="checkbox-con me-3">
@@ -314,6 +315,12 @@
 				}
 			})
 			
+		})
+		
+		$(function () {
+			$('#mailList ul li').click(function () {
+				location.href="detailDeleteMail.do?mailNo="+$(this).children().eq(0).val();
+			})
 		})
 	</script>
 

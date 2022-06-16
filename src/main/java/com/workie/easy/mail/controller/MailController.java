@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.common.CommException;
 import com.workie.easy.employee.model.dto.Employee;
@@ -32,7 +33,8 @@ import com.workie.easy.mail.model.service.MailService;
 * 
 * History
 * 2022/06/13 (김지수) insert 구현
-* 2022/06/
+* 2022/06/14~15 (김지수) selectList 구현
+* 2022/06/15 (김지수) selectDetail 구현
 * </pre>
 * @version 1.0(클래스의 버전)
 * @author 김지수
@@ -58,10 +60,87 @@ public class MailController {
 		return "mail/mailSendForm"; 
 	}
 	
+	/* 메일 작성 양식(답장용) 화면 전환 */
+	@RequestMapping("mailReplyForm.do")
+	public String replyMailForm(int mailNo, Model model, HttpSession session) {
+		
+		/* 로그인 회원의 회원번호 */
+		int fromMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		/* 원본 메일의 정보 */
+		Mail mail = mailService.selectDetailMailForReply(mailNo);
+		
+		/* 원본 메일의 발신인(from)과 수신인(to). "이름" */
+		String originFromName = mail.getFromName();
+		String originToName = mail.getToName();
+				
+		/* 원본 메일의 발신인, 답장시 답장받을 수신인(to) "회원번호" */
+		int toReply;
+		
+		/* 수신-발신 메일 여부에 따라 답장 수신인이 다르다 */
+		if(fromMail == mail.getFromMail()) {
+			
+			/* 발신 메일 : "내가" 해당 메일을 보냈던 사람에게 답장 */
+			toReply = mail.getToMail();
+		}else {
+			
+			/* 수신 메일 : "나에게" 해당 메일을 보냈던 사람에게 답장 */
+			toReply = mail.getFromMail();
+		}
+		
+		/* 참조인과 제목은 동일 수신-발신 메일 상관없이 동일 */ 
+		String ccMail = mail.getCcMail();
+		String ccTitle = "[RE:]" + mail.getTitle();
+		String ccContent = "\n\n\n-----원본메일----\n" 
+							+ "| 보낸사람 : " + originFromName + "<" + mail.getFromId() + ">" + "\n"
+							+ "| 받는사람 : " + originToName + "<" + mail.getToId() + ">" + "\n"
+							+ "| 날짜 : "	+ mail.getSendDate() + "\n"
+							+ "| 제목 : "	+ mail.getTitle() + "\n"
+							+ mail.getContent();
+							
+		model.addAttribute("toReply", toReply);
+		model.addAttribute("ccMail", ccMail);
+		model.addAttribute("ccTitle", ccTitle);
+		model.addAttribute("ccContent", ccContent);
+		
+		/* 작성하기 화면으로 전환하면서 model에 담겨있는 데이터까지 보내준다. */
+		return "mail/mailSendForm"; 
+	}
+	
+	/* 메일 작성 양식(전달용) 화면 전환 */
+	@RequestMapping("mailForwardForm.do")
+	public String forwardMailForm(int mailNo, Model model, HttpSession session) {
+		
+		Mail mail = mailService.selectDetailMailForReply(mailNo);
+		
+		String ccTitle = "[FW:]" + mail.getTitle();
+		
+		model.addAttribute("ccTitle", ccTitle);
+		
+		/* 작성하기 화면으로 전환하면서 model에 담겨있는 데이터까지 보내준다. */
+		return "mail/mailSendForm"; 
+	}
+	
 	/* 메일 전송 */
 	@RequestMapping("insertMail.do")
 	public String insertMail(@ModelAttribute Mail mail, HttpServletRequest request, 
 							 @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+
+		
+		/* 기본 view : 아래에서 예약여부가 Y이면 view 경로 변경 */ 
+		String view = "redirect:sendMailList.do";
+		
+		/* 내용 */
+		String changeContent = mail.getContent().replace("\n", "<br>");
+		mail.setContent(changeContent);
+		
+		/* 예약여부 확인 : 예약여부에 따른 stateCode 값 및 view 지정 */
+		if(mail.getReserveYn().equals("Y")) {
+			mail.setStateCode("EP");
+			view = "redirect:reserveMailList.do";
+		}else {
+			mail.setStateCode("FN");
+		}
 		
 		/* 파일 첨부여부 확인 */
 		if(!file.getOriginalFilename().equals("")) {
@@ -77,7 +156,7 @@ public class MailController {
 		
 		mailService.insertMail(mail);
 		
-		return "mail/mailSendListView"; 
+		return view; 
 	}
 	
 	/* 파일을 업로드(저장) 하고, 수정된 파일명을 반환 */
@@ -109,7 +188,7 @@ public class MailController {
 			file.transferTo(new File(savePath+changeName));
 		} catch (IllegalStateException | IOException e) { 
 			e.printStackTrace();
-			throw new CommException("파일 업로드에 실패 하였습니다. 관리자에게 문의 바랍니다.");
+			throw new CommException("파일 업로드에 실패 하였습니다.관리자에게 문의 바랍니다.");
 		}
 		
 		return changeName; 
@@ -217,6 +296,66 @@ public class MailController {
 		return "mail/mailDeleteListView"; 
 	}
 	
+	/* 메일 상세 조회 : 받은, 보낸, 예약 */
+	@RequestMapping("detailMail.do")
+	public ModelAndView selectDetailMail(int mailNo, ModelAndView mv, HttpSession session) {
+		
+		int loginEmpNo = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		int toMail = selectToMail(mailNo);
+		
+		Mail mail = mailService.selectDetailMail(mailNo, loginEmpNo, toMail);
+
+		/* 참조인 list 조회 */
+		ArrayList<Mail> ccList = mailService.selectCcMembers(mail.getCcMail()); 
+		
+		if(!ccList.isEmpty()) {
+			
+			/* 참조인 list가 있는 경우 */ 
+			mv.addObject("mail", mail).addObject("ccList", ccList);
+		}else {
+		
+			/* 참조인 list가 없는 경우 */ 
+			mv.addObject("mail", mail);
+		}
+		
+		mv.setViewName("mail/mailDetailView");
+		
+		return mv; 
+	}
 	
+	/* 내부 메소드 : 받는사람조회 */
+	private int selectToMail(int mailNo) {
+		
+		int toMail = 0;
+		toMail = mailService.selectToMail(mailNo);
+				
+		return toMail; 
+	}
 	
+	/* 메일 상세 조회 : 휴지통 */
+	@RequestMapping("detailDeleteMail.do")
+	public ModelAndView selectDetailDeleteMail(int mailNo, ModelAndView mv, HttpSession session) {
+		
+		int loginEmpNo = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		int toMail = selectToMail(mailNo);
+		
+		Mail mail = mailService.selectDetailDeleteMail(mailNo, loginEmpNo, toMail);
+
+		/* 참조인 list 조회 */
+		ArrayList<Mail> ccList = mailService.selectCcMembers(mail.getCcMail()); 
+
+		if(!ccList.isEmpty()) {
+			
+			/* 참조인 list가 있는 경우 */ 
+			mv.addObject("mail", mail).addObject("ccList", ccList);
+		}else {
+			
+			/* 참조인 list가 없는 경우 */ 
+			mv.addObject("mail", mail);
+		}
+		
+		mv.setViewName("mail/mailDetailView");
+		
+		return mv; 
+	}
 }

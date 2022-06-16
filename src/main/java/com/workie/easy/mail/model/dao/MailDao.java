@@ -17,7 +17,8 @@ import com.workie.easy.mail.model.dto.MailType;
 * 
 * History
 * 2022/06/13 (김지수) insert 구현
-* 2022/06/
+* 2022/06/14~15 (김지수) selectList 구현
+* 2022/06/15 (김지수) selectDetail 구현
 * </pre>
 * @version 1.0(클래스의 버전)
 * @author 김지수
@@ -69,5 +70,36 @@ public class MailDao {
 
 		return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteMailList", toFromMail, rowBounds);
 	}
+
+	public int updateReceiveCheck(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.update("mailMapper.updateReceiveCheck", mailNo);
+	}
+
+	public Mail selectDetailMail(SqlSession sqlSession, int mailNo) {
+
+		return sqlSession.selectOne("mailMapper.selectDetailMail", mailNo);
+	}
+
+	public ArrayList<Mail> selectCcMembers(SqlSession sqlSession, String ccMail) {
+
+		return (ArrayList)sqlSession.selectList("mailMapper.selectCcMembers", ccMail);
+	}
+
+	public int selectToMail(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.selectOne("mailMapper.selectToMail", mailNo);
+	}
+
+	public Mail selectDetailDeleteMail(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.selectOne("mailMapper.selectDetailDeleteMail", mailNo);
+	}
+
+	public Mail selectDetailMailForReply(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.selectOne("mailMapper.selectDetailMailForReply", mailNo);
+	}
+
 	
 }

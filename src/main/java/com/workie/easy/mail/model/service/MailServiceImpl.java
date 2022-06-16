@@ -19,7 +19,8 @@ import com.workie.easy.mail.model.dto.MailType;
 * 
 * History
 * 2022/06/13 (김지수) insert 구현
-* 2022/06/
+* 2022/06/14~15 (김지수) selectList 구현
+* 2022/06/15 (김지수) selectDetail 구현
 * </pre>
 * @version 1.0(클래스의 버전)
 * @author 김지수
@@ -73,5 +74,77 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Mail> selectDeleteMailList(int toFromMail, MailPageInfo mpi) {
 		
 		return mailDao.selectDeleteMailList(sqlSession, toFromMail, mpi);
+	}
+
+	@Override
+	public Mail selectDetailMail(int mailNo, int loginEmpNo, int toMail) {
+		
+		Mail mail = null;
+		
+		/* 수신 확인 업데이트 */
+		int result = 0;
+		
+		/* 로그인한 회원과 해당 메일의 수신인이 같은 경우에만 수신확인 쿼리 실행한다.
+		 * 로그인한 회원과 해당 메일의 수신인이 다른 경우(즉, 보낸 메일함이나 예약 메일함에서 상세조회시)에는 수신확인 쿼리를 실행하면 안된다. */
+		if(loginEmpNo == toMail) {
+			result = mailDao.updateReceiveCheck(sqlSession, mailNo);
+		}else {
+			result = 1;
+		}
+		
+		/* 위의 if문에서 정상 update 되거나, 위의 else문을 통해 1을 받아야만 else 구문 실행 */
+		if(result < 0) {
+			throw new CommException("메일 확인에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}else {
+			mail = mailDao.selectDetailMail(sqlSession, mailNo);
+		}
+
+		/* 수신 확인 업데이트 실패시 null 반환 */
+		return mail; 
+	}
+
+	@Override
+	public ArrayList<Mail> selectCcMembers(String ccMail) {
+
+		return mailDao.selectCcMembers(sqlSession, ccMail);
+	}
+
+	@Override
+	public int selectToMail(int mailNo) {
+
+		return mailDao.selectToMail(sqlSession, mailNo);
+	}
+
+	@Override
+	public Mail selectDetailDeleteMail(int mailNo, int loginEmpNo, int toMail) {
+		
+		Mail mail = null;
+		
+		/* 수신 확인 업데이트 */
+		int result = 0;
+		
+		/* 로그인한 회원과 해당 메일의 수신인이 같은 경우에만 수신확인 쿼리 실행한다.
+		 * 로그인한 회원과 해당 메일의 수신인이 다른 경우(즉, 보낸 메일함이나 예약 메일함에서 상세조회시)에는 수신확인 쿼리를 실행하면 안된다. */
+		if(loginEmpNo == toMail) {
+			result = mailDao.updateReceiveCheck(sqlSession, mailNo);
+		}else {
+			result = 1;
+		}
+		
+		/* 위의 if문에서 정상 update 되거나, 위의 else문을 통해 1을 받아야만 else 구문 실행 */
+		if(result < 0) {
+			throw new CommException("메일 확인에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}else {
+			mail = mailDao.selectDetailDeleteMail(sqlSession, mailNo);
+		}
+
+		/* 수신 확인 업데이트 실패시 null 반환 */
+		return mail; 
+	}
+
+	@Override
+	public Mail selectDetailMailForReply(int mailNo) {
+	
+		return mailDao.selectDetailMailForReply(sqlSession, mailNo); 
 	}
 }
