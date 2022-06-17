@@ -1,14 +1,15 @@
 package com.workie.easy.sign.controller;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.sign.model.service.SignService;
@@ -28,15 +29,15 @@ public class SignController {
 	}
 	
 	/* 결재선 지정 조회 */
-	
-	@RequestMapping(value = "selectList.do", method = RequestMethod.POST)
+/*	
+	@RequestMapping("selectList.do")
 	@ResponseBody
 	public ModelAndView selectSign(Locale locale, ModelAndView mv) {
 		System.out.println("찍히는지 테스트222");
 		
-		/*
-		Employee semp = signService.sEmp(sEmp);
-		*/
+		
+		//Employee semp = signService.sEmp(sEmp);
+		
 		
 		ArrayList<Employee> list = signService.selectList();
 		
@@ -46,5 +47,40 @@ public class SignController {
 		
 		return mv;
 	}
+*/
+	
+	@ResponseBody
+	@RequestMapping(value="selectList.do",method=RequestMethod.POST)
+	public JSONArray selectSign() {
+		System.out.println("찍히는지 테스트222");
+		
+		
+		//Employee semp = signService.sEmp(sEmp);
 
+		ArrayList<Employee> list = signService.selectList();
+		
+		JSONArray jArr = new JSONArray();
+		JSONObject jsonList = null;
+		
+		
+		System.out.println("list에 담긴 값 :" + list);
+		
+		System.out.println("jsonList 에 담긴 값"  + jsonList);
+		
+		
+	for(Employee emp : list) { //추가한거
+		
+		jsonList = new JSONObject();	
+		
+		jsonList.put("deptName", emp.getDeptName()); //부서이름
+		jsonList.put("empName", emp.getEmpName()); //이름
+		jsonList.put("jobName", emp.getJobName()); //직급
+
+		jArr.add(jsonList); 
+		}//향상된 for문 닫기 
+	
+	System.out.println("jArr에 담긴 값 " + jArr);
+	return jArr;
+
+	}
 }

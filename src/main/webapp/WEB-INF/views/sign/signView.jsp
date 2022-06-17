@@ -14,7 +14,7 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 
-<title>Insert title here</title>
+<title>결재함</title>
 <style>
 
 
@@ -350,35 +350,18 @@
                  <!-- 예약 메일 여부에 대한 y/n 데이터를 넘겨주는 hidden input -->
              		<br>
              		<br>
+             		<!--   <textarea id="textArea5" rows="5" cols="30"></textarea> <!-- 응답 박스 --> 
              		
-             		<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
-
-						<hr>
-						
-				        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
-							
-				        <p>홍길동 과장
-				         	<input type="checkbox"name="ch" >&nbsp홍길은 차장 &nbsp
-				         	<input type="checkbox"name="ch" ><p>&nbsp홍길금 부장 &nbsp
-				         
-				         <hr>
-				         
-				         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
-				          
-				           <p><input type="checkbox"name="ch" >청길동 과장 &nbsp
-				         	<input type="checkbox"name="ch" >&nbsp청길은 차장 &nbsp
-				         	<input type="checkbox"name="ch" >&nbsp청길금 부장 &nbsp<p/>
-				         	
-				         <hr>
-				         	
-				          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
-				          	
-				          	<p>고길동 과장 &nbsp<input type="checkbox"name="ch" >
-				         	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch" >
-				         	&nbsp고길금 부장 &nbsp<input type="checkbox"name="ch" ><p>
-				          
-				          <hr>	
-				<script>    		
+             		<table id="selectList" style=" border: 0px solid; width:40%; margin:22px">
+						<b style="color:red; margin:22px"><u>최대 1명 지정 가능</u></b>
+             			<!-- 결재선 지정 조회목록 들어오는 공간 -->
+             			
+             		</table>
+             		
+              <pre>           <button type="button" class="btn btn-sm btn-outline-primary"> 완료 </button> </pre>
+             	
+             	
+				<script>    		//결재선 지정 (조회) 스크립트 
 			             		
 					$(document).ready(function () { //ㅇㅇ
 						 $("#hideTest").val(" ");
@@ -386,9 +369,11 @@
 					   $('#reserveYn').val('N');
 					   $('#hideTest').attr('required', false);
 					   
+					  
+					   
 					   $("#ckbox").on('click', function () {
 					      if($(this).prop('checked')){
-					         alert('결재선 지정은 최대 2명까지 가능합니다.');
+					         alert('결재선 지정은 최대 1명까지 가능합니다.');
 					         $('#reserveYn').val('Y');
 					        // $('#test').attr('required', 'required');
 					         $("#hideTest").show();
@@ -396,27 +381,41 @@
 					         $.ajax({
 					        			url: "selectList.do",
 					        			
+									   	dataType: "JSON",
+									   
 					        			type: "POST",
 					        			
-					        			data:{
-					        				list : list
-					        			},
+					        			success: function(list){
+										
+					        				console.log(list) 
+					        				
+					        			var result="";
 					        			
-					        			success: function(data){
-					        				if (data.Code == 0) {
-					        						for ( i = 0; i < data.data.length; i++) {
-					        							var tag = "<tr>" +
-					        												"<td>" + data.data[i]
-					        						}
-					        				}
-					        				alert("조회완료")
-					        			},
+					        		    $.each(list, function(index, obj){
+					        		    	
+					        		 	/*			        		
+					        		    	result += obj.deptName + "\n" 
+					        		    			+ obj.empName+ "\n" 
+					        		    			+ obj.jobName + "\n"
+					        		    		*/
+					        		    		
+					        		    	result += '<tr>' +
+					        		    			  '<td style="color:rgb(124, 127, 251)">' + obj.deptName + '<td>' + '      ' + 
+					        		    			  '<td style="margin:35px">' + obj.empName + ' ' + obj.jobName + ' ' + 
+					        		    			  '<input type="checkbox" class="form-check-warning" name="ck" id="ck" style="float:right; margin:5px">' + '</td>' 
+					        		    			  '</tr>';					        							
+					        		    }) //each 끝
+					        		 
+					        		    $("#selectList").html(result)
+					        		   					        		  
+					        		    }, //success 끝
+
 					        			error: function(e){
-					        				console.log(e)
+					        				$("#selectList").val("ajax통신실패")
 					        			} // error 닫는 괄호
 					        			
 					         }); //ajax 닫는 괄호
-					      
+
 					      }else{
 					         $('#reserveYn').val('N');
 					         $('#hideTest').attr('required', false);
@@ -426,7 +425,12 @@
 					   });
 					});
 		</script>       		
-               		
+         
+         
+         <script> //insert 스크립트
+         	
+         
+         </script>      		
  </div>
 
                <!--    <input type="date" class="form-control" name="sendDate" id="sendDate"></div> -->
@@ -859,33 +863,6 @@
 	
 	</div>
 
-	
-<script>
-/*
-$(document).ready(function () { //ㅇㅇ
-	 $("#hideTest").val(" ");
-    $("#hideTest").hide();
-    $('#reserveYn').val('N');
-    $('#hideTest').attr('required', false);
-    
-    $("#ckbox").on('click', function () {
-       if($(this).prop('checked')){
-          alert('결재선 지정은 최대 2명까지 가능합니다.');
-          $('#reserveYn').val('Y');
-         // $('#test').attr('required', 'required');
-          $("#hideTest").show();
-       }else{
-          $('#reserveYn').val('N');
-          $('#hideTest').attr('required', false);
-          $("#hideTest").val(" ");
-          $("#hideTest").hide();
-       }
-    });
- });
-*/
-
-
-</script>
 	
 	<jsp:include page="../common/bottom.jsp" />
 
