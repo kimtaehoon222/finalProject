@@ -113,7 +113,9 @@
 						<div class="content-body">
 							<!-- email app overlay -->
 							<div class="email-app-area">
-
+								
+								<!-- form 시작 -->
+								<form id="mailForm" method="post">
 								<!-- Email list Area -->
 								<div class="email-app-list-wrapper">
 									<div class="email-app-list">
@@ -133,11 +135,10 @@
 												<ul class="list-inline m-0 d-flex">
 													<li class="list-inline-item mail-delete">
 														<!-- 발송취소 및 삭제(휴지통) 버튼 -->
-														<button type="button" class="btn action-icon">
+														<button type="button" class="btn btn-outline-primary" id="cancelMailBtn">
                                                             	발송취소
 														</button>
-														<button type="button" class="btn btn-icon action-icon"
-															data-toggle="tooltip">
+														<button type="button" class="btn btn-icon btn-outline-primary" id="deleteMailBtn">
 															<span class="fonticon-wrap"> 
 																<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
@@ -209,20 +210,21 @@
 										</div>
 										<!-- 메일 리스트 상단 끝 -->
 
+										
 										<!-- 메일 리스트 하단 시작 -->
 										<div class="email-user-list list-group ps ps--active-y" id="mailList">
 											<c:if test="${ !empty list  }">
 											<!-- 메일 리스트 시작 -->
 											<ul class="users-list-wrapper media-list">
 												<!-- 메일 1개 시작 -->
-												<c:forEach items="${list }" var="mail">
+												<c:forEach items="${ list }" var="mail">
 												<li class="media mail-read">
-												<input type="hidden" value="${ mail.mailNo }">
+												<input type="hidden" name="mailNo" value="${ mail.mailNo }">
 													<!-- 체크박스 및 중요표시 -->
-													<div class="user-action">
+													<div class="user-action noDetail">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1" name="email-check" class='form-check-input'>
+																<input type="checkbox" id="checkboxsmall1" name="emailNocheck" class='form-check-input noDetail' value="${ mail.mailNo }">
 															</div>
 														</div>
 														<c:if test="${ mail.typeName == '중요' }">
@@ -312,10 +314,14 @@
 											</div>
 										</div>
 										<!-- 메일 리스트 하단 끝 -->
+										
 									</div>
 								</div>
 								<!--/ Email list Area -->
-
+								<input type="hidden" id="mailNoList" name="mailNoList" value="">
+								</form>
+								<!-- form 끝 -->
+								
 							</div>
 						</div>
 					</div>
@@ -334,20 +340,82 @@
 			$('#checked-all').click(function () {
 				//해당 요소의 값이 checked인 경우
 				if($('#checked-all').is(":checked")){
-					//이름이 email-check인 input 요소의 값을 checked=true
-					$('input[name=email-check]').prop("checked", true);
+					//이름이 emailNocheck인 input 요소의 값을 checked=true
+					$('input[name=emailNocheck]').prop("checked", true);
 				}else{
-					//이름이 email-check인 input 요소의 값을 checked=false
-					$('input[name=email-check]').prop("checked", false);
+					//이름이 emailNocheck인 input 요소의 값을 checked=false
+					$('input[name=emailNocheck]').prop("checked", false);
 				}
 			})
 		})
 		
+		/* 메일의 행 클릭 시 */
 		$(function () {
-			$('#mailList ul li').click(function () {
+			$('#mailList ul li').click(function (e) {
+				
+				/* 클릭된 target이 area라는 클래스를 갖고있다면 함수 종료 */
+				if($(e.target).hasClass("noDetail")) {
+					return;
+				}
+				
+				/* 위의 if문을 통과한 경우에만 메일 상세보기로 이동 */
 				location.href="detailMail.do?mailNo="+$(this).children().eq(0).val();
 			})
 		})
+
+		/* 발송취소 클릭시 */
+		$(function () {
+			$('#cancelMailBtn').click(function () {
+				
+				var mailNoList = [];
+		         
+		         $('input[name=emailNocheck]:checked').each(function () {
+		            var v = $(this).val();
+		            mailNoList.push(v);
+		         })
+		         
+		         console.log(mailNoList);
+		         
+		         $('#mailNoList').val(mailNoList);
+		         
+		         if($("input:checkbox[name='emailNocheck']").is(":checked") == false) {
+		     		alert("하나 이상 선택 바랍니다.");
+		     		return;
+		     	 }
+		         
+		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/cancelMail.do");
+		         $('#mailForm').submit();
+			})
+		})
+		
+		/* 메일 삭제 클릭시 */
+		$(function () {
+			$('#deleteMailBtn').click(function () {
+				
+				var mailNoList = [];
+		         
+		         $('input[name=emailNocheck]:checked').each(function () {
+		            var v = $(this).val();
+		            mailNoList.push(v);
+		         })
+		         
+		         console.log(mailNoList);
+		         
+		         $('#mailNoList').val(mailNoList);
+		         
+		         if($("input:checkbox[name='emailNocheck']").is(":checked") == false) {
+		     		alert("하나 이상 선택 바랍니다.");
+		     		return;
+		     	 }
+		         
+		         alert('삭제된 메일은 휴지통에서 확인 바랍니다.');
+		         
+		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/deleteMail.do");
+		         $('#mailForm').submit();
+			})
+		})
+		
+		
 	</script>
 	
 	<jsp:include page="../common/bottom.jsp"/>

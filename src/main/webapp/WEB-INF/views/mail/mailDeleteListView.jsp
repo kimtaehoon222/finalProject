@@ -213,10 +213,10 @@
 												<li class="media mail-read">
 												<input type="hidden" value="${ mail.mailNo }">
 													<!-- 체크박스 및 중요표시 -->
-													<div class="user-action">
+													<div class="user-action noDetail">
 														<div class="checkbox-con me-3">
 															<div class="checkbox checkbox-shadow checkbox-sm">
-																<input type="checkbox" id="checkboxsmall1" class='form-check-input' name="email-check">
+																<input type="checkbox" id="checkboxsmall1" class='form-check-input noDetail' name="emailNocheck" value="${ mail.mailNo }">
 															</div>
 														</div>
 														<c:if test="${ mail.stateName == '수신' }">
@@ -308,17 +308,23 @@
 				//해당 요소의 값이 checked인 경우
 				if($('#checked-all').is(":checked")){
 					//이름이 email-check인 input 요소의 값을 checked=true
-					$('input[name=email-check]').prop("checked", true);
+					$('input[name=emailNocheck]').prop("checked", true);
 				}else{
 					//이름이 email-check인 input 요소의 값을 checked=false
-					$('input[name=email-check]').prop("checked", false);
+					$('input[name=emailNocheck]').prop("checked", false);
 				}
 			})
 			
 		})
 		
 		$(function () {
-			$('#mailList ul li').click(function () {
+			$('#mailList ul li').click(function (e) {
+				
+				/* 클릭된 target이 area라는 클래스를 갖고있다면 함수 종료 */
+				if($(e.target).hasClass("noDetail")) {
+					return;
+				}
+				
 				location.href="detailDeleteMail.do?mailNo="+$(this).children().eq(0).val();
 			})
 		})

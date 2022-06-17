@@ -40,8 +40,35 @@
    <div class="row">
       <div class="col-md-12">
        <ul class="nav nav-pills flex-column flex-md-row mb-3">
-         <li class="nav-item"><a class="nav-link active" href="javascript:void(0);">목록으로</a></li>
+       	 <!-- "목록으로" Modal 열기  -->
+         <li class="nav-item">
+         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#smallModal">목록으로</button>
+         </li>
        </ul>
+    	
+       <!-- "목록으로" 열린 Modal -->
+       <div class="modal fade" id="smallModal" tabindex="-1" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">목록으로</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <hr>
+              <div class="modal-body">
+                <div>
+                	<button type="button" class="btn btn-sm btn-outline-primary mb-2">메일 홈 바로가기</button>
+                </div>
+                <a href="receiveMailList.do?receive=r" class="mt-2">받은 메일함</a><br>
+                <a href="sendMailList.do?send=s" class="mt-2">보낸 메일함</a><br>
+                <a href="reserveMailList.do?reserve=re" class="mt-2">예약 메일함</a><br>
+                <a href="deleteMailList.do?delete=d" class="mt-2">휴지통</a>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
     
        <!-- 메일 영역 시작 -->
        <div class="card mb-4">
@@ -109,13 +136,13 @@
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="title">제목</label>
-                 <input class="form-control" type="text" name="title" id="title" value="${ ccTitle }" placeholder="제목을 작성하세요" maxlength="33" required/>
+                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" placeholder="제목을 작성하세요" maxlength="33" required/>
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="content">내용</label>
                  <div>
                     <textarea class="form-control" name="content" id="content" rows="10" cols="150" required>
-                    	${ ccContent }
+                    	${ originContent }
                     </textarea>
                  </div>
                </div>

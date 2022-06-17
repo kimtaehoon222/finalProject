@@ -147,4 +147,25 @@ public class MailServiceImpl implements MailService {
 	
 		return mailDao.selectDetailMailForReply(sqlSession, mailNo); 
 	}
+
+	@Override
+	public void cancelMail(int mailNo) {
+
+		int result = mailDao.cancelMail(sqlSession, mailNo); 
+		
+		if(result < 0) {
+			throw new CommException("메일 발송취소에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
+		
+	}
+
+	@Override
+	public void deleteMail(int mailNo) {
+		int result = mailDao.deleteMail(sqlSession, mailNo); 
+		
+		if(result < 0) {
+			throw new CommException("메일 삭제에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
+		
+	}
 }

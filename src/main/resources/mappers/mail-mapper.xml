@@ -77,6 +77,7 @@
 		<result property="fromMail" column="FROM_MAIL"/>
 		<result property="ccMail" column="CC_MAIL"/>
 		<result property="ccName" column="CC_NAME"/>
+		<result property="toId" column="TO_ID"/>
 		<result property="fromId" column="FROM_ID"/>
 	</resultMap>
 	
@@ -225,5 +226,26 @@
 		 WHERE A.MAIL_NO = #{mailNo}
 		   AND B.STATUS = 'Y'
 	</select>
+	
+	<!-- 메일 발송취소 -->
+	<update id="cancelMail">
+	    <![CDATA[
+		UPDATE EASYWORK.MAIL
+		   SET STATE_CODE = 'CN'
+		 WHERE MAIL_NO = #{mailNo}
+		   AND RESERVE_YN = 'Y'
+		   AND STATE_CODE = 'EP'
+		   AND RECEIVE_CHECK = 'N'
+		   AND STATUS = 'Y'
+		  ]]>
+	</update>
+
+	<!-- 메일 삭제 -->
+	<update id="deleteMail">
+		UPDATE EASYWORK.MAIL
+		   SET STATUS = 'N'
+		 WHERE MAIL_NO = #{mailNo}
+		   AND STATUS = 'Y'
+	</update>
 	
 </mapper>

@@ -141,71 +141,71 @@
 										</div>
 										<!-- 메일 리스트 상단 끝 -->
 
-	<!-- 메일 리스트 하단 시작 -->
-	<div class="email-user-list list-group ps ps--active-y">
-											
-	<div class="card-body">
-        <form id="formAccountSettings" method="POST" onsubmit="return false">
-        
-          <!-- 메일 정보 영역 시작 -->
-		  <input type="hidden" id="mailNo" name="mailNo" value="${ mail.mailNo }">
-          <div class="row">
-          	<div class="col-md-12">
-              <b class="text-danger">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
-            </div>
-            
-            <!-- 제목 영역 -->
-          	<h3>${ mail.title }</h3>
-          	<hr>
-          	
-          	<!-- 발신인/수신인/참조인 영역 -->
-            <div class="mb-1 col-md-12 toFromMaill">
-              <label for="firstName" class="form-label">발신 : </label>
-              <span class="badge rounded-pill bg-label-info">
-              	${ mail.fromName }
-              <input type="hidden" name="" id="fromMail" value="${ mail.fromMail}"/>
-              </span>
-            </div>
-            <div class="mb-1 col-md-12 toFromMaill">
-              <label for="firstName" class="form-label">수신 : </label>
-              <span class="badge rounded-pill bg-label-primary">
-                 ${ mail.toName }
-                 <input type="hidden" name="" id="toMail" value="${ mail.toMail}"/>
-              </span>
-            </div>
-            <div class="mb-1 col-md-12">
-              <label for="lastName" class="form-label">참조 : </label>
-              <c:forEach items="${ ccList }" var="cc">
-              	<span class="badge rounded-pill bg-label-warning">
-              		${ cc.ccName }
-              		<input type="hidden" name="" value="${ cc.ccMail}"/>
-              	</span>
-              </c:forEach>
-            </div>
-            <input type="hidden" name="" id="ccMail" value="${ mail.ccMail}"/>
-            
-            <hr>
-            <!-- 내용 영역 -->
-            <div class="mb-2 col-md-12" style="height: 300px;">
-            	${ mail.content }
-            </div>
-           
-           	<hr>
-           	
-            <div class="mb-2 col-md-12">
-	            <c:if test="${ !empty mail.changeName }">
-	            	<a href="${ pageContext.servletContext.contextPath }/resources/mail_files/${mail.changeName}" download="${ mail.changeName }"> ${ mail.originName }</a>
-	            </c:if>
-	            <c:if test="${ empty mail.changeName }">
-	            	첨부파일이 없습니다.
-	            </c:if> 
-            </div>
-            
-          </div>
-          <!-- 메일 정보 영역 끝 -->
-          
-        </form>
-      </div>
+										<!-- 메일 리스트 하단 시작 -->
+										<div class="email-user-list list-group ps ps--active-y">
+																				
+										<div class="card-body">
+									        <form id="formAccountSettings" method="POST" onsubmit="return false">
+									        
+									          <!-- 메일 정보 영역 시작 -->
+											  <input type="hidden" id="mailNo" name="mailNo" value="${ mail.mailNo }">
+									          <div class="row">
+									          	<div class="col-md-12">
+									              <b class="text-danger">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
+									            </div>
+									            
+									            <!-- 제목 영역 -->
+									          	<h3>${ mail.title }</h3>
+									          	<hr>
+									          	
+									          	<!-- 발신인/수신인/참조인 영역 -->
+									            <div class="mb-1 col-md-12 toFromMaill">
+									              <label for="firstName" class="form-label">발신 : </label>
+									              <span class="badge rounded-pill bg-label-info">
+									              	${ mail.fromName }
+									              <input type="hidden" name="" id="fromMail" value="${ mail.fromMail}"/>
+									              </span>
+									            </div>
+									            <div class="mb-1 col-md-12 toFromMaill">
+									              <label for="firstName" class="form-label">수신 : </label>
+									              <span class="badge rounded-pill bg-label-primary">
+									                 ${ mail.toName }
+									                 <input type="hidden" name="" id="toMail" value="${ mail.toMail}"/>
+									              </span>
+									            </div>
+									            <div class="mb-1 col-md-12">
+									              <label for="lastName" class="form-label">참조 : </label>
+									              <c:forEach items="${ ccList }" var="cc">
+									              	<span class="badge rounded-pill bg-label-warning">
+									              		${ cc.ccName }
+									              		<input type="hidden" name="" value="${ cc.ccMail}"/>
+									              	</span>
+									              </c:forEach>
+									            </div>
+									            <input type="hidden" name="" id="ccMail" value="${ mail.ccMail}"/>
+									            
+									            <hr>
+									            <!-- 내용 영역 -->
+									            <div class="mb-2 col-md-12" style="height: 300px;">
+									            	${ mail.content }
+									            </div>
+									           
+									           	<hr>
+									           	
+									            <div class="mb-2 col-md-12">
+										            <c:if test="${ !empty mail.changeName }">
+										            	<a href="${ pageContext.servletContext.contextPath }/resources/mail_files/${mail.changeName}" download="${ mail.changeName }"> ${ mail.originName }</a>
+										            </c:if>
+										            <c:if test="${ empty mail.changeName }">
+										            	첨부파일이 없습니다.
+										            </c:if> 
+									            </div>
+									            
+									          </div>
+									          <!-- 메일 정보 영역 끝 -->
+									          
+									        </form>
+									      </div>
 											
 										</div>
 										<!-- 메일 리스트 하단 끝 -->

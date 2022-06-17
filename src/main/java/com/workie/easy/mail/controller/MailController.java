@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -90,18 +91,19 @@ public class MailController {
 		
 		/* 참조인과 제목은 동일 수신-발신 메일 상관없이 동일 */ 
 		String ccMail = mail.getCcMail();
-		String ccTitle = "[RE:]" + mail.getTitle();
-		String ccContent = "\n\n\n-----원본메일----\n" 
+		
+		String originTitle = "[RE:]" + mail.getTitle();
+		String originContent = "\n\n\n-----원본메일----\n" 
 							+ "| 보낸사람 : " + originFromName + "<" + mail.getFromId() + ">" + "\n"
 							+ "| 받는사람 : " + originToName + "<" + mail.getToId() + ">" + "\n"
 							+ "| 날짜 : "	+ mail.getSendDate() + "\n"
 							+ "| 제목 : "	+ mail.getTitle() + "\n"
-							+ mail.getContent();
+							+ mail.getContent().replace("<br>", "\n");
 							
 		model.addAttribute("toReply", toReply);
 		model.addAttribute("ccMail", ccMail);
-		model.addAttribute("ccTitle", ccTitle);
-		model.addAttribute("ccContent", ccContent);
+		model.addAttribute("originTitle", originTitle);
+		model.addAttribute("originContent", originContent);
 		
 		/* 작성하기 화면으로 전환하면서 model에 담겨있는 데이터까지 보내준다. */
 		return "mail/mailSendForm"; 
@@ -111,11 +113,23 @@ public class MailController {
 	@RequestMapping("mailForwardForm.do")
 	public String forwardMailForm(int mailNo, Model model, HttpSession session) {
 		
+		/* 원본 메일의 정보 */
 		Mail mail = mailService.selectDetailMailForReply(mailNo);
 		
-		String ccTitle = "[FW:]" + mail.getTitle();
+		/* 원본 메일의 발신인(from)과 수신인(to). "이름" */
+		String originFromName = mail.getFromName();
+		String originToName = mail.getToName();
 		
-		model.addAttribute("ccTitle", ccTitle);
+		String originTitle = "[FW:]" + mail.getTitle();
+		String originContent = "\n\n\n-----원본메일----\n" 
+							+ "| 보낸사람 : " + originFromName + "<" + mail.getFromId() + ">" + "\n"
+							+ "| 받는사람 : " + originToName + "<" + mail.getToId() + ">" + "\n"
+							+ "| 날짜 : "	+ mail.getSendDate() + "\n"
+							+ "| 제목 : "	+ mail.getTitle() + "\n"
+							+ mail.getContent().replace("<br>", "\n");
+		
+		model.addAttribute("originTitle", originTitle);
+		model.addAttribute("originContent", originContent);
 		
 		/* 작성하기 화면으로 전환하면서 model에 담겨있는 데이터까지 보내준다. */
 		return "mail/mailSendForm"; 
@@ -357,5 +371,39 @@ public class MailController {
 		mv.setViewName("mail/mailDetailView");
 		
 		return mv; 
+	}
+	
+	/* 메일 발송 취소  : 예약 메일에서만 가능 */
+	@RequestMapping(value="cancelMail.do", method=RequestMethod.POST) 
+	public String cancelMail(String mailNoList) {
+		
+		/* 파라미터로 전달받은 mailNo를 구분자로 분리하여 배열에 담는다. */
+		String[] mailNoArr = mailNoList.split(",");
+		
+		/* 방법을 모르겠어서 반복문으로 처리 */
+		for(String mailNo : mailNoArr) {
+			
+			/* 배열에 문자열로 담겨있으므로 int로 형 변환 : 조건절의 MAIL_NO가 NUMBER 타입이다. */
+			mailService.cancelMail(Integer.parseInt(mailNo));
+		}
+		
+		return "redirect:reserveMailList.do"; 
+	}
+	
+	/* 메일 삭제  : 예약 메일에서만 가능 */
+	@RequestMapping(value="deleteMail.do", method=RequestMethod.POST) 
+	public String deleteMail(String mailNoList) {
+		
+		/* 파라미터로 전달받은 mailNo를 구분자로 분리하여 배열에 담는다. */
+		String[] mailNoArr = mailNoList.split(",");
+		
+		/* 방법을 모르겠어서 반복문으로 처리 */
+		for(String mailNo : mailNoArr) {
+			
+			/* 배열에 문자열로 담겨있으므로 int로 형 변환 : 조건절의 MAIL_NO가 NUMBER 타입이다. */
+			mailService.deleteMail(Integer.parseInt(mailNo));
+		}
+		
+		return "redirect:deleteMailList.do"; 
 	}
 }
