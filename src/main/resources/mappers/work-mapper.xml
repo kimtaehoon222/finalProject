@@ -83,7 +83,7 @@
 			    || TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24*60*60
 			    - TRUNC((TO_DATE(END_TIME, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(START_TIME, 'YYYY-MM-DD HH24:MI:SS'))*24*60)*60)
 			    || 's' TOTAL_TIME
-			FROM
+			 FROM
 			    WORK
 			WHERE EMP_NO = #{empNo}
 			AND (WORK_DATE BETWEEN NEXT_DAY((TRUNC(TO_DATE(#{strDate}, 'yy/MM/dd'),'MONTH')-7),'월') AND NEXT_DAY(LAST_DAY(TO_DATE(#{strDate}, 'yy/MM/dd'))-1, '일'))
@@ -91,12 +91,12 @@
 			UNION
 			
 			SELECT 
-			    NULL,
-			    NULL,
-			    YMD WORK_DATE,
-			    NULL,
-			    NULL,
 			    NULL
+			  , NULL
+			  , YMD WORK_DATE
+			  , NULL
+			  , NULL
+			  , NULL
 			FROM 
 			    (
 			    SELECT 
@@ -114,5 +114,11 @@
 			)
 			ORDER BY WORK_DATE
 		]]>
+	</select>
+	
+	<select id="selectVacationInfo" parameterType="_int" resultMap="VacationInfoResultSet">
+		SELECT *
+	      FROM VACATION_INFO
+	     WHERE EMP_NO = #{empNo}	
 	</select>
 </mapper>
