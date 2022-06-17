@@ -104,24 +104,24 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 											<div class="fonticon-wrap d-inline me-3">
 												<div>
 													<div class="d-flex" style="font-size: 12px">
-														<p class="col-6" style="padding:0px;">출근시간</p>
+														<p class="col-6" style="padding:0px; font-size:15px">출근시간</p>
 														<c:choose>
 															<c:when test="${empty w.startTime }">
-																<p class="col-6 text-right" style="padding:0px;">미등록</p>
+																<p class="col-6 text-right" style="padding:0px; font-size:15px">미등록</p>
 															</c:when>
 															<c:otherwise>
-																<p class="col-6 text-right" style="padding:0px;">${w.startTime}</p>
+																<p class="col-6 text-right" style="padding:0px; font-size:15px">${w.startTime}</p>
 															</c:otherwise>
 														</c:choose>
 													</div>
 													<div class="d-flex" style="font-size: 12px">
-														<p class="col-6" style="padding:0px;">퇴근시간</p>
+														<p class="col-6" style="padding:0px; font-size:15px">퇴근시간</p>
 															<c:choose>
 															<c:when test="${empty w.endTime }">
-																<p class="col-6 text-right" style="padding:0px;">미등록</p>
+																<p class="col-6 text-right" style="padding:0px; font-size:15px">미등록</p>
 															</c:when>
 															<c:otherwise>
-																<p class="col-6 text-right" style="padding:0px;">${w.endTime}</p>
+																<p class="col-6 text-right" style="padding:0px; font-size:15px">${w.endTime}</p>
 															</c:otherwise>
 														</c:choose>
 														

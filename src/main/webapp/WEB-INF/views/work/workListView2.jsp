@@ -30,14 +30,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <style>
-	.inner:hover, .ab:hover{
+	.inner:hover, .calendar:hover{
 		color: rgb(95,118,232);
 		cursor: pointer;
 	}
 	
 	#status{
 		display:none;
-		position:absolute;
+		position: absolute;
 	}
 	
 	.week1:hover, .week2:hover, .week3:hover, .week4:hover, .week5:hover{
@@ -52,31 +52,28 @@
 	}
 	
 	.today{
-		background-color: rgba(95,118,232);
+		background-color: rgb(124, 127, 251);
 		color : white;
 		border-radius : 8px;
 		padding: 1px;
 	}
 	
-	.selectDetail{
-		border: 1px solid rgb(95,118,232);
-	}
 
 </style>
 </head>
 
 	<div class="row">
 		<div class="m-auto">
-			<span class="ab" id="before"><i data-feather="chevron-left" class="feather-icon"></i></span>
+			<span class="calendar" id="before"><i data-feather="chevron-left" class="feather-icon"></i></span>
 			<span>${year }.${month }</span>
-			<span class="ab" id="after"><i data-feather="chevron-right" class="feather-icon"></i></span>
+			<span class="calendar" id="after"><i data-feather="chevron-right" class="feather-icon"></i></span>
 		</div>
 	</div>
 	<script>
 		var year = ${year}
 		var month = ${month}
 		
-		$('.ab').click(function(){
+		$('.calendar').click(function(){
 			if($(this).attr('id') == 'before'){
 				month = month - 1;
 				if(month < 1){
@@ -116,7 +113,7 @@
 	<div class="row">
 		<div class="col-md-12 m-auto">
 
-				<div id = "summary" class="email-action">
+				<div id = "thisweek" class="email-action">
 					<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
 						<p class="text-center m-auto" style="font-size:18px">이번주 누적</p>
 						<p class="text-center m-auto text-primary">00h 00m 00s</p>
@@ -129,14 +126,7 @@
 						<p class="text-center m-auto" style="font-size:18px">이번주 잔여</p>
 						<p class="text-center m-auto text-primary">52h 00m 00s</p>
 					</div>
-					<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
-						<p class="text-center m-auto" style="font-size:12px">이번달 누적</p>
-						<p class="text-center m-auto">3h 27m 32s</p>
-					</div>
-					<div class="col-2 m-auto" style="height:100%; padding:10px 0px">
-						<p class="text-center m-auto" style="font-size:12px">이번달 연장</p>
-						<p class="text-center m-auto">3h 27m 32s</p>
-					</div>
+
 				
 			</div>
 		</div>
@@ -171,10 +161,10 @@
 					<span class="font-weight-bold">일차</span>
 				</div>
 				<div class="col-2">
-					<span class="font-weight-bold">업무시작</span>
+					<span class="font-weight-bold">출근 시간</span>
 				</div>
 				<div class="col-2">
-					<span class="font-weight-bold">업무종료</span>
+					<span class="font-weight-bold">퇴근 시간</span>
 				</div>
 				<div class="col-2">
 					<span class="font-weight-bold">총 근무시간</span>
@@ -257,7 +247,7 @@
 			}	
 			var currentDate = new Date();	// 현재시간
 			
-			//오늘 월, 일
+			//현재 요일, 월, 일
 			var day = new Array('일', '월', '화', '수', '목', '금', '토')
 			var today = day[currentDate.getDay()];
 			
@@ -278,7 +268,7 @@
 				console.log("main classDate : " + classDate)
 				
 				
-				if(toDate == classDate.substr(8, 10)){
+				if(toDate.substr(5, 10) == classDate.substr(8, 10)){
 					console.log("main if : " )
 					$('.date').eq(i).addClass('today')
 
@@ -453,30 +443,30 @@
 					//오늘 날짜이고, 총 근무시간이 00h 00m 00s이면(출퇴근 x) -> 누적시간 표시x
 					if($('.date').eq(num).attr('class').includes('today')&&total.text() == '00h 00m 00s'){ // 다 0으로 나옴
 						console.log("if문 확인")
-						$('#summary').children().eq(0).children().eq(1).text(accumulation2)
+						$('#thisweek').children().eq(0).children().eq(1).text(accumulation2)
 						console.log("if문 확인" + accumulation2)
-						$('#summary').children().eq(1).children().eq(1).text(overtime2)
-						$('#summary').children().eq(2).children().eq(1).text(leftTime2)
-						break;
+						$('#thisweek').children().eq(1).children().eq(1).text(overtime2)
+						$('#thisweek').children().eq(2).children().eq(1).text(leftTime2)
+				
 					}
 					//오늘 날짜이면 -> 누적시간 표시o
 					else if($('.date').eq(num).attr('class').includes('today')){ //accumulation : 52h 60m 60 s 나머지 0
 						console.log("if문 확인2")
-						$('#summary').children().eq(0).children().eq(1).text(accumulation)
+						$('#thisweek').children().eq(0).children().eq(1).text(accumulation)
 						console.log("if문 확인2 : " + accumulation)
-						$('#summary').children().eq(1).children().eq(1).text(overtime)
+						$('#thisweek').children().eq(1).children().eq(1).text(overtime)
 						console.log("if문 확인2 : " + overtime)
-						$('#summary').children().eq(2).children().eq(1).text(leftTime)
+						$('#thisweek').children().eq(2).children().eq(1).text(leftTime)
 						console.log("if문 확인2 : " + leftTime)
 						
 					
-						break;
+			
 					}
 				
 					num++;
 				}
 			}
-			
+			//한 자릿수에 0추가하기
 			function zero(n){
 				
 				if(n < 10){
@@ -486,7 +476,7 @@
 			}
 			
 			
-			//주차(일별 상세정보) 클릭하면 펼쳐지는 이벤트
+			//주차 클릭시 아래 리스트 펼침, 닫힘
 			$(".chevron").click(function(){
 				
 				var week = $(this).attr('id').substr(7, 1);
@@ -495,7 +485,7 @@
 					$(this).removeClass('cl');
 					$(this).addClass('op');
 					
-
+					//week? 클래스에 d-flex추가
 					$(".week" + week).addClass('d-flex')
 				}
 				
@@ -504,7 +494,7 @@
 					$(this).removeClass('op');
 					$(this).addClass('cl');
 					
-
+					//week? 클래스에 d-flex제거
 					$(".week" + week).removeClass('d-flex')
 					
 				}

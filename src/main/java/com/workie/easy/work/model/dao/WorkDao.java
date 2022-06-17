@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;
 import com.workie.easy.work.model.dto.WorkSInfo;
 
@@ -34,6 +35,11 @@ public class WorkDao {
 	public ArrayList<Work> selectWorkList(SqlSession sqlSession, Work work) {
 		
 		return (ArrayList)sqlSession.selectList("workMapper.selectWorkList", work);
+	}
+
+	public VacationInfo selectVacationInfo(SqlSession sqlSession, int empNo) {
+		
+		return sqlSession.selectOne("workMapper.selectVacationInfo", empNo);
 	}
 
 }

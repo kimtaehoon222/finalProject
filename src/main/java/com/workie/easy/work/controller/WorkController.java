@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;
 import com.workie.easy.work.model.service.WorkService;
 
@@ -34,6 +35,7 @@ public class WorkController {
 		
 		mv.addObject("w", w);
 		mv.setViewName("work/workMainView2");
+
 
 		return mv;
 		
@@ -85,7 +87,7 @@ public class WorkController {
 		Work work = new Work(empNo, strDate);
 		
 		System.out.println("===================================================" +work);
-		//사원의 이번달 근무정보 가져오기
+		//사원의 이번달 근무정보리스트 가져오기
 		ArrayList<Work> wlist = workService.selectWorkList(work);
 		System.out.println("===================================================" +wlist);
 		mv.addObject("wlist", wlist);
@@ -105,6 +107,14 @@ public class WorkController {
 		
 		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
 		int empNo = loginEmp.getEmpNo();
+		/*include로 sidebar에 넘겨줘야 하니까 오늘 근무내역을 한번 더 조회*/
+		Work w = workService.selectWork(empNo);
+		model.addAttribute("w", w);
+		
+		/*상단에 보여질 사원의 휴가 정보*/
+		VacationInfo vInfo = workService.selectVacationInfo(empNo);
+		model.addAttribute("vInfo", vInfo);
+		
 		
 		return "work/vacationView"; 
 		

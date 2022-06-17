@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.workie.easy.work.model.dao.WorkDao;
+import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;
 import com.workie.easy.work.model.dto.WorkSInfo;
 
@@ -49,5 +50,11 @@ public class WorkServiceImpl implements WorkService {
 	public ArrayList<Work> selectWorkList(Work work) {
 		ArrayList<Work> wList = workdao.selectWorkList(sqlSession, work);
 		return wList;
+	}
+
+	@Override
+	public VacationInfo selectVacationInfo(int empNo) {
+		VacationInfo vInfo = workdao.selectVacationInfo(sqlSession, empNo);
+		return vInfo;
 	}
 }
