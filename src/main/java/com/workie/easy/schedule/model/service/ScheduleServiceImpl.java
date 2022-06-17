@@ -1,8 +1,6 @@
 package com.workie.easy.schedule.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleDao skedDao;
 
 	@Override
-	public ArrayList<Schedule> scheduleList(int empNo) {
+	public ArrayList<Schedule> scheduleList(Schedule sked) {
 		
-		return skedDao.scheduleList(sqlSession, empNo);
+		return skedDao.scheduleList(sqlSession, sked);
 	}
 	
 	@Override

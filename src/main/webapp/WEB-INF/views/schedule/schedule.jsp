@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList" import="com.workie.easy.schedule.model.dto.Schedule"%>
+<%--@page import="java.util.ArrayList" import="com.workie.easy.schedule.model.dto.Schedule"--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -29,33 +29,22 @@
 			      <ul class="nav nav-tabs" role="tablist">
 			          <li class="nav-item">
 			          <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-			              data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" ria-selected="true">
+			              	  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" ria-selected="true"
+			              	  id="C_sked" onclick="selectCatecory(this)">
 			              	통합 일정
 			          </button>
 			          </li>
 			          <li class="nav-item">
-			          <button
-			              type="button"
-			              class="nav-link"
-			              role="tab"
-			              data-bs-toggle="tab"
-			              data-bs-target="#comb_calendar_p"
-			              aria-controls="comb_calendar_p"
-			              aria-selected="false"
-			          >
+			          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+			                  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" aria-selected="false"
+			                  id="P_sked" onclick="selectCatecory(this)">
 			              	개인 일정
 			          </button>
 			          </li>
 			          <li class="nav-item">
-			          <button
-			              type="button"
-			              class="nav-link"
-			              role="tab"
-			              data-bs-toggle="tab"
-			              data-bs-target="#comb_calendar_p"
-			              aria-controls="comb_calendar_p"
-			              aria-selected="false"
-			          >
+			          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+			                  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" aria-selected="false"
+			                  id="D_sked" onclick="selectCatecory(this)">
 			              	부서 일정
 			          </button>
 			          </li>
@@ -291,76 +280,93 @@
 		<script src='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.js'></script>
 		
 		<script>
-			var skedList;
-			$.ajax({
-				  url: "skedSelectList.do?empNo=${loginEmp.empNo}",
-				  //url: "${pageContext.request.contextPath}/resources/jje_css/test.json",
-				  type: "GET",
-				  dataType: "JSON",
-				  success : function(sked){
-					  //alert("연결됨");
-					  skedList = sked;
-					  console.log(skedList);
-				  },
-				  error : function(sked){
-					    //alert(xhr.responseText);
-					  alert('데이터 로딩 실패<br>새로고침 해주세요');
-				  }
+		
+			$(function(){
+				test();
 			});
+				
+			var btn_id;								//누른 버튼의 id값
+			var skedCode = "C";						//skedCode
 			
-			document.addEventListener('DOMContentLoaded', function() {
-				var calendarEl = document.getElementById('comb_calendar');
-				// var pCalendarEl = document.getElementById('p_calendar');
+			/*버튼 클릭 함수*/
+			function selectCatecory(e){				//버튼 눌렀을 때 값이 바뀐다. C->(P/D)
+				btn_id=$(e).attr("id");
+				console.log("버튼 아이디 : "+btn_id);
+				skedCode = btn_id.substring(0,1);
+				console.log("카테고리 : "+skedCode);
+				test();
+			}
 			
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-				    initialView: 'dayGridMonth',
-				    headerToolbar: {
-				        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
-				        center: '',
-				        end: 'today dayGridMonth,timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
-				    },
-				    locale: 'ko',
-				    slotMinTime: '08:00',
-				    slotMaxTime: '24:00:00',
-				    businessHours: true,
-				    dayMaxEventRows: true,
-				    dateClick: function(e) { //날짜 클릭 이벤트
-				        //skedDayList(e);	//선택 일자 간편 조회 이벤트 
-				        console.log(e.dateStr);//선택한 날짜 콘솔에 출력 -> 상세조회 가능할듯
-				    },
-				    eventClick:function(e){
-				    	//skedDetail(e);	//선택일정 상세조회 모달 이벤트
-				        console.log(e.event.title); //클릭한 이벤트의 제목
-				        console.log(e.event.id); //클릭한 이벤트의 id -> 일정 숫자로 지정해야겠음
-				    },
-				    events:skedList
-				    /*[
-				    	<c:if test="${not empty scheduleList}">
-				    		<c:forEach items="${scheduleList}" var="s">
-				    	{
-					    	id: '${s.skedNo}',
-					    	title: '${s.skedTitle}',
-					    	start: '${s.skedStart}',
-					    	end: '${s.skedEnd}',
-					    	color: 'rgb(${s.rgbCode})',
-				    	},
-				    		</c:forEach>
-				    	</c:if>
-				    ]*/
-				});
-			
-				//아이디가 'a'인 이벤트 발생하면 콘솔창에 이벤트 시작 시간 출력
-				//var event = calendar.getEventById('a') // an event object!
-				//var start = event.start // a property (a Date object)
-				//console.log(start.toISOString()) // "2018-09-01T00:00:00.000Z"
-			
-				calendar.on('dateClick', function(info) { //날짜 클릭 후 콘솔 출력
-				    console.log('clicked on ' + info.dateStr);
-				});
-			
-				//캘린더 랜더링
-				calendar.render();
-			});
+			/*달력*/
+			var skedSelectList;
+			function test(){
+				
+				var skedList;							//조회 한 일정 목록을 담을 변수
+				var loginEmpNo=${loginEmp.empNo};		//로그인 사원번호
+				/*최초 조회 데이터 호출 ajax*/
+				skedSelectList = $.ajax({ 
+										url: "skedSelectList.do",
+										data: {
+										 		empNo: loginEmpNo,
+										 		skedCode: skedCode
+										},
+										type: "GET",
+										dataType: "JSON",
+										success : function(sked){
+										 //alert("연결됨");
+										 skedList = sked;
+										 console.log(skedList);
+										},
+										error : function(sked){
+										   //alert(xhr.responseText);
+										 alert('데이터 로딩 실패');
+										}
+								   });
+				
+				skedSelectList.done(function (sked) {
+					
+					var calendarEl = document.getElementById('comb_calendar');
+					// var pCalendarEl = document.getElementById('p_calendar');
+				
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+					    initialView: 'dayGridMonth',
+					    headerToolbar: {
+					        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
+					        center: '',
+					        end: 'today dayGridMonth,timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
+					    },
+					    locale: 'ko',
+					    slotMinTime: '08:00',
+					    slotMaxTime: '24:00:00',
+					    businessHours: true,
+					    dayMaxEventRows: true,
+					    dateClick: function(e) { //날짜 클릭 이벤트
+					        //skedDayList(e);	//선택 일자 간편 조회 이벤트 
+					        console.log(e.dateStr);//선택한 날짜 콘솔에 출력 -> 상세조회 가능할듯
+					    },
+					    eventClick:function(e){
+					    	//skedDetail(e);	//선택일정 상세조회 모달 이벤트
+					        console.log(e.event.title); //클릭한 이벤트의 제목
+					        console.log(e.event.id); //클릭한 이벤트의 id -> 일정 숫자로 지정해야겠음
+					    },
+					    events:sked
+					    
+					}); // 끝 calendar
+				
+					//아이디가 'a'인 이벤트 발생하면 콘솔창에 이벤트 시작 시간 출력
+					//var event = calendar.getEventById('a') // an event object!
+					//var start = event.start // a property (a Date object)
+					//console.log(start.toISOString()) // "2018-09-01T00:00:00.000Z"
+				
+					calendar.on('dateClick', function(info) { 		//날짜 클릭 후 콘솔 출력
+						console.log('clicked on ' + info.dateStr);
+					}); // 끝 calendar.on
+					
+					calendar.render();		//캘린더 랜더링
+					
+				});// 끝 request.done끝
+			}
+					
 			
 		</script>
 		
