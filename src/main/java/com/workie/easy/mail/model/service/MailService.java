@@ -30,5 +30,9 @@ public interface MailService {
 
 	Mail selectDetailMailForReply(int mailNo);
 
+	void cancelMail(int mailNo);
+
+	void deleteMail(int mailNo);
+
 	
 }

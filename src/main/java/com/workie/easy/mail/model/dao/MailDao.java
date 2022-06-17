@@ -101,5 +101,15 @@ public class MailDao {
 		return sqlSession.selectOne("mailMapper.selectDetailMailForReply", mailNo);
 	}
 
+	public int cancelMail(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.update("mailMapper.cancelMail", mailNo);
+	}
+
+	public int deleteMail(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.update("mailMapper.deleteMail", mailNo);
+	}
+
 	
 }
