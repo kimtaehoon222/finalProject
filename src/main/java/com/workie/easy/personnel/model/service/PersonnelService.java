@@ -16,7 +16,7 @@ public interface PersonnelService {
 	//마이페이지 비밀번호 업데이트용
 	Employee selectEmp(String eId);
 	//인사관리에서 재직중인 직원 상세용
-	void updateEmpInfo(Employee e);
+	void updateEmpInfo(Employee emp);
 	//인사관리에서 재직중인 직원 정보 수정용
 	void deleteEmp(String eId);
 	//재직중인 직원 퇴사하는 용

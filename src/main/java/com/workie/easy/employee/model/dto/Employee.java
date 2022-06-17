@@ -37,5 +37,10 @@ public class Employee {
 	private String jobName;//직위명
 	private int jobVacation;//보유연차
 	private String telNo;//내선 번호
+	private String originName;//파일 원본명
+	private String changeName;//파일 수정명
+	private String filePath;//파일 저장 장소
+		
+	
 		
 }

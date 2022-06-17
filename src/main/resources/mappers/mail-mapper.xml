@@ -225,6 +225,7 @@
 	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
 		 WHERE A.MAIL_NO = #{mailNo}
 		   AND B.STATUS = 'Y'
+		   
 	</select>
 	
 	<!-- 메일 발송취소 -->
