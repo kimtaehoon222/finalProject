@@ -31,9 +31,9 @@ public class PersonnelDao {
 		return sqlSession.selectOne("personnelMapper.selectEmp", eId);
 	}
 
-	public int updateEmpInfo(Employee e, SqlSessionTemplate sqlSession) {
+	public int updateEmpInfo(Employee emp, SqlSessionTemplate sqlSession) {
 		
-		return sqlSession.update("personnelMapper.updateEmpInfo", e);
+		return sqlSession.update("personnelMapper.updateEmpInfo", emp);
 	}
 
 	public int deleteEmp(String eId, SqlSessionTemplate sqlSession) {

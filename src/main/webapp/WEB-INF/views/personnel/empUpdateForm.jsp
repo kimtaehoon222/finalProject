@@ -74,15 +74,21 @@
 
 <div class="row">
   <div class="col-md-12">
-    
     <div class="card mb-4">
       <h4 class="card-header">직원 정보</h4>
-      
+      <form class="reg-form mb-5" action="updateEmpInfo.do" enctype="multipart/form-data" method="post" >
+       <input type="hidden" name="empId" value="${e.empId}">
       <div class="card-body">
       
         <div class="d-flex align-items-start align-items-sm-center gap-4">
         
-          <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="150" width="200" id="uploadedAvatar" />
+          <img id="titleImg" name="reUploadFile"src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" 
+           class="d-block rounded" height="150" width="200"/>
+      		<c:if test="${ !empty e.originName }">
+                                             현재 업로드된 파일 : ${ e.originName } <br>
+          <input type="hidden" name="changeName" value="${ e.changeName }">
+          <input type="hidden" name="originName" value="${ e.originName }">
+              </c:if> 
       		 <div id="topPage" >
                     <div id="title">
                     <h5> 이메일 : ${e.empId}@easy.co.kr</h5>
@@ -91,11 +97,13 @@
                     </div>
 					</div>
         </div>
+          		  <!-- 숨겨져있는 파일영역 -->
+           <div id="fileArea">
+             <input type="file" accept="image/*" name="file" id="file" onchange="loadImg(this);">
+          </div>
       </div>
       <hr class="my-0">
       <div class="card-body">
-      <form id="updateEmpInfo" method="post" action="updateEmpInfo.do" enctype="multipart/form-data">
-      <input type="hidden" name="empId" value="${e.empId}">
           <div class="row">
             <div class="mb-3 col-md-6">
               <label for="empName" class="form-label">이름 </label>
@@ -134,9 +142,9 @@
             </div>
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
-              <select id="disabledYN" class="select2 form-select">
-    		   <option value="">N</option>
-    		 <option value="-12">Y</option>
+              <select name="disabledYN" id="disabledYN" class="select2 form-select">
+    		   <option value="N">N</option>
+    		 <option  value="Y">Y</option>
            	 </select>
             </div>
                
@@ -149,10 +157,10 @@
           <div class="mt-2">
             <button type="submit" class="btn btn-primary me-2">수정하기</button>
             <button type="reset"  class="btn btn-outline-secondary">취소하기</button>
-          </div>
-            </form>  
+          </div> 
       </div>
       <!-- /Account -->
+        </form> 
     </div>
     <div class="card">
  
@@ -165,7 +173,32 @@
         <!-- Content wrapper -->
       </div>
       <!-- / Layout page -->
-    
+      <script>
+   	
+       $(function(){
+           // 파일 input 하는 부분은 숨겼음
+           console.log("확인");
+           $("#fileArea").hide();
+
+
+           // 위에 이미지 부분을 클릭하면 숨겨놓은 input 버튼 클릭되게 구현
+           $("#titleImg").click(function(){
+              $("#file").click();
+           });
+        });
+
+       function loadImg(inputFile){
+           if(inputFile.files.length == 1){
+              //readAsDataURL : 파일의 읽어서 리더에 업로드 동작이 되면서 파일 읽기가 완료가 되면 이미지 src를 URL에 담아주는 방식
+              var reader = new FileReader(); //파일을 읽어 들일 객체 생성
+              reader.readAsDataURL(inputFile.files[0]); //파일을 읽어 들이는 메소드
+              // onload : 파일 읽기가 완료가 되면 실행 하는것
+              reader.onload = function(e){ //파일 읽기가 다 완료 되면 실행
+                 $("#titleImg").attr("src", e.target.result);
+              }
+           }
+        }
+       </script>  
     
   <jsp:include page="../common/bottom.jsp" />
   <!-- Core JS -->

@@ -65,11 +65,10 @@
        
        	<update id="updateEmpInfo" parameterType="Employee">
 		  UPDATE EMPLOYEE SET 
-	      EMP_ID= #{empId}, 
-	      PHONE= #{phone}, 
-	      ADDRESS= #{address}
-	      WHERE EMP_NO = #{empNo}
+	      DISABLE_YN = #{disabledYN}
+	      WHERE EMP_ID = #{eId}
       </update>
+      
       
       <update id="deleteEmp" parameterType="string">
 		  UPDATE EMPLOYEE SET 
