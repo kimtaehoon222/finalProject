@@ -23,7 +23,7 @@
 </head>
 
 <body>
-	<jsp:include page="top.jsp"/>
+	<jsp:include page="../common/top.jsp" />
     <div id="app">
        
         <div id="main">
@@ -58,11 +58,11 @@
                                 <tbody>
                                 <c:forEach items="${ list }" var="e">
                                     <tr>
-                                        <td>${e.empName}</td>
+                                       <td>${e.empName}</td>
                                         <td>${e.empId}</td>
-                                        <td>076 4820 8838</td>
-                                        <td>인사과</td>
-                                       	<td>부장</td>
+                                        <td> ${e.phone}</td>
+                                        <td>${e.deptName}</td>
+                                       	<td>${e.jobName}</td>
                                     </tr>
                                 
                                    </c:forEach> 
@@ -78,7 +78,14 @@
         </div>
         
     </div>
-    <jsp:include page="bottom.jsp"/>
+          <script>
+      $(function(){
+  		$("#table1 tbody tr").click(function(){
+  	      location.href="detailRetiredEmp.do?eId=" + $(this).children().eq(1).text();
+  		});
+    	});
+    </script>
+     <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>
 
