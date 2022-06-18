@@ -1,7 +1,6 @@
 package com.workie.easy.sign.controller;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.workie.easy.employee.model.dto.Employee;
@@ -28,30 +28,10 @@ public class SignController {
 		return "sign/signView";
 	}
 	
-	/* 결재선 지정 조회 */
-/*	
-	@RequestMapping("selectList.do")
-	@ResponseBody
-	public ModelAndView selectSign(Locale locale, ModelAndView mv) {
-		System.out.println("찍히는지 테스트222");
-		
-		
-		//Employee semp = signService.sEmp(sEmp);
-		
-		
-		ArrayList<Employee> list = signService.selectList();
-		
-		mv.addObject("list", list).setViewName("sign/signView");
-		
-		System.out.println("list에 담긴 값" + list);
-		
-		return mv;
-	}
-*/
 	
 	@ResponseBody
 	@RequestMapping(value="selectList.do",method=RequestMethod.POST)
-	public JSONArray selectSign() {
+	public JSONArray selectSign() { //결재선 지정 select
 		System.out.println("찍히는지 테스트222");
 		
 		
@@ -75,6 +55,7 @@ public class SignController {
 		jsonList.put("deptName", emp.getDeptName()); //부서이름
 		jsonList.put("empName", emp.getEmpName()); //이름
 		jsonList.put("jobName", emp.getJobName()); //직급
+		jsonList.put("empNo", emp.getEmpNo()); //사번
 
 		jArr.add(jsonList); 
 		}//향상된 for문 닫기 
@@ -82,5 +63,15 @@ public class SignController {
 	System.out.println("jArr에 담긴 값 " + jArr);
 	return jArr;
 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertName.do", method=RequestMethod.POST)
+	public String insertName( @RequestParam("eNo") int eNo) {
+		System.out.println("넘어왔는지 체크  : " + "  " + eNo);
+		
+		signService.insertName(eNo);
+		
+		return null;
 	}
 }

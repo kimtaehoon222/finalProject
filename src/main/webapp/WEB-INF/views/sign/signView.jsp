@@ -355,10 +355,14 @@
              		<table id="selectList" style=" border: 0px solid; width:40%; margin:22px">
 						<b style="color:red; margin:22px"><u>최대 1명 지정 가능</u></b>
              			<!-- 결재선 지정 조회목록 들어오는 공간 -->
+             			<form id ="insertName" method="post">
+             				
+             			
+             			</form>
              			
              		</table>
              		
-              <pre>           <button type="button" class="btn btn-sm btn-outline-primary"> 완료 </button> </pre>
+              <pre>            <button type="button" class="btn btn-sm btn-outline-primary"> 완료 </button> </pre>
              	
              	
 				<script>    		//결재선 지정 (조회) 스크립트 
@@ -391,8 +395,11 @@
 					        				
 					        			var result="";
 					        			
+					        		
+					        				
 					        		    $.each(list, function(index, obj){
 					        		    	
+					        		    	var eNo = obj.empNo;
 					        		 	/*			        		
 					        		    	result += obj.deptName + "\n" 
 					        		    			+ obj.empName+ "\n" 
@@ -402,14 +409,13 @@
 					        		    	result += '<tr>' +
 					        		    			  '<td style="color:rgb(124, 127, 251)">' + obj.deptName + '<td>' + '      ' + 
 					        		    			  '<td style="margin:35px">' + obj.empName + ' ' + obj.jobName + ' ' + 
-					        		    			  '<input type="checkbox" class="form-check-warning" name="ck" id="ck" style="float:right; margin:5px">' + '</td>' 
+					        		    			  '<input type="checkbox" class="form-check-warning" name="empNo" id="empNo" onclick="insertName(' + eNo + ');" style="float:right; margin:5px">' + '</td>' 
 					        		    			  '</tr>';					        							
+					        		    			  
 					        		    }) //each 끝
-					        		 
 					        		    $("#selectList").html(result)
-					        		   					        		  
 					        		    }, //success 끝
-
+											
 					        			error: function(e){
 					        				$("#selectList").val("ajax통신실패")
 					        			} // error 닫는 괄호
@@ -428,7 +434,28 @@
          
          
          <script> //insert 스크립트
+         	function insertName(eNo) { //selectList에서 넘겨준 사원번호
+			console.log(eNo);
          	
+         	$.ajax({
+         		url:"insertName.do",
+         		
+         		type: "POST",
+        
+         		data: {
+         			eNo:eNo
+         		},
+         
+         	/*	dataType: "JSON", */
+         		
+         		success:function(end){
+         			console.log("넘어오기 성공")
+         		},
+         		error:function(){
+         			alert("insert 실패")
+         		}
+         	}) //ajax 끝
+         } //insertName function 끝
          
          </script>      		
  </div>
