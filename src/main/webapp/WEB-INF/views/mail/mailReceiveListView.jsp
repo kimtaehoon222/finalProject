@@ -114,6 +114,8 @@
 							<!-- email app overlay -->
 							<div class="email-app-area">
 
+								<!-- form 시작 -->
+								<form id="mailForm" method="post">
 								<!-- Email list Area -->
 								<div class="email-app-list-wrapper">
 									<div class="email-app-list">
@@ -133,7 +135,7 @@
 												<ul class="list-inline m-0 d-flex">
 													<li class="list-inline-item mail-delete">
 														<!-- 삭제(휴지통) 버튼 -->
-														<button type="button" class="btn btn-icon action-icon" id="deleteMailBtn">
+														<button type="button" class="btn btn-icon btn-outline-primary" id="deleteMailBtn">
 															<span class="fonticon-wrap"> <svg class="bi"
 																	width="1.5em" height="1.5em" fill="currentColor">
                                                             <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
@@ -224,10 +226,10 @@
 															</div>
 														</div>
 														<c:if test="${ mail.typeName == '중요' }">
-															<span class="favorite text-danger">${ mail.typeName }</span>
+															<span class="favorite badge bg-danger" style="color:white;">${ mail.typeName }</span>
 														</c:if>
 														<c:if test="${ mail.typeName == '일반' }">
-															<span class="favorite">${ mail.typeName }</span>
+															<span class="favorite badge bg-label-secondary">${ mail.typeName }</span>
 														</c:if>														
 													</div> 
 													<!-- 받는 사람 이미지 -->
@@ -281,7 +283,7 @@
 											</c:if>
 											<c:if test="${ empty list  }">
 												<ul class="users-list-wrapper media-list">
-													<li class="media mail-read">조회 가능한 메일이 없습니다.</li>
+													<li class="media mail-read noDetail">조회 가능한 메일이 없습니다.</li>
 												</ul>
 											</c:if>
 
@@ -304,6 +306,10 @@
 									</div>
 								</div>
 								<!--/ Email list Area -->
+								<input type="hidden" id="mailNoList" name="mailNoList" value="">
+								<input type="hidden" id="listType" name="listType" value="r">
+								</form>
+								<!-- form 끝 -->
 
 							</div>
 						</div>
@@ -342,6 +348,33 @@
 				}
 				
 				location.href="detailMail.do?mailNo="+$(this).children().eq(0).val();
+			})
+		})
+		
+		/* 메일 삭제 클릭시 */
+		$(function () {
+			$('#deleteMailBtn').click(function () {
+				
+				var mailNoList = [];
+		         
+		         $('input[name=emailNocheck]:checked').each(function () {
+		            var v = $(this).val();
+		            mailNoList.push(v);
+		         })
+		         
+		         console.log(mailNoList);
+		         
+		         $('#mailNoList').val(mailNoList);
+		         
+		         if($("input:checkbox[name='emailNocheck']").is(":checked") == false) {
+		     		alert("하나 이상 선택 바랍니다.");
+		     		return;
+		     	 }
+		         
+		         alert('삭제된 메일은 휴지통에서 확인 바랍니다.');
+		         
+		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/deleteMailList.do");
+		         $('#mailForm').submit();
 			})
 		})
 	</script>

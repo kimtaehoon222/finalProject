@@ -134,6 +134,12 @@
 	<select id="selectDeleteMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, DECODE(A.TO_MAIL, #{toFromMail}, '수신', '발신') AS STATE_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
     		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+    		 , (SELECT EMP_NAME 
+		          FROM EMPLOYEE
+		         WHERE EMP_NO = A.TO_MAIL) AS TO_NAME
+		     , (SELECT EMP_NAME  
+		          FROM EMPLOYEE
+		         WHERE EMP_NO = A.FROM_MAIL) AS FROM_NAME
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
 	 LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
@@ -161,7 +167,8 @@
 		     , (SELECT EMP_NAME  
 		        FROM EMPLOYEE
 		        WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_NAME
-		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT, D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH
+		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT
+		     , D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH, B.STATUS
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
 	 LEFT JOIN EASYWORK.TYPE C ON C.TYPE_CODE = B.TYPE_NO
@@ -198,7 +205,8 @@
 		     , (SELECT EMP_NAME  
 		        FROM EMPLOYEE
 		        WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_NAME
-		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT, D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH
+		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT
+		     , D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH, B.STATUS
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
 	 LEFT JOIN EASYWORK.TYPE C ON C.TYPE_CODE = B.TYPE_NO
@@ -224,8 +232,6 @@
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
 		 WHERE A.MAIL_NO = #{mailNo}
-		   AND B.STATUS = 'Y'
-		   
 	</select>
 	
 	<!-- 메일 발송취소 -->
@@ -241,12 +247,35 @@
 		  ]]>
 	</update>
 
+	<!-- 메일 삭제 
+	<update id="deleteMailList">
+		UPDATE EASYWORK.MAIL
+		   SET STATUS = 'N'
+		 WHERE MAIL_NO = #{mailNo}
+		   AND STATUS = 'Y'
+	</update> -->
+	
+	<!-- 메일 복원 -->
+	<update id="restoreMail">
+		UPDATE EASYWORK.MAIL
+		   SET STATUS = 'Y'
+		 WHERE MAIL_NO = #{mailNo}
+		   AND STATUS = 'N'
+	</update>
+	
+	<!-- 메일 영구삭제 -->
+	<delete id="permanentDeleteMail">
+		DELETE FROM EASYWORK.MAIL
+		 WHERE MAIL_NO = #{mailNo} 
+		   AND STATUS = 'N'
+	</delete>
+	
 	<!-- 메일 삭제 -->
+	<!-- 위의  deleteMailList 와 동일 -->
 	<update id="deleteMail">
 		UPDATE EASYWORK.MAIL
 		   SET STATUS = 'N'
 		 WHERE MAIL_NO = #{mailNo}
 		   AND STATUS = 'Y'
 	</update>
-	
 </mapper>

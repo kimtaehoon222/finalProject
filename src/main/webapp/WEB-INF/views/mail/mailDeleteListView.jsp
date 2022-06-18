@@ -114,7 +114,9 @@
 						<div class="content-body">
 							<!-- email app overlay -->
 							<div class="email-app-area">
-
+									
+								<!-- form 시작 -->
+								<form id="mailForm" method="post">
 								<!-- Email list Area -->
 								<div class="email-app-list-wrapper">
 									<div class="email-app-list">
@@ -133,12 +135,8 @@
 												<ul class="list-inline m-0 d-flex">
 													<li class="list-inline-item mail-delete">
 														<!-- 발송취소 및 삭제(휴지통) 버튼 -->
-														<button type="button" class="btn-danger btn action-icon">
-                                                            	영구삭제
-														</button>
-														<button type="button" class="btn-success btn action-icon">
-                                                            	복원
-														</button>
+														<button type="button" class="btn action-icon btn-danger" id="" data-bs-toggle="modal" data-bs-target="#deleteCheckModal">완전삭제</button>
+														<button type="button" class="btn btn-success action-icon" id="restoreMailBtn">복원</button>
 													</li>
 												</ul>
 											</div>
@@ -220,10 +218,10 @@
 															</div>
 														</div>
 														<c:if test="${ mail.stateName == '수신' }">
-															<span class="favorite text-primary">${ mail.stateName }</span>
+															<span class="favorite badge bg-primary" style="color:white;">${ mail.stateName }</span><span class="text-primary">${ mail.fromName }</span>
 														</c:if>
-														<c:if test="${ mail.typeName == '발신' }">
-															<span class="favorite text-info">${ mail.stateName }</span>
+														<c:if test="${ mail.stateName == '발신' }">
+															<span class="favorite badge bg-success" style="color:white;">${ mail.stateName }</span><span class="text-success">${ mail.fromName }</span>
 														</c:if>	
 													</div> 
 													<!-- 메일 내용 표시 -->
@@ -266,7 +264,7 @@
 											</c:if>
 											<c:if test="${ empty list  }">
 												<ul class="users-list-wrapper media-list">
-													<li class="media mail-read">조회 가능한 메일이 없습니다.</li>
+													<li class="media mail-read noDetail">조회 가능한 메일이 없습니다.</li>
 												</ul>
 											</c:if>
 
@@ -289,6 +287,9 @@
 									</div>
 								</div>
 								<!--/ Email list Area -->
+								<input type="hidden" id="mailNoList" name="mailNoList" value="">
+								</form>
+								<!-- form 끝 -->
 
 							</div>
 						</div>
@@ -297,6 +298,37 @@
 			</section>
 		</div>
 	</div>
+	
+   <!-- 영구 삭제 재확인 모달창 -->
+   <!-- 본 모달창에서 완전삭제 클릭시 controller로 넘어갈 수 있는 스크립트가 실행된다. -->
+   <div class="modal fade" id="deleteCheckModal" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">완전삭제 확인</h4>
+            <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <p class="desc_info">
+		        선택된 메일을 완전히 삭제하시겠습니까?<br>
+		        <b class="text-danger">완전삭제</b>되어 복구할 수 없습니다.
+		    </p>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" id="permanentDeleteMailBtn" data-dismiss="modal">완전삭제</button>
+            <button type="button" class="btn btn-outline-secondary close" data-bs-dismiss="modal">취소</button>
+          </div>
+          
+        </div>
+      </div>
+   </div>
+	
 
 	<script src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
@@ -317,6 +349,7 @@
 			
 		})
 		
+		/* 메일의 행 클릭 시 */
 		$(function () {
 			$('#mailList ul li').click(function (e) {
 				
@@ -328,6 +361,57 @@
 				location.href="detailDeleteMail.do?mailNo="+$(this).children().eq(0).val();
 			})
 		})
+		
+		/* 복원 클릭시 */
+		$(function () {
+			$('#restoreMailBtn').click(function () {
+				
+				var mailNoList = [];
+		         
+		         $('input[name=emailNocheck]:checked').each(function () {
+		            var v = $(this).val();
+		            mailNoList.push(v);
+		         })
+		         
+		         console.log(mailNoList);
+		         
+		         $('#mailNoList').val(mailNoList);
+		         
+		         if($("input:checkbox[name='emailNocheck']").is(":checked") == false) {
+		     		alert("하나 이상 선택 바랍니다.");
+		     		return;
+		     	 }
+		         
+		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/restoreMail.do");
+		         $('#mailForm').submit();
+			})
+		})
+		
+		/* 완전삭제 클릭시 */
+		$(function () {
+			$('#permanentDeleteMailBtn').click(function () {
+				
+				var mailNoList = [];
+		         
+		         $('input[name=emailNocheck]:checked').each(function () {
+		            var v = $(this).val();
+		            mailNoList.push(v);
+		         })
+		         
+		         console.log(mailNoList);
+		         
+		         $('#mailNoList').val(mailNoList);
+		         
+		         if($("input:checkbox[name='emailNocheck']").is(":checked") == false) {
+		     		alert("하나 이상 선택 바랍니다.");
+		     		return;
+		     	 }
+		         
+		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/permanentDeleteMailList.do");
+		         $('#mailForm').submit();
+			})
+		})
+		
 	</script>
 
    <jsp:include page="../common/bottom.jsp"/>

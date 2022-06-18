@@ -159,13 +159,44 @@ public class MailServiceImpl implements MailService {
 		
 	}
 
-	@Override
-	public void deleteMail(int mailNo) {
-		int result = mailDao.deleteMail(sqlSession, mailNo); 
+	/*@Override
+	public void deleteMailList(int mailNo) {
+		
+		int result = mailDao.deleteMailList(sqlSession, mailNo); 
 		
 		if(result < 0) {
 			throw new CommException("메일 삭제에 실패하였습니다. 관리자에게 문의 바랍니다.");
 		}
 		
+	}*/
+
+	@Override
+	public void restoreMail(int mailNo) {
+
+		int result = mailDao.restoreMail(sqlSession, mailNo); 
+		
+		if(result < 0) {
+			throw new CommException("메일 복원에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
+	}
+
+	@Override
+	public void permanentDeleteMail(int mailNo) {
+
+		int result = mailDao.permanentDeleteMail(sqlSession, mailNo); 
+		
+		if(result < 0) {
+			throw new CommException("메일 영구삭제에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
+	}
+
+	@Override
+	public void deleteMail(int mailNo) {
+		
+		int result = mailDao.deleteMail(sqlSession, mailNo); 
+		
+		if(result < 0) {
+			throw new CommException("메일 영구삭제에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
 	}
 }

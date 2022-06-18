@@ -228,10 +228,10 @@
 															</div>
 														</div>
 														<c:if test="${ mail.typeName == '중요' }">
-															<span class="favorite text-danger">${ mail.typeName }</span>
+															<span class="favorite badge bg-danger" style="color:white;">${ mail.typeName }</span>
 														</c:if>
 														<c:if test="${ mail.typeName == '일반' }">
-															<span class="favorite">${ mail.typeName }</span>
+															<span class="favorite badge bg-label-secondary">${ mail.typeName }</span>
 														</c:if>		
 													</div> 
 													<!-- 받는 사람 이미지 -->
@@ -294,7 +294,7 @@
 											</c:if>
 											<c:if test="${ empty list  }">
 												<ul class="users-list-wrapper media-list">
-													<li class="media mail-read">조회 가능한 메일이 없습니다.</li>
+													<li class="media mail-read noDetail">조회 가능한 메일이 없습니다.</li>
 												</ul>
 											</c:if>
 
@@ -319,6 +319,7 @@
 								</div>
 								<!--/ Email list Area -->
 								<input type="hidden" id="mailNoList" name="mailNoList" value="">
+								<input type="hidden" id="listType" name="listType" value="re">
 								</form>
 								<!-- form 끝 -->
 								
@@ -410,7 +411,7 @@
 		         
 		         alert('삭제된 메일은 휴지통에서 확인 바랍니다.');
 		         
-		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/deleteMail.do");
+		         $('#mailForm').attr("action", "${pageContext.request.contextPath}/deleteMailList.do");
 		         $('#mailForm').submit();
 			})
 		})
