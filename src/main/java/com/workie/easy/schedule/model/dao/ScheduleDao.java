@@ -13,12 +13,13 @@ public class ScheduleDao {
 	public ArrayList<Schedule> scheduleList(SqlSessionTemplate sqlSession, Schedule sked) {
 		
 		return (ArrayList)sqlSession.selectList("skedMapper.scheduleList", sked);
-//		return null;
 		
 	}
 
-	public ArrayList<Schedule> scheduleList2(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("skedMapper.scheduleList");
+	public Schedule scheduleSelect(SqlSessionTemplate sqlSession, Schedule sked) {
+		
+		return sqlSession.selectOne("selectSchedule", sked);
+		
 	}
 
 }

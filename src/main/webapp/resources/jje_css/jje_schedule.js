@@ -1,76 +1,6 @@
 //<!---------------------------------------------달력----------------------------------------------------------------->
-//var initialLocaleCode = 'ko';
-//var calendarEl = document.getElementById('comb_calendar');
-//// var pCalendarEl = document.getElementById('p_calendar');
-//
-//var calendar = new FullCalendar.Calendar(calendarEl, {
-//    initialView: 'dayGridMonth',
-//    headerToolbar: {
-//        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
-//        center: '',
-//        end: 'today dayGridMonth,timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
-//    },
-//    locale: initialLocaleCode,
-//    slotMinTime: '08:00',
-//    slotMaxTime: '24:00:00',
-//    businessHours: true,
-//    // navLinks: true,
-//    editable: true,
-//    droppable: true, // this allows things to be dropped onto the calendar
-//    drop: function(info) {
-//        // is the "remove after drop" checkbox checked?
-//        if (checkbox.checked) {
-//        // if so, remove the element from the "Draggable Events" list
-//        info.draggedEl.parentNode.removeChild(info.draggedEl);
-//        }
-//    },
-//    dateClick: function(e) { //날짜 클릭 이벤트
-//        // alert('a day has been clicked!');
-//        console.log(e.dateStr);//선택한 날짜 콘솔에 출력 -> 상세조회 가능할듯
-//    },
-//    eventClick:function(e){
-//        console.log(e.event.title); //클릭한 이벤트의 제목
-//        console.log(e.event.id); //클릭한 이벤트의 id -> 일정 숫자로 지정해야겠음
-//    },
-//
-//    // timeZone: 'UTC',
-//    //임의로 이벤트 추가1
-//    events: [
-//    	<%ArrayList<Schedule> ScheduleList = (ArrayList<Schedule>)request.getAttribute("schedule");%>
-//    	<%if (ScheduleList != null) {%>
-//	        <%for (Schedule s : ScheduleList) {%>
-//		        {
-//		        	title : '<%=s.getskedTitle()%>',
-//		            start : '<%=s.getskedStart()%>',
-//		            end : '<%=s.getskedEnd()%>'
-//		         },
-//			<%}
-//		}%>
-//    ]
-//});
-//
-//// var pCalendar = new FullCalendar.Calendar(pCalendarEl, {
-////     initialView: 'listDay',
-//// });
-//
-////아이디가 'a'인 이벤트 발생하면 콘솔창에 이벤트 시작 시간 출력
-//var event = calendar.getEventById('a') // an event object!
-//var start = event.start // a property (a Date object)
-//console.log(start.toISOString()) // "2018-09-01T00:00:00.000Z"
-//
-//
-////임의로 이벤트 추가2
-//calendar.addEvent( {'title':'테스트', 'start':'2022-06-10', 'end':'2022-06-11'});
-//
-//calendar.on('dateClick', function(info) { //날짜 클릭 후 콘솔 출력
-//    console.log('clicked on ' + info.dateStr);
-//});
-//
-////캘린더 랜더링
-//calendar.render();
+
 //<!---------------------------------------------달력----------------------------------------------------------------->
-
-
 
 //시작날짜 설정
 var today = document.getElementById('start_date').value= new Date().toISOString().slice(0, 10);
@@ -95,33 +25,33 @@ const getDateDiff = (d1, d2) => {
     return Math.abs(diffDate / (1000 * 3600 * 24));
 }
 
-/*submit*/
+/*Insert submit*/
 function sked_submit(){
     var start_date = document.getElementById('start_date').value;
     var end_date = document.getElementById('end_date').value;
     var start_time = document.getElementById('start_time').value;
-    var fin_time = document.getElementById('fin_time').value;
+    var end_time = document.getElementById('end_time').value;
     
     if(start_date && !end_date){ //시작일만 있는 경우(종료일은 없는 경우)
-        if(start_time && !fin_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
+        if(start_time && !end_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
             console.log("시작일 "+start_date+" "+start_time);
         }
-        if(!start_time && fin_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
+        if(!start_time && end_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
             alert("시작 시간 누락");
             return false;
         }
-        if(start_time && fin_time){ //시작시간과 종료시간 둘 다 있는경우
-            if(start_time>=fin_time){ //시작시간이 종료시간보다 더 크면 안됨
+        if(start_time && end_time){ //시작시간과 종료시간 둘 다 있는경우
+            if(start_time>=end_time){ //시작시간이 종료시간보다 더 크면 안됨
                 alert("종료시간은 시작시간보다 늦어야합니다.");
                 return false;
             }else{
                 var time1 = new Date(start_date+" "+start_time); //시작일+시작시간
-                // var time2 = new Date(start_date+" "+fin_time); //시작일+종료시간
-                var time = getTimeDiff(start_date, fin_time, time1);
+                // var time2 = new Date(start_date+" "+end_time); //시작일+종료시간
+                var time = getTimeDiff(start_date, end_time, time1);
                 console.log(time);
                 
                 console.log("시작시간 "+start_date+" "+start_time);
-                console.log("종료시간 "+start_date+" "+fin_time);
+                console.log("종료시간 "+start_date+" "+end_time);
             }
         }else{
             if(!start_time){//시작 시간도 없는 경우
@@ -137,26 +67,188 @@ function sked_submit(){
                 console.log("시작일 "+start_date);
                 console.log("종료일 "+end_date);
             }
-            if(start_time && !fin_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
+            if(start_time && !end_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
                 console.log("시작일 "+start_date+" "+start_time);
                 console.log("종료일 "+end_date+" "+start_time);
             }
-            if(!start_time && fin_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
+            if(!start_time && end_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
                 alert("시작 시간 누락");
                 return false;
             }
-            if(start_time && fin_time){ //시작시간과 종료시간 둘 다 있는경우
+            if(start_time && end_time){ //시작시간과 종료시간 둘 다 있는경우
                 var time1 = new Date(start_date+" "+start_time); //시작일+시작시간
-                // var time2 = new Date(end_date+" "+fin_time); //종료일+종료시간
-                var time = getTimeDiff(end_date, fin_time, time1);
+                // var time2 = new Date(end_date+" "+end_time); //종료일+종료시간
+                var time = getTimeDiff(end_date, end_time, time1);
                 
                 var date = getDateDiff(start_date, end_date);
     
                 console.log(date+"일 "+time);
                 console.log("시작일 "+start_date+" "+start_time);
-                console.log("시작일 "+end_date+" "+fin_time);
+                console.log("시작일 "+end_date+" "+end_time);
             }
         }
     }
 
 }
+
+/*Update submit*/
+function sked_update_submit(){
+    var detail_start_date = document.getElementById('detail_start_date').value;
+    var detail_end_date = document.getElementById('detail_end_date').value;
+    var detail_start_time = document.getElementById('detail_start_time').value;
+    var detail_end_time = document.getElementById('detail_end_time').value;
+    
+    if(detail_start_date && !detail_end_date){ //시작일만 있는 경우(종료일은 없는 경우)
+        if(detail_start_time && !detail_end_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
+            console.log("시작일 "+detail_start_date+" "+detail_start_time);
+        }
+        if(!detail_start_time && detail_end_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
+            alert("시작 시간 누락");
+            return false;
+        }
+        if(detail_start_time && detail_end_time){ //시작시간과 종료시간 둘 다 있는경우
+            if(detail_start_time>=detail_end_time){ //시작시간이 종료시간보다 더 크면 안됨
+                alert("종료시간은 시작시간보다 늦어야합니다.");
+                return false;
+            }else{
+                var time1 = new Date(detail_start_date+" "+detail_start_time); //시작일+시작시간
+                // var time2 = new Date(detail_start_date+" "+detail_end_time); //시작일+종료시간
+                var time = getTimeDiff(detail_start_date, detail_end_time, time1);
+                console.log(time);
+                
+                console.log("시작시간 "+detail_start_date+" "+detail_start_time);
+                console.log("종료시간 "+detail_start_date+" "+detail_end_time);
+            }
+        }else{
+            if(!detail_start_time){//시작 시간도 없는 경우
+                console.log("시작일 "+detail_start_date);
+            }
+        }
+    }else{ //시작일과 종료일이 둘 다 있는 경우
+        if(detail_start_date>=detail_end_date){ //종료일이 시작일보다 이른경우
+            alert("종료일은 시작일보다 늦어야합니다.");
+            return false;
+        }else{
+            if(!detail_start_time){//시작 시간은 없는 경우
+                console.log("시작일 "+detail_start_date);
+                console.log("종료일 "+detail_end_date);
+            }
+            if(detail_start_time && !detail_end_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
+                console.log("시작일 "+detail_start_date+" "+detail_start_time);
+                console.log("종료일 "+detail_end_date+" "+detail_start_time);
+            }
+            if(!detail_start_time && detail_end_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
+                alert("시작 시간 누락");
+                return false;
+            }
+            if(detail_start_time && detail_end_time){ //시작시간과 종료시간 둘 다 있는경우
+                var time1 = new Date(detail_start_date+" "+detail_start_time); //시작일+시작시간
+                // var time2 = new Date(detail_end_date+" "+detail_end_time); //종료일+종료시간
+                var time = getTimeDiff(detail_end_date, detail_end_time, time1);
+                
+                var date = getDateDiff(detail_start_date, detail_end_date);
+    
+                console.log(date+"일 "+time);
+                console.log("시작일 "+detail_start_date+" "+detail_start_time);
+                console.log("시작일 "+detail_end_date+" "+detail_end_time);
+            }
+        }
+    }
+
+}
+
+/*카테고리별 색상 변경*/
+var sked_code = document.getElementById('sked_code');
+sked_code.addEventListener('input',function(e){		//Form Event
+	
+	var codeValue = sked_code.options[sked_code.selectedIndex].value;
+	
+	var groupP = document.getElementById('color_group_P');
+	var groupD = document.getElementById('color_group_D');
+
+	if(codeValue=="P"){
+    	groupD.style.display="none";
+    	groupP.style.display="block";
+    }else{
+    	groupP.style.display="none";
+    	groupD.style.display="block";
+    }
+});
+
+/*상세조회 모달*/
+function clickDetailBtn(result)  {
+	var id = result.id;
+	var skedCode = result.skedCode;
+	var colorCode = result.colorCode;
+	
+	var title = result.title;
+	var content = result.content;
+	var place = result.place;
+	var memo = result.memo;
+	
+	var start = result.start;
+	var startTime = result.startTime;
+	var end = result.end;
+	var endTime = result.endTime;
+	
+	$("#detail_head").text(start);		//헤더
+	$("#detail_sked_code").val(skedCode);	//일정코드
+	
+	/*표시 색상 변경*/
+	var detailGroupP = document.getElementById('detail_color_group_P');
+	var detailGroupD = document.getElementById('detail_color_group_D');
+	if(skedCode==="P"){
+		detailGroupD.style.display="none";
+		detailGroupP.style.display="block";
+	}else{
+		detailGroupP.style.display="none";
+		detailGroupD.style.display="block";
+	}
+	
+	if(colorCode=="C1"){
+		$("#detail_color_pink").attr("checked", true);
+		console.log("C1입니다.")
+	}else if(colorCode=="C2"){
+		$("#detail_color_blue").attr("checked", true);
+		console.log("C2입니다.")
+	}else if(colorCode=="C3"){
+		$("#detail_color_yellow").attr("checked", true);
+		console.log("C3입니다.")
+	}else if(colorCode=="C4"){
+		$("#detail_color_purple").attr("checked", true);
+		console.log("C4입니다.")
+	}else if(colorCode=="C5"){
+		$("#detail_color_red").attr("checked", true);
+		console.log("C5입니다.")
+	}else if(colorCode=="C6"){
+		$("#detail_color_lightGray").attr("checked", true);
+		console.log("C6입니다.")
+	}else if(colorCode=="C7"){
+		$("#detail_color_gray").attr("checked", true);
+		console.log("C7입니다.")
+	}else if(colorCode=="C8"){
+		$("#detail_color_darkGray").attr("checked", true);
+		console.log("C8입니다.")
+	}else{
+		console.log("없습니다.")
+	}
+	
+	$("#detail_sked_title").val(title);		//제목
+	$("#detail_sked_content").val(content);	//내용
+	$("#detail_sked_place").val(place);		//장소
+	$("#detail_sked_meno").val(memo);		//메모
+	
+	$("#detail_start_date").val(start);		//시작일
+	$("#detail_start_time").val(startTime);	//시작시간
+	$("#detail_end_date").val(end);			//종료일
+	$("#detail_end_time").val(endTime);		//종료시간
+	
+	/*목록창 닫기*/
+	$('.fc-popover-close').click();
+	
+	/*모달창 호출*/
+	document.getElementById('detail_btn').click();
+}
+
+
+

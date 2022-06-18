@@ -101,78 +101,69 @@ data-template="vertical-menu-template-free"
         </div>
     </div>
         
-        <!-- Content -->
-        <div class="container-xxl">
-            <div class="authentication-wrapper authentication-basic container-p-y">
-        <!-- <div class="authentication-inner"> -->
-            <!-- Register -->
-            <div class="join-card">
-            <div class="card-body">
-                <!-- Logo -->
-                <div class="app-brand justify-content-center">
-                <span class="app-brand-text demo text-body fw-bolder m-2 mb-2">Join</span>
-                </div>
-
-                <form id="formAuthentication" class="m-3 join-input" action="insertEmp.do" method="POST">
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="empName" name="empName" placeholder="Name" autofocus required/>
-                    </div>
-                    <div class="mb-2">
-                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" autofocus required/>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required/>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="empReg" name="empReg" placeholder="Persnal Number" autofocus required/>
-                    </div>
-                    <div class="mb-2 form-password-toggle">
-                        <div class="input-group input-group-merge">
-                        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required/>
-                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus required/>
-                    </div>
-                    <!-- <div class="mb-2">
-                        <select id="deptCode" name="deptCode" class="form-select" autofocus>
-                            <option>Department</option>
-                            <option value="D1">인사관리부</option>
-                            <option value="D2">회계관리부</option>
-                            <option value="D3">마게팅부</option>
-                            <option value="D4">자재관리부</option>
-                            <option value="D5">기획영업부</option>
-                            <option value="D6">경영관리부</option>
-                            <option value="D7">기술개발부</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <select id="jobCode" name="jobCode" class="form-select" autofocus>
-                            <option>Job</option>
-                            <option value="J1">대표</option>
-                            <option value="J2">부사장</option>
-                            <option value="J3">부장</option>
-                            <option value="J4">차장</option>
-                            <option value="J5">과장</option>
-                            <option value="J6">대리</option>
-                            <option value="J7">사원</option>
-                            <option value="J8">인턴</option>
-                        </select>
-                    </div> -->
-                    <!--로그인, 회원가입 버튼-->
-                    <div class="join-buttons">
-                        <button class="btn rounded-pill btn-primary" type="submit">Submit</button>
-                        <button class="btn rounded-pill btn-secondary" type="reset">Reset</button>
-                    </div>
-                </form>
-            </div>
-            </div>
-            <!-- /Register -->
-        <!-- </div> -->
-        </div>
-    </div>
-
+	<!-- Content -->
+	<div class="container-xxl">
+	    <div class="authentication-wrapper authentication-basic container-p-y">
+			<div class="join-card">
+				<div class="card-body">
+			     	
+			     	<!-- Logo -->
+					<div class="app-brand justify-content-center">
+						<span class="app-brand-text demo text-body fw-bolder m-2 mb-2">Join</span>
+					</div>
+					<!-- / Logo -->
+					
+					<!-- 회원가입 폼 -->
+					<form id="formAuthentication" class="m-3 join-input" action="insertEmp.do" method="POST">
+						<div class="mb-2">
+						    <input type="text" class="form-control" id="empName" name="empName" placeholder="Name" autofocus required/>
+						</div>
+					    <div class="mb-2">
+					        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" autofocus required/>
+					    </div>
+					    <div class="mb-2">
+					        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required/>
+					    </div>
+					    <div class="mb-2">
+					        <input type="text" class="form-control" id="empReg" name="empReg" placeholder="Persnal Number" autofocus required/>
+					    </div>
+					    <div class="mb-2 form-password-toggle">
+					        <div class="input-group input-group-merge">
+					        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required/>
+					        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+					        </div>
+					    </div>
+					    <div class="mb-2">
+					        <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus required/>
+					    </div>
+					    
+					    <!--로그인, 회원가입 버튼-->
+						<div class="join-buttons">
+							<button class="btn rounded-pill btn-primary" type="submit">Submit</button>
+							<button class="btn rounded-pill btn-secondary" type="reset">Reset</button>
+						</div>
+					</form>
+					<!-- 회원가입 폼 -->
+					<script>
+						$(function(){
+				            $('#empName').keyup(function(){
+				                var regExp = /^[가-힣]+$/
+				                	if(!regExp.test($(this).val())){
+										
+				                	}else{
+				                		
+				                	}
+				            });
+	
+				            $('form').submit(function(event){
+				            	
+				            })
+				        });
+					</script>
+				</div>
+			</div>
+	    </div>
+	</div>
     <!-- / Content -->
 
     <!-- Core JS -->
@@ -183,6 +174,7 @@ data-template="vertical-menu-template-free"
     <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/assets/vendor/js/menu.js"></script>
+    
     <!-- endbuild -->
 
     <!-- Vendors JS -->

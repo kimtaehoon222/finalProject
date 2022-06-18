@@ -1,7 +1,5 @@
 package com.workie.easy.schedule.model.dto;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
