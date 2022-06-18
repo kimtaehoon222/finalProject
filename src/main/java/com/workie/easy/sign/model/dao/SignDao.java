@@ -15,5 +15,10 @@ public class SignDao {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectList");
 	}
+
+	public int insertName(SqlSessionTemplate sqlSession, int eNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("signMapper.insertName", eNo);
+	}
 		
 }

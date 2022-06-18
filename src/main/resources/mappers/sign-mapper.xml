@@ -56,9 +56,13 @@
 			AND B.DEPT_NAME IN ( '기획영업부', '마케팅부', '인사관리부')
 			ORDER BY B.DEPT_NAME, A.JOB_CODE DESC
 			
-		</select>
+	</select>
 		
+	<insert id="insertName" parameterType="_int">
 		
+	
+	
+	</insert>	
 		
 		
 		

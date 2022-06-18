@@ -11,4 +11,6 @@ public interface SignService {
 
 	ArrayList<Employee> selectList();
 
+	void insertName(int eNo);
+
 }
