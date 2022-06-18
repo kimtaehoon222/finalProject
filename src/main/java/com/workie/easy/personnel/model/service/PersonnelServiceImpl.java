@@ -26,7 +26,6 @@ public class PersonnelServiceImpl implements PersonnelService {
 	public Employee updateEmp(Employee e) {
 		
 		int result = personnelDao.updateEmp(sqlSession,e);
-		System.out.println("kim"+ result);
 				
 		     if(result > 0 ) {
 				
@@ -97,6 +96,20 @@ public class PersonnelServiceImpl implements PersonnelService {
 		if(result < 0 ) {
 			throw new CommException("직원 삭제에 실패하였습니다. 관리자에게 문의바랍니다.");
 		}
+	}
+
+	@Override
+	public ArrayList<Employee> selectRetiredEmpList() {
+		
+		ArrayList<Employee> list = personnelDao.selectRetiredEmpList(sqlSession);
+		
+		return list;
+	}
+
+	@Override
+	public Employee selectRetiredEmp(String eId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

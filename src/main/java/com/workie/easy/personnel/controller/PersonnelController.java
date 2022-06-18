@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -95,23 +95,12 @@ public class PersonnelController {
 			                           @RequestParam (name = "reUploadFile", required = false) 
 	                                   MultipartFile file) { 
 		 
-		 System.out.println("직원 수정한 값 컨트롤 ++++" + emp);
-		 String orgChangeName = emp.getChangeName();
-		   //기존첨부파일을 orgChangeName변수에 담아주고 	      
+		
 		 
-		 String changeName = saveFile(file, request, emp);
-		   //경로와 바뀐첨부파일명
-		 emp.setOriginName(file.getOriginalFilename());
-		 emp.setChangeName(changeName);
 		 
 		   personnelService.updateEmpInfo(emp);
 		   
-		   if(orgChangeName != null) {
-			   deleteFile(orgChangeName, request);
-			   //기존에 첨부파일이 있으면  deleteFile메소드로 삭제
-		   }
-		   
-		   mv.addObject("eId", emp.getEmpId()).setViewName("personnel/empDetailView");
+		   mv.addObject("eId", emp.getEmpId()).setViewName("redirect:detailEmp.do");
 		   return mv;
 		 
 	 }
@@ -171,5 +160,22 @@ public class PersonnelController {
 		 personnelService.deleteEmp(eId);
 		 
 		 return "redirect:empList.do";
+	 }
+	
+	@RequestMapping("retiredEmpList.do") 
+	public String selectRetiredEmpList(Model model) {
+        ArrayList<Employee> list = personnelService.selectRetiredEmpList();
+		
+		model.addAttribute("list", list);
+		return "personnel/retiredEmpListView";	
+	}
+	 @RequestMapping("detailRetiredEmp.do") 
+     public ModelAndView selectRetiredEmp(String eId , ModelAndView mv) {
+		 
+		 Employee e = personnelService.selectRetiredEmp(eId);
+		 
+		 mv.addObject("e",e).setViewName("personnel/retiredEmpDetailView");
+
+		 return mv;	
 	 }
 }

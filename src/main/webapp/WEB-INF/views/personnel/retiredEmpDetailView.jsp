@@ -55,7 +55,7 @@
 #home{background-color: rgb(144, 145, 191); }
 </style>
 <body>
-<jsp:include page="top.jsp"/>
+<jsp:include page="../common/top.jsp" />
 
   <div class="layout-container">
 
@@ -69,10 +69,7 @@
         
           <div class="container-xxl flex-grow-1 container-p-y">
             
-            
-
-
-<div class="row">
+    <div class="row">
   <div class="col-md-12">
     
     <div class="card mb-4">
@@ -85,9 +82,9 @@
           <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="150" width="200" id="uploadedAvatar" />
              <div id="topPage" >
                     <div id="title">
-               <h5  name="empName"> 이름 : 김재호</h5>
-               <h5 name="email"> 이메일 : shslove22@nate.com </h5>
-               <h5 name= phone>전화번호 : 010-888-8888</h5>
+                 <h5>이메일 : ${e.empId}@easy.co.kr</h5>
+					<h5>전화번호 : ${e.phone}</h5>
+					<h5>생년월일 : ${e.empReg}</h5>
                     </div>
                </div>
         </div>
@@ -156,7 +153,7 @@
   
     
     
-   <jsp:include page="bottom.jsp"/>
+   <jsp:include page="../common/bottom.jsp"/>
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>

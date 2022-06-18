@@ -91,7 +91,7 @@
               </c:if> 
       		 <div id="topPage" >
                     <div id="title">
-                    <h5> 이메일 : ${e.empId}@easy.co.kr</h5>
+                    <h5>이메일 : ${e.empId}@easy.co.kr</h5>
 					<h5>전화번호 : ${e.phone}</h5>
 					<h5>생년월일 : ${e.empReg}</h5>
                     </div>
@@ -114,20 +114,30 @@
               <input class="form-control" type="text" name="telNo"  value="${e.telNo}" />
             </div>
                <div class="mb-3 col-md-6">
-              <label for="deptName" class="form-label">부서</label>
-              <select id="deptName" class="select2 form-select">
-                <option value="">총무부</option>
-                <option value="-12">법무부</option>
-                <option value="-12">총무부</option>
+              <label for="deptCode" class="form-label">부서</label>
+              <select name ="deptCode" id="deptCode" class="select2 form-select">
+                <option value="">${e.deptName}</option>
+                <option value="D1">인사관리부</option>
+                <option value="D2">회계관리부</option>
+                <option value="D3">마케팅부</option>
+                <option value="D4">자재관리부</option>
+                <option value="D5">기획영업부</option>
+                <option value="D6">경영관리부</option>
+                <option value="D7">기술개발부</option>
               </select>
             </div>
             <div class="mb-3 col-md-6">
-              <label for="jobName" class="form-label">직위</label>
-              <select id="jobName" class="select2 form-select">
-                <option value="">부장</option>
-                <option value="-12">부장</option>
-                <option value="-12">차장</option>
-                <option value="-12">사원</option>
+              <label for="jobCode" class="form-label">직위</label>
+              <select name ="jobCode" id="jobCode" class="select2 form-select">
+                <option>${e.jobName}</option>
+                <option value="J1">사장</option>
+                <option value="J2">부사장</option>
+                <option value="J3">부장</option>
+                <option value="J4">차장</option>
+                <option value="J5">과장</option>
+                <option value="J6">대리</option>
+                <option value="J7">사원</option>
+                <option value="J8">인턴</option>
               </select>
             </div>
 

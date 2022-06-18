@@ -41,4 +41,9 @@ public class PersonnelDao {
 		return sqlSession.update("personnelMapper.deleteEmp", eId);
 	}
 
+	public ArrayList<Employee> selectRetiredEmpList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("personnelMapper.selectRetiredEmpList");
+	}
+
 }

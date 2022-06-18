@@ -369,13 +369,13 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="form-layouts-horizontal.html" class="menu-link">
-                    <div data-i18n="Horizontal Form">2</div>
+                  <a href="retiredEmpList.do" class="menu-link">
+                    <div data-i18n="Horizontal Form">퇴사자 목록</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="form-layouts-horizontal.html" class="menu-link">
-                    <div data-i18n="Horizontal Form">3</div>
+                  <a href="" class="menu-link">
+                    <div data-i18n="Horizontal Form">미승인 직원 목록</div>
                   </a>
                 </li>
               </ul>

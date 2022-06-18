@@ -53,7 +53,7 @@
         </select>
         
         <select id="selectEmp" resultMap="personnelResult">
-		SELECT 
+	    SELECT 
 		*
 		FROM EMPLOYEE A
 		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
@@ -65,8 +65,10 @@
        
        	<update id="updateEmpInfo" parameterType="Employee">
 		  UPDATE EMPLOYEE SET 
-	      DISABLE_YN = #{disabledYN}
-	      WHERE EMP_ID = #{eId}
+	      DISABLE_YN = #{disabledYN},
+	      DEPT_CODE=#{deptCode},
+	      JOB_CODE=#{jobCode}
+	      WHERE EMP_ID = #{empId}
       </update>
       
       
@@ -76,4 +78,16 @@
 	      ENT_YN = 'N'
 	      WHERE EMP_ID = #{eId}
       </update>
+      
+      <select id="selectRetiredEmpList" resultMap="personnelResult">
+		SELECT 
+		*
+		FROM EMPLOYEE A
+		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
+		WHERE ENT_YN= 'N'
+        ORDER BY EMP_NAME
+        </select>
+      
 </mapper>

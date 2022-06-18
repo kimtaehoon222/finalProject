@@ -20,5 +20,8 @@ public interface PersonnelService {
 	//인사관리에서 재직중인 직원 정보 수정용
 	void deleteEmp(String eId);
 	//재직중인 직원 퇴사하는 용
+	ArrayList<Employee> selectRetiredEmpList();
+	//
+	Employee selectRetiredEmp(String eId);
 
 }

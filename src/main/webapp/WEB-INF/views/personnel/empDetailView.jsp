@@ -133,10 +133,10 @@
          
           </div>
           <div class="mt-2">
-          <button type="submit" id="home" class="btn btn-primary me-3">목록으로</button>
+          <button type="button"  id= "home"  class="btn btn-primary me-3">목록으로</button>
          
             <button type="submit" class="btn btn-primary me-2" onclick="postFormSubmit(1);">수정하기</button>
-            <button type="reset" id ="o_butt" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">퇴사하기</button>
+            <button type="submit" id ="o_butt" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">퇴사하기</button>
           </div>
               
 			 <form id="postForm" action="" method="post">
