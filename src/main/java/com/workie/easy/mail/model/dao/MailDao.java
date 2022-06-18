@@ -106,6 +106,21 @@ public class MailDao {
 		return sqlSession.update("mailMapper.cancelMail", mailNo);
 	}
 
+	/*public int deleteMailList(SqlSession sqlSession, int mailNo) {
+		
+		return sqlSession.update("mailMapper.deleteMailList", mailNo);
+	}*/
+
+	public int restoreMail(SqlSession sqlSession, int mailNo) {
+
+		return sqlSession.update("mailMapper.restoreMail", mailNo);
+	}
+
+	public int permanentDeleteMail(SqlSession sqlSession, int mailNo) {
+
+		return sqlSession.delete("mailMapper.permanentDeleteMail", mailNo);
+	}
+
 	public int deleteMail(SqlSession sqlSession, int mailNo) {
 		
 		return sqlSession.update("mailMapper.deleteMail", mailNo);

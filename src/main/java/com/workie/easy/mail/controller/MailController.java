@@ -390,19 +390,71 @@ public class MailController {
 		return "redirect:reserveMailList.do"; 
 	}
 	
-	/* 메일 삭제  : 예약 메일에서만 가능 */
-	@RequestMapping(value="deleteMail.do", method=RequestMethod.POST) 
-	public String deleteMail(String mailNoList) {
+	/* 메일 삭제  : 보낸, 받은, 예약 메일 리스트에서 호출 */
+	@RequestMapping(value="deleteMailList.do", method=RequestMethod.POST) 
+	public String deleteMailList(String mailNoList, String listType) {
 		
-		/* 파라미터로 전달받은 mailNo를 구분자로 분리하여 배열에 담는다. */
+		String view = "";
+
+		if(listType.equals("r")) { /* 받은 메일에서 요청 */
+			view = "redirect:receiveMailList.do";
+		}else if(listType.equals("re")) { /* 예약 메일에서 요청 */
+			view = "redirect:reserveMailList.do";
+		}else{ /* 보낸 메일에서 요청 */
+			view = "redirect:sendMailList.do";
+		}
+		
 		String[] mailNoArr = mailNoList.split(",");
 		
-		/* 방법을 모르겠어서 반복문으로 처리 */
+		/* 호출하는 deleteMail 메소드는 상세조회에서의 삭제와 공통이다. 즉, service 계층부터 동일하다. */
 		for(String mailNo : mailNoArr) {
-			
-			/* 배열에 문자열로 담겨있으므로 int로 형 변환 : 조건절의 MAIL_NO가 NUMBER 타입이다. */
 			mailService.deleteMail(Integer.parseInt(mailNo));
 		}
+		
+		return view; 
+	}
+	
+	/* 메일 복원  : 휴지통 리스트에서 호출 */
+	@RequestMapping(value="restoreMail.do", method=RequestMethod.POST) 
+	public String restoreMail(String mailNoList) {
+		
+		String[] mailNoArr = mailNoList.split(",");
+		
+		for(String mailNo : mailNoArr) {
+			mailService.restoreMail(Integer.parseInt(mailNo));
+		}
+		
+		return "redirect:deleteMailList.do"; 
+	}
+	
+	/* 메일 완전삭제  : 휴지통 리스트에서 호출 */
+	@RequestMapping(value="permanentDeleteMailList.do", method=RequestMethod.POST) 
+	public String permanentDeleteMailList(String mailNoList) {
+		
+		String[] mailNoArr = mailNoList.split(",");
+		
+		/* 호출하는 permanentDeleteMail 메소드는 상세조회에서의 완전삭제와 공통이다. 즉, service 계층부터 동일하다. */
+		for(String mailNo : mailNoArr) {
+			mailService.permanentDeleteMail(Integer.parseInt(mailNo));
+		}
+		
+		return "redirect:deleteMailList.do"; 
+	}
+	
+	/* 메일 삭제  : 상세조회에서만 호출 */
+	@RequestMapping("deleteMail.do") 
+	public String deleteMail(int mailNo) {
+		
+		mailService.deleteMail(mailNo);
+		
+		return "redirect:deleteMailList.do"; 
+	}
+	
+	/* 메일 완전삭제 : 휴지통 상세에서만 호출 */
+	@RequestMapping("permanentDeleteMail.do") 
+	public String permanentDeleteMailOne(int mailNo) {
+		
+		mailService.permanentDeleteMail(mailNo);
 		
 		return "redirect:deleteMailList.do"; 
 	}

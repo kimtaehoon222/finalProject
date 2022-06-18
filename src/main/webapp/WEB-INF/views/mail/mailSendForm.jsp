@@ -84,7 +84,7 @@
                  <span class="d-none d-sm-block">내 정보 수정하기</span>
                </label>
                <p class="text-muted mb-0">부서 : <%=loginEmp.getDeptName() %></p>
-               <p class="text-muted mb-0">내선번호 : 02-123-4567</p>
+               <p class="text-muted mb-0">내선번호 : <%=loginEmp.getTelNo() %></p>
              </div>
            </div>
          </div>
@@ -180,22 +180,126 @@
            </div>
            
            <!-- Modal body -->
-           <div class="modal-body">
-            <!--<button onclick="javascript:window.returnValue='음훼훼';window.close()">부모창 폼에 값넘기기</button>  -->
-              <label class="form-label" for="add">받는사람선택</label>
-                 <select id="insertAddress1" class="select2 form-select">
-               <option value="5">전재은</option>
-               <option value="3">김태훈</option>
-               <option value="1">김재호</option>
-               <option value="4">임현빈</option>
-            </select>
+           <div class="container-xxl flex-grow-1 container-p-y">
+
+			<!-- Accordion -->
+			<h5 class="mt-4">수신인 선택</h5>
+			<div class="row">
+			  <div class="col-md mb-4 mb-md-0">
+			    <small class="text-light fw-semibold">수신인은 1명만 지정이 가능합니다. 이외의 수인인은 참조인으로 선택해주세요.</small>
+			    <div class="accordion mt-3" id="accordionExample">
+			      <!-- 부서 1개 시작 -->
+			      <div class="card accordion-item active">
+			        <h2 class="accordion-header" id="headingOne">
+			          <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
+			            	회계관리부
+			          </button>
+			        </h2>
+			        <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+			          <div class="accordion-body">
+			            <input type="radio" name="xxx" value="yyy" checked> 전재은 <br> 
+			            <input type="radio" name="xxx" value="yyy" checked> 임현빈 <br>
+			            <input type="radio" name="xxx" value="yyy" checked> 김태훈 <br>
+			            <input type="radio" name="xxx" value="yyy" checked> 김재호 <br>
+			          </div>
+			        </div>
+			      </div>
+			      <!-- 부서 1개 끝 -->
+			      <!-- 부서 1개 시작 -->
+			      <div class="card accordion-item">
+			        <h2 class="accordion-header" id="headingTwo">
+			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
+			            Accordion Item 2
+			          </button>
+			        </h2>
+			        <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+			          <div class="accordion-body">
+			            Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake dragée ice
+			            cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly beans candy canes
+			            carrot cake. Fruitcake chocolate chupa chups.
+			          </div>
+			        </div>
+			      </div>
+			      <!-- 부서 1개 끝 -->
+			      <!-- 부서 1개 시작 -->
+			      <div class="card accordion-item">
+			        <h2 class="accordion-header" id="headingThree">
+			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionThree" aria-expanded="false" aria-controls="accordionThree">
+			            Accordion Item 3
+			          </button>
+			        </h2>
+			        <div id="accordionThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+			          <div class="accordion-body">
+			            Oat cake toffee chocolate bar jujubes. Marshmallow brownie lemon drops cheesecake. Bonbon gingerbread
+			            marshmallow sweet jelly beans muffin. Sweet roll bear claw candy canes oat cake dragée caramels. Ice cream
+			            wafer danish cookie caramels muffin.
+			          </div>
+			        </div>
+			      </div>
+			      <!-- 부서 1개 끝 -->
+			    </div>
+			  </div>
+			  
+			  <div class="col-md">
+			    <small class="text-light fw-semibold">Accordion Without Arrow</small>
+			    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
+			      <div class="accordion-item card">
+			        <h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
+			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-1" aria-controls="accordionIcon-1">
+			            Accordion Item 1
+			          </button>
+			        </h2>
+			
+			        <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+			          <div class="accordion-body">
+			            Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi
+			            bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears
+			            marshmallow pastry pie.
+			          </div>
+			        </div>
+			      </div>
+			
+			      <div class="accordion-item card">
+			        <h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconTwo">
+			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-2" aria-controls="accordionIcon-2">
+			            Accordion Item 2
+			          </button>
+			        </h2>
+			        <div id="accordionIcon-2" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+			          <div class="accordion-body">
+			            Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake dragée ice
+			            cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly beans candy canes
+			            carrot cake. Fruitcake chocolate chupa chups.
+			          </div>
+			        </div>
+			      </div>
+			<h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconThree">
+			          <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionIcon-3" aria-expanded="true" aria-controls="accordionIcon-3">
+			            Accordion Item 3
+			          </button>
+			        </h2>
+			        <div id="accordionIcon-3" class="accordion-collapse collapse show" data-bs-parent="#accordionIcon">
+			          <div class="accordion-body">
+			            Oat cake toffee chocolate bar jujubes. Marshmallow brownie lemon drops cheesecake. Bonbon gingerbread
+			            marshmallow sweet jelly beans muffin. Sweet roll bear claw candy canes oat cake dragée caramels. Ice cream
+			            wafer danish cookie caramels muffin.
+			          </div>
+			        </div>
+			      <div class="accordion-item card active">
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!--/ Accordion -->
+
+        </div>
+         
+         <!-- Modal footer -->
+         <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" onclick="insertAddress1();" data-dismiss="modal">선택완료</button>
+           <button type="button" class="btn btn-secondary" onclick="deleteAddress1();" data-dismiss="modal">선택취소</button>
          </div>
-           
-           <!-- Modal footer -->
-           <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" onclick="insertAddress1();" data-dismiss="modal">선택완료</button>
-             <button type="button" class="btn btn-secondary" onclick="deleteAddress1();" data-dismiss="modal">선택취소</button>
-           </div>
            
          </div>
        </div>
@@ -245,9 +349,7 @@
          </div>
        </div>
    </div>
-   <!-- 주소록 클릭시 나오는 모달창 끝 : 참조인용 -->
-   
-   
+		
    <script type="text/javascript">
    
       /* 받는사람 선택 */

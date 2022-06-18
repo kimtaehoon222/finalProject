@@ -32,6 +32,12 @@ public interface MailService {
 
 	void cancelMail(int mailNo);
 
+	/*void deleteMailList(int mailNo);*/
+
+	void restoreMail(int mailNo);
+
+	void permanentDeleteMail(int mailNo);
+
 	void deleteMail(int mailNo);
 
 	

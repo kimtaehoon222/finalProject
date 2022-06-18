@@ -133,7 +133,12 @@
 														<!-- 발송취소 및 삭제(휴지통) 버튼 -->
 														<button type="button" class="btn btn-outline-primary mt-2" id="replyMail">답장</button>
 														<button type="button" class="btn btn-outline-primary mt-2" id="forwardMail">전달</button>
-														<button type="button" class="btn btn-outline-primary mt-2">삭제</button>
+														<c:if test="${ mail.status == 'Y' }">
+															<button type="button" class="btn btn-outline-danger mt-2" id="deleteMail">삭제</button>
+														</c:if>
+														<c:if test="${ mail.status == 'N' }">
+															<button type="button" class="btn btn-outline-danger mt-2" id="" data-bs-toggle="modal" data-bs-target="#deleteCheckModal">완전삭제</button>
+														</c:if>
 													</li>
 												</ul>
 											</div>
@@ -163,7 +168,7 @@
 									              <label for="firstName" class="form-label">발신 : </label>
 									              <span class="badge rounded-pill bg-label-info">
 									              	${ mail.fromName }
-									              <input type="hidden" name="" id="fromMail" value="${ mail.fromMail}"/>
+									              <input type="hidden" name="" id="fromMail" value="${ mail.fromMail}" />
 									              </span>
 									            </div>
 									            <div class="mb-1 col-md-12 toFromMaill">
@@ -222,28 +227,68 @@
 	</div>
 	</form>
 
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	   <!-- 영구 삭제 재확인 모달창 -->
+	   <!-- 본 모달창에서 완전삭제 클릭시 controller로 넘어갈 수 있는 스크립트가 실행된다. -->
+	   <div class="modal fade" id="deleteCheckModal" data-backdrop="static" data-keyboard="false">
+	      <div class="modal-dialog modal-sm modal-dialog-centered">
+	        <div class="modal-content">
+	        
+	          <!-- Modal Header -->
+	          <div class="modal-header">
+	            <h4 class="modal-title">완전삭제 확인</h4>
+	            <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal">&times;</button>
+	          </div>
+	          
+	          <!-- Modal body -->
+	          <div class="modal-body">
+	            <p class="desc_info">
+			        선택된 메일을 완전히 삭제하시겠습니까?<br>
+			        <b class="text-danger">완전삭제</b>되어 복구할 수 없습니다.
+			    </p>
+	          </div>
+	          
+	          <!-- Modal footer -->
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-outline-primary" id="permanentDeleteMailBtn" data-dismiss="modal">완전삭제</button>
+	            <button type="button" class="btn btn-outline-secondary close" data-bs-dismiss="modal">취소</button>
+	          </div>
+	          
+	        </div>
+	      </div>
+	   </div>
+   
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
 	
 	<script type="text/javascript">
-
+		
+		/* 답장 */
 		$('#replyMail').click(function () {
 		      
-	       var mailNo = $('#mailNo').val();
-           location.href="mailReplyForm.do?mailNo="+mailNo;
-	        
+		       var mailNo = $('#mailNo').val();
+	           location.href="mailReplyForm.do?mailNo="+mailNo;
 	     })
 	     
+	    /* 전달 */ 
 		$('#forwardMail').click(function () {
 		      
-	       var mailNo = $('#mailNo').val();
-           location.href="mailForwardForm.do?mailNo="+mailNo;
-	        
+		       var mailNo = $('#mailNo').val();
+	           location.href="mailForwardForm.do?mailNo="+mailNo;
 	     })
+	     
+		/* 삭제 클릭시 : 받은/보낸/예약의 상세 조회에서 */
+		$('#permanentDeleteMailBtn').click(function () {
+			 var mailNo = $('#mailNo').val();
+	         location.href="permanentDeleteMail.do?mailNo="+mailNo;
+		})
+
+		/* 완전삭제 클릭시 : 휴지통에서의 상세 조회에서 */
+		$('#deleteMail').click(function () {
+			 var mailNo = $('#mailNo').val();
+	         location.href="deleteMail.do?mailNo="+mailNo;
+		})
+
 		
 	</script>
 
