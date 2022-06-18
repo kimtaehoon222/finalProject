@@ -8,6 +8,6 @@ public interface ScheduleService {
 
 	ArrayList<Schedule> scheduleList(Schedule sked);
 
-	ArrayList<Schedule> scheduleList2();
+	Schedule scheduleSelect(Schedule sked);
 
 }

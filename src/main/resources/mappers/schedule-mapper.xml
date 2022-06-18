@@ -38,4 +38,28 @@
 		   AND A.SKED_CODE = #{skedCode}
 		   </if>
 	</select>
+	
+	<select id="selectSchedule" resultMap="scheduleResultSet">
+		SELECT
+		       A.SKED_NO
+		     , A.SKED_CODE
+		     , A.EMP_NO
+		     , A.COLOR_CODE
+		     , A.SKED_TITLE
+		     , A.SKED_CONTENT
+		     , A.SKED_PLACE
+		     , A.SKED_MEMO
+		     , TO_CHAR(B.SKED_START, 'YYYY-MM-DD') AS SKED_START
+		     , B.SKED_START_TIME
+		     , TO_CHAR(B.SKED_END, 'YYYY-MM-DD') AS SKED_END
+		     , B.SKED_END_TIME
+		  FROM SCHEDULE A
+		  JOIN SCHEDULE_INFO B ON(A.SKED_NO=B.SKED_NO)
+		 WHERE A.SKED_STATUS = 'Y'
+		   AND A.EMP_NO = #{empNo}
+		   <if test='!skedCode.equals("C")'>
+		   AND A.SKED_CODE = #{skedCode}
+		   </if>
+		   AND A.SKED_NO = #{skedNo}
+	</select>
 </mapper>

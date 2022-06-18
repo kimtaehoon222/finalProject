@@ -143,6 +143,9 @@ html, body {
 .c3_list {background-color: rgba(243, 156, 18, 0.5);}
 .c4_list {background-color: rgba(155, 89, 182, 0.5);}
 .c5_list {background-color: rgba(239, 77, 61, 0.5);}
+.c6_list {background-color: rgba(190, 190, 190);}
+.c7_list {background-color: rgba(158, 158, 158);}
+.c8_list {background-color: rgba(69, 69, 69);}
 
 .t_list_cont {
     padding: 0 1.25rem;
@@ -156,12 +159,12 @@ html, body {
 /* ----------등록 모달창---------- */
 
 /* 색상 라디오 */
-.color_radio{
+.color_radio,.detail_color_radio{
     display: flex;
     justify-content: space-evenly;
     padding: 5px;
 }
-.color_radio div{
+.color_radio div, .detail_color_radio div{
     margin: 2px;
 }
 
@@ -170,6 +173,9 @@ html, body {
 #color_yellow{background-color: rgb(243, 156, 18);}
 #color_purple{background-color: rgb(155, 89, 182);}
 #color_red{background-color: rgb(239, 77, 61);}
+#color_lightGray {background-color: rgba(190, 190, 190);}
+#color_gray {background-color: rgba(158, 158, 158);}
+#color_darkGray {background-color: rgba(69, 69, 69);}
 
 /* 필수 입력 */
 #sked_code, .color_radio, #sked_title, #start_date, #sked_content{
@@ -191,4 +197,19 @@ html, body {
 .detail_footer button{
     width: 130px;
 
+}
+
+/* ----------상세조회 모달창---------- */
+#detail_color_pink{background-color: rgb(251, 138, 124);}
+#detail_color_blue{background-color: rgb(41, 128, 185);}
+#detail_color_yellow{background-color: rgb(243, 156, 18);}
+#detail_color_purple{background-color: rgb(155, 89, 182);}
+#detail_color_red{background-color: rgb(239, 77, 61);}
+#detail_color_lightGray {background-color: rgba(190, 190, 190);}
+#detail_color_gray {background-color: rgba(158, 158, 158);}
+#detail_color_darkGray {background-color: rgba(69, 69, 69);}
+
+/* 필수 입력 */
+#detail_sked_code, .detail_color_radio, #detail_sked_title, #detail_start_date, #sdetail_ked_content{
+    border: 1px solid rgb(251, 138, 124);
 }

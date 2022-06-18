@@ -22,12 +22,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<Schedule> scheduleList(Schedule sked) {
 		
 		return skedDao.scheduleList(sqlSession, sked);
-	}
-	
-	@Override
-	public ArrayList<Schedule> scheduleList2() {
 		
-		return skedDao.scheduleList2(sqlSession);
 	}
 
+	@Override
+	public Schedule scheduleSelect(Schedule sked) {
+
+		return skedDao.scheduleSelect(sqlSession, sked);
+
+	}
+	
 }

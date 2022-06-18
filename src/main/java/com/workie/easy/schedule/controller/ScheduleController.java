@@ -39,9 +39,7 @@ public class ScheduleController {
 	@ResponseBody
 	public List<Map<String, Object>> scheduleList(@RequestParam("empNo") int empNo 
 												 ,@RequestParam(value="skedCode", required=false) String skedCode) {
-		/*파라미터 값 확인*/
-		System.out.println("empNo : "+empNo);
-		System.out.println("skedCode : "+skedCode);
+		/*파라미터값 정리*/
 		Schedule sked = new Schedule();
 		sked.setEmpNo(empNo);
 		sked.setSkedCode(skedCode);
@@ -53,7 +51,7 @@ public class ScheduleController {
 		JSONObject jsonObj = new JSONObject();
 		JSONArray jsonArr = new JSONArray();
 		
-		/**/
+		/*HashMap에 값 담기(fullCalendar 형식으로 담기 위해서)*/
 		HashMap<String, Object> hash = new HashMap<>();		
 		
 		for(int i=0; i < skedlist.size(); i++) {
@@ -82,102 +80,42 @@ public class ScheduleController {
 		
 	}
 	
-	/* model에 넣어서 출력하는 방법
-	@RequestMapping(value = "skedSelectList.do", method = RequestMethod.GET)
-	public String scheduleList2(Schedule s, Model model) {
-
-		try {
-			ArrayList<Schedule> schedule = scheduleService.scheduleList2();
-			model.addAttribute("scheduleList", schedule);
-			
-			if (!schedule.isEmpty()) {
-				for (Schedule ss : schedule) {
-					System.out.println("title:"+ss.getSkedTitle());
-					System.out.println("start:"+ss.getSkedStart());
-					System.out.println("end:"+ss.getSkedEnd());
-					System.out.println("rgb:"+ss.getRgbCode());
-				}
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "일정 목록 조회에 실패했습니다.");
-		}
-		
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++");
-		
-		return "schedule/schedule";
-		
-	}
-	*/
 	
-	/*선택 카테고리 일정 조회*/
-	@RequestMapping("skedSelectCatList.do")
+	/*선택 일정 상세 조회*/
+//	@RequestMapping(value="skedSelect.do", produces = "application/text; charset=utf8")		//text(String)타입 한글 인코딩
+	@RequestMapping("skedSelect.do")
 	@ResponseBody
-	public JSONObject scheduleCategoryList(@RequestParam("empNo") int empNo , @RequestParam(value="skedCode", required=false) String skedCode) {
-//	public List<Map<String, Object>> scheduleCategoryList(@RequestParam("empNo") int empNo , @RequestParam("skedCode") String skedCode) {
-		System.out.println("empNo : "+empNo);
-		System.out.println("skedCode : "+skedCode);
+	public JSONObject scheduleSelect(int empNo, int skedNo, @RequestParam(value="skedCode", required=false) String skedCode) {
 		
-		ArrayList<Schedule> list = new ArrayList<>();
-		list.add(new Schedule(13,skedCode,empNo,"1","1","1","1","1","1","1","1","1","1","1","1","1"));
-		
-		JSONObject jsonObj = new JSONObject();
-		for(Schedule s: list) {
-			jsonObj.put("id", s.getSkedNo()); 				//ID
-			jsonObj.put("skedCode", s.getSkedCode()); 			//제목
-			jsonObj.put("empNo", s.getEmpNo()); 			//시작일자
-		}
-		
-		return jsonObj;
-		
-		/*Schedule sked = new Schedule();
+		/*파라미터값 정리*/
+		Schedule sked = new Schedule();
+		sked.setSkedNo(skedNo);
 		sked.setEmpNo(empNo);
 		sked.setSkedCode(skedCode);
 		
-		ArrayList<Schedule> skedlist = scheduleService.scheduleCategoryList(sked);
-				
-		JSONObject jsonObj = new JSONObject();
-		JSONArray jsonArr = new JSONArray();
+		/*서비스 연결*/
+		Schedule s = scheduleService.scheduleSelect(sked);
 		
-		HashMap<String, Object> hash = new HashMap<>();		
+		/*Json에 담기*/
+		JSONObject jsonSked = new JSONObject();
+		jsonSked.put("id", s.getSkedNo());
+		jsonSked.put("skedCode", s.getSkedCode());
+		jsonSked.put("colorCode", s.getColorCode());
 		
-		for(int i=0; i < skedlist.size(); i++) {
-			if(skedlist.get(i).getSkedStartTime() != null) {			//시작시간 있는 경우 추가
-				String start = skedlist.get(i).getSkedStart();
-				String startTime = skedlist.get(i).getSkedStartTime();
-				skedlist.get(i).setSkedStart(start+"T"+startTime);
-			}
-			if(skedlist.get(i).getSkedEndTime() != null) {				//종료시간 있는 경우 추가
-				String end = skedlist.get(i).getSkedEnd();
-				String endTime = skedlist.get(i).getSkedEndTime();
-				skedlist.get(i).setSkedEnd(end+"T"+endTime);
-			}
-			
-			hash.put("id", skedlist.get(i).getSkedNo()); 				//ID
-			hash.put("title", skedlist.get(i).getSkedTitle()); 			//제목
-			hash.put("start", skedlist.get(i).getSkedStart()); 			//시작일자
-			hash.put("end", skedlist.get(i).getSkedEnd()); 				//종료일자
-			hash.put("color", "rgb("+skedlist.get(i).getRgbCode()+")");	//색상
-			
-			jsonObj = new JSONObject(hash); 							//중괄호 {key:value , key:value, key:value}
-			jsonArr.add(jsonObj); 										// 대괄호 안에 넣어주기[중괄호]
-		}
+		jsonSked.put("title", s.getSkedTitle());
+		jsonSked.put("content", s.getSkedContent());
+		jsonSked.put("memo", s.getSkedMemo());
 		
-		return jsonArr;*/
+		jsonSked.put("start", s.getSkedStart());
+		jsonSked.put("startTime", s.getSkedStartTime());
+		jsonSked.put("end", s.getSkedEnd());
+		jsonSked.put("endTime", s.getSkedEndTime());
 		
-	}
-	
-	
-	
-	/*선택 일정 상세 조회*/
-	@RequestMapping("skedSelect.do")
-	public String scheduleSelect() {
-		
-		return null;
+		return jsonSked;
 		
 	}
 
+	
 	/*일정 등록*/
 	@RequestMapping("skedInsert.do")
 	public String scheduleInsert() {
@@ -186,6 +124,7 @@ public class ScheduleController {
 		
 	}
 	
+	
 	/*일정 수정*/
 	@RequestMapping("skedUpdate.do")
 	public String scheduleUpdate() {
@@ -193,6 +132,7 @@ public class ScheduleController {
 		return null;
 		
 	}
+	
 	
 	/*일정 삭제*/
 	@RequestMapping("skedDelete.do")
