@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.work.model.dto.EmpVacation;
 import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;
 import com.workie.easy.work.model.service.WorkService;
@@ -114,6 +115,9 @@ public class WorkController {
 		/*상단에 보여질 사원의 휴가 정보*/
 		VacationInfo vInfo = workService.selectVacationInfo(empNo);
 		model.addAttribute("vInfo", vInfo);
+		
+		/*ArrayList<EmpVacation> empVlist = workService.selectEmpVacationList(empNo);
+		model.addAttribute("empVlist", empVlist);*/
 		
 		
 		return "work/vacationView"; 

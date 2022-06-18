@@ -2,6 +2,7 @@ package com.workie.easy.work.model.service;
 
 import java.util.ArrayList;
 
+import com.workie.easy.work.model.dto.EmpVacation;
 import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;
 import com.workie.easy.work.model.dto.WorkSInfo;
@@ -19,5 +20,7 @@ public interface WorkService {
 	ArrayList<Work> selectWorkList(Work work);
 
 	VacationInfo selectVacationInfo(int empNo);
+
+	ArrayList<EmpVacation> selectEmpVacationList(int empNo);
 
 }
