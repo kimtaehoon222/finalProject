@@ -105,15 +105,15 @@ a {
 												</div>
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
 													<p class="text-center m-auto" style="font-size:18px">총 연차</p>
-													<p class="text-center m-auto text-primary">15</p>
+													<p class="text-center m-auto text-primary">${vInfo.allDays}</p>
 												</div>
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
 													<p class="text-center m-auto" style="font-size:18px">사용 연차</p>
-													<p class="text-center m-auto text-primary">0</p>
+													<p class="text-center m-auto text-primary">${vInfo.useDays}</p>
 												</div>
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
 													<p class="text-center m-auto" style="font-size:18px">잔여 연차</p>
-													<p class="text-center m-auto text-primary">15</p>
+													<p class="text-center m-auto text-primary">${vInfo.leftDays}</p>
 												</div>
 										
 

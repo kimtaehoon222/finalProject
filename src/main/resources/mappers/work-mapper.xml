@@ -23,8 +23,22 @@
 	<resultMap type="VacationInfo" id="VacationInfoResultSet">
 		<id property="empNo" column="EMP_NO"/>
 		<result property="allDays" column="ALL_DAYS"/>
-		<result property="usedDays" column="USED_DAYS"/>
+		<result property="useDays" column="USE_DAYS"/>
 		<result property="leftDays" column="LEFT_DAYS"/>
+	</resultMap>
+	
+	
+	<resultMap type="EmpVacation" id="EmpVacationResultSet">
+		<id property="useNo" column="USE_NO"/>
+		<result property="empNo" column="EMP_NO"/>
+		<result property="vNo" column="V_NO"/>
+		<result property="reson" column="RESON"/>
+		<result property="firstDate" column="FIRST_DATE"/>
+		<result property="lastDate" column="LAST_DATE"/>
+		<result property="usingDay" column="USING_DAY"/>
+		<result property="vName" column="V_NAME"/>
+		<result property="deptTitle" column="DEPT_TITLE"/>
+		
 	</resultMap>
 	
 	
@@ -121,4 +135,27 @@
 	      FROM VACATION_INFO
 	     WHERE EMP_NO = #{empNo}	
 	</select>
+	
+	<!--  <select id="selectEmpVacationList" parameterType="_int" resultMap="EmpVacationResultSet">
+		SELECT
+		    A.USE_NO
+		  , A.EMP_NO
+		  , A.V_NO
+		  , A.RESON
+		  , A.FIRST_DATE
+		  , A.LAST_DATE
+		  , A.USING_DAY
+		  , B.V_NAME 
+		  , C.EMP_NAME 
+		  , D.DEPT_NAME
+		  FROM
+		    EMP_VACATION A
+		  JOIN VACATION B ON A.V_NO = B.V_NO
+		  JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		  JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+		 WHERE 
+		    A.EMP_NO = #{empNo}
+	  ORDER BY A.FIRST_DATE ASC;
+	
+	</select>-->
 </mapper>
