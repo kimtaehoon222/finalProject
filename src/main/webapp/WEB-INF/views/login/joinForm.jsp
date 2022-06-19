@@ -68,6 +68,8 @@ data-template="vertical-menu-template-free"
 
     <!--로그인 css-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jje_css/jje_login.css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -115,50 +117,90 @@ data-template="vertical-menu-template-free"
 					
 					<!-- 회원가입 폼 -->
 					<form id="formAuthentication" class="m-3 join-input" action="insertEmp.do" method="POST">
+						<!-- 이름 -->
 						<div class="mb-2">
-						    <input type="text" class="form-control" id="empName" name="empName" placeholder="Name" autofocus required/>
+						    <input type="text" class="form-control" id="empName" name="empName" placeholder="Name" autofocus required title="이름"/>
 						</div>
+						<!-- 연락처 -->
 					    <div class="mb-2">
-					        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" autofocus required/>
+					        <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" autofocus required title="연락처"/>
 					    </div>
+						<!-- ID, 이메일 -->
 					    <div class="mb-2">
-					        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required/>
+					        <input type="text" class="form-control" id="empId" name="empId" placeholder="ID" autofocus required title="ID, 이메일"/>
 					    </div>
+						<!-- 주민번호 -->
 					    <div class="mb-2">
-					        <input type="text" class="form-control" id="empReg" name="empReg" placeholder="Persnal Number" autofocus required/>
+					        <input type="text" class="form-control" id="empReg" name="empReg" placeholder="Persnal Number" autofocus required title="주민번호"/>
 					    </div>
+						<!-- 비닐번호 -->
 					    <div class="mb-2 form-password-toggle">
 					        <div class="input-group input-group-merge">
-					        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required/>
+					        <input type="password" class="form-control" id="empPwd" name="empPwd" placeholder="Pwd" aria-describedby="password" required title="비밀번호"/>
 					        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
 					        </div>
 					    </div>
+						<!-- 주소 -->
 					    <div class="mb-2">
-					        <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus required/>
+					        <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus required title="주소"/>
 					    </div>
 					    
 					    <!--로그인, 회원가입 버튼-->
 						<div class="join-buttons">
-							<button class="btn rounded-pill btn-primary" type="submit">Submit</button>
-							<button class="btn rounded-pill btn-secondary" type="reset">Reset</button>
+							<button class="btn rounded-pill btn-primary" type="submit" title="가입">Submit</button>
+							<button class="btn rounded-pill btn-secondary" type="reset" title="지우기">Reset</button>
 						</div>
 					</form>
 					<!-- 회원가입 폼 -->
 					<script>
 						$(function(){
-				            $('#empName').keyup(function(){
-				                var regExp = /^[가-힣]+$/
-				                	if(!regExp.test($(this).val())){
-										
-				                	}else{
-				                		
-				                	}
-				            });
-	
+				            
+				            /*Form submit*/
 				            $('form').submit(function(event){
 				            	
+								/*이름 입력 정규식*/
+				                var chkName = /^[가-힣]{2,6}$/;
+			                	if(!chkName.test($('#empName').val())){
+									alert("이름은 두글자 이상의 한글로 입력하십시오.");	//경고
+									$('#empName').focus();			//포커스
+									return false;
+			                	}
+					            
+					            /*연락처 정규식*/
+				            	var chkPhone = /^010\d{8}$/;
+								if(!chkPhone.test($('#phone').val())){
+									alert("연락처는 특수문자를 제외하고 \"010\"부터 입력하십시오.");
+									$('#phone').focus();
+									return false;
+								}		            	
+					            
+					            /*ID, 이메일 정규식*/
+					            var chkId = /^[a-zA-Z0-9]+([_]?[a-zA-Z0-9]){2,19}$/;
+								if(!chkId.test($('#empId').val())){
+									alert("Id,Email은 특수문자를 제외한 3글자 이상으로 입력하십시오.");
+									$('#empId').focus();
+									return false;
+								}
+					            
+					            /*주민번호 정규식*/
+					            var chkReg = /^\d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])[1-4]\d{6}$/;
+					            if(!chkReg.test($('#empReg').val())){
+									alert("주민번호는 \"-\"를 제외하고 입력하십시오");
+									$('#empReg').focus();
+									return false;
+								}
+					            
+					            /*비밀번호 정규식*/
+								var chkPwd = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[~!@#$*?]).{4,10}$/;
+					            if(!chkPwd.test($('#empPwd').val())){
+									alert("비밀번호는 4~10자 이내의 영문, 숫자, 특수문자를 한가지씩 조합해서 입력하십시오.");
+									$('#empPwd').focus();
+									return false;
+								}
+				            	
 				            })
-				        });
+				            
+						});
 					</script>
 				</div>
 			</div>
@@ -168,6 +210,7 @@ data-template="vertical-menu-template-free"
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
+    
     <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/popper/popper.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/vendor/js/bootstrap.js"></script>
