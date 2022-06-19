@@ -6,6 +6,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.mail.model.dto.Department;
 import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.dto.MailPageInfo;
 import com.workie.easy.mail.model.dto.MailType;
@@ -124,6 +126,26 @@ public class MailDao {
 	public int deleteMail(SqlSession sqlSession, int mailNo) {
 		
 		return sqlSession.update("mailMapper.deleteMail", mailNo);
+	}
+
+	public int selectEmpNo(SqlSession sqlSession, String mailEmpId) {
+		
+		return sqlSession.selectOne("mailMapper.selectEmpNo", mailEmpId);
+	}
+
+	public String selectEmpId(SqlSession sqlSession, int empNo) {
+
+		return sqlSession.selectOne("mailMapper.selectEmpId", empNo);
+	}
+
+	public ArrayList<Department> seletDeptList(SqlSession sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("mailMapper.seletDeptList");
+	}
+
+	public ArrayList<Employee> seletEmployeeList(SqlSession sqlSession, String selectDept) {
+
+		return (ArrayList)sqlSession.selectList("mailMapper.seletEmployeeList", selectDept);
 	}
 
 	

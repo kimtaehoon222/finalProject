@@ -57,12 +57,20 @@
               <hr>
               <div class="modal-body">
                 <div>
-                	<button type="button" class="btn btn-sm btn-outline-primary mb-2">메일 홈 바로가기</button>
+	                <a href="mailHome.do" class="btn btn-sm btn-outline-primary mb-2">메일 홈 바로가기</a><br>
                 </div>
-                <a href="receiveMailList.do?receive=r" class="mt-2">받은 메일함</a><br>
-                <a href="sendMailList.do?send=s" class="mt-2">보낸 메일함</a><br>
-                <a href="reserveMailList.do?reserve=re" class="mt-2">예약 메일함</a><br>
-                <a href="deleteMailList.do?delete=d" class="mt-2">휴지통</a>
+                 <a href="receiveMailList.do?receive=r" class="mb-4"><svg class="bi mb-1" width="1.5em" height="1.5em" fill="currentColor">
+                 <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
+                 </svg>&nbsp;받은 메일함</a><br>
+                 <a href="sendMailList.do?send=s" class="mb-4"><svg class="bi mb-1" width="1.5em" height="1.5em" fill="currentColor">
+                 <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#archive" />
+                 </svg>&nbsp;보낸 메일함</a><br>
+                 <a href="reserveMailList.do?reserve=re" class="mb-4"><svg class="bi mb-1" width="1.5em" height="1.5em"fill="currentColor">
+                 <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#info-circle" />
+                 </svg>&nbsp;예약 메일함</a><br>
+                 <a href="deleteMailList.do?delete=d" class="mb-4"><svg class="bi mb-1" width="1.5em" height="1.5em" fill="currentColor">
+                 <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash" />
+                 </svg>&nbsp;휴지통</a>
               </div>
               <div class="modal-footer">
               </div>
@@ -96,13 +104,13 @@
          <div class="card-body">
          
             <!-- form 시작 -->
-           <form id="formAccountSettings" action="insertMail.do" method="post" enctype="multipart/form-data" onsubmit="return insertMailValidate();">
+           <form id="formAccountSettings" action="insertMail.do" method="post" enctype="multipart/form-data" onsubmit="insertMailValidate();">
              <!-- 메일 정보 영역 시작 -->
              <input type="hidden" name="fromMail" value="<%= loginEmp.getEmpNo()%>">
              <div class="row">
                <div class="mb-3 col-md-11">
                  <label for="to" class="form-label">받는사람</label>
-                 <input class="form-control" type="text" name="toMail" id="toMail" placeholder="주소록을 통해 입력하세요." value="${ toReply}" readonly required/>
+                 <input class="form-control" type="text" name="toMailEmpId" id="toMail" placeholder="주소록을 통해 입력하세요." value="${ toReply}" required readonly />
                </div>
                <div class="mb-3 col-md-1">
                  <label for="addressList" class="form-label">&nbsp;</label>
@@ -110,7 +118,7 @@
                </div>
                <div class="mb-3 col-md-11">
                  <label for="cc" class="form-label">참조</label>
-                 <input class="form-control" type="text" name="ccMail" id="ccMail" placeholder="주소록을 통해 입력하세요." value="${ ccMail }" readonly/>
+                 <input class="form-control" type="text" name="ccMailEmpId" id="ccMail" placeholder="주소록을 통해 입력하세요." value="${ ccMail }" readonly/>
                </div>
                <div class="mb-3 col-md-1">
                  <label for="addressList" class="form-label">&nbsp;</label>
@@ -141,9 +149,7 @@
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="content">내용</label>
                  <div>
-                    <textarea class="form-control" name="content" id="content" rows="10" cols="150" required>
-                    	${ originContent }
-                    </textarea>
+                    <textarea class="form-control" name="content" id="content" rows="10" cols="150" required>${ originContent }</textarea>
                  </div>
                </div>
              </div>
@@ -167,7 +173,6 @@
    </div>
    <!-- 컨테이너 끝 -->
    
-
    <!-- 주소록 클릭시 나오는 모달창 시작 : 받는사람용 -->
    <div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false">
        <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -175,7 +180,7 @@
          
            <!-- Modal Header -->
            <div class="modal-header">
-             <h4 class="modal-title">주소록</h4>
+             <h4 class="modal-title"><b>주소록</b></h4>
              <button type="button" class="close" data-dismiss="modal">&times;</button>
            </div>
            
@@ -183,116 +188,24 @@
            <div class="container-xxl flex-grow-1 container-p-y">
 
 			<!-- Accordion -->
-			<h5 class="mt-4">수신인 선택</h5>
+			<h5 class="mt-2">수신인(TO) 선택</h5>
+			<input type="text" class="form-control mt-1" id="setToEmail" value="" readonly style="border: 1px solid #696cff; color:#696cff;">
 			<div class="row">
 			  <div class="col-md mb-4 mb-md-0">
-			    <small class="text-light fw-semibold">수신인은 1명만 지정이 가능합니다. 이외의 수인인은 참조인으로 선택해주세요.</small>
+			    <small class="text-light fw-semibold">수신인은 1명만 지정이 가능합니다. 이외의 수신인은 참조인으로 선택해주세요.</small><br>
+			    <button class="btn btn-outline-primary mt-2" id="selectListDept">부서조회</button>
+			    <button class="btn btn-outline-primary mt-2" id="choiceEmployee">직원추가</button>
+			    
+			    <!-- 부서리스트 영역 시작 -->
 			    <div class="accordion mt-3" id="accordionExample">
 			      <!-- 부서 1개 시작 -->
-			      <div class="card accordion-item active">
-			        <h2 class="accordion-header" id="headingOne">
-			          <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
-			            	회계관리부
-			          </button>
-			        </h2>
-			        <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-			          <div class="accordion-body">
-			            <input type="radio" name="xxx" value="yyy" checked> 전재은 <br> 
-			            <input type="radio" name="xxx" value="yyy" checked> 임현빈 <br>
-			            <input type="radio" name="xxx" value="yyy" checked> 김태훈 <br>
-			            <input type="radio" name="xxx" value="yyy" checked> 김재호 <br>
-			          </div>
-			        </div>
-			      </div>
-			      <!-- 부서 1개 끝 -->
-			      <!-- 부서 1개 시작 -->
-			      <div class="card accordion-item">
-			        <h2 class="accordion-header" id="headingTwo">
-			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
-			            Accordion Item 2
-			          </button>
-			        </h2>
-			        <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-			          <div class="accordion-body">
-			            Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake dragée ice
-			            cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly beans candy canes
-			            carrot cake. Fruitcake chocolate chupa chups.
-			          </div>
-			        </div>
-			      </div>
-			      <!-- 부서 1개 끝 -->
-			      <!-- 부서 1개 시작 -->
-			      <div class="card accordion-item">
-			        <h2 class="accordion-header" id="headingThree">
-			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionThree" aria-expanded="false" aria-controls="accordionThree">
-			            Accordion Item 3
-			          </button>
-			        </h2>
-			        <div id="accordionThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-			          <div class="accordion-body">
-			            Oat cake toffee chocolate bar jujubes. Marshmallow brownie lemon drops cheesecake. Bonbon gingerbread
-			            marshmallow sweet jelly beans muffin. Sweet roll bear claw candy canes oat cake dragée caramels. Ice cream
-			            wafer danish cookie caramels muffin.
-			          </div>
-			        </div>
-			      </div>
+
 			      <!-- 부서 1개 끝 -->
 			    </div>
-			  </div>
-			  
-			  <div class="col-md">
-			    <small class="text-light fw-semibold">Accordion Without Arrow</small>
-			    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
-			      <div class="accordion-item card">
-			        <h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
-			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-1" aria-controls="accordionIcon-1">
-			            Accordion Item 1
-			          </button>
-			        </h2>
-			
-			        <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
-			          <div class="accordion-body">
-			            Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi
-			            bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears
-			            marshmallow pastry pie.
-			          </div>
-			        </div>
-			      </div>
-			
-			      <div class="accordion-item card">
-			        <h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconTwo">
-			          <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-2" aria-controls="accordionIcon-2">
-			            Accordion Item 2
-			          </button>
-			        </h2>
-			        <div id="accordionIcon-2" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
-			          <div class="accordion-body">
-			            Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake dragée ice
-			            cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly beans candy canes
-			            carrot cake. Fruitcake chocolate chupa chups.
-			          </div>
-			        </div>
-			      </div>
-			<h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconThree">
-			          <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionIcon-3" aria-expanded="true" aria-controls="accordionIcon-3">
-			            Accordion Item 3
-			          </button>
-			        </h2>
-			        <div id="accordionIcon-3" class="accordion-collapse collapse show" data-bs-parent="#accordionIcon">
-			          <div class="accordion-body">
-			            Oat cake toffee chocolate bar jujubes. Marshmallow brownie lemon drops cheesecake. Bonbon gingerbread
-			            marshmallow sweet jelly beans muffin. Sweet roll bear claw candy canes oat cake dragée caramels. Ice cream
-			            wafer danish cookie caramels muffin.
-			          </div>
-			        </div>
-			      <div class="accordion-item card active">
-			        
-			      </div>
-			    </div>
+			    <!-- 부서리스트 영역 시작 -->
 			  </div>
 			</div>
 			<!--/ Accordion -->
-
         </div>
          
          <!-- Modal footer -->
@@ -302,9 +215,11 @@
          </div>
            
          </div>
+         <!-- modal content 끝 -->
        </div>
    </div>
    <!-- 주소록 클릭시 나오는 모달창 끝 : 받는사람용-->
+   
    
    <!-- 주소록 클릭시 나오는 모달창 시작 : 참조인용 -->
    <div class="modal fade" id="myModal2" data-backdrop="static" data-keyboard="false">
@@ -313,32 +228,34 @@
          
            <!-- Modal Header -->
            <div class="modal-header">
-             <h4 class="modal-title">주소록</h4>
+             <h4 class="modal-title"><b>주소록</b></h4>
              <button type="button" class="close" data-dismiss="modal">&times;</button>
            </div>
            
-           <!-- Modal body -->
-           <div class="modal-body">
-            <!--<button onclick="javascript:window.returnValue='음훼훼';window.close()">부모창 폼에 값넘기기</button>  -->
-              <label class="form-label" for="add">참조인선택</label>
-                 <table>
-                    <tr>
-                  <td>
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="5">
-                     <label for="">전재은</label>
-                     
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="3">
-                     <label for="">김태훈</label>
-                     
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="1">
-                     <label for="">김재호</label>
-                     
-                     <input type="checkbox" id="insertAddress2" name="insertAddress2" value="4">
-                     <label for="">임현빈</label>
-                  </td>
-               </tr>
-                 </table>
-         </div>
+            <!-- Modal body -->
+           <div class="container-xxl flex-grow-1 container-p-y">
+
+			<!-- Accordion -->
+			<h5 class="mt-2">참조인(CC) 선택</h5>
+			<input type="text" class="form-control mt-1" id="setCcEmail" value="" readonly style="border: 1px solid #696cff; color:#696cff;">
+			<div class="row">
+			  <div class="col-md mb-4 mb-md-0">
+			    <small class="text-light fw-semibold">참조인은 여러명 지정이 가능합니다.</small><br>
+			    <button class="btn btn-outline-primary mt-2" id="selectListDept2">부서조회</button>
+			    <button class="btn btn-outline-primary mt-2" id="choiceEmployeeList">직원추가/수정</button>
+			    
+			    <!-- 부서리스트 영역 시작 -->
+			    <div class="accordion mt-3" id="accordionExample2">
+			      <!-- 부서 1개 시작 -->
+
+			      <!-- 부서 1개 끝 -->
+			    </div>
+			    <!-- 부서리스트 영역 끝 -->
+			  </div>
+			  
+			</div>
+			<!--/ Accordion -->
+        </div>
            
            <!-- Modal footer -->
            <div class="modal-footer">
@@ -351,36 +268,230 @@
    </div>
 		
    <script type="text/javascript">
+      
+      /* 부서 조회 Ajax*/
+      $(function () {
+		$('#selectListDept').click(function () {
+			
+			$.ajax({
+				url: "deptList.do",	
+				type: "post",
+				success: function(list) {
+					var result = "";
+					const element = document.getElementById('accordionExample');
+					
+	 					$.each(list, function(i) {
+							result += '<div class="card accordion-item active">' 
+							  	   + '<h2 class="accordion-header" id="headingOne">'
+							  	   + '<button type="button" onclick="test(this);" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#' + list[i].deptName + '" aria-expanded="true" aria-controls=" ' + list[i].deptName + '">'
+					               + '<b style=color:#696cff;>' + list[i].deptName +  '</b>'
+					               + '</button>'
+					               + '</h2>'
+					               + '<div id="' + list[i].deptName + '" class="accordion-collapse collapse" data-bs-parent="#accordionExample">'
+					               + '<div class="accordion-body mb-2">'
+					               + '</div>'
+					               + '</div>'
+						           + '</div>';
+						})
+					
+					/*결과 출력*/ 
+					element.innerHTML = result;
+				},
+				
+				error: function(list) {
+					element.innerHTML = "실패";
+				}
+				
+			})
+
+		})
+	})
+	
+	/* 직원 조회 Ajax : 수신인 용 */
+	function test(e) {
+		console.log('직원호출');
+		console.log(e);
+		
+		var selectDept = e.innerText;
+		console.log(selectDept);
+			
+		$.ajax({
+			url: "employeeList.do",
+			data:{
+				selectDept : selectDept
+			},
+			type: "post",
+			success: function(list) {
+				var result = "";
+				const element = document.getElementById(selectDept);
+				
+				console.log(list);
+				if(list.length > 0){
+	
+					$.each(list, function(i) {
+						result += '<input type="radio" name="empToId" class="getToEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>'
+					})
+					
+				}else{
+					alert('선택하신 부서 [' + selectDept + '] 에는 조회된 직원이 없습니다.');
+				}
+				
+				//결과 뿌려지는 곳
+				//$("#accordionExample").val(result)
+				element.innerHTML = result;
+			},
+			
+			error: function(list) {
+				element.innerHTML = "실패";
+			}
+			
+		})
+	}
+	
+      /* 수신인 선택 */
+      /* 1.modal 주소록에서 받는 사람 선택하면 modal안의 input으로 값이 들어간다. */ 
+	  $(document).ready(function() {
+	    $('#choiceEmployee').click(function() {
+	    	console.log("확인");
+	    	
+	    	var value = $("input[type=radio][name=empToId]:checked").val();
+	    	
+	    	if(value != null){
+		        $('#setToEmail').val(value);
+	    	}else{
+	    		alert('선택하신 직원이 없습니다. 부서조회를 통해 선택하세요.');
+	    	}
+	    })
+	  });
    
-      /* 받는사람 선택 */
+      /* 2.위 1번 modal에서 선택완료 클릭시 해당 페이지의 input으로 값이 들어온다. */
       function insertAddress1() {
-         var value = $('#insertAddress1').val();
+         var value = $('#setToEmail').val();
          $('#toMail').val(value);
       }
       
-      /* 받는사람 선택 취소 */
+      /* 3.수신인 선택 취소 */
       function deleteAddress1() {
+    	 $('#setToEmail').val("");
          $('#toMail').val("");
+         $('input:radio[name=empToId]').prop('checked', false);
       }
       
-      /* 참조인 선택  */
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      
+      /* 부서 조회 Ajax : 참조인 용*/
+      $(function () {
+  		$('#selectListDept2').click(function () {
+  			
+  			$.ajax({
+  				url: "deptList.do",	
+  				type: "post",
+  				success: function(list) {
+  					var result = "";
+  					const element = document.getElementById('accordionExample2');
+  					
+  	 					$.each(list, function(i) {
+  							result += '<div class="card accordion-item active">' 
+							  	   + '<h2 class="accordion-header" id="' + i + '">'
+							  	   + '<button type="button" onclick="test2(this);" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#' + list[i].deptName + '" aria-expanded="true" aria-controls="' + list[i].deptName + '">'
+					               + '<b style=color:#696cff;>' + list[i].deptName +  '</b>'
+					               + '</button>'
+					               + '</h2>'
+					               + '<div id="' + list[i].deptName + '" class="accordion-collapse collapse" aria-labelledby="' + i + '">'
+					               + '<div class="accordion-body mb-2">'
+					               + '</div>'
+					               + '</div>'
+						           + '</div>';
+  						})
+  					
+  					/*결과 출력*/ 
+  					element.innerHTML = result;
+  				},
+  				
+  				error: function(list) {
+  					element.innerHTML = "실패";
+  				}
+  				
+  			})
+
+  		})
+  	})
+  	
+    /* 직원 조회 Ajax : 참조인 용 */
+	function test2(e) {
+		console.log('직원호출');
+		console.log(e);
+		
+		var selectDept = e.innerText;
+		console.log(selectDept);
+			
+		$.ajax({
+			url: "employeeList.do",
+			data:{
+				selectDept : selectDept
+			},
+			type: "post",
+			success: function(list) {
+				var result = "";
+				const element = document.getElementById(selectDept);
+				
+				console.log(list);
+				if(list.length > 0){
+	
+					$.each(list, function(i) {
+						result += '<input type="checkbox" name="empCcId" class="getCcEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>';
+					})
+					
+				}else{
+					alert('선택하신 부서 [' + selectDept + '] 에는 조회된 직원이 없습니다.');
+				}
+				
+				//결과 뿌려지는 곳
+				//$("#accordionExample").val(result)
+				element.innerHTML = result;
+			},
+			
+			error: function(list) {
+				element.innerHTML = "실패";
+			}
+			
+		})
+	}  
+      
+      
+      /* 참조인 선택 */
+      /* 1.modal 주소록에서 받는 사람 선택하면 modal안의 input으로 값이 들어간다. */ 
+	  $(document).ready(function() {
+	    $('#choiceEmployeeList').click(function() {
+	    	var value = [];
+	    	
+	    	$('input[name=empCcId]:checked').each(function () {
+	            var v = $(this).val();
+	            value.push(v);
+	         })
+	         
+	         if(value.length == 0){
+	    		alert('선택하신 직원이 없습니다. 부서조회를 통해 선택하세요.');
+	         }else{
+		        $('#setCcEmail').val(value);
+	         }
+	    	
+	    })
+	   });
+      
+	  /* 2.위 1번 modal에서 선택완료 클릭시 해당 페이지의 input으로 값이 들어온다. */
       function insertAddress2() {
-         
-         var value = [];
-         
-         $('input[name=insertAddress2]:checked').each(function () {
-            var v = $(this).val();
-            value.push(v);
-         })
-         
-         $('#ccMail').val(value);
-         
+	  	  var value = $('#setCcEmail').val();
+	      $('#ccMail').val(value);
       }
       
-      /* 참조인 선택 취소  */
+      /* 3.참조인 선택 취소  */
       function deleteAddress2() {
-         $('#ccMail').val("");
+    	  $('#setCcEmail').val("");
+    	  $('#ccMail').val("");
+          $('input:checkbox[name=empCcId]').prop('checked', false);
       }
+      
       
       /* 예약여부 선택에 따른 달력 표시 */    
       $(document).ready(function () {
@@ -422,6 +533,7 @@
          return true;
       }
       
+      /* 제목 길이 제한 */
       $(document).ready(function(){
           $('#title').keyup(function(){
               if ($(this).val().length > $(this).attr('maxlength')) {
@@ -431,6 +543,8 @@
               }
           });
       });
+      
+      
    </script>
    
    <!-- bottom -->

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.workie.easy.common.CommException;
+import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.mail.model.dao.MailDao;
+import com.workie.easy.mail.model.dto.Department;
 import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.dto.MailPageInfo;
 import com.workie.easy.mail.model.dto.MailType;
@@ -198,5 +200,29 @@ public class MailServiceImpl implements MailService {
 		if(result < 0) {
 			throw new CommException("메일 영구삭제에 실패하였습니다. 관리자에게 문의 바랍니다.");
 		}
+	}
+
+	@Override
+	public int selectEmpNo(String mailEmpId) {
+		
+		return mailDao.selectEmpNo(sqlSession, mailEmpId); 
+	}
+
+	@Override
+	public String selectEmpId(int empNo) {
+
+		return mailDao.selectEmpId(sqlSession, empNo); 
+	}
+
+	@Override
+	public ArrayList<Department> seletDeptList() {
+		
+		return mailDao.seletDeptList(sqlSession); 
+	}
+
+	@Override
+	public ArrayList<Employee> seletEmployeeList(String selectDept) {
+
+		return mailDao.seletEmployeeList(sqlSession, selectDept); 
 	}
 }

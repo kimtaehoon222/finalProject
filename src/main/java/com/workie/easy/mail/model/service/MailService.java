@@ -2,6 +2,8 @@ package com.workie.easy.mail.model.service;
 
 import java.util.ArrayList;
 
+import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.mail.model.dto.Department;
 import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.dto.MailPageInfo;
 import com.workie.easy.mail.model.dto.MailType;
@@ -39,6 +41,14 @@ public interface MailService {
 	void permanentDeleteMail(int mailNo);
 
 	void deleteMail(int mailNo);
+
+	int selectEmpNo(String mailEmpId);
+
+	String selectEmpId(int empNo);
+
+	ArrayList<Department> seletDeptList();
+
+	ArrayList<Employee> seletEmployeeList(String selectDept);
 
 	
 }

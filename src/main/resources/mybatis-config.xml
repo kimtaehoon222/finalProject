@@ -26,6 +26,7 @@
 	    <typeAlias type="com.workie.easy.employee.model.dto.Employee" alias="Employee"/>
 	    
 	    <typeAlias type="com.workie.easy.schedule.model.dto.Schedule" alias="Schedule"/>
+	    <typeAlias type="com.workie.easy.mail.model.dto.Department" alias="Department"/>
 	    
 	</typeAliases>
 		
