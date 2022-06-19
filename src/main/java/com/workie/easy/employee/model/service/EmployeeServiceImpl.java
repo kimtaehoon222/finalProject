@@ -37,11 +37,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void insertEmp(Employee emp) {
+		
 		int result = empDao.insertEmp(sqlSession, emp);
 		
-		if(result<0) {
-			throw new DataIntegrityViolationException("회원가입에 실패하였습니다.");
-		}
 	}
 
 }
