@@ -50,6 +50,6 @@ public class Mail {
 	private String ccName;
 	private String fromId;
 	private String toId;
-	
+	private int empNo;
 	
 }

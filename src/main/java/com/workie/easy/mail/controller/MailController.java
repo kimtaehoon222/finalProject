@@ -9,18 +9,23 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.common.CommException;
 import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.mail.model.dto.Department;
 import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.dto.MailPageInfo;
 import com.workie.easy.mail.model.dto.MailPagination;
@@ -76,21 +81,26 @@ public class MailController {
 		String originToName = mail.getToName();
 				
 		/* 원본 메일의 발신인, 답장시 답장받을 수신인(to) "회원번호" */
-		int toReply;
+		String toReply;
 		
 		/* 수신-발신 메일 여부에 따라 답장 수신인이 다르다 */
 		if(fromMail == mail.getFromMail()) {
 			
 			/* 발신 메일 : "내가" 해당 메일을 보냈던 사람에게 답장 */
-			toReply = mail.getToMail();
+			toReply = mail.getToId();
 		}else {
 			
 			/* 수신 메일 : "나에게" 해당 메일을 보냈던 사람에게 답장 */
-			toReply = mail.getFromMail();
+			toReply = mail.getFromId();
 		}
 		
 		/* 참조인과 제목은 동일 수신-발신 메일 상관없이 동일 */ 
-		String ccMail = mail.getCcMail();
+		String ccMailList = mail.getCcMail();
+		
+		String ccMail = null;
+		if(ccMailList != null) {
+			ccMail = selectEmpId(ccMailList);
+		}
 		
 		String originTitle = "[RE:]" + mail.getTitle();
 		String originContent = "\n\n\n-----원본메일----\n" 
@@ -135,11 +145,54 @@ public class MailController {
 		return "mail/mailSendForm"; 
 	}
 	
+	/* empId를 조회해오는 메소드 : 참조인 */
+	private String selectEmpId(String mailEmpNoList) {
+		
+		/* 번호를 골뱅이(,) 기준으로 자른 후 배열에 담는다. */ 
+		/* 1,2,3 => [1,2,3] */
+		String[] strArr = mailEmpNoList.split(","); 
+		
+		/* 위의 번호를 기준으로 Id를 받아올 배열 생성 */ 
+		String[] newStrArr = new String[strArr.length];
+		
+		for(int i=0; i<strArr.length; i++) {
+			
+			String empId = mailService.selectEmpId(Integer.parseInt(strArr[i]));
+			newStrArr[i] = empId + "@easy.co.kr";
+		}
+		
+		/* 위의 새 배열에 담긴 요소들을 콤마(,)로 연결한다. */
+		String empIdList = "";
+		for(int i=0; i<newStrArr.length; i++) {
+				
+			if(i != newStrArr.length-1) {
+				empIdList += newStrArr[i] + ",";
+			}else {
+				empIdList += newStrArr[i];
+			}
+			
+		}
+		
+		return empIdList;
+	}
+	
 	/* 메일 전송 */
 	@RequestMapping("insertMail.do")
 	public String insertMail(@ModelAttribute Mail mail, HttpServletRequest request, 
-							 @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+							 @RequestParam(name="uploadFile", required=false) MultipartFile file,
+							 String toMailEmpId, String ccMailEmpId) {
 
+		/* 파라미터로 넘어온 아이디 기준으로 수신인의 회원번호를 추출하여 set 해준다. */
+		int toMail = selectEmpNo(toMailEmpId);
+		mail.setToMail(toMail);
+		
+		/* 파라미터로 넘어온 아이디들을 수신인의 회원번호로 추출한 문자열을 반환받아 set 해준다. */
+		
+		if(ccMailEmpId.length() > 0) {
+			
+			String empIdCcList = selectEmpNoList(ccMailEmpId);
+			mail.setCcMail(empIdCcList);
+		}
 		
 		/* 기본 view : 아래에서 예약여부가 Y이면 view 경로 변경 */ 
 		String view = "redirect:sendMailList.do";
@@ -171,6 +224,50 @@ public class MailController {
 		mailService.insertMail(mail);
 		
 		return view; 
+	}
+	
+	/* empNo를 조회해오는 메소드 : 수신인 */
+	private int selectEmpNo(String mailEmpId) {
+		
+		/* 아이디를 골뱅이(@) 기준으로 자른다. 
+		 * ex. kjs@easy.co.kr 이면 index 0번째에는 kjs가 들어가고 
+		 *     1번째에는 easy.co.kr가 들어가게 된다. */
+		String[] strArr = mailEmpId.split("@"); 
+		
+		/* 위의 배열에 담긴 0번째 인덱스를 기준으로 회원번호를 조회해온다. */
+		return mailService.selectEmpNo(strArr[0]);
+	}
+	
+	/* empNo를 조회해오는 메소드  : 참조인 */
+	private String selectEmpNoList(String mailEmpIdList) {
+		
+		/* 여러개의 이메일을 콤마(,) 기준으로 배열에 담는다. */
+		String[] strArr = mailEmpIdList.split(","); 
+		
+		/* 여러개의 참조인의 회원번호를 담을 배열 생성 */
+		int[] newStrArr = new int[strArr.length];
+		
+		/* 배열에 담긴 각 요소(ex.kjs@easy.co.kr)에서 골뱅이 뒤 메일주소(easy.co.kr)를 제거해준다. */
+		for(int i=0; i<strArr.length; i++) {
+			
+			/* empId만 추출된 문자열을 새 배열에 담는다. */	
+			String mailEmpId = (String) strArr[i].subSequence(0, strArr[i].indexOf("@"));
+			newStrArr[i] = mailService.selectEmpNo(mailEmpId);
+		}
+		
+		/* 위의 새 배열에 담긴 요소들을 콤마(,)로 연결한다. */
+		String empIdList = "";
+		for(int i=0; i<newStrArr.length; i++) {
+				
+			if(i != newStrArr.length-1) {
+				empIdList += newStrArr[i] + ",";
+			}else {
+				empIdList += newStrArr[i];
+			}
+			
+		}
+		
+		return empIdList;
 	}
 	
 	/* 파일을 업로드(저장) 하고, 수정된 파일명을 반환 */
@@ -224,7 +321,7 @@ public class MailController {
 		/* 페이징 처리를 위한 받은 메일함 개수 조회 */
 		int listCount = mailService.selectMailListCount(mailType);
 
-		int mailLimit = 5;
+		int mailLimit = 10;
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
 		
 		/* 화면에 뿌려줄 리스트 조회 */
@@ -250,7 +347,7 @@ public class MailController {
 		
 		int listCount = mailService.selectMailListCount(mailType);
 		
-		int mailLimit = 5;
+		int mailLimit = 10;
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
 
 		/* 화면에 뿌려줄 리스트 조회 */
@@ -275,7 +372,7 @@ public class MailController {
 		
 		int listCount = mailService.selectMailListCount(mailType);
 		
-		int mailLimit = 5;
+		int mailLimit = 10;
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
 
 		ArrayList<Mail> list = mailService.selectReserveMailList(fromMail, mpi); 
@@ -299,7 +396,7 @@ public class MailController {
 		
 		int listCount = mailService.selectMailListCount(mailType);
 		
-		int mailLimit = 5;
+		int mailLimit = 10;
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
 
 		ArrayList<Mail> list = mailService.selectDeleteMailList(toFromMail, mpi); 
@@ -458,4 +555,73 @@ public class MailController {
 		
 		return "redirect:deleteMailList.do"; 
 	}
+	
+	
+	/* 부서 조회 : 주소록에서 호출 */
+	@ResponseBody
+	@RequestMapping(value="deptList.do", method=RequestMethod.POST) 
+	public JSONArray seletDeptList() {
+		
+		/* 부서의 정보를 담을 list */
+		ArrayList<Department> list = mailService.seletDeptList();
+		
+		/* JSON 배열로 반환하기 위한 배열 */
+		JSONArray deptList = new JSONArray();
+		
+		/* JSON 배열에 담을 JSOn 객체  "선언" -> 생성은 반복문 안에서 한다. */
+		JSONObject jsonObject = null;
+		
+		for(Department dept : list) {
+			
+			/* JSON 객체 생성 */
+			jsonObject = new JSONObject();
+			
+			/* 생성된 JSON 객체에 list의 자바 데이터 를 put 해준다. */
+			jsonObject.put("deptCode", dept.getDeptCode());
+			jsonObject.put("deptName", dept.getDeptName());
+			jsonObject.put("deptPwd", dept.getDeptPwd());
+			
+			/* 데이터가 담긴 JSON 객체를 JSON배열에 추가해준다. */
+			deptList.add(jsonObject);
+		}
+		
+		return deptList; 
+	}
+	
+	/* 직원 조회 : 주소록에서 호출 */
+	@ResponseBody
+	@RequestMapping(value="employeeList.do", method=RequestMethod.POST) 
+	public JSONArray seletEmployeeList(@RequestParam String selectDept) {
+		
+		System.out.println("직원 조회 컨트롤러 도착");
+		
+		/* 직원의 정보를 담을 list */
+		ArrayList<Employee> list = mailService.seletEmployeeList(selectDept);
+		
+		/* JSON 배열로 반환하기 위한 배열 */
+		JSONArray empList = new JSONArray();
+		
+		/* JSON 배열에 담을 JSOn 객체  "선언" -> 생성은 반복문 안에서 한다. */
+		JSONObject jsonObject = null;
+		
+		if(!list.isEmpty()) {
+			for(Employee emp : list) {
+				
+				/* JSON 객체 생성 */
+				jsonObject = new JSONObject();
+				
+				/* 생성된 JSON 객체에 list의 자바 데이터 를 put 해준다. */
+				jsonObject.put("empName", emp.getEmpName());
+				jsonObject.put("empId", emp.getEmpId()+"@easy.co.kr");
+				
+				/* 데이터가 담긴 JSON 객체를 JSON배열에 추가해준다. */
+				empList.add(jsonObject);
+			}
+		}
+		
+		return empList; 
+	}
+	
+	
+	
 }

@@ -79,12 +79,26 @@
 		<result property="ccName" column="CC_NAME"/>
 		<result property="toId" column="TO_ID"/>
 		<result property="fromId" column="FROM_ID"/>
+		<result property="receiveCheck" column="RECEIVE_CHECK"/>
+		<result property="ccId" column="CC_ID"/>
+	</resultMap>
+	
+	<resultMap type="Department" id="departmentResultSet">
+		<id property="deptCode" column="DEPT_CODE"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="deptPwd" column="DEPT_PWD"/>
+	</resultMap>
+
+	<resultMap type="Employee" id="employeeResultSet">
+		<id property="empNo" column="EMP_NO"/>
+		<result property="empName" column="EMP_NAME"/>
+		<result property="empId" column="EMP_ID"/>
 	</resultMap>
 	
 	<!-- 메일 리스트 조회(받은 메일함) -->
 	<select id="selectReceiveMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME, C.RECEIVE_CHECK
 		  FROM EASYWORK.MAIL_INFO A
      LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.FROM_MAIL AND B.ENT_YN = 'Y'
      LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
@@ -278,4 +292,31 @@
 		 WHERE MAIL_NO = #{mailNo}
 		   AND STATUS = 'Y'
 	</update>
+	
+	<select id="selectEmpNo" resultType="_int">
+		SELECT EMP_NO
+		  FROM EASYWORK.EMPLOYEE
+		 WHERE EMP_ID = #{mailEmpId}
+	</select>
+	
+	<select id="selectEmpId" resultType="string">
+		SELECT EMP_ID AS CC_ID
+		  FROM EASYWORK.EMPLOYEE
+		 WHERE EMP_NO = #{empNo}
+	</select>
+	
+	<select id="seletDeptList" resultMap="departmentResultSet">
+		SELECT * 
+		  FROM EASYWORK.DEPARTMENT
+	</select>
+
+	<select id="seletEmployeeList" resultMap="employeeResultSet">
+		SELECT EMP_NAME, EMP_ID
+		  FROM EASYWORK.EMPLOYEE
+		 WHERE DEPT_CODE = (SELECT DEPT_CODE
+		                      FROM EASYWORK.DEPARTMENT
+		                      WHERE DEPT_NAME = #{selectDept})
+		   AND ENT_YN = 'Y'
+	</select>
+	
 </mapper>

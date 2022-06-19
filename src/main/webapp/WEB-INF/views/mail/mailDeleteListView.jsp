@@ -160,7 +160,7 @@
 												<!-- 검색창 끝 -->
 
 												<!-- 페이징 처리 시작 -->
-												<span class="d-none d-sm-block">${ mpi.currentPage*5-4 }-${ mpi.currentPage*5 } of ${ mpi.listCount } </span>
+												<span class="d-none d-sm-block">${ mpi.currentPage*10-9 }-${ mpi.currentPage*10 } of ${ mpi.listCount } </span>
 												<c:choose>
 													<c:when test="${mpi.currentPage ne 1}">
 													<a class="btn btn-icon btn-primary email-pagination-prev d-none d-sm-block" 
@@ -202,9 +202,10 @@
 										<!-- 메일 리스트 상단 끝 -->
 
 										<!-- 메일 리스트 하단 시작 -->
-										<div class="email-user-list list-group ps ps--active-y" id="mailList">
+										<div class="email-user-list list-group card overflow-hidden ps ps--active-y" id="mailList">
 											<c:if test="${ !empty list  }">
 											<!-- 메일 리스트 시작 -->
+											<div class="ps ps--active-y" id="vertical-example">
 											<ul class="users-list-wrapper media-list">
 												<!-- 메일 1개 시작 -->
 												<c:forEach items="${ list }" var="mail">
@@ -260,6 +261,7 @@
 												<!-- 메일 1개 끝 -->
 												</c:forEach>
 											</ul>
+											</div>
 											<!-- 메일 리스트 끝 -->
 											</c:if>
 											<c:if test="${ empty list  }">
