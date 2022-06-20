@@ -103,14 +103,14 @@
          <!-- 보내는 영역 시작 -->
          <div class="card-body">
          
-            <!-- form 시작 -->
-           <form id="formAccountSettings" action="insertMail.do" method="post" enctype="multipart/form-data" onsubmit="insertMailValidate();">
+           <!-- form 시작 -->
+           <form id="formAccountSettings" action="insertMail.do" method="post" enctype="multipart/form-data" onsubmit="return mailSendValidate();">
              <!-- 메일 정보 영역 시작 -->
              <input type="hidden" name="fromMail" value="<%= loginEmp.getEmpNo()%>">
              <div class="row">
                <div class="mb-3 col-md-11">
                  <label for="to" class="form-label">받는사람</label>
-                 <input class="form-control" type="text" name="toMailEmpId" id="toMail" placeholder="주소록을 통해 입력하세요." value="${ toReply}" required readonly />
+                 <input class="form-control" type="text" name="toMailEmpId" id="toMail" placeholder="주소록을 통해 입력하세요." value="${ toReply}" readonly="readonly"/>
                </div>
                <div class="mb-3 col-md-1">
                  <label for="addressList" class="form-label">&nbsp;</label>
@@ -136,7 +136,7 @@
                  <!-- 예약 메일 여부에 대한 y/n 데이터를 넘겨주는 hidden input -->
                  <input type="hidden" name="reserveYn" id="reserveYn" required>
                  <label class="form-label" for="calendar">예약메일</label>
-                 <div><input type="date" class="form-control" name="sendDate" id="sendDate"></div>
+                 <div><input type="date" class="form-control" name="sendDate" id="sendDate" min="2022-06-20" max=""></div>
                </div>
                <div class="mb-3 col-md-7">
                  <label class="form-label" for="upfile">파일첨부<i class="bi bi-upload"></i></label>
@@ -268,7 +268,28 @@
    </div>
 		
    <script type="text/javascript">
-      
+   /* 실패한 함수 */
+   $(document).ready(function () {
+	   function getMinDate() {
+		    var today = new Date();
+		 	console.log(today);
+		 	return today;
+	   }
+	 	
+   })
+   
+     /* form 데이터 유효성 검사 */
+   	 function mailSendValidate() {
+		var toMailCheck = document.getElementById("toMail").value;
+		
+		if(!toMailCheck){
+			alert('주소록을 통해 받는 사람을 입력해주세요!');
+			$('#toMail').focus();
+			return false;
+		}
+	}   
+   
+   
       /* 부서 조회 Ajax*/
       $(function () {
 		$('#selectListDept').click(function () {
@@ -514,24 +535,6 @@
             }
          });
       });
-      
-      function insertMailValidate() {
-         
-         if($('#toMail').val() == null){
-            alert('받는 사람을 선택해주세요.');
-            return false;
-         }
-         if($('#title').val() == null){
-            alert('제목을 입력해주세요.');
-            return false;
-         }
-         if($('#content').val() == null){
-            alert('내용을 입력해주세요.');
-            return false;
-         }
-         
-         return true;
-      }
       
       /* 제목 길이 제한 */
       $(document).ready(function(){

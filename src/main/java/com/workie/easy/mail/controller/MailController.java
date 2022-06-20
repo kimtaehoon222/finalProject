@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +55,19 @@ public class MailController {
 
 	/* 메일 홈 화면 전환 */ 
 	@RequestMapping("mailHome.do")
-	public String readMailHome() {
+	public String readMailHome(HttpSession session, Model model) {
+		
+		/* 로그인 회원의 회원번호 */
+		int empNo = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		/* 읽지 않은 메일 조회 */
+		ArrayList<Mail> mailList = mailService.selectMailListNoRead(empNo);
+		
+		/* 즐겨찾는 사람 조회 : Top 3*/
+		ArrayList<Mail> empList = mailService.selectFavoriteEmpList(empNo);
+		
+		model.addAttribute("mailList", mailList);
+		
 		return "mail/mailHomeView"; 
 	}
 	
@@ -204,6 +215,7 @@ public class MailController {
 		/* 예약여부 확인 : 예약여부에 따른 stateCode 값 및 view 지정 */
 		if(mail.getReserveYn().equals("Y")) {
 			mail.setStateCode("EP");
+			mail.setSendDate(mail.getSendDate()+"09:00:00");
 			view = "redirect:reserveMailList.do";
 		}else {
 			mail.setStateCode("FN");
@@ -313,7 +325,7 @@ public class MailController {
 		/* 쿼리에서 받는사람 기준이 될 변수 */
 		int toMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
 		
-		/* 해다 요청의 타입을 결정할 dto */
+		/* 해당 요청의 타입을 결정할 dto */
 		MailType mailType = new MailType();
 		mailType.setReceive(receive);
 		mailType.setMailEmpNo(toMail);
@@ -323,6 +335,16 @@ public class MailController {
 
 		int mailLimit = 10;
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
+		
+		/* 나에게 들어온 예약메일 중 예약상태를 처리해야 할 메일이 있는지 조회 => 갯수 조회에서 갯수가 0 이상이면 true 넘어올 것. */
+		boolean reserveMailList = mailService.checkReserveMail(toMail);
+		
+		/* 처리해야 할 메일이 있는 경우 (true) */
+		if(reserveMailList) {
+			
+			/* 예약 메일 update => 발송처리상태를 발송예정에서 발송완료로 변경 해야한다. */
+			mailService.updateReserveMail(toMail);
+		}
 		
 		/* 화면에 뿌려줄 리스트 조회 */
 		ArrayList<Mail> list = mailService.selectReceiveMailList(toMail, mpi); 

@@ -225,4 +225,41 @@ public class MailServiceImpl implements MailService {
 
 		return mailDao.seletEmployeeList(sqlSession, selectDept); 
 	}
+
+	@Override
+	public boolean checkReserveMail(int toMail) {
+		
+		boolean result = false;
+		
+		int checkReserveMailCount = mailDao.checkReserveMail(sqlSession, toMail);
+		
+		/* 처리해야할 예약 메일이 있는 경우 */
+		if(checkReserveMailCount > 0) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public void updateReserveMail(int toMail) {
+
+		int result = mailDao.updateReserveMail(sqlSession, toMail); 
+		
+		if(result < 0) {
+			throw new CommException("메일 예약상태 변경에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
+	}
+
+	@Override
+	public ArrayList<Mail> selectMailListNoRead(int empNo) {
+		
+		return mailDao.selectMailListNoRead(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectFavoriteEmpList(int empNo) {
+
+		return mailDao.selectFavoriteEmpList(sqlSession, empNo);
+	}
 }

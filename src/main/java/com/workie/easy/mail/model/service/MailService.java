@@ -50,5 +50,13 @@ public interface MailService {
 
 	ArrayList<Employee> seletEmployeeList(String selectDept);
 
+	boolean checkReserveMail(int toMail);
+
+	void updateReserveMail(int toMail);
+
+	ArrayList<Mail> selectMailListNoRead(int empNo);
+
+	ArrayList<Mail> selectFavoriteEmpList(int empNo);
+
 	
 }

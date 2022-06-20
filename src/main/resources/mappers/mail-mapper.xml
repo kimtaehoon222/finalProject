@@ -6,7 +6,7 @@
 	<insert id="insertMail" parameterType="Mail">
 		INSERT ALL
       	  INTO EASYWORK.MAIL
-    	VALUES (SEQ_ENO.NEXTVAL, #{reserveYn}, DEFAULT, NVL(TO_DATE(#{sendDate}, 'YYYY-MM-DD'), SYSDATE) 
+    	VALUES (SEQ_ENO.NEXTVAL, #{reserveYn}, DEFAULT, NVL(TO_DATE(#{sendDate}, 'YYYY-MM-DDHH24:MI:SS'), SYSDATE) 
     	     , #{cancelDate}, DEFAULT, DEFAULT, #{stateCode}, #{typeNo}, DEFAULT)
           INTO EASYWORK.MAIL_INFO
    		VALUES (SEQ_ENO.CURRVAL, #{title}, #{content}, #{toMail}, #{fromMail}, #{ccMail})       
@@ -26,7 +26,8 @@
 		 <trim prefix="WHERE" prefixOverrides="AND|OR">
 		 	<choose>
 		 		<when test="receive != null">
-		 			A.TO_MAIL = #{mailEmpNo} 
+		 			((CC_MAIL LIKE '%,${mailEmpNo}%' OR CC_MAIL LIKE '%${mailEmpNo},%') OR A.TO_MAIL = #{mailEmpNo})
+		 			AND B.STATE_CODE = 'FN'
 		 		</when> 
 		 		<when test="send != null">
 		 			A.FROM_MAIL = #{mailEmpNo} 
@@ -66,6 +67,8 @@
 		<result property="typeName" column="TYPE_NAME"/>
 		<result property="empName" column="EMP_NAME"/>
 		<result property="sendDate" column="SEND_DATE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="cancelDate" column="CANCEL_DATE"/>
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="originName" column="ORIGIN_NAME"/>
 		<result property="filePath" column="FILE_PATH"/>
@@ -98,21 +101,22 @@
 	<!-- 메일 리스트 조회(받은 메일함) -->
 	<select id="selectReceiveMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME, C.RECEIVE_CHECK
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME, C.RECEIVE_CHECK
 		  FROM EASYWORK.MAIL_INFO A
      LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.FROM_MAIL AND B.ENT_YN = 'Y'
      LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
      LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
      LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
-         WHERE A.TO_MAIL = #{toMail} 
+         WHERE ((CC_MAIL LIKE '%,${toMail}%' OR CC_MAIL LIKE '%${toMail},%') OR A.TO_MAIL = ${toMail})
            AND C.STATUS = 'Y'
+           AND C.STATE_CODE = 'FN'
       ORDER BY C.SEND_DATE DESC
 	</select>
 	
 	<!-- 메일 리스트 조회(보낸 메일함) -->
 	<select id="selectSendMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-		     , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE
+		     , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
 		     , E.CHANGE_NAME, DECODE(C.RECEIVE_CHECK, 'Y', '읽음', '읽지않음') AS STATE_CODE
 		  FROM EASYWORK.MAIL_INFO A
      LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
@@ -122,14 +126,16 @@
 	  	 WHERE A.FROM_MAIL = #{fromMail}
 		   AND C.STATE_CODE = 'FN'
 		   AND C.STATUS = 'Y'
-		   AND C.RESERVE_YN = 'N'
 	  ORDER BY C.SEND_DATE DESC
 	</select>
 	
 	<!-- 메일 리스트 조회(예약 메일함) -->
 	<select id="selectReserveMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-     		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+     		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
+     		 , TO_CHAR(C.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CREATE_DATE
+     		 , TO_CHAR(C.CANCEL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CANCEL_DATE
+     		 , E.CHANGE_NAME
      		 , C.STATE_CODE, F.STATE_NAME
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
@@ -141,13 +147,13 @@
 	       AND C.RESERVE_YN = 'Y'
 	       AND C.STATE_CODE IN('EP', 'CN') 
 	       AND C.STATUS = 'Y'
-	  ORDER BY C.SEND_DATE DESC
+	  ORDER BY C.CREATE_DATE DESC
 	</select>
 	
 	<!-- 메일 리스트 조회(휴지통) -->
 	<select id="selectDeleteMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, DECODE(A.TO_MAIL, #{toFromMail}, '수신', '발신') AS STATE_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD-HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
     		 , (SELECT EMP_NAME 
 		          FROM EMPLOYEE
 		         WHERE EMP_NO = A.TO_MAIL) AS TO_NAME
@@ -197,9 +203,11 @@
 		SELECT TO_CHAR(EMP_NO) AS CC_MAIL, EMP_NAME AS CC_NAME
 		  FROM EASYWORK.EMPLOYEE
 		 WHERE EMP_NO IN(
-		SELECT REGEXP_SUBSTR(#{ccMail}, '[^,]', 1, LEVEL)
-		  FROM DUAL
-    CONNECT BY LEVEL <= 5)
+						 WITH TMP AS (SELECT #{ccMail} AS STR FROM DUAL)
+		               SELECT REGEXP_SUBSTR(TMP.STR, '[^,]+', 1, LEVEL) CODE
+		                 FROM DUAL, TMP
+		           CONNECT BY REGEXP_SUBSTR(TMP.STR, '[^,]+', 1, LEVEL) IS NOT NULL
+                )
 		]]>
 	</select>
 	
@@ -252,7 +260,7 @@
 	<update id="cancelMail">
 	    <![CDATA[
 		UPDATE EASYWORK.MAIL
-		   SET STATE_CODE = 'CN'
+		   SET STATE_CODE = 'CN', CANCEL_DATE = SYSDATE
 		 WHERE MAIL_NO = #{mailNo}
 		   AND RESERVE_YN = 'Y'
 		   AND STATE_CODE = 'EP'
@@ -293,23 +301,27 @@
 		   AND STATUS = 'Y'
 	</update>
 	
+	<!-- 직원 아이디로 직원 번호 조회 -->
 	<select id="selectEmpNo" resultType="_int">
 		SELECT EMP_NO
 		  FROM EASYWORK.EMPLOYEE
 		 WHERE EMP_ID = #{mailEmpId}
 	</select>
 	
+	<!-- 직원 번호로 직원 아이디 조회 -->
 	<select id="selectEmpId" resultType="string">
 		SELECT EMP_ID AS CC_ID
 		  FROM EASYWORK.EMPLOYEE
 		 WHERE EMP_NO = #{empNo}
 	</select>
 	
+	<!-- 부서 조회 -->
 	<select id="seletDeptList" resultMap="departmentResultSet">
 		SELECT * 
 		  FROM EASYWORK.DEPARTMENT
 	</select>
 
+	<!-- 직원 조회 -->
 	<select id="seletEmployeeList" resultMap="employeeResultSet">
 		SELECT EMP_NAME, EMP_ID
 		  FROM EASYWORK.EMPLOYEE
@@ -318,5 +330,76 @@
 		                      WHERE DEPT_NAME = #{selectDept})
 		   AND ENT_YN = 'Y'
 	</select>
+	
+	<!-- 처리해야할 예약메일 count -->
+	<select id="checkReserveMail" resultType="_int">
+		<![CDATA[
+		SELECT COUNT(*) 
+		  FROM EASYWORK.MAIL A
+		  JOIN EASYWORK.MAIL_INFO B ON A.MAIL_NO = B.MAIL_NO
+		 WHERE B.TO_MAIL = #{toMail}
+		   AND A.RESERVE_YN = 'Y'
+		   AND A.STATE_CODE = 'EP'
+		   AND A.SEND_DATE <= SYSDATE
+		 ]]>
+	</select>
+	
+	<!-- 예약메일 update -->
+	<update id="updateReserveMail">
+		<![CDATA[
+		UPDATE (
+				SELECT * 
+		          FROM EASYWORK.MAIL A
+		     LEFT JOIN EASYWORK.MAIL_INFO B ON A.MAIL_NO = B.MAIL_NO
+		         WHERE B.TO_MAIL = #{toMail}
+		           AND A.RESERVE_YN = 'Y'
+		           AND A.STATE_CODE = 'EP'
+		           AND A.SEND_DATE <= SYSDATE
+		        )
+		   SET STATE_CODE = 'FN'
+		 ]]>
+	</update>
+	
+	<!-- 읽지 않은 메일 조회 -->
+	<select id="selectMailListNoRead" resultMap="mailResultSet">
+		SELECT ROWNUM, RESULT.*
+		FROM
+		(SELECT A.MAIL_NO, A.TITLE, B.SEND_DATE
+		      ,C.EMP_NAME AS FROM_NAME, D.TYPE_NAME
+		FROM EASYWORK.MAIL_INFO A 
+		LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
+		LEFT JOIN EASYWORK.EMPLOYEE C ON C.EMP_NO = A.FROM_MAIL
+		LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = B.TYPE_NO
+		WHERE A.TO_MAIL = #{empNo}
+		AND B.RECEIVE_CHECK = 'N'
+		AND B.STATUS = 'Y'
+		AND B.STATE_CODE = 'FN'
+		ORDER BY B.SEND_DATE DESC) RESULT
+	</select>
+
+	<!-- 읽지 않은 메일 조회 -->
+	<select id="selectFavoriteEmpList" resultMap="mailResultSet">
+		<![CDATA[
+		SELECT TO_ID, TO_NAME, CHANGE_NAME 
+		FROM(
+		     SELECT (SELECT CONCAT(EMP_ID, '@easy.co.kr') AS TO_ID
+		               FROM EASYWORK.EMPLOYEE
+		              WHERE EMP_NO = TO_MAIL) AS TO_ID, 
+		            (SELECT EMP_NAME
+		               FROM EASYWORK.EMPLOYEE
+		              WHERE EMP_NO = TO_MAIL) AS TO_NAME,
+		            (SELECT CHANGE_NAME
+		               FROM ATTACHMENT
+		              WHERE CTG_NO = 'E' AND REF_NO = TO_MAIL) AS CHANGE_NAME, 
+		            COUNT(*) AS COUNT
+		       FROM MAIL_INFO A
+		  LEFT JOIN MAIL B ON B.MAIL_NO = A.MAIL_NO
+		      WHERE FROM_MAIL = #{empNo}
+		        AND TO_MAIL != #{empNo}
+		   GROUP BY TO_MAIL
+		   ORDER BY COUNT DESC) 
+		WHERE ROWNUM <= 3
+		 ]]>
+		</select>
 	
 </mapper>

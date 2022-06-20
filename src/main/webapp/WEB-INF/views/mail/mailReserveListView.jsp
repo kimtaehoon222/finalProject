@@ -169,7 +169,19 @@
 												<!-- 검색창 끝 -->
 
 												<!-- 페이징 처리 시작 -->
-												<span class="d-none d-sm-block">${ mpi.currentPage*10-9 }-${ mpi.currentPage*10 } of ${ mpi.listCount } </span>
+												<span class="d-none d-sm-block">
+												${ mpi.currentPage*mpi.mailLimit-9 }
+												-
+												<c:choose>
+													<c:when test="${mpi.currentPage ne mpi.maxPage }">
+														${mpi.currentPage*mpi.mailLimit }
+													</c:when>
+													<c:when test="${mpi.currentPage eq mpi.maxPage }">
+														${mpi.listCount }
+													</c:when>
+												</c:choose>
+												of 
+												${ mpi.listCount } </span>
 												<c:choose>
 													<c:when test="${mpi.currentPage ne 1}">
 													<a class="btn btn-icon btn-primary email-pagination-prev d-none d-sm-block" 
@@ -258,7 +270,12 @@
 															<!-- 메일 보낸 날짜 및 시간 -->
 															<div class="mail-meta-item">
 																<span class="float-right"> 
-																<span class="mail-date">${ mail.sendDate }</span>
+																<c:if test="${ mail.stateCode == 'EP' }">
+																	<span class="mail-date">${ mail.createDate }</span>
+																</c:if>
+																<c:if test="${ mail.stateCode == 'CN' }">
+																	<span class="mail-date">${ mail.cancelDate }</span>
+																</c:if>
 																</span>
 															</div>
 														</div>
@@ -278,9 +295,11 @@
 																	</c:if>
 																</span>
 																	<c:if test="${ mail.stateCode == 'EP' }">
+																	    <span class="mail-date">${ mail.sendDate }</span>
 																		<span class="mail-date text-primary">${ mail.stateName }</span>
 																	</c:if>
 																	<c:if test="${ mail.stateCode == 'CN' }">
+																	    <span class="mail-date">${ mail.sendDate }</span>
 																		<span class="mail-date text-danger">${ mail.stateName }</span>
 																	</c:if>
 															</div>

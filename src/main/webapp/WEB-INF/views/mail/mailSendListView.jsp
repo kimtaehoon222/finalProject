@@ -168,7 +168,19 @@
 												<!-- 검색창 끝 -->
 
 												<!-- 페이징 처리 시작 -->
-												<span class="d-none d-sm-block">${ mpi.currentPage*10-9 }-${ mpi.currentPage*10 } of ${ mpi.listCount } </span>
+												<span class="d-none d-sm-block">
+												${ mpi.currentPage*mpi.mailLimit-9 }
+												-
+												<c:choose>
+													<c:when test="${mpi.currentPage ne mpi.maxPage }">
+														${mpi.currentPage*mpi.mailLimit }
+													</c:when>
+													<c:when test="${mpi.currentPage eq mpi.maxPage }">
+														${mpi.listCount }
+													</c:when>
+												</c:choose>
+												of 
+												${ mpi.listCount } </span>
 												<c:choose>
 													<c:when test="${mpi.currentPage ne 1}">
 													<a class="btn btn-icon btn-primary email-pagination-prev d-none d-sm-block" 
