@@ -7,6 +7,18 @@ import org.springframework.stereotype.Repository;
 import com.workie.easy.employee.JoinException;
 import com.workie.easy.employee.model.dto.Employee;
 
+/*
+* <pre>
+* Class : EmployeeDao
+* Comment : service에서 넘어온 값으로 DB에 접근한다.
+* History
+* 2022/06/14 (전재은) 처음 작성, 로그인, 회원가입 생성
+* 2022/06/19 (전재은) 회원가입 예외처리 수정
+* </pre>
+* @version 1
+* @author 전재은
+* @see EmployeeServiceImpl, employee-mapper
+*/
 @Repository
 public class EmployeeDao {
 

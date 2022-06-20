@@ -53,7 +53,7 @@
 			          </li>
 			      </ul>
 			      <!------------------- 모달 ------------------->
-			      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="skedInsert.do"  onsubmit="sked_submit()"method="POST">
+			      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do"  onsubmit="return sked_submit()"method="POST">
 			          <div class="modal-dialog modal-l" role="document">
 			          <div class="modal-content">
 			              <!-- 모달 헤더 -->
@@ -62,113 +62,124 @@
 			              </div>
 			              <!-- 모달 바디 -->
 			              <div class="modal-body">
+			              
+			             	  <!-- 작성자 정보 -->
+	                          <input type="hidden" id="empNo" name="empNo" class="form-control" value="${ loginEmp.empNo }" required/>
+			              
 			                  <!-- 1번줄 -->
 			                  <div class="row">
 			                  <!-- 카테고리 -->
 			                      <div class="col mb-3">
 			                      <label for="sked_code" class="form-label">카테고리</label>
-			                          <select id="sked_code" name="sked_code" class="form-select" autofocus required>
+			                          <select id="sked_code" name="skedCode" class="form-select" autofocus required>
 			                              <option value="P" id="sked_code_P">개인</option>
 			                              <option value="D" id="sked_code_D">부서</option>
 			                          </select>
 			                      </div>
+			                      
 			                      <!-- P 색상 -->
 			                      <div class="col mb-3"  id="color_group_P">
 			                        <label for="sked_color" class="form-label">색상</label>
 			                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
 			                        <div class="form-control color_radio">
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_pink" value="c1" required />
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_pink" value="C1" required />
 			                            </div>
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_blue" value="c2" />
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_blue" value="C2" />
 			                            </div>
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_yellow" value="c3" />
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_yellow" value="C3" />
 			                            </div>
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_purple" value="c4" />
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_purple" value="C4" />
 			                            </div>
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_red" value="c5" />
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_red" value="C5" />
 			                            </div>
 			                        </div>
 		                   		  </div>
 			                      <!-- / P 색상 -->
+			                      
 			                      <!-- D 색상 -->
 			                      <div class="col mb-3" style="display:none;" id="color_group_D">
 			                        <label for="sked_color" class="form-label">색상</label>
 			                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
 			                        <div class="form-control color_radio">
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_lightGray" value="c6"/>
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_lightGray" value="C6"/>
 			                            </div>
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_gray" value="c7"/>
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_gray" value="C7"/>
 			                            </div>
 			                            <div class="form-check form-check-inline">
-			                                <input class="form-check-input" type="radio" name="sked_color" id="color_darkGray" value="c8"/>
+			                                <input class="form-check-input" type="radio" name="colorCode" id="color_darkGray" value="C8"/>
 			                            </div>
 			                        </div>
 			                    </div>
 			                    <!-- / D 색상 -->
+			                    
 			                  </div>
+			                  
 			                  <!-- 2번줄 -->
 			                  <div class="row">
 			                      <div class="col mb-3">
 			                          <label for="sked_title" class="form-label">제목</label>
-			                          <input type="text" id="sked_title" class="form-control" placeholder="제목을 입력하세요." required/>
+			                          <input type="text" id="sked_title" name="skedTitle" class="form-control" placeholder="제목을 입력하세요." required/>
 			                      </div>
 			                  </div>
+			                  
 			                  <!-- 3번줄 -->
 			                  <div class="row" id="line3">
 			                  <!-- 시작 날짜 -->
 			                      <div class="col mb-3">
 			                          <label for="start_date" class="form-label">날짜</label>
-			                          <input id="start_date" type="date" class="form-control" required>
+			                          <input id="start_date" name="skedStart" type="date" class="form-control" required>
 			                          <label for="end_date" class="form-label">종료날짜</label>
-			                          <input id="end_date" type="date" class="form-control">
+			                          <input id="end_date" name="skedEnd" type="date" class="form-control">
 			                      </div>
 			                      <!--시간 -->
 			                      <div class="col mb-3">
 			                          <div class="row">
 			                              <label for="start_time" class="form-label">시작 시간</label>
-			                              <input id="start_time" type="time" class="form-control"/>
+			                              <input id="start_time" name="skedStartTime" type="time" class="form-control"/>
 			                              <label for="end_time" class="form-label">종료 시간</label>
-			                              <input id="end_time" type="time" class="form-control"/>
+			                              <input id="end_time" name="skedEndTime" type="time" class="form-control"/>
 			                          </div>
 			                      </div>
 			                  </div>
+			                  
 			                  <!-- 4번줄 -->
 			                  <div class="row">
 			                      <div class="col mb-3">
 			                          <label for="sked_content" class="form-label">내용</label>
-			                          <input type="text" id="sked_content" class="form-control" placeholder="내용을 입력하세요." required/>
+			                          <input type="text" name="skedContent" id="sked_content" class="form-control" placeholder="내용을 입력하세요." required/>
 			                      </div>
 			                  </div>
+			                  
 			                  <!-- 5번줄 -->
 			                  <div class="row">
 			                      <div class="col mb-3">
 			                          <label for="sked_place" class="form-label">장소</label>
-			                          <input type="text" id="sked_place" class="form-control" placeholder="장소 입력"/>
+			                          <input type="text" name="skedPlace" id="sked_place" class="form-control" placeholder="장소 입력"/>
 			                      </div>
 			                  </div>
+			                  
 			                  <!-- 6번줄 -->
 			                  <div class="row">
 			                      <div class="col mb-3">
 			                          <label for="sked_meno" class="form-label">메모</label>
-			                          <textarea id="sked_meno" class="form-control" placeholder="메모 입력"></textarea>
-			                          <!-- <input type="text" id="nameExLarge" class="form-control" placeholder="Enter Name" /> -->
+			                          <textarea id="sked_meno" name="skedMemo" class="form-control" placeholder="메모 입력"></textarea>
 			                      </div>
-			                      
 			                  </div>
+			                  
 			              </div>
 			              <!-- 모달 풋터 -->
 			              <div class="modal-footer">
 			                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                       			취소
 			                  </button>
-			                  <button type="submit" class="btn btn-primary" id="sked_insert_btn" onclick="sked_submit()">등록</button>
+			                  <button type="submit" class="btn btn-primary" id="sked_insert_btn">등록</button>
 			              </div>
 			          </div>
 			          </div>
@@ -271,7 +282,7 @@
 				var loginEmpNo=${loginEmp.empNo};		//로그인 사원번호
 				/*최초 조회 데이터 호출 ajax*/
 				var skedSelectList = $.ajax({ 
-										url: "skedSelectList.do",
+										url: "selectSkedList.do",
 										data: {
 										 		empNo: loginEmpNo,
 										 		skedCode: skedCode
@@ -330,7 +341,7 @@
 						console.log('clicked on ' + info.event.title);
 						var skedNo = info.event.id;
 				        $.ajax({ 
-							url: "skedSelect.do",
+							url: "selectSked.do",
 							data: {
 							 		empNo: loginEmpNo,
 							 		skedNo: skedNo,
@@ -394,21 +405,27 @@
 		
 		<!----------------------------- 상세 조회 -------------------------------------->
 		<!------------------- 상세 조회 모달 ------------------->
-		<form class="modal fade" id="sked-detail-modal" tabindex="-1" aria-hidden="true"  onsubmit="sked_update_submit()" action="skedUpdate.do" method="POST">
+		<form class="modal fade" id="sked-detail-modal" tabindex="-1" aria-hidden="true" action="updateSked.do" onsubmit="return sked_update_submit()" method="POST">
 		    <div class="modal-dialog modal-l" role="document">
 		    <div class="modal-content">
 		        <!-- 모달 헤더 -->
 			    <div class="modal-header">
-			        <h5 class="modal-title" id="detail_head">일정 등록</h5>
+			        <h5 class="modal-title" id="detail_head"></h5>
 			    </div>
 				<!-- 모달 바디 -->
 				<div class="modal-body">
+					
+					<!-- 작성자 정보 -->
+                    <input type="hidden" id="detail_empNo" name="empNo" value="${ loginEmp.empNo }" required/>
+					<!-- 일정 번호 -->
+                    <input type="hidden" id="detail_sked_number" name="skedNo" value="" required/>
+				
 					<!-- 1번줄 -->
 					<div class="row">
 					<!-- 카테고리 -->
 					    <div class="col mb-3">
 					    <label for="detail_sked_code" class="form-label">카테고리</label>
-					        <select id="detail_sked_code" name="sked_code" class="form-select" autofocus required>
+					        <select id="detail_sked_code" name="skedCode" class="form-select" autofocus required>
 					            <option value="P">개인</option>
 					            <option value="D">부서</option>
 					        </select>
@@ -418,19 +435,19 @@
 	                        <label for="sked_color" class="form-label">색상</label>
 	                        <div class="form-control color_radio">
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_pink" value="c1" required />
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_pink" value="C1" required />
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_blue" value="c2" />
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_blue" value="C2" />
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_yellow" value="c3" />
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_yellow" value="C3" />
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_purple" value="c4" />
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_purple" value="C4" />
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_red" value="c5" />
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_red" value="C5" />
 	                            </div>
 	                        </div>
 	                  		  </div>
@@ -441,73 +458,83 @@
 	                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
 	                        <div class="form-control color_radio">
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_lightGray" value="c6"/>
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_lightGray" value="C6"/>
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_gray" value="c7"/>
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_gray" value="C7"/>
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                                <input class="form-check-input" type="radio" name="sked_color" id="detail_color_darkGray" value="c8"/>
+	                                <input class="form-check-input" type="radio" name="colorCode" id="detail_color_darkGray" value="C8"/>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <!-- / D 색상 -->
 					</div>
+					
 					<!-- 2번줄 -->
 					<div class="row">
 					    <div class="col mb-3">
 					        <label for="detail_sked_title" class="form-label">제목</label>
-					        <input type="text" id="detail_sked_title" class="form-control" placeholder="제목을 입력하세요." required/>
+					        <input type="text" name="skedTitle" id="detail_sked_title" class="form-control" placeholder="제목을 입력하세요." required/>
 					    </div>
 					</div>
+					
 					<!-- 3번줄 -->
 					<div class="row" id="line3">
 					<!-- 시작 날짜 -->
 					    <div class="col mb-3">
 					        <label for="detail_start_date" class="form-label">날짜</label>
-					        <input id="detail_start_date" type="date" class="form-control" required>
+					        <input id="detail_start_date" name="skedStart" type="date" class="form-control" required>
 					        <label for="detail_end_date" class="form-label">종료날짜</label>
-					        <input id="detail_end_date" type="date" class="form-control">
+					        <input id="detail_end_date" name="skedEnd" type="date" class="form-control">
 					    </div>
 					    <!--시간 -->
 					    <div class="col mb-3">
 					        <div class="row">
 					            <label for="detail_start_time" class="form-label">시작 시간</label>
-					            <input id="detail_start_time" type="time" class="form-control"/>
+					            <input id="detail_start_time" name="skedStartTime" type="time" class="form-control"/>
 					            <label for="detail_end_time" class="form-label">종료 시간</label>
-					            <input id="detail_end_time" type="time" class="form-control"/>
+					            <input id="detail_end_time" name="skedEndTime" type="time" class="form-control"/>
 					        </div>
 					    </div>
 					</div>
+					
 					<!-- 4번줄 -->
 					<div class="row">
 					    <div class="col mb-3">
 					        <label for="detail_sked_content" class="form-label">내용</label>
-					        <input type="text" id="detail_sked_content" class="form-control" placeholder="내용을 입력하세요." required/>
+					        <input type="text" name="skedContent" id="detail_sked_content" class="form-control" placeholder="내용을 입력하세요." required/>
 					    </div>
 					</div>
+					
 					<!-- 5번줄 -->
 					<div class="row">
 					    <div class="col mb-3">
 					        <label for="detail_sked_place" class="form-label">장소</label>
-					        <input type="text" id="detail_sked_place" class="form-control" placeholder="장소 입력"/>
+					        <input type="text" name="skedPlace" id="detail_sked_place" class="form-control" placeholder="장소 입력"/>
 					    </div>
 					</div>
+					
 					<!-- 6번줄 -->
 					<div class="row">
 					    <div class="col mb-3">
 					        <label for="detail_sked_meno" class="form-label">메모</label>
-					        <textarea id="detail_sked_meno" class="form-control" placeholder="메모 입력"></textarea>
+					        <textarea id="detail_sked_meno" name="skedMemo" class="form-control" placeholder="메모 입력"></textarea>
 					        <!-- <input type="text" id="nameExLarge" class="form-control" placeholder="Enter Name" /> -->
 					    </div>
-					    
 					</div>
+					    
 				</div>
 		        <!-- 모달 풋터 -->
 		        <div class="modal-footer detail_footer">
 			    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
-			    <button type="button" class="btn btn-primary" id="sked_update_btn" onclick="sked_update_submit()">수정</button>
-			    <button type="button" class="btn btn-danger" id="sked_delete_btn">삭제</button>
+			    <button type="submit" class="btn btn-primary" id="sked_update_btn">수정</button>
+			    <button type="button" class="btn btn-danger" id="sked_delete_btn" onclick="deleteSked()">삭제</button>
+			    <script>
+				    function deleteSked(){
+					    location.href = "deleteSked.do?skedNo="+$('#detail_sked_number').val();
+				    }
+			    </script>
 			</div>
 		    </div>
 		    </div>

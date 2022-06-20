@@ -62,4 +62,64 @@
 		   </if>
 		   AND A.SKED_NO = #{skedNo}
 	</select>
+	
+	<insert id="insertSchedule">
+		INSERT INTO SCHEDULE
+		     VALUES(
+		             SEQ_SKNO.NEXTVAL 
+		           , #{skedCode} 
+		           , #{empNo}
+		           , #{colorCode}
+		           , #{skedTitle}
+		           , #{skedContent}
+		           , DEFAULT 
+		           , #{skedPlace}
+		           , #{skedMemo}
+		           )
+	</insert>
+	
+	<insert id="insertScheduleInfo">
+		INSERT INTO SCHEDULE_INFO
+		     VALUES(
+		             (
+		              SELECT MAX(SKED_NO)
+		                FROM SCHEDULE
+		               WHERE EMP_NO = #{empNo}
+		             )
+		           , #{skedStart}
+		           , #{skedStartTime}
+		           , #{skedEnd}
+		           , #{skedEndTime}
+		           )
+	</insert>
+	
+	<update id="updateSchedule">
+		UPDATE SCHEDULE
+		   SET
+		       COLOR_CODE = #{colorCode}
+		     , SKED_TITLE = #{skedTitle}
+		     , SKED_CONTENT = #{skedContent}
+		     , SKED_PLACE = #{skedPlace}
+		     , SKED_MEMO = #{skedMemo}
+		 WHERE SKED_STATUS = 'Y'
+		   AND SKED_NO = #{skedNo}
+	</update>
+	
+	<update id="updateScheduleInfo">
+		UPDATE SCHEDULE_INFO
+		   SET
+		       SKED_START = #{skedStart}
+		     , SKED_START_TIME = #{skedStartTime}
+		     , SKED_END = #{skedEnd}
+		     , SKED_END_TIME = #{skedEndTime}
+		 WHERE SKED_NO = #{skedNo}
+	</update>
+	
+	<update id="deleteSchedule">
+		UPDATE SCHEDULE
+		   SET
+		       SKED_STATUS = 'N'
+		 WHERE SKED_STATUS = 'Y'
+		   AND SKED_NO = #{skedNo}
+	</update>
 </mapper>

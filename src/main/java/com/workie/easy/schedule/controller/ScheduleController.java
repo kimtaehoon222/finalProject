@@ -18,6 +18,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.workie.easy.schedule.model.dto.Schedule;
 import com.workie.easy.schedule.model.service.ScheduleService;
 
+/*
+* <pre>
+* Class : ScheduleController
+* Comment : client가 보낸 데이터를 가공해서 service을 호출하고 결과를 view에 전달한다.
+* History
+* 2022/06/15 (전재은) 처음 작성, 일정전체조회 추가
+* 2022/06/16 (전재은) 일정 화면 전환 추가, 일정전체조회 수정
+* 2022/06/17 (전재은) 일정전체조회 수정
+* 2022/06/18 (전재은) 일정상세조회 추가
+* 2022/06/20 (전재은) 일정등록추가
+* </pre>
+* @version 1
+* @author 전재은
+* @see ScheduleService, ScheduleServiceImpl
+*/
 @Controller
 public class ScheduleController {
 	
@@ -35,9 +50,9 @@ public class ScheduleController {
 	}
 	
 	/*일정 전체 조회*/
-	@RequestMapping("skedSelectList.do")
+	@RequestMapping("selectSkedList.do")
 	@ResponseBody
-	public List<Map<String, Object>> scheduleList(@RequestParam("empNo") int empNo 
+	public List<Map<String, Object>> selectScheduleList(@RequestParam("empNo") int empNo 
 												 ,@RequestParam(value="skedCode", required=false) String skedCode) {
 		/*파라미터값 정리*/
 		Schedule sked = new Schedule();
@@ -45,7 +60,7 @@ public class ScheduleController {
 		sked.setSkedCode(skedCode);
 		
 		/*서비스 연결*/
-		ArrayList<Schedule> skedlist = scheduleService.scheduleList(sked);
+		ArrayList<Schedule> skedlist = scheduleService.selectScheduleList(sked);
 		
 		/*ArrayList를 담을 JsonObject, Json을 배열로 변환시켜줄 JsonArray*/
 		JSONObject jsonObj = new JSONObject();
@@ -83,9 +98,9 @@ public class ScheduleController {
 	
 	/*선택 일정 상세 조회*/
 //	@RequestMapping(value="skedSelect.do", produces = "application/text; charset=utf8")		//text(String)타입 한글 인코딩
-	@RequestMapping("skedSelect.do")
+	@RequestMapping("selectSked.do")
 	@ResponseBody
-	public JSONObject scheduleSelect(int empNo, int skedNo, @RequestParam(value="skedCode", required=false) String skedCode) {
+	public JSONObject selectSchedule(int empNo, int skedNo, @RequestParam(value="skedCode", required=false) String skedCode) {
 		
 		/*파라미터값 정리*/
 		Schedule sked = new Schedule();
@@ -94,7 +109,7 @@ public class ScheduleController {
 		sked.setSkedCode(skedCode);
 		
 		/*서비스 연결*/
-		Schedule s = scheduleService.scheduleSelect(sked);
+		Schedule s = scheduleService.selectSchedule(sked);
 		
 		/*Json에 담기*/
 		JSONObject jsonSked = new JSONObject();
@@ -117,28 +132,40 @@ public class ScheduleController {
 
 	
 	/*일정 등록*/
-	@RequestMapping("skedInsert.do")
-	public String scheduleInsert() {
+	@RequestMapping("insertSked.do")
+	public String insertSchedule(Schedule sked) {
 		
-		return null;
+		System.out.println(sked);
+		
+		scheduleService.insertSchedule(sked);
+		
+		return "schedule/schedule";
 		
 	}
 	
 	
 	/*일정 수정*/
-	@RequestMapping("skedUpdate.do")
-	public String scheduleUpdate() {
+	@RequestMapping("updateSked.do")
+	public String updateSchedule(Schedule sked) {
 		
-		return null;
+		System.out.println("scheduleUpdate : "+sked);
+		
+		scheduleService.updateSchedule(sked);
+		
+		return "schedule/schedule";
 		
 	}
 	
 	
 	/*일정 삭제*/
-	@RequestMapping("skedDelete.do")
-	public String scheduleDelete() {
+	@RequestMapping("deleteSked.do")
+	public String deleteSchedule(String skedNo) {
 		
-		return null;
+		System.out.println("scheduleDelete : "+skedNo);
+		
+		scheduleService.deleteSchedule(skedNo);
+		
+		return "schedule/schedule";
 		
 	}
 }

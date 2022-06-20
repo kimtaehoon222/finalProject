@@ -6,8 +6,14 @@ import com.workie.easy.schedule.model.dto.Schedule;
 
 public interface ScheduleService {
 
-	ArrayList<Schedule> scheduleList(Schedule sked);
+	ArrayList<Schedule> selectScheduleList(Schedule sked);
 
-	Schedule scheduleSelect(Schedule sked);
+	Schedule selectSchedule(Schedule sked);
+
+	void insertSchedule(Schedule sked);
+
+	void updateSchedule(Schedule sked);
+
+	void deleteSchedule(String skedNo);
 
 }

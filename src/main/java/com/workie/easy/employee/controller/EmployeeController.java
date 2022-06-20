@@ -14,13 +14,27 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.workie.easy.employee.model.service.EmployeeService;
 import com.workie.easy.employee.model.dto.Employee;
 
+/*
+* <pre>
+* Class : EmployeeController
+* Comment : client가 보낸 데이터를 가공해서 service을 호출하고 결과를 view에 전달한다.
+* History
+* 2022/06/13 (전재은) 처음 작성
+* 2022/06/14 (전재은) 로그인, 회원가입, 로그아웃 추가
+* </pre>
+* @version 1
+* @author 전재은
+* @see EmployeeService, EmployeeServiceImpl
+*/
 @SessionAttributes("loginEmp")
 @Controller
 public class EmployeeController {
 	
+	/*Service 연결을 위한 Autowired*/
 	@Autowired
 	private EmployeeService empService;
 	
+	/*암호화를 위한 Autowired*/
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
