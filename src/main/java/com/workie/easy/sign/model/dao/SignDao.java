@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.sign.model.dto.Sign;
 
 @Repository
 public class SignDao {
@@ -19,6 +20,11 @@ public class SignDao {
 	public int insertName(SqlSessionTemplate sqlSession, int eNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("signMapper.insertName", eNo);
+	}
+
+	public ArrayList<Sign> selectName(SqlSessionTemplate sqlSession, int eNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("signMapper.selectName");
 	}
 		
 }
