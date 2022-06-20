@@ -29,5 +29,8 @@ public class Sign {
 	private String statusCode; //처리 상태코드
 	private String status; // 상태값
 	private Date modifyDate; //수정일
+	
+	private String empName;//사원이름
+	private String jobName;//직위명
 }
 

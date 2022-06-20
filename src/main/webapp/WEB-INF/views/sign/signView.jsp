@@ -362,7 +362,7 @@
              			
              		</table>
              		
-              <pre>            <button type="button" class="btn btn-sm btn-outline-primary"> 완료 </button> </pre>
+              <pre>            <button type="button" class="btn btn-sm btn-outline-primary" id="buttonName"> 완료 </button> </pre>
              	
              	
 				<script>    		//결재선 지정 (조회) 스크립트 
@@ -445,12 +445,11 @@
          		data: {
          			eNo:eNo
          		},
-         
-         	/*	dataType: "JSON", */
-         		
+ 		
          		success:function(end){
+	
          			console.log("넘어오기 성공")
-         		},
+         		}, //success 끝
          		error:function(){
          			alert("insert 실패")
          		}
@@ -460,12 +459,7 @@
          </script>      		
  </div>
 
-               <!--    <input type="date" class="form-control" name="sendDate" id="sendDate"></div> -->
-					<!--  
-						<a href="selectList.do" class="btn btn-primary btn-sm"
-							style="width: 30%; height: 30px; float: left; margin: 22px;">결재선
-							지정 </a>
- 							-->		
+
 						<fieldset style="width: 30%; float: right; margin: 22px;">
 							<p>
 								<b>문서 보존 기한</b>
@@ -480,13 +474,15 @@
 
 
 					<div class="col-md-4">
-
-						<table class="tftable" border="1" hight="10" style="margin: 22px">
+						
+						
+						<table class="tftable" border="1" hight="10" style="margin: 22px" id="selectName">
+						
 							<tr>
 
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 								<th>대리</th>
-								<th></th>
+								<th>jobName</th>
 								<th></th>
 
 							</tr>
@@ -495,13 +491,13 @@
 
 								<th style="width: 100px; background-color: #ffffff;">임현빈
 									22.06.10</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
+								<th style="width: 100px; background-color: #ffffff;" >empName</th>
 								<th style="width: 100px; background-color: #ffffff;"></th>
 							</tr>
-
 						</table>
-
-
+					
+					<!-- selectName 원래 있던곳 -->
+			
 					</div>
 					
 						<button type="button" class="btn btn-primary btn-sm"

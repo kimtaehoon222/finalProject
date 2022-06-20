@@ -59,13 +59,24 @@
 	</select>
 		
 	<insert id="insertName" parameterType="_int">
-		
+		INSERT INTO SIGN
+	VALUES
+    (SEQ_GNO.NEXTVAL, 'AA', NULL, #{eNo}, SYSDATE, (SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_NO = #{eNo}), NULL, NULL, NULL, NULL, 'W', 'Y', NULL)
 	
 	
 	</insert>	
 		
 		
-		
+	<select id="selectName" resultMap="singResultSet" parameterType="_int">
+		SELECT 
+			A.*,
+			B.EMP_NAME,
+			C.JOB_NAME
+			FROM SIGN A
+			JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+			JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
+			WHERE A.EMP_NO = #{eNo}
+	</select>	
 		
 	</mapper>
 

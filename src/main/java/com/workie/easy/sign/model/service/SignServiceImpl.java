@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.workie.easy.common.CommException;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.sign.model.dao.SignDao;
+import com.workie.easy.sign.model.dto.Sign;
 
 
 @Service
@@ -46,6 +47,14 @@ private SignDao signDao;
 			throw new CommException("(임플)이름 추가 실패");
 		}
 		
+	}
+
+	@Override
+	public ArrayList<Sign> selectName(int eNo) {
+		// TODO Auto-generated method stub
+
+		return signDao.selectName(sqlSession, eNo);
+
 	}
 
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.sign.model.dto.Sign;
 import com.workie.easy.sign.model.service.SignService;
 
 @Controller
@@ -67,11 +68,38 @@ public class SignController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertName.do", method=RequestMethod.POST)
-	public String insertName( @RequestParam("eNo") int eNo) {
+	public void insertName( @RequestParam("eNo") int eNo) {
 		System.out.println("넘어왔는지 체크  : " + "  " + eNo);
 		
 		signService.insertName(eNo);
 		
-		return null;
 	}
+
+	/*
+	@ResponseBody
+	@RequestMapping(value="selectName.do", method=RequestMethod.POST)
+	public JSONArray selectName(@RequestParam("eNo") int eNo) {
+		
+		ArrayList<Sign> sList = signService.selectName(eNo);
+		
+
+		JSONArray jArr = new JSONArray();
+		JSONObject jsonList = null;
+		
+		System.out.println(sList);
+		
+		for(Sign si : sList) {
+			jsonList.put("empName", si.getEmpName()); //이름
+			jsonList.put("jobName", si.getJobName()); //직급
+
+			jArr.add(jsonList); 
+			
+			System.out.println("slectName jArr에 담긴 값 : " + jArr);
+		}
+		
+		
+		return jArr;
+	}
+	
+	*/
 }
