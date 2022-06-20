@@ -44,7 +44,7 @@ public class PersonnelController {
 			                Model model) {
 		
 		Employee empInfo = personnelService.updateEmp(e);
-
+        
 		model.addAttribute("loginEmp", empInfo);
 		
 		 return "personnel/myPageView";//수정후 다시 마이페이지로
@@ -77,6 +77,8 @@ public class PersonnelController {
 		 
 		 Employee e = personnelService.selectEmp(eId);
 		 
+		 String reg = e.getEmpReg().substring(0, 6);
+		 e.setEmpReg(reg);
 		 mv.addObject("e",e).setViewName("personnel/empDetailView");
 
 		 return mv;	
@@ -85,6 +87,7 @@ public class PersonnelController {
 	   @RequestMapping("updateEmpform.do")//화면전환용
 	   public ModelAndView updateForm(String eId , ModelAndView mv) {
 		   
+		
 		   mv.addObject("e", personnelService.selectEmp(eId))
 		   .setViewName("personnel/empUpdateForm");
 		   
@@ -94,8 +97,6 @@ public class PersonnelController {
 	 public ModelAndView updateEmpInfo(@ModelAttribute Employee emp, ModelAndView mv, HttpServletRequest request,
 			                           @RequestParam (name = "reUploadFile", required = false) 
 	                                   MultipartFile file) { 
-		 
-		
 		 
 		 
 		   personnelService.updateEmpInfo(emp);
@@ -174,8 +175,44 @@ public class PersonnelController {
 		 
 		 Employee e = personnelService.selectRetiredEmp(eId);
 		 
+		 String reg = e.getEmpReg().substring(0, 6);
+		 e.setEmpReg(reg);
 		 mv.addObject("e",e).setViewName("personnel/retiredEmpDetailView");
 
 		 return mv;	
 	 }
+	 @RequestMapping("returnEmp.do")
+	   public String updateReturnEmp(String eId ,Model model) {
+		   //String eId jsp에서 히든값 emp_id로 받아온 거
+		 
+		 Employee e = personnelService.updateReturnEmp(eId);  
+		 
+		 model.addAttribute("e", e);
+		    
+		 return "personnel/empUpdateForm";
+		  
+	   }
+	 
+	 @RequestMapping("noApvList.do")
+	 public String selectApvList(Model model) {
+		
+		 ArrayList<Employee> list = personnelService.selectApvList();
+			
+			model.addAttribute("list", list);
+			return "personnel/noApvListView";		
+	 }
+	 @RequestMapping("insertEmpForm.do")
+	 public ModelAndView updateNoApvEmpForm(String eId , ModelAndView mv ) {
+		  
+		 Employee e = personnelService.selectEmp(eId);  
+		 
+		 String reg = e.getEmpReg().substring(0, 6);
+		 e.setEmpReg(reg);
+		 
+		 mv.addObject("e", e).setViewName("personnel/empInsertView");
+		  
+		 return mv;
+	 }
+	 
+	   
 }

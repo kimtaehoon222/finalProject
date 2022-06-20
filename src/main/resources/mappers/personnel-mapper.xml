@@ -56,15 +56,16 @@
 	    SELECT 
 		*
 		FROM EMPLOYEE A
-		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
-		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
-		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
+		LEFT JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+		LEFT JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+		LEFT JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
 		WHERE EMP_ID = #{eId}
         AND ENT_YN= 'Y'
         </select>
        
        	<update id="updateEmpInfo" parameterType="Employee">
 		  UPDATE EMPLOYEE SET 
+		  EMP_NAME = #{empName},
 	      DISABLE_YN = #{disabledYN},
 	      DEPT_CODE=#{deptCode},
 	      JOB_CODE=#{jobCode}
@@ -74,7 +75,7 @@
       
       <update id="deleteEmp" parameterType="string">
 		  UPDATE EMPLOYEE SET 
-	      ENT_DATE = NULL,
+	      ENT_DATE = SYSDATE,
 	      ENT_YN = 'N'
 	      WHERE EMP_ID = #{eId}
       </update>
@@ -89,5 +90,27 @@
 		WHERE ENT_YN= 'N'
         ORDER BY EMP_NAME
         </select>
-      
+        
+        <select id="selectRetiredEmp" resultMap="personnelResult">
+	    SELECT 
+		*
+		FROM EMPLOYEE A
+		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+		WHERE EMP_ID = #{eId}
+        AND ENT_YN= 'N'
+        </select>
+        
+        <update id="updateReturnEmp" parameterType="string">
+		  UPDATE EMPLOYEE SET 
+	      ENT_DATE = NULL,
+	      ENT_YN = 'Y'
+	      WHERE EMP_ID = #{eId}
+        </update>
+        
+        <select id="selectApvList" resultMap="personnelResult">
+	        SELECT * FROM EMPLOYEE 
+	        WHERE APV_YN = 'N'
+         </select>
+    
 </mapper>

@@ -374,7 +374,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="" class="menu-link">
+                  <a href="noApvList.do" class="menu-link">
                     <div data-i18n="Horizontal Form">미승인 직원 목록</div>
                   </a>
                 </li>
