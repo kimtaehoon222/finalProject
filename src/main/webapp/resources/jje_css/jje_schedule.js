@@ -59,7 +59,7 @@ function sked_submit(){
             }
         }
     }else{ //시작일과 종료일이 둘 다 있는 경우
-        if(start_date>=end_date){ //종료일이 시작일보다 이른경우
+        if(start_date>end_date){ //종료일이 시작일보다 이른경우
             alert("종료일은 시작일보다 늦어야합니다.");
             return false;
         }else{
@@ -125,7 +125,7 @@ function sked_update_submit(){
             }
         }
     }else{ //시작일과 종료일이 둘 다 있는 경우
-        if(detail_start_date>=detail_end_date){ //종료일이 시작일보다 이른경우
+        if(detail_start_date>detail_end_date){ //종료일이 시작일보다 이른경우
             alert("종료일은 시작일보다 늦어야합니다.");
             return false;
         }else{
@@ -233,6 +233,7 @@ function clickDetailBtn(result)  {
 		console.log("없습니다.")
 	}
 	
+	$("#detail_sked_number").val(id);		//일정번호
 	$("#detail_sked_title").val(title);		//제목
 	$("#detail_sked_content").val(content);	//내용
 	$("#detail_sked_place").val(place);		//장소

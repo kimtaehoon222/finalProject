@@ -26,9 +26,9 @@ public class Schedule {
 	
 	/*일정 시간 정보*/
 	private String skedStart;		//일정시작
-	private String skedStartTime;	//일정시작
+	private String skedStartTime;	//일정시작시간
 	private String skedEnd;			//일정종료
-	private String skedEndTime;		//일정종료
+	private String skedEndTime;		//일정종료시간
 	
 	/*일정 분류 */
 //	private String skedCode;	    //일정분류코드
