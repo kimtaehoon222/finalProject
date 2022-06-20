@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +71,8 @@
 												<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                             		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
                                         		</svg>
-											</div> 받은 메일함
+											</div> 
+											받은 메일함
 										</a> 
 										<a href="sendMailList.do?send=s" class="list-group-item">
 											<div class="fonticon-wrap d-inline me-3">
@@ -168,7 +170,19 @@
 												<!-- 검색창 끝 -->
 
 												<!-- 페이징 처리 시작 -->
-												<span class="d-none d-sm-block">${ mpi.currentPage*10-9 }-${ mpi.currentPage*10 } of ${ mpi.listCount } </span>
+												<span class="d-none d-sm-block">
+												${ mpi.currentPage*mpi.mailLimit-9 }
+												-
+												<c:choose>
+													<c:when test="${mpi.currentPage ne mpi.maxPage }">
+														${mpi.currentPage*mpi.mailLimit }
+													</c:when>
+													<c:when test="${mpi.currentPage eq mpi.maxPage }">
+														${mpi.listCount }
+													</c:when>
+												</c:choose>
+												of 
+												${ mpi.listCount } </span>
 												<c:choose>
 													<c:when test="${mpi.currentPage ne 1 }">
 													<a class="btn btn-icon btn-primary email-pagination-prev d-none d-sm-block" 

@@ -20,9 +20,10 @@ public class Mail {
 	/* mail 테이블에 insert 하기 위한 정보를 담는 필드 */
 	private int mailNo;
 	private String reserveYn;
-	private Date createDate;
+	/* createDate : 0620 타입 변경 Date -> String*/
+	private String createDate;
 	private String sendDate;
-	private Date cancelDate;
+	private String cancelDate;
 	private String receiveCheck;
 	private String status;
 	private String stateCode;
@@ -51,5 +52,7 @@ public class Mail {
 	private String fromId;
 	private String toId;
 	private int empNo;
+	
+	private int rowNum;
 	
 }

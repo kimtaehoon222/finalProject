@@ -13,7 +13,7 @@
 	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/${pageContext.request.contextPath}/resources/kjs_assets/css/bootstrap.css">
+	href="${pageContext.request.contextPath}/resources/kjs_assets/css/bootstrap.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/kjs_assets/css/pages/email.css">
 <link rel="stylesheet"
@@ -26,6 +26,13 @@
 	href="${pageContext.request.contextPath}/resources/kjs_assets/images/favicon.svg"
 	type="image/x-icon">
 
+<style type="text/css">
+tr:hover{
+	cursor: pointer;
+	background-color: #696cff;
+	color: white;
+}
+</style>
 </head>
 <body>
 
@@ -117,8 +124,6 @@
                 <div class="card corona-gradient-card">
                   <div class="card-body py-0 px-0 px-sm-3">
                   
-                   
-                    
                   </div>
                 </div>
               </div>
@@ -264,62 +269,66 @@
             <!-- 첫번째 행 끝 -->
             
             <!-- 두번째 행 시작 -->
+            <form>
             <div class="row mx-2">
             	<!-- 읽지않은메일 시작 -->
-                <div class="col-md-12 col-lg-12 order-0">
-                  <div class="card h-100">
+                <div class="col-md-12 col-lg-12 order-0 email-user-list list-group card overflow-hidden ps ps--active-y" id="mailList">
+                  <div class="card h-100" >
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2 text-primary">읽지않은메일</h5>
+                      <h5 class="card-title mt-0 me-2 text-primary">읽지않은메일</h5>
                     </div>
-                    
-                    <div class="card-body">
+                    <!-- 메일 리스트 시작 -->
+                    <div class="card-body ps ps--active-y" id="vertical-example">
                       <table class="table">
                         <thead>
                           <tr>
-                            <th> 분류 </th>
-                            <th> 보낸사람 </th>
-                            <th> 제목 </th>
-                            <th> 보낸날짜 </th>
+                            <th class="d-none"></th>
+                            <th>구분</th>
+                            <th>분류</th>
+                            <th>보낸사람</th>
+                            <th>제목</th>
+                            <th>보낸날짜</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td class="text-danger">
-                            	중요
-                            </td>
-                            <td>
-                              <span class="pl-2">김재호</span>
-                            </td>
-                            <td> 안녕하세요. 김재호 입니다. </td>
-                            <td> 2022-06-09 </td>
-                          </tr>
-                          <tr>
-                            <td>
-                            	일반
-                            </td>
-                            <td>
-                              <span class="pl-2">임현빈</span>
-                            </td>
-                            <td> 안녕하세요. 임현빈 입니다. </td>
-                            <td> 2022-06-08 </td>
-                          </tr>
-                          <tr>
-                            <td>
-                            	일반
-                            </td>
-                            <td>
-                              <span class="pl-2">전재은</span>
-                            </td>
-                            <td> 안녕하세요. 전재은 입니다. </td>
-                            <td> 2022-06-07 </td>
-                          </tr>
+                        <!-- 읽지 않은 메일이 있는 경우 -->
+                        <c:if test="${ !empty mailList }">
+                          <c:forEach items="${ mailList }" var="mail">
+	                          <tr>
+	                            <td class="d-none">${mail.mailNo }</td>
+	                            <td>${mail.rowNum }</td>
+	                            <c:if test="${ mail.typeName == '중요' }">
+	                            	<td><span class="favorite badge bg-danger" style="color:white;">${ mail.typeName }</span></td>
+	                            </c:if>
+	                            <c:if test="${ mail.typeName == '일반' }">
+	                            	<td><span class="favorite badge bg-label-secondary">${ mail.typeName }</span></td>
+	                            </c:if>
+	                            <td><span class="pl-2">${ mail.fromName }</span></td>
+	                            <td> ${ mail.title } </td>
+	                            <td> ${ mail.sendDate } </td>
+	                          </tr>
+                          </c:forEach>
+                        </c:if>
+                        <!-- 읽지 않은 메일이 없는 경우 -->
+                        <c:if test="${ empty mailList }">
+                        	<tr>
+                        		<td colspan="6" style="text-align: center;">읽지 않은 메일이 없습니다.</td>
+                        	</tr>
+                        </c:if>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
                 <!-- 읽지않은메일 끝 -->
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+					<div class="ps__thumb-x" tabindex="0"style="left: 0px; width: 0px;"></div>
+			   </div>
+			   <div class="ps__rail-y" style="top: 0px; height: 733px; right: 0px;">
+					<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 567px;"></div>
+			   </div>
             </div>
+            </form>
             
 		          </div>
 		          <!-- content-wrapper ends -->
@@ -327,13 +336,22 @@
 			</section>
 		</div>
 	</div>
-
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	
+	
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
+	
+	<script type="text/javascript">
+		/* 읽지 않은 메일 행 클릭시 */
+		$(function(){
+	   		$(".table>tbody>tr").click(function() {
+	   			var mailNo = $(this).children().eq(0).text(); 
+	   			location.href = "detailMail.do?mailNo="+mailNo; 
+	   		})
+	   	})
+	
+	</script>
 
 	<jsp:include page="../common/bottom.jsp"/>
 	
