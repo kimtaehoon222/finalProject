@@ -107,10 +107,7 @@ a {
 													<p class="text-center m-auto" style="font-size:18px">총 연차</p>
 													<p class="text-center m-auto text-primary">${vInfo.allDays}</p>
 												</div>
-												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
-													<p class="text-center m-auto" style="font-size:18px">사용 연차</p>
-													<p class="text-center m-auto text-primary">${vInfo.useDays}</p>
-												</div>
+											
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
 													<p class="text-center m-auto" style="font-size:18px">잔여 연차</p>
 													<p class="text-center m-auto text-primary">${vInfo.leftDays}</p>
@@ -139,22 +136,28 @@ a {
 			                                    
 			                                    
 			                                </thead>
+			                                
 			                                <tbody>
+			                                <c:forEach items="${empVlist}" var="vacation">
 				                                <tr>
-					                                <td>인사과</td>
-					                                <td>2022.05.13~2022.05.14</td>
-					                                <td>연차</td>
-					                                <td>1</td>
-					                                <td>병원진료</td>
+				                                	<c:set var="dept" value="${vacation.deptName }"/>
+				                                	<c:choose> 
+				                                		<c:when test="${empty dept}">
+				                                			<td>부서 미정</td>
+				                                		</c:when>
+				                                		<c:otherwise>
+					                                		<td>${vacation.deptName}</td>
+					                              	  </c:otherwise>
+					                                </c:choose>
+					                                <td>${vacation.firstDate} ~ ${vacation.lastDate}</td>
+					                                <td>${vacation.VName}</td>
+					                                <td>${vacation.usingDay}</td>
+					                                <td>${vacation.reason}</td>
 					                            </tr>
-					                            <tr>
-					                                <td>인사과</td>
-					                                <td>2022.05.13~2022.05.14</td>
-					                                <td>연차</td>
-					                                <td>1</td>
-					                                <td>병원진료</td>
-					                            </tr>
+					                          </c:forEach>
+					                          
 				                           </tbody>
+				                       
 			                            </table>
                            			 </div>
 										</div>

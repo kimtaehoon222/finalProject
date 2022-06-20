@@ -323,6 +323,7 @@
 					}
 					
 					time = h + "h " + m + "m " + s + "s"
+					console.log("time+++++" + time)
 
 				}
 			}
@@ -419,17 +420,26 @@
 					if(m4 - m < 60){
 						m4 = m4 - m;
 						h4 = h4 - 1;
+						
 					}
-					h4 = h4 - h
+					if(h4 - h < 52){
+						h4 = h4 - h;
+						console.log("h4----" + h4);
+					}
 					
 					h4 = zero(h4)
 					m4 = zero(m4)
 					s4 = zero(s4)
+					console.log("h++++" + h)
 					console.log("h4" + h4)
 					console.log("m4" + m4)
 					console.log("s4" + s4)
+					
+			
 					//이번주 잔여
 					leftTime = h4 + "h " + m4 + "m " + s4 + "s"
+					
+				
 					console.log("leftTime" + leftTime)
 					
 
