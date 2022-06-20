@@ -18,7 +18,7 @@ public class EmpVacation {
 
 	private String useNo;//휴가코드
 	private int empNo;//사원코드
-	private int vNo;//종류코드
+	private String vNo;//종류코드
 	private String reason;//사유	
 	private Date firstDate;//휴가 시작일
 	private Date lastDate;//휴가 종료일
@@ -26,5 +26,5 @@ public class EmpVacation {
 	
 	//join
 	private String vName;
-	private String deptTitle;
+	private String deptName;
 }

@@ -2,6 +2,7 @@ package com.workie.easy.work.model.service;
 
 import java.util.ArrayList;
 
+import com.workie.easy.sign.model.dto.VacationForm;
 import com.workie.easy.work.model.dto.EmpVacation;
 import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;

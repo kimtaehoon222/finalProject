@@ -32,13 +32,25 @@
 		<id property="useNo" column="USE_NO"/>
 		<result property="empNo" column="EMP_NO"/>
 		<result property="vNo" column="V_NO"/>
-		<result property="reson" column="RESON"/>
+		<result property="reason" column="RESON"/>
 		<result property="firstDate" column="FIRST_DATE"/>
 		<result property="lastDate" column="LAST_DATE"/>
 		<result property="usingDay" column="USING_DAY"/>
 		<result property="vName" column="V_NAME"/>
-		<result property="deptTitle" column="DEPT_TITLE"/>
+		<result property="deptName" column="DEPT_NAME"/>
 		
+	</resultMap>
+	
+	<resultMap type="com.workie.easy.sign.model.dto.VacationForm" id="VacationFormResultSet">
+		<id property="signNo" column="sign_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="reason" column="REASON"/>
+		<result property="firstDate" column="FIRST_DATE"/>
+		<result property="lastDate" column="LAST_DATE"/>
+		<result property="vName" column="V_NAME"/>
+		<result property="deptName" column="DEPT_NAME"/>
+	
+	
 	</resultMap>
 	
 	
@@ -136,8 +148,8 @@
 	     WHERE EMP_NO = #{empNo}	
 	</select>
 	
-	<!--  <select id="selectEmpVacationList" parameterType="_int" resultMap="EmpVacationResultSet">
-		SELECT
+    <select id="selectEmpVacationList" parameterType="_int" resultMap="EmpVacationResultSet">
+  		SELECT
 		    A.USE_NO
 		  , A.EMP_NO
 		  , A.V_NO
@@ -148,14 +160,42 @@
 		  , B.V_NAME 
 		  , C.EMP_NAME 
 		  , D.DEPT_NAME
-		  FROM
+		 FROM
 		    EMP_VACATION A
-		  JOIN VACATION B ON A.V_NO = B.V_NO
-		  JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
-		  JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
-		 WHERE 
+	LEFT JOIN VACATION B ON A.V_NO = B.V_NO
+	LEFT JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+	LEFT JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+		WHERE 
 		    A.EMP_NO = #{empNo}
-	  ORDER BY A.FIRST_DATE ASC;
+		    AND A.STATUS_CODE = 'A'
+	 ORDER BY A.FIRST_DATE ASC
+	 
+	 
+	 
+	 
+	  
+	      
+		    
+		    
+	<!--    SELECT
+		     A.TITLE
+		   , A.REASON
+		   , A.FIRST_DATE
+		   , A.LAST_DATE
+		   , C.V_NAME
+		   , E.DEPT_NAME
+		FROM
+		    VACATION_FORM A
+   LEFT JOIN SIGN B ON A.SIGN_NO = B.SIGN_NO
+   LEFT JOIN VACATION C ON A.V_NO = C.V_NO
+   LEFT JOIN EMPLOYEE D ON B.EMP_NO = D.EMP_NO
+   LEFT JOIN DEPARTMENT E ON D.DEPT_CODE = E.DEPT_CODE
+
+	   WHERE 
+		    B.EMP_NO = #{empNo}
+		    AND B.STATUS_CODE = 'A'
+		    AND B.TYPE_CODE = 'CC'
+    ORDER BY A.FIRST_DATE ASC-->
 	
-	</select>-->
+	</select>
 </mapper>

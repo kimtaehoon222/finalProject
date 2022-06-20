@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.workie.easy.sign.model.dto.VacationForm;
 import com.workie.easy.work.model.dao.WorkDao;
 import com.workie.easy.work.model.dto.EmpVacation;
 import com.workie.easy.work.model.dto.VacationInfo;

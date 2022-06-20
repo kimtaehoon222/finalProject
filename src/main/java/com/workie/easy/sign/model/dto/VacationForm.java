@@ -20,4 +20,9 @@ public class VacationForm {
 	private Date firstDate; //휴가 시작일
 	private Date lastDate; //휴가 종료일
 	private String vNo; //휴가종류
+	
+	//조인
+
+	private String vName;
+	private String deptName;
 }

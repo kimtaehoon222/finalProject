@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.sign.model.dto.VacationForm;
 import com.workie.easy.work.model.dto.EmpVacation;
 import com.workie.easy.work.model.dto.VacationInfo;
 import com.workie.easy.work.model.dto.Work;
@@ -116,8 +116,11 @@ public class WorkController {
 		VacationInfo vInfo = workService.selectVacationInfo(empNo);
 		model.addAttribute("vInfo", vInfo);
 		
-		/*ArrayList<EmpVacation> empVlist = workService.selectEmpVacationList(empNo);
+		/*ArrayList<VacationForm> empVlist = workService.selectEmpVacationList(empNo);
 		model.addAttribute("empVlist", empVlist);*/
+		
+		ArrayList<EmpVacation> empVlist = workService.selectEmpVacationList(empNo);
+		model.addAttribute("empVlist", empVlist);
 		
 		
 		return "work/vacationView"; 
