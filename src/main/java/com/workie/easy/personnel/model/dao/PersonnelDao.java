@@ -46,4 +46,19 @@ public class PersonnelDao {
 		return (ArrayList)sqlSession.selectList("personnelMapper.selectRetiredEmpList");
 	}
 
+	public Employee selectRetiredEmp(String eId, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("personnelMapper.selectRetiredEmp", eId);
+	}
+
+	public int updateReturnEmp(String eId, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.update("personnelMapper.updateReturnEmp", eId);
+	}
+
+	public ArrayList<Employee> selectApvList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("personnelMapper.selectApvList");
+	}
+
 }

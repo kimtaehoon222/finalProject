@@ -84,7 +84,6 @@ picture-area{
                         <hr>	  
             		
          		    <div id="topPage" >
-         		    <form action="updateEmp.do" method="post">
          		    <img id="mainImg" src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" height="250" width="300"/>
                     <div id="title">
 					<h3  name="empName">이름 : ${loginEmp.empName} </h3>
@@ -94,7 +93,7 @@ picture-area{
 					<h3  name="empReg"> 생년월일 : ${loginEmp.empReg}</h3>
                     </div>
 					</div>
-
+                        <form action="updateEmp.do" method="post">
                             <div class="update hidden d-block align-items-center">
                             <hr>
                        
@@ -131,19 +130,40 @@ picture-area{
 									<button type="button" class="cancle btn waves-effect waves-light btn-danger"> 목록으로</button>    
                             		</div>
                             	</form>
-            
+            <div class="modal fade" id="passModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">비밀번호 수정하기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+            </div>
+
+            <form action="updatePwd.do" method="post">
+          
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <label for="origin" class="mr-sm-2">수정 전 비밀번호</label>
+                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="원래 비밀번호를 입력하세요." id="originPwd" name="originPwd"> <br>
+                    <label for="update" class="mr-sm-2">수정 후 비밀번호</label>
+                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="수정할 비밀번호를 입력하세요." id="updatePwd" name="updatePwd">
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">수정</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>
                     </div>
                   
-                </div>
-            </div>
-        
-                
-               
-          
-        </div>
+       
     
       <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/jquery/dist/jquery.min.js"></script>

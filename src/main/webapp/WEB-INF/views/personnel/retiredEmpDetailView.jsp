@@ -91,42 +91,60 @@
       </div>
       <hr class="my-0">
       <div class="card-body">
-        <form id="formAccountSettings" method="POST" onsubmit="return false">
+        
           <div class="row">
+          <div class="mb-3 col-md-6">
+              <label for="empName" class="form-label">이름 </label>
+              <input type="text" class="form-control" id="empName" name="empName" value="${e.empName}" readonly/>
+            </div>
                  <div class="mb-3 col-md-6">
               <label for="address" class="form-label">주소</label>
-              <input type="text" class="form-control" id="address" name="address" value="면목동" readonly="readonly"/>
+              <input type="text" class="form-control" id="address" name="address" value="${e.address}" readonly/>
             </div>
                <div class="mb-3 col-md-6">
               <label for="organization" class="form-label">생년월일</label>
-              <input type="text" class="form-control" id="empReg" name="empReg" value="960305" readonly="readonly"/>
+              <input type="text" class="form-control" id="empReg" name="empReg" value="${e.empReg }" readonly/>
             </div>
                  <div class="mb-3 col-md-6">
               <label for="deptName" class="form-label">퇴사전 부서</label>
-              <input class="form-control" type="text" name="deptName"  value="인사과" readonly="readonly"/>
+              <input class="form-control" type="text" name="deptName"  value="${e.deptName}" readonly/>
             </div>
             <div class="mb-3 col-md-6">
               <label for="jobName" class="form-label">퇴사전 직위</label>
-              <input class="form-control" type="text" name="jobName"  value="과장" readonly="readonly"/>
+              <input class="form-control" type="text" name="jobName"  value="${e.jobName}" readonly/>
             </div>
 
           
             <div class="mb-3 col-md-6">
               <label for="entDate" class="form-label">퇴사일</label>
-              <input type="text" class="form-control" id="entDate" name="entDate" value="2022-06-10" readonly="readonly"/>
+              <input type="text" class="form-control" id="entDate" name="entDate" value="${e.entDate }" readonly/>
             </div>
 
            <div class="mb-3 col-md-6">
               <label for="organization" class="form-label">특이사항</label>
-              <input type="text" class="form-control" id="empNote" name="empNote" value="대통령 비서 출신" readonly="readonly"/>
+              <input type="text" class="form-control" id="empNote" name="empNote" value=" ${e.empNote}"  readonly/>
             </div> 
              
           </div>
           <div class="mt-2">
-           <button  class="btn btn-primary me-2">목록으로</button>
-           <button type="submit" class="btn btn-outline-secondary">사원 재 등록</button>
+           <button type="submit" class="btn btn-primary me-2" onclick="postFormSubmit(1);">목록으로</button>
+           <button type="submit" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">사원 재 등록</button>
           </div>
-        </form>
+        <form id="postForm" action="" method="post">
+               <input type="hidden" name="eId" value="${e.empId}">
+            </form>
+		   <script>
+               function postFormSubmit(num){
+                  var postForm = $("#postForm");
+                  
+                  if(num == 1){
+                     postForm.attr("action", "retiredEmpList.do");
+                  }else{
+                     postForm.attr("action", "returnEmp.do");
+                  }
+                  postForm.submit();
+               }
+            </script>
       </div>
       <!-- /Account -->
     </div>

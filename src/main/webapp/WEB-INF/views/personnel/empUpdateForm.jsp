@@ -93,7 +93,7 @@
                     <div id="title">
                     <h5>이메일 : ${e.empId}@easy.co.kr</h5>
 					<h5>전화번호 : ${e.phone}</h5>
-					<h5>생년월일 : ${e.empReg}</h5>
+					<h5 name="empReg">생년월일 : ${e.empReg}</h5>
                     </div>
 					</div>
         </div>
@@ -129,7 +129,7 @@
             <div class="mb-3 col-md-6">
               <label for="jobCode" class="form-label">직위</label>
               <select name ="jobCode" id="jobCode" class="select2 form-select">
-                <option>${e.jobName}</option>
+                <option value="">${e.jobName}</option>
                 <option value="J1">사장</option>
                 <option value="J2">부사장</option>
                 <option value="J3">부장</option>

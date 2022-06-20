@@ -56,7 +56,7 @@
 #home{background-color: rgb(144, 145, 191);}
 </style>
 <body>
-<jsp:include page="top.jsp"/>
+<jsp:include page="../common/top.jsp" />
 
   <div class="layout-container">
 
@@ -74,35 +74,125 @@
 
 
 <div class="row">
-  <div class="col-md-12">
-    
+  <div class="col-md-12">    
     <div class="card mb-4">
       <h4 class="card-header">직원 승인 페이지</h4>
+   <form class="reg-form mb-5" action="insertEmp.do" enctype="multipart/form-data" method="post" >
       
       <div class="card-body">
-      <hr>
-      <form class="reg-form mb-5"  enctype="multipart/form-data" method="post" >
+     
         <div class="d-flex align-items-start align-items-sm-center gap-4">
     
        		  <div class="field-row mb-3">
-            <label class="form-label">직원 사진</label> 
+             
             <img id="titleImg" name="titleImg" width="250" height="200">
          </div>
 
       		 <div id="topPage" >
                     <div id="title">
-					<h5 name="empName"> 이름 : 김재호</h5> 
-					<h5 name="email"> 이메일 : shslove22@nate.com </h5>
-					<h5 name= phone>전화번호 : 010-888-8888</h5>
+				    <h5>이메일 : ${e.empId}@easy.co.kr</h5>
+					<h5>전화번호 : ${e.phone}</h5>
+					<h5>생년월일 : ${e.empReg}</h5>
                     </div>
+                    
 					</div>
+					
         		</div>
         		  <!-- 숨겨져있는 파일영역 -->
            <div id="fileArea">
              <input type="file" accept="image/*" name="file" id="file" onchange="loadImg(this);">
+          </div> 		
+        
+      </div>
+      <hr>
+      <div class="card-body">
+          <div class="row">
+          <div class="mb-3 col-md-6">
+              <label for="empName" class="form-label">이름 </label>
+              <input type="text" class="form-control" id="empName" name="empName" value="${e.empName}" />
+            </div>
+           	<div class="mb-3 col-md-6">
+              <label for="lastName" class="form-label">내선 번호</label>
+              <input class="form-control" type="text" name="telNo"  value="" />
+            </div>
+             <div class="mb-3 col-md-6">
+              <label for="address" class="form-label">주소</label>
+              <input type="text" class="form-control" id="address" name="address" value="${e.address}" readonly/>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="organization" class="form-label">생년월일</label>
+              <input type="text" class="form-control" id="empReg" name="empReg" value="${e.empReg}" readonly/>
+            </div>
+               <div class="mb-3 col-md-6">
+              <label for="deptName" class="form-label">부서</label>
+             <select name ="deptCode" id="deptCode" class="select2 form-select">
+                <option value="">부서선택</option>
+                <option value="D1">인사관리부</option>
+                <option value="D2">회계관리부</option>
+                <option value="D3">마케팅부</option>
+                <option value="D4">자재관리부</option>
+                <option value="D5">기획영업부</option>
+                <option value="D6">경영관리부</option>
+                <option value="D7">기술개발부</option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="jobName" class="form-label">직위</label>
+             <select name ="jobCode" id="jobCode" class="select2 form-select">
+                <option>직위 선택</option>
+                <option value="J1">사장</option>
+                <option value="J2">부사장</option>
+                <option value="J3">부장</option>
+                <option value="J4">차장</option>
+                <option value="J5">과장</option>
+                <option value="J6">대리</option>
+                <option value="J7">사원</option>
+                <option value="J8">인턴</option>
+              </select>
+            </div>
+        
+            <div class="mb-3 col-md-6">
+              <label for="address" class="form-label">입사일</label>
+              <input type="text" class="form-control" id="hireDate" name="hireDate" value="${e.hireDate}" readonly/>
+            </div>
+			    <div class="mb-3 col-md-6">
+              <label for="disabledYN" class="form-label">장애여부</label>
+              <select id="disabledYN" class="select2 form-select">
+    		   <option value="">N</option>
+    		 <option value="-12">Y</option>
+           	 </select>
+            </div>
+           <div class="mb-3 col-md-6">
+              <label for="organization" class="form-label">특이사항</label>
+              <input type="text" class="form-control" id="empNote" name="empNote" value=" " />
+            </div> 
+         
           </div>
-   </form>
-       <script>
+          <!-- 수정하는 부분 끝 -->
+          <div class="mt-2">
+            <button type="submit" class="btn btn-primary me-2">승인하기</button>
+            <button type="reset" class="btn btn-outline-secondary">취소하기</button>
+          </div>
+       
+      </div>
+  </form>     
+    </div>
+   
+  </div>
+</div>
+         </div>
+
+
+          
+       
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+   
+    
+    <!-- Overlay -->
+      <script>
    	
        $(function(){
            // 파일 input 하는 부분은 숨겼음
@@ -127,103 +217,10 @@
               }
            }
         }
-       </script> 		
-        
-      </div>
-      <hr class="my-0">
-      <div class="card-body">
-        <form id="formAccountSettings" method="POST" onsubmit="return false">
-          <div class="row">
-           		<div class="mb-3 col-md-6">
-              <label for="lastName" class="form-label">내선 번호</label>
-              <input class="form-control" type="text" name="telNo"  value="" />
-            </div>
-             <div class="mb-3 col-md-6">
-              <label for="address" class="form-label">주소</label>
-              <input type="text" class="form-control" id="address" name="address" value="면목동" readonly/>
-            </div>
-               <div class="mb-3 col-md-6">
-              <label for="deptName" class="form-label">부서</label>
-              <select id="deptName" class="select2 form-select">
-              	 <option value="">부서 선택</option>
-                <option value="">총무부</option>
-                <option value="-12">법무부</option>
-                <option value="-12">총무부</option>
-              </select>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="jobName" class="form-label">직위</label>
-              <select id="jobName" class="select2 form-select">
-              	 <option value="">직원 선택</option>
-                <option value="">부장</option>
-                <option value="-12">부장</option>
-                <option value="-12">차장</option>
-                <option value="-12">사원</option>
-              </select>
-            </div>
-
-            <div class="mb-3 col-md-6">
-              <label for="organization" class="form-label">생년월일</label>
-              <input type="text" class="form-control" id="empReg" name="empReg" value="960305" readonly/>
-            </div>
-          
-            <div class="mb-3 col-md-6">
-              <label for="address" class="form-label">입사일</label>
-              <input type="text" class="form-control" id="hireDate" name="hireDate" value="1996-03-05" readonly/>
-            </div>
-			    <div class="mb-3 col-md-6">
-              <label for="disabledYN" class="form-label">장애여부</label>
-              <select id="disabledYN" class="select2 form-select">
-    		   <option value="">N</option>
-    		 <option value="-12">Y</option>
-           	 </select>
-            </div>
-                <div class="mb-3 col-md-6">
-              <label for="entYN" class="form-label">재직 여부</label>
-              <select id="entYN" class="select2 form-select">
-    		    <option value="-12">Y</option>
-    		   <option value="">N</option>
-           	 </select>
-            </div>
-           <div class="mb-3 col-md-6">
-              <label for="organization" class="form-label">특이사항</label>
-              <input type="text" class="form-control" id="empNote" name="empNote" value=" " />
-            </div> 
-         
-          </div>
-          <div class="mt-2">
-          
-            <button type="submit" class="btn btn-primary me-2">승인하기</button>
-            <button type="reset" class="btn btn-outline-secondary">취소하기</button>
-          </div>
-        </form>
-      </div>
-      <!-- /Account -->
-    </div>
-    <div class="card">
- 
-    </div>
-  </div>
-</div>
-
-
-            
-          </div>
-
-
-          
-          <div class="content-backdrop fade"></div>
-        </div>
-        <!-- Content wrapper -->
-      </div>
-      <!-- / Layout page -->
-   
-    
-    <!-- Overlay -->
-  
+       </script>
     
     
-	<jsp:include page="bottom.jsp"/>
+	<jsp:include page="../common/bottom.jsp" />
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <script src="${pageContext.request.contextPath}/resources/assets/vendor/libs/jquery/jquery.js"></script>

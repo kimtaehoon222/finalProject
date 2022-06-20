@@ -108,8 +108,31 @@ public class PersonnelServiceImpl implements PersonnelService {
 
 	@Override
 	public Employee selectRetiredEmp(String eId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return personnelDao.selectRetiredEmp(eId, sqlSession);
+	}
+
+	@Override
+	public Employee updateReturnEmp(String eId) {
+		
+		int result = personnelDao.updateReturnEmp(eId,sqlSession);
+        
+		if(result > 0) {
+		Employee e= personnelDao.selectEmp(eId, sqlSession);
+		
+		return e;
+		}else {
+		throw new CommException("퇴사자 재직 등록에 실패하였습니다. 관리자에게 문의바랍니다.");
+		}
+		
+}
+
+	@Override
+	public ArrayList<Employee> selectApvList() {
+		
+		ArrayList<Employee> list = personnelDao.selectApvList(sqlSession);
+		
+	    return list;
 	}
 
 }

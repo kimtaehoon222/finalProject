@@ -25,7 +25,7 @@
 #apvBut{ background-color: rgb(57, 90, 112); color: white;}
 </style>
 <body>
-	<jsp:include page="top.jsp"/>
+	<jsp:include page="../common/top.jsp" />
     <div id="app">
        
         <div id="main">
@@ -57,23 +57,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                 <c:forEach items="${list}" var="e">
                                     <tr>
-                                        <td>김재호</td>
-                                        <td>shslove22@nate.com</td>
-                                        <td>076 4820 8838</td>
-                                        <td>2022-06-10</td>
-                                      
-                                       	<td><a href="#" class="btn btn-primary rounded-pill">이동하기</a></td>
+                                        <td>${e.empName}</td>
+                                        <td>${e.empId}</td>
+                                        <td>${e.phone}</td>
+                                        <td>${e.hireDate}</td>
+                                        <td><a  class="btn btn-primary rounded-pill" href="insertEmpForm.do?eId=${e.empId}"> 이동하기</a></td>                                   
                                     </tr>
-                                   <tr>
-                                        <td>김재호</td>
-                                        <td>shslove22@nate.com</td>
-                                        <td>076 4820 8838</td>
-                                        <td>2022-06-10</td>
-                                      	<td><a href="#" class="btn btn-primary rounded-pill">이동하기</a></td>
-                                    </tr>
-                                
-                                  
+                                 </c:forEach>                              
                                 </tbody>
                             </table>
                         </div>
@@ -86,7 +78,7 @@
         </div>
         
     </div>
-    <jsp:include page="bottom.jsp"/>
+    <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>
 
