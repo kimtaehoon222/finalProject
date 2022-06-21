@@ -24,20 +24,22 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-     <style>
-     	#message{
-     		background: rgb(124, 127, 251);
-     		color: white;
-     		width: 100px;
-     		height: 40px;
-     		
-     	}
-     </style>
+   <style>
+.contectDeptList button:hover {
+	font-weight: bold;
+}
+.accordion {
+	height: 80px;
+}
+.accordion-button {
+	height: 60px;
+}
+</style>
 </head>
 
 <body>
 
-<jsp:include page="${pageContext.request.contextPath}/top.jsp" />
+<jsp:include page="../common/top.jsp"/>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -70,7 +72,11 @@
                 <div class="row">
                 	<!-- 주소록 영역 -->
                     <div class="col-7 align-self-center">
-                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">주소록</h3>
+                        <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">메신저</h2>
+                        
+                        <br><br><br>
+                         <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">주소록</h3>
+                         
                         <div class="d-flex align-items-center">
 
                         </div>
@@ -282,7 +288,7 @@
         <!-- ============================================================== -->
 
     </div>
-     <jsp:include page="${pageContext.request.contextPath}/bottom.jsp" />
+     <jsp:include page="../common/bottom.jsp"/>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
