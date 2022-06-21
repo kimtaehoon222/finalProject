@@ -23,7 +23,6 @@
 	  	<result property="deptName" column="DEPT_NAME"/>
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="jobVacation" column="JOB_VACATION"/>
-		<result property="telNo" column="TEL_NO"/>
 	</resultMap>
 	
 	<select id="loginEmp" parameterType="Employee" resultMap="employeeResultSet">
@@ -32,11 +31,10 @@
 		     , A.GENDER , A.EMP_PWD , A.ADDRESS , A.DEPT_CODE , A.JOB_CODE
 		     , A.DISABLE_YN , A.EMP_NOTE , A.HIRE_DATE , A.ENT_DATE, A.APV_YN
 		     , A.ENT_YN , A.CTG_NO , B.DEPT_NAME , C.JOB_NAME , C.JOB_VACATION
-		     , D.TEL_NO
+		     , A.TEL_NO
 		  FROM EMPLOYEE A
 		  LEFT JOIN DEPARTMENT B ON(A.DEPT_CODE=B.DEPT_CODE)
 		  LEFT JOIN JOB C ON(A.JOB_CODE=C.JOB_CODE)
-		  LEFT JOIN TELEPHONE_BOOK D ON(A.EMP_NO=D.EMP_NO)
 		 WHERE EMP_ID = #{empId}
 		   AND APV_YN = 'Y'
 		   AND ENT_YN = 'Y'
