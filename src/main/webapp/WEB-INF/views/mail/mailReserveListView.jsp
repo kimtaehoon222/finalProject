@@ -36,7 +36,7 @@
 			<div class="page-title">
 				<div class="row">
 					<div class="col-12 col-md-6 order-md-1 order-last">
-						<h3>Email</h3>
+						<h3><a href="mailHome.do" style="color:#566a7f;" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="right" data-bs-html="true" title data-bs-original-title="<i class='bx bx-home bx-xs' ></i><span>메일 홈으로 돌아가기</span>">Email</a></h3>
 					</div>
 					<div class="col-12 col-md-6 order-md-2 order-first">
 						<nav aria-label="breadcrumb"

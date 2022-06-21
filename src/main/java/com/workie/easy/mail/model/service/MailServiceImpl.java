@@ -262,4 +262,36 @@ public class MailServiceImpl implements MailService {
 
 		return mailDao.selectFavoriteEmpList(sqlSession, empNo);
 	}
+
+	@Override
+	public ArrayList<Mail> seletMailListChart(int empNo) {
+
+		return mailDao.seletMailListChart(sqlSession, empNo);
+	}
+
+	@Override
+	public boolean checkReserveMailFromMe(int fromMail) {
+		
+		boolean result = false;
+		
+		int checkReserveMailCount = mailDao.checkReserveMailFromMe(sqlSession, fromMail);
+		
+		/* 처리해야할 예약 메일이 있는 경우 */
+		if(checkReserveMailCount > 0) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public void updateReserveMailFromMe(int fromMail) {
+		
+		int result = mailDao.updateReserveMailFromMe(sqlSession, fromMail); 
+		
+		if(result < 0) {
+			throw new CommException("메일 예약상태 변경에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
+		
+	}
 }

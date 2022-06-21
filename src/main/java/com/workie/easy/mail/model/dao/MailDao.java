@@ -168,5 +168,20 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectFavoriteEmpList", empNo);
 	}
 
+	public ArrayList<Mail> seletMailListChart(SqlSession sqlSession, int empNo) {
+
+		return (ArrayList)sqlSession.selectList("mailMapper.seletMailListChart", empNo);
+	}
+
+	public int checkReserveMailFromMe(SqlSession sqlSession, int fromMail) {
+		
+		return sqlSession.selectOne("mailMapper.checkReserveMailFromMe", fromMail);
+	}
+
+	public int updateReserveMailFromMe(SqlSession sqlSession, int fromMail) {
+
+		return sqlSession.update("mailMapper.updateReserveMailFromMe", fromMail);
+	}
+
 	
 }

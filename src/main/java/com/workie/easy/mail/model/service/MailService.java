@@ -58,5 +58,11 @@ public interface MailService {
 
 	ArrayList<Mail> selectFavoriteEmpList(int empNo);
 
+	ArrayList<Mail> seletMailListChart(int empNo);
+
+	boolean checkReserveMailFromMe(int fromMail);
+
+	void updateReserveMailFromMe(int fromMail);
+
 	
 }
