@@ -16,6 +16,14 @@
 		<result property="statusCode" column="STATUS_CODE"/>
 		<result property="status" column="STATUS"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="createName" column="CREATE_NAME"/>
+		<result property="signContent" column="SIGN_CONTENT"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="expiryDate" column="EXPIRY_DATE"/>
+		<result property="ctgNo" column="CTG_NO"/>
+		
 	</resultMap>
 
 		<resultMap type="Employee" id="employeeResultSet">
@@ -57,27 +65,41 @@
 			ORDER BY B.DEPT_NAME, A.JOB_CODE DESC
 			
 	</select>
+
+	<insert id="insertSign" parameterType="Sign">
+		INSERT ALL 
+		INTO SIGN
+		VALUES(SEQ_GNO.NEXTVAL, 'AA', #{signTitle}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{signContent})
 		
-	<insert id="insertName" parameterType="_int">
-		INSERT INTO SIGN
-	VALUES
-    (SEQ_GNO.NEXTVAL, 'AA', NULL, #{eNo}, SYSDATE, (SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_NO = #{eNo}), NULL, NULL, NULL, NULL, 'W', 'Y', NULL)
-	
+		INTO STANDARD_FORM
+		VALUES(SEQ_GNO.CURRVAL, #{check}, #{signContent}, 'SF')
+		
+		<if test="originName != null">
+		INTO ATTACHMENT
+		VALUES(SEQ_FNO.NEXTVAL, SEQ_GNO.CURRVAL, 'SF', #{originName}, #{changeName}, #{filePath}, SYSDATE, DEFAULT)
+		</if>
+		SELECT * 
+	      FROM DUAL
 	
 	</insert>	
 		
+	<insert id="insertHelp" parameterType="Sign">
+		INSERT ALL 
+		INTO SIGN
+		VALUES(SEQ_GNO.NEXTVAL, 'BB', #{signTitle}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{signContent})
 		
-	<select id="selectName" resultMap="singResultSet" parameterType="_int">
-		SELECT 
-			A.*,
-			B.EMP_NAME,
-			C.JOB_NAME
-			FROM SIGN A
-			JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
-			JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
-			WHERE A.EMP_NO = #{eNo}
-	</select>	
+		INTO STANDARD_FORM
+		VALUES(SEQ_GNO.CURRVAL, #{check}, #{signContent}, 'SF')
 		
+		<if test="originName != null">
+		INTO ATTACHMENT
+		VALUES(SEQ_FNO.NEXTVAL, SEQ_GNO.CURRVAL, 'SF', #{originName}, #{changeName}, #{filePath}, SYSDATE, DEFAULT)
+		</if>
+		SELECT * 
+	      FROM DUAL
+	
+	</insert>	
+	
 	</mapper>
 
 		

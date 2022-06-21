@@ -1,16 +1,26 @@
 package com.workie.easy.sign.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.workie.easy.common.CommException;
+import com.workie.easy.common.model.dto.Attachment;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.sign.model.dto.Sign;
 import com.workie.easy.sign.model.service.SignService;
@@ -44,11 +54,6 @@ public class SignController {
 		JSONObject jsonList = null;
 		
 		
-		System.out.println("list에 담긴 값 :" + list);
-		
-		System.out.println("jsonList 에 담긴 값"  + jsonList);
-		
-		
 	for(Employee emp : list) { //추가한거
 		
 		jsonList = new JSONObject();	
@@ -60,46 +65,80 @@ public class SignController {
 
 		jArr.add(jsonList); 
 		}//향상된 for문 닫기 
-	
-	System.out.println("jArr에 담긴 값 " + jArr);
+
 	return jArr;
 
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="insertName.do", method=RequestMethod.POST)
-	public void insertName( @RequestParam("eNo") int eNo) {
-		System.out.println("넘어왔는지 체크  : " + "  " + eNo);
-		
-		signService.insertName(eNo);
-		
-	}
+	@RequestMapping("insertSign.do")
+	public String insertSign(@ModelAttribute Sign si , HttpServletRequest request ,
+			@RequestParam(name = "uploadFile", required = false) MultipartFile file) { //품의 insert
 
-	/*
-	@ResponseBody
-	@RequestMapping(value="selectName.do", method=RequestMethod.POST)
-	public JSONArray selectName(@RequestParam("eNo") int eNo) {
-		
-		ArrayList<Sign> sList = signService.selectName(eNo);
-		
-
-		JSONArray jArr = new JSONArray();
-		JSONObject jsonList = null;
-		
-		System.out.println(sList);
-		
-		for(Sign si : sList) {
-			jsonList.put("empName", si.getEmpName()); //이름
-			jsonList.put("jobName", si.getJobName()); //직급
-
-			jArr.add(jsonList); 
+	
+		if(!file.getOriginalFilename().equals("")) { //file이 비어있으면 빈문자열로 넘어옴 빈문자열이 아니라면 파일이 들어있다.
+			String changeName = saveFile(file, request, si);
 			
-			System.out.println("slectName jArr에 담긴 값 : " + jArr);
+			if(changeName != null) {
+				si.setOriginName(file.getOriginalFilename());
+				si.setChangeName(changeName);
+			}
 		}
 		
+		System.out.println("si에 데이터 :" + si);
+		signService.insertSign(si);
 		
-		return jArr;
+		String view = "redirect:signView.do";
+		
+		return view;
+	}
+
+
+	private String saveFile(MultipartFile file, HttpServletRequest request, Sign si) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		//  \\ : 파일 경로를 구분하고 \ 1개 사용시 특수문자이기에 \\를쓰어 읽어들일 수 있도록 한다.
+		String savePath = resources + "\\sign_files\\";
+		si.setFilePath(savePath);
+		
+		String originName = file.getOriginalFilename();
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); //util Date 임폴트
+		
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		String changeName = currentTime + ext;
+		System.out.println("changeName : " + changeName);
+		
+		
+		try {
+			file.transferTo(new File(savePath + changeName)); //io FIle 임폴트 후 트라이 캐치
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new CommException("file Upload Error");
+		} 
+		return changeName;
 	}
 	
-	*/
+	@RequestMapping("insertHelp.do")
+	public String insertHelp(@ModelAttribute Sign si , HttpServletRequest request ,
+			@RequestParam(name = "uploadFile", required = false) MultipartFile file) { //협조 insert
+
+	
+		if(!file.getOriginalFilename().equals("")) { //file이 비어있으면 빈문자열로 넘어옴 빈문자열이 아니라면 파일이 들어있다.
+			String changeName = saveFile(file, request, si);
+			
+			if(changeName != null) {
+				si.setOriginName(file.getOriginalFilename());
+				si.setChangeName(changeName);
+			}
+		}
+		
+		System.out.println("si에 데이터 :" + si);
+		signService.insertHelp(si);
+		
+		String view = "redirect:signView.do";
+		
+		return view;
+	}
+
+	
 }

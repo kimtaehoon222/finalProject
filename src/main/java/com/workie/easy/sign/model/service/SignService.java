@@ -8,12 +8,13 @@ import com.workie.easy.sign.model.dto.Sign;
 
 public interface SignService {
 
-/*	Employee sEmp(Employee sEmp); */
-
 	ArrayList<Employee> selectList();
-	
-	ArrayList<Sign> selectName(int eNo);
 
-	void insertName(int eNo);
+	void insertSign(Sign si);
+
+	void insertHelp(Sign si);
+	
+
+	/* void insertName(int eNo); */
 
 }
