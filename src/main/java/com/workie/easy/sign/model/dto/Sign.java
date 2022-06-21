@@ -29,8 +29,36 @@ public class Sign {
 	private String statusCode; //처리 상태코드
 	private String status; // 상태값
 	private Date modifyDate; //수정일
+	private String createName; //기안자
+	private String signContent; //결재내용
 	
 	private String empName;//사원이름
 	private String jobName;//직위명
+	
+	/* 파일 */
+	private int fileNo;							/* 파일 번호 */
+	private int refNo;							/* 참조 번호 */
+	private String originName;					/* 파일 원본명 */
+	private String changeName;					/* 파일 수정명 */
+	private String filePath;					/* 저장 경로 */
+	private Date uploadDate;					/* 업로드일 */
+	
+	/* 품의, 협조 */
+	private Date expiryDate; //문서 만료일
+	private String ctgNo; //분류코드
+	
+	private String check; // 1년
+	
+	/* 휴가원 */
+	private String title; //제목
+	private String reason; //사유
+	private Date firstDate; //휴가 시작일
+	private Date lastDate; //휴가 종료일
+	private String vNo; //휴가종류
+	
+	private String vName;
+	private String deptName;
+	
+	
 }
 

@@ -22,14 +22,7 @@ private SqlSessionTemplate sqlSession;
 @Autowired
 private SignDao signDao;
 
-/*
-	@Override
-	public Employee sEmp(Employee sEmp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	*/
+
 
 	@Override
 	public ArrayList<Employee> selectList() {
@@ -37,25 +30,33 @@ private SignDao signDao;
 		return signDao.selectList(sqlSession);
 	}
 
+
+
 	@Override
-	public void insertName(int eNo) {
-		// TODO Auto-generated method stub
+	public void insertSign(Sign si) {
 		
-		int result = signDao.insertName(sqlSession, eNo);
+		int result = signDao.insertSign(sqlSession, si);
 		
 		if(result < 0 ) {
-			throw new CommException("(임플)이름 추가 실패");
+			throw new CommException("품의 기안 실패");
 		}
 		
 	}
 
+
+
 	@Override
-	public ArrayList<Sign> selectName(int eNo) {
+	public void insertHelp(Sign si) {
 		// TODO Auto-generated method stub
-
-		return signDao.selectName(sqlSession, eNo);
-
+		
+		int result = signDao.insertHelp(sqlSession, si);
+		
+		if(result < 0) {
+			throw new CommException("협조 기안 실패");
+		}
 	}
+
+
 
 
 

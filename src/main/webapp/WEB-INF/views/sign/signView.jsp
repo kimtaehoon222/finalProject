@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -16,9 +15,6 @@
 
 <title>결재함</title>
 <style>
-
-
-
 .tftable {
 	font-size: 12px;
 	color: #333333;
@@ -100,228 +96,33 @@
 			<b>결재함</b>
 		</h2>
 		<div class="col-md-12" id="center">
-		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-sm btn-outline-primary"
-			style="padding: 10px; width: 150px; float:left; margin:20px"
-			data-bs-toggle="modal" data-bs-target="#exampleModal2">
-			<b>새 결재 (협조)</b>
-		</button>
-		
-		
-		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-sm btn-outline-primary"
-			style="padding: 10px; width: 150px; float:left; margin:20px"
-			data-bs-toggle="modal" data-bs-target="#exampleModal">
-			<b>새 결재 (품의)</b>
-		</button>
-		
-		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-sm btn-outline-primary"
-			style="padding: 10px; width: 150px; float:left; margin:20px"
-			data-bs-toggle="modal" data-bs-target="#exampleModal3">
-			<b>새 결재 (휴가원)</b>
-		</button>
-	</div>
-	
-<!-- submodal 1 품의 및 결재선 지정 		
-<div class="modal" tabindex="-1" id="submodal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    	<br><br><br><br><br>
-					<h3 id="center"  style="margin:-50px">
-						<b>결재선 지정</b>
-					</h3>
-      <div class="modal-header">
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-sm btn-outline-primary"
+				style="padding: 10px; width: 150px; float: left; margin: 20px"
+				data-bs-toggle="modal" data-bs-target="#exampleModal2"
+				id="selectListt">
+				<b>새 결재 (협조)</b>
+			</button>
 
-      </div>
-      <div class="modal-body" style="margin:80px">
-      	<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
 
-		<hr>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-sm btn-outline-primary"
+				style="padding: 10px; width: 150px; float: left; margin: 20px"
+				data-bs-toggle="modal" data-bs-target="#exampleModal"
+				id="selectList">
+				<b>새 결재 (품의)</b>
+			</button>
 
-		
-        <p style="color:rgb(124, 127, 251)"><b> 기획영업부 </b></p>
-			
-       <p> <input type="checkbox"name="ch">&nbsp 홍길동 과장 &nbsp
-	
-           <input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
-           <input type="checkbox"name="ch">&nbsp홍길금 부장 &nbsp </p>
-         
-         <hr>
-         
-         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
-          
-           <p><input type="checkbox"name="ch">&nbsp청길동 과장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp청길금 부장 &nbsp</p>
-         	
-         <hr>
-         	
-          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
-          	
-          	<p><input type="checkbox"name="ch">&nbsp고길동 과장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp고길은 차장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp고길금 부장 &nbsp</p>
-         	
-          <hr>
-          
-         
-      </div>
-      <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">저장</button> <!-- 저장 누르면 다시 품의로 이동되도록 설정
-      </div>
-    </div>
-  </div>
-</div>
--->
-<!-- submodal 2 품의 수신처 지정		
-<div class="modal" tabindex="-1" id="submodal2">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    	<br><br><br><br><br>
-					<h3 id="center"  style="margin:-50px">
-						<b>수신처 지정</b>
-					</h3>
-      <div class="modal-header">
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-sm btn-outline-primary"
+				style="padding: 10px; width: 150px; float: left; margin: 20px"
+				data-bs-toggle="modal" data-bs-target="#exampleModal3"
+				id="selectListtt">
+				<b>새 결재 (휴가원)</b>
+			</button>
+		</div>
 
-      </div>
-      <div class="modal-body" style="margin:80px">
-      	<pre style="color:red"><u>최대 1명 지정 가능</u></pre>
 
-		<hr>
-		
-        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
-			
-        <p>홍길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp홍길금 부장 &nbsp<input type="checkbox"name="ch"><p>
-         
-         <hr>
-         
-         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
-          
-           <p>청길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp청길금 부장 &nbsp<input type="checkbox"name="ch"><p>
-         	
-         <hr>
-         	
-          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
-          	
-          	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길금 부장 &nbsp<input type="checkbox"name="ch"><p>
-          
-          <hr>	
-      </div>
-      <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">저장</button>
-      </div>
-    </div>
-  </div>
-</div>
--->
-
-<!-- submodal3 협조 결재선 지정 		
-<div class="modal" tabindex="-1" id="submodal3">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    	<br><br><br><br><br>
-					<h3 id="center"  style="margin:-50px">
-						<b>결재선 지정</b>
-					</h3>
-      <div class="modal-header">
-
-      </div>
-      <div class="modal-body" style="margin:80px">
-      	<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
-
-		<hr>
-		
-        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
-			
-        <p><input type="checkbox"name="ch">&nbsp홍길동 과장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp홍길금 부장 &nbsp</p>
-         
-         <hr>
-         
-         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
-          
-           <p><input type="checkbox"name="ch">&nbsp청길동 과장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp청길금 부장 &nbsp</p>
-         	
-         <hr>
-         	
-          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
-          	
-          	<p><input type="checkbox"name="ch">&nbsp고길동 과장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp고길은 차장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp고길금 부장 &nbsp</p>
-          
-          <hr>	
-      </div>
-      <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">저장</button> <!-- 저장 누르면 다시 협조로 이동되도록 설정 
-      </div>
-    </div>
-  </div>
-</div>
-		
--->
-<!-- submodal 4 휴가원	
-<div class="modal" tabindex="-1" id="submodal4">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    	<br><br><br><br><br>
-					<h3 id="center"  style="margin:-50px">
-						<b>결재선 지정</b>
-					</h3>
-      <div class="modal-header">
-
-      </div>
-      <div class="modal-body" style="margin:80px">
-      	<pre style="color:red"><u>최대 2명 지정 가능</u></pre>
-
-		<hr>
-		
-        <p style="color:rgb(124, 127, 251)"><b>기획영업부</b></p>
-			
-        <p><input type="checkbox"name="ch">홍길동 과장 &nbsp
-         	<input type="checkbox"name="ch">&nbsp홍길은 차장 &nbsp
-         	<input type="checkbox"name="ch"><p>&nbsp홍길금 부장 &nbsp
-         
-         <hr>
-         
-         <p style="color:rgb(124, 127, 251)"><b>마케팅부</b></p>	
-          
-           <input type="checkbox"name="ch"><p>청길동 과장 &nbsp
-           <input type="checkbox"name="ch">&nbsp청길은 차장 &nbsp
-           <input type="checkbox"name="ch">&nbsp청길금 부장 &nbsp<p>
-         	
-         <hr>
-         	
-          <p style="color:rgb(124, 127, 251)"><b>인사관리부</b></p>
-          	
-          	<p>고길동 과장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길은 차장 &nbsp<input type="checkbox"name="ch">
-         	&nbsp고길금 부장 &nbsp<input type="checkbox"name="ch"><p>
-          
-          <hr>	
-      </div>
-      <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">저장</button> <!-- 저장 누르면 다시 휴가원으로 이동되도록 설정
-      </div>
-    </div>
-  </div>
-</div>
- -->
-		
 		<!--                                  품의                                ko                              -->
 		<!-- main modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -336,197 +137,186 @@
 						<b>품 의</b>
 					</h4>
 
-					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">문서번호 : 5</h6>
-					</div>
+					<form id="insertSign" method="post" action="insertSign.do"
+						enctype="multipart/form-data">
 
-					<div class="col-md-12">
-					<div id="center">
-				<input type="checkbox" class="form-check-warning" name="ckbox" id="ckbox" style="float:left">
-				    <input type="hidden" name="reserveYn" id="reserveYn" required>
-                 <label class="form-label" style="float:left; margin:-2px; color:rgb(124, 127, 251)">&nbsp&nbsp<b>결재선 지정</b></label>
-                  </div>
-					<div id="hideTest">	
-                 <!-- 예약 메일 여부에 대한 y/n 데이터를 넘겨주는 hidden input -->
-             		<br>
-             		<br>
-             		<!--   <textarea id="textArea5" rows="5" cols="30"></textarea> <!-- 응답 박스 --> 
-             		
-             		<table id="selectList" style=" border: 0px solid; width:40%; margin:22px">
-						<b style="color:red; margin:22px"><u>최대 1명 지정 가능</u></b>
-             			<!-- 결재선 지정 조회목록 들어오는 공간 -->
-             			<form id ="insertName" method="post">
-             				
-             			
-             			</form>
-             			
-             		</table>
-             		
-              <pre>            <button type="button" class="btn btn-sm btn-outline-primary" id="buttonName"> 완료 </button> </pre>
-             	
-             	
-				<script>    		//결재선 지정 (조회) 스크립트 
-			             		
-					$(document).ready(function () { //ㅇㅇ
-						 $("#hideTest").val(" ");
-					   $("#hideTest").hide();
-					   $('#reserveYn').val('N');
-					   $('#hideTest').attr('required', false);
-					   
-					  
-					   
-					   $("#ckbox").on('click', function () {
-					      if($(this).prop('checked')){
-					         alert('결재선 지정은 최대 1명까지 가능합니다.');
-					         $('#reserveYn').val('Y');
-					        // $('#test').attr('required', 'required');
-					         $("#hideTest").show();
-					         
-					         $.ajax({
-					        			url: "selectList.do",
-					        			
-									   	dataType: "JSON",
-									   
-					        			type: "POST",
-					        			
-					        			success: function(list){
+						<input type="hidden" name="createName"
+							value="${ loginEmp.empName }"> <input type="hidden"
+							name="empNo" value="${ loginEmp.empNo }">
+
+
+
+						<div class="modal-header">
+							<h6 class="modal-title" id="exampleModalLabel">결재번호 :</h6>
+						</div>
+
+						<div>
+							<br> <b style="margin: 22px; color: rgb(124, 127, 251)">결재선
+								지정</b>
+						</div>
+
+						<div class="col-md-12">
+
+							<select id="selectName" name="firstApprover" class="form-label"
+								style="margin: 22px; height: 25px">
+
+								<!-- selectList 뿌려지는 곳 -->
+
+							</select>
+
+							<script>
+							$("#selectList").on('click', function () { //결재선 지정 목록 조회
+								
+								$.ajax({
+									
+									url: "selectList.do",
+									
+									type: "POST",
+									
+									dataType: "JSON",
+									
+									success: function(list) {
+									
+										console.log(list)	
 										
-					        				console.log(list) 
-					        				
-					        			var result="";
-					        			
-					        		
-					        				
-					        		    $.each(list, function(index, obj){
-					        		    	
-					        		    	var eNo = obj.empNo;
-					        		 	/*			        		
-					        		    	result += obj.deptName + "\n" 
-					        		    			+ obj.empName+ "\n" 
-					        		    			+ obj.jobName + "\n"
-					        		    		*/
-					        		    		
-					        		    	result += '<tr>' +
-					        		    			  '<td style="color:rgb(124, 127, 251)">' + obj.deptName + '<td>' + '      ' + 
-					        		    			  '<td style="margin:35px">' + obj.empName + ' ' + obj.jobName + ' ' + 
-					        		    			  '<input type="checkbox" class="form-check-warning" name="empNo" id="empNo" onclick="insertName(' + eNo + ');" style="float:right; margin:5px">' + '</td>' 
-					        		    			  '</tr>';					        							
-					        		    			  
-					        		    }) //each 끝
-					        		    $("#selectList").html(result)
-					        		    }, //success 끝
-											
-					        			error: function(e){
-					        				$("#selectList").val("ajax통신실패")
-					        			} // error 닫는 괄호
-					        			
-					         }); //ajax 닫는 괄호
+									var result="";
+									
+									$.each(list, function(index, obj) {
+										
+										result += '<option>' + obj.deptName + " " + obj.empName + " " + obj.jobName + '</option>';
 
-					      }else{
-					         $('#reserveYn').val('N');
-					         $('#hideTest').attr('required', false);
-					         $("#hideTest").val(" ");
-					         $("#hideTest").hide();
-					      }
-					   });
-					});
-		</script>       		
-         
-         
-         <script> //insert 스크립트
-         	function insertName(eNo) { //selectList에서 넘겨준 사원번호
-			console.log(eNo);
-         	
-         	$.ajax({
-         		url:"insertName.do",
-         		
-         		type: "POST",
-        
-         		data: {
-         			eNo:eNo
-         		},
- 		
-         		success:function(end){
-	
-         			console.log("넘어오기 성공")
-         		}, //success 끝
-         		error:function(){
-         			alert("insert 실패")
-         		}
-         	}) //ajax 끝
-         } //insertName function 끝
-         
-         </script>      		
- </div>
+									}) //each 닫는 괄호
+									
+									$("#selectName").html(result)
+									
+									}, // success 닫는 괄호
+									
+									error:function(e) {
+										$("#selectName").val("ajax 통신실페")
+									}
+								}); //ajax 닫는 괄호
+								
+							}); //맨 마지막 닫는 괄호
+						
+						</script>
 
 
-						<fieldset style="width: 30%; float: right; margin: 22px;">
-							<p>
-								<b>문서 보존 기한</b>
+							<fieldset style="width: 30%; float: right; margin: 22px;">
+								<p>
+									<b>문서 보존 기한</b>
+								</p>
+
+								<label> <input type="radio" id="o" name="check"
+									value="1년" checked> 1년
+								</label> &nbsp&nbsp <label> <input type="radio" id="t"
+									name="check" value="2년"> 2년
+								</label>
+
+							</fieldset>
+						</div>
+
+
+						<div class="col-md-4">
+
+
+							<table class="tftable" border="1" hight="10" style="margin: 22px"
+								id="selectName">
+
+								<tr>
+
+									<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
+									<th>${loginEmp.jobName}</th>
+									<th></th>
+									<th></th>
+
+								</tr>
+
+								<tr>
+
+									<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}
+									</th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
+								</tr>
+							</table>
+
+
+						</div>
+						<b style="color: rgb(124, 127, 251)">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp수신처
+							지정</b> 
+						<div class="col-md-12">
+							<select id="selectDept" name="finalApprover"
+							class="form-label"
+							style="margin: 22px; height: 25px; width: 150px">
+
+						</select>
+
+						<script>
+							$("#selectList").on('click', function () { //수신처 지정 목록 조회
+								
+								$.ajax({
+									
+									url: "selectList.do",
+									
+									type: "POST",
+									
+									dataType: "JSON",
+									
+									success: function(list) {
+									
+										console.log(list)	
+										
+									var result="";
+									
+									$.each(list, function(index, obj) {
+										
+										result += '<option>' + obj.deptName + " " + obj.empName + " " + obj.jobName + '</option>';
+
+									}) //each 닫는 괄호
+									
+									$("#selectDept").html(result)
+									
+									}, // success 닫는 괄호
+									
+									error:function(e) {
+										$("#selectDept").val("ajax 통신실페")
+									}
+								}); //ajax 닫는 괄호
+								
+							}); //맨 마지막 닫는 괄호
+						
+						</script>
+						</div>
+						<div class="modal-body">
+
+							<p style="width: 7%; float: left;">
+								<b> 제 목 </b>
 							</p>
+							<input type="text" id="signTitle" name="signTitle" class="mb-3"
+								placeholder="제목을 입력하세요." style="width: 91%; float: right"
+								value="${signTitle}">
 
-							<input type="radio" id="huey" name="drone" checked> <label
-								for="huey">1년</label> &nbsp&nbsp <input type="radio" id="dewey"
-								name="drone" value="dewey"> <label for="dewey">2년</label>
+							<textarea name="signContent" id="signContent"
+								style="width: 100%; height: 270px;" placeholder="내용을 입력하세요."
+								value="${signContent}"></textarea>
 
-						</fieldset>
-					</div>
+							<input type="file" id="file" name="uploadFile">
 
+						</div>
+						<div class="modal-footer">
+							<button type="reset" class="btn btn-secondary"
+								data-bs-dismiss="modal">닫기</button>
+							<button type="submit" class="btn btn-primary" id="endSign">상신</button>
 
-					<div class="col-md-4">
-						
-						
-						<table class="tftable" border="1" hight="10" style="margin: 22px" id="selectName">
-						
-							<tr>
+						</div>
 
-								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
-								<th>대리</th>
-								<th>jobName</th>
-								<th></th>
+					</form>
+					<!-- insert Form 끝 태그 -->
 
-							</tr>
-
-							<tr>
-
-								<th style="width: 100px; background-color: #ffffff;">임현빈
-									22.06.10</th>
-								<th style="width: 100px; background-color: #ffffff;" >empName</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-							</tr>
-						</table>
-					
-					<!-- selectName 원래 있던곳 -->
-			
-					</div>
-					
-						<button type="button" class="btn btn-primary btn-sm"
-							style="width: 20%; background-color: #ffffff; color: black" id="center"
-							data-bs-toggle="modal" data-bs-target="#submodal2">수신처</button>
-							
-					<div class="modal-body">
-						
-						<p style="width: 7%; float: left;">
-							<b> 제 목 </b>
-						</p>
-						<input type="text" id="title" name="title" class="mb-3"
-							placeholder="제목을 입력하세요." style="width: 91%; float: right">
-
-						<textarea name="content" id="content"
-							style="width: 100%; height: 300px;" placeholder="내용을 입력하세요."></textarea>
-
-						<input type="file" id="file" name="file" >
-
-					</div>
-					<div class="modal-footer">
-						<button type="reset" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary">상신</button>
-					</div>
 				</div>
 			</div>
 		</div>
-		
+
 
 		<!--                        협조 											-->
 		<div class="modal fade" id="exampleModal2" tabindex="-1"
@@ -541,90 +331,181 @@
 						<b>협 조</b>
 					</h4>
 
-					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">문서번호 : 5</h6>
-					</div>
+					<form id="insertHelp" method="post" action="insertHelp.do"
+						enctype="multipart/form-data">
 
-					<div class="col-md-12">
+						<input type="hidden" name="createName"
+							value="${ loginEmp.empName }"> <input type="hidden"
+							name="empNo" value="${ loginEmp.empNo }">
 
-						<button type="button" class="btn btn-primary btn-sm"
-							style="width: 30%; height: 30px; float: left; margin: 22px;" data-bs-toggle="modal" data-bs-target="#submodal3">결재선
-							지정 </button>
- 
-						<fieldset style="width: 30%; float: right; margin: 22px;">
+						<div class="modal-header">
+							<h6 class="modal-title" id="exampleModalLabel">결재번호 :</h6>
+						</div>
+
+						<br> <b style="margin: 22px; color: rgb(124, 127, 251)">결재선
+							지정</b>
+
+						<div class="col-md-12">
+
+							<select id="selectNamee" name="firstApprover" class="form-label"
+								style="margin: 22px; height: 25px">
+
+								<!-- selectList 뿌려지는 곳 -->
+
+							</select>
+
+							<script>
+							$("#selectListt").on('click', function () { //결재선 지정 목록 조회
+								
+								$.ajax({
+									
+									url: "selectList.do",
+									
+									type: "POST",
+									
+									dataType: "JSON",
+									
+									success: function(list) {
+									
+										console.log(list)	
+										
+									var result="";
+									
+									$.each(list, function(index, obj) {
+										
+										result += '<option>' + obj.deptName + " " + obj.empName + " " + obj.jobName + '</option>';
+
+									}) //each 닫는 괄호
+									
+									$("#selectNamee").html(result)
+									
+									}, // success 닫는 괄호
+									
+									error:function(e) {
+										$("#selectNamee").val("ajax 통신실페")
+									}
+								}); //ajax 닫는 괄호
+								
+							}); //맨 마지막 닫는 괄호
+						
+						</script>
+
+							<fieldset style="width: 30%; float: right; margin: 22px;">
 							<p>
 								<b>문서 보존 기한</b>
 							</p>
 
-							<input type="radio" id="huey" name="drone" checked> <label
-								for="huey">1년</label> &nbsp&nbsp <input type="radio" id="dewey"
-								name="drone" value="dewey"> <label for="dewey">2년</label>
+						<label>	<input type="radio" id="o" name="check" value="1년" checked> 
+								1년</label> &nbsp&nbsp <label> <input type="radio" id="t"
+								name="check" value="2년"> 2년</label>
 
 						</fieldset>
-					</div>
+						</div>
 
 
 
 
-					<div class="col-md-4">
+						<div class="col-md-4">
 
-						<table class="tftable" border="1" hight="10" style="margin: 22px">
-							<tr>
+							<table class="tftable" border="1" hight="10" style="margin: 22px">
+								<tr>
 
-								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
-								<th>대리</th>
-								<th></th>
-								<th></th>
+									<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
+									<th>${loginEmp.jobName}</th>
+									<th></th>
+									<th></th>
 
-							</tr>
+								</tr>
 
-							<tr>
+								<tr>
 
-								<th style="width: 100px; background-color: #ffffff;">임현빈
-									22.06.10</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-							</tr>
+									<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}
+									</th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
+								</tr>
 
-						</table>
+							</table>
 
+						</div>
 
-					</div>
-					
-						
+						<div class="modal-body">
+
+							<p style="width: 7%; float: left;">
+								<b> 담 당 </b>
+							</p>
+							<select id="selectDeptt" name="finalApprover" class="form-label"
+								style="width: 91%; height: 28.94px; float: right">
+
+							</select>
 							
-					<div class="modal-body">
+							<input type="text" id="title" name="signTitle" class="mb-3"
+								placeholder="제목을 입력하세요." style="width: 91%; float: right">
+							<p style="width: 7%; float: left;">
+								<b> 제 목 </b>
+							</p>
+							<textarea name="signContent" id="content"
+								style="width: 100%; height: 300px;" placeholder="내용을 입력하세요."></textarea>
+
+							<input type="file" id="file" name="uploadFile">
+							
+							<script>
+							$("#selectListt").on('click', function () { //담당자 목록 조회
+								
+								$.ajax({
+									
+									url: "selectList.do",
+									
+									type: "POST",
+									
+									dataType: "JSON",
+									
+									success: function(list) {
+									
+										console.log(list)	
+										
+									var result="";
+									
+									$.each(list, function(index, obj) {
+										
+										result += '<option>' + obj.deptName + " " + obj.empName + " " + obj.jobName + '</option>';
+										
+									}) //each 닫는 괄호
+									
+									$("#selectDeptt").html(result)
+									
+									}, // success 닫는 괄호
+									
+									error:function(e) {
+										$("#selectDeptt").val("ajax 통신실페")
+									}
+								}); //ajax 닫는 괄호
+								
+							}); //맨 마지막 닫는 괄호
 						
-						<p style="width: 7%; float: left;">
-							<b> 담 당 </b>
-						</p>
-						<input type="text" id="title" name="title" class="mb-3"
-							placeholder="담당자를 지정해주세요." style="width: 91%; float: right">
+						</script>
 						
-						<p style="width: 7%; float: left;">
-							<b> 제 목 </b>
-						</p>
-						<input type="text" id="title" name="title" class="mb-3"
-							placeholder="제목을 입력하세요." style="width: 91%; float: right">
-
-						<textarea name="content" id="content"
-							style="width: 100%; height: 300px;" placeholder="내용을 입력하세요."></textarea>
-
-						<input type="file" id="file" name="file" >
-
-					</div>
+						</div>
+		
+					
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary">상신</button>
+						<button type="submit" class="btn btn-primary">상신</button>
+
 					</div>
+					
+					</form><!-- insertHelp 끝나는 form -->
 				</div>
 			</div>
 		</div>
-		
-		
-		
+
+
+
 		<!--                                  휴가원                                                                   -->
+		
+		
+		
 		<div class="modal fade" id="exampleModal3" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -636,29 +517,125 @@
 					<h4 id="center">
 						<b>휴 가 원</b>
 					</h4>
-
+					
+					<form>
+					
 					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">문서번호 : 5</h6>
+						<h6 class="modal-title" id="exampleModalLabel">결재번호 : </h6>
 					</div>
-
+					
+					<div>
+						<br>
+						<b style="margin:22px; color:rgb(124, 127, 251)">1차 결재선 지정</b>
+					</div>
+					
+					
+					
 					<div class="col-md-12">
-
-						<button type="button" class="btn btn-primary btn-sm"
-							style="width: 30%; height: 30px; float: left; margin: 22px;" data-bs-toggle="modal" data-bs-target="#submodal4">결재선
-							지정 </button>
-							
-							
- 						<fieldset style="width: 30%; float: right; margin: 22px;">
+						
+							<fieldset style="width: 30%; float: right; margin: 22px;">
 							<p>
 								<b id="center">휴가 종류</b>
 							</p>
 
-							&nbsp<input type="radio" id="huey" name="drone" checked> <label
-								for="huey">'Y'=연차</label> &nbsp&nbsp <input type="radio" id="dewey"
-								name="drone" value="dewey"> <label for="dewey">'H'= 반차</label>
+							&nbsp<input type="radio" id="huey" name="check" value="Y" checked>
+							<label for="huey">'Y'=연차</label> &nbsp&nbsp <input type="radio"
+								id="dewey" name="check" value="H"> <label
+								for="dewey">'H'= 반차</label>
 
 						</fieldset>
-				
+						
+						
+						<select id="selectNameee" name="firstApprover" class="form-label" style="margin:22px; height:25px"> <!-- 1차 결재선 -->
+						
+							<!-- selectList 뿌려지는 곳 -->
+							
+						</select>
+						
+						<div>
+						<br>
+						<b style="margin:22px; color:rgb(124, 127, 251)">최종 결재선 지정</b>
+					</div>
+						
+						<select id="selectNameeee" name="finalApprover" class="form-label" style="margin:22px; height:25px"> <!-- 최종 결재선 -->
+						
+							<!-- selectList 뿌려지는 곳 -->
+							
+						</select>
+						
+						<script>
+							$("#selectListtt").on('click', function () { //1차 결재선 지정 목록 조회
+								
+								$.ajax({
+									
+									url: "selectList.do",
+									
+									type: "POST",
+									
+									dataType: "JSON",
+									
+									success: function(list) {
+									
+										console.log(list)	
+										
+									var result="";
+									
+									$.each(list, function(index, obj) {
+										
+										result += '<option>' + obj.deptName + " " + obj.empName + " " + obj.jobName + '</option>';
+
+									}) //each 닫는 괄호
+									
+									$("#selectNameee").html(result)
+									
+									}, // success 닫는 괄호
+									
+									error:function(e) {
+										$("#selectNameee").val("ajax 통신실페")
+									}
+								}); //ajax 닫는 괄호
+								
+							}); //맨 마지막 닫는 괄호
+						
+						</script>
+						
+						<script>
+							$("#selectListtt").on('click', function () { //최종 결재선 지정 목록 조회
+								
+								$.ajax({
+									
+									url: "selectList.do",
+									
+									type: "POST",
+									
+									dataType: "JSON",
+									
+									success: function(list) {
+									
+										console.log(list)	
+										
+									var result="";
+									
+									$.each(list, function(index, obj) {
+										
+										result += '<option>' + obj.deptName + " " + obj.empName + " " + obj.jobName + '</option>';
+
+									}) //each 닫는 괄호
+									
+									$("#selectNameeee").html(result)
+									
+									}, // success 닫는 괄호
+									
+									error:function(e) {
+										$("#selectNameeee").val("ajax 통신실페")
+									}
+								}); //ajax 닫는 괄호
+								
+							}); //맨 마지막 닫는 괄호
+						
+						</script>
+						
+					
 					</div>
 
 
@@ -670,7 +647,7 @@
 							<tr>
 
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
-								<th>대리</th>
+								<th>${ loginEmp.jobName }</th>
 								<th></th>
 								<th></th>
 
@@ -678,8 +655,8 @@
 
 							<tr>
 
-								<th style="width: 100px; background-color: #ffffff;">임현빈
-									22.06.10</th>
+								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}
+									</th>
 								<th style="width: 100px; background-color: #ffffff;"></th>
 								<th style="width: 100px; background-color: #ffffff;"></th>
 							</tr>
@@ -688,20 +665,20 @@
 
 
 					</div>
-					
-					 <form method="post" style="margin:22px">
-        <label for = "dateIn">휴가 시작일 : </label> <!--포커싱이 어디로 향하는지가 for-->
-        <input type = "date" name="dateInput" id="dateIn"><br>
-        		
-        		<br>
-        		
-            <label for = "dateIn">휴가 종료일 : </label> <!--포커싱이 어디로 향하는지가 for-->
-        <input type = "date" name="dateInput" id="dateIn"><br>
-        </form>
-							
+
+				<!--  	<form method="post" style="margin: 22px"> -->
+						<label for="dateIn">휴가 시작일 : </label>
+						<!--포커싱이 어디로 향하는지가 for-->
+						<input type="date" name="firstDate" id="dateIn"><br>
+
+						<br> <label for="dateIn">휴가 종료일 : </label>
+						<!--포커싱이 어디로 향하는지가 for-->
+						<input type="date" name="lastDate" id="dateInn"><br>
+				<!--  	</form> -->
+
 					<div class="modal-body">
-						
-						
+
+
 						<p style="width: 7%; float: left;">
 							<b> 제 목 </b>
 						</p>
@@ -709,8 +686,8 @@
 							placeholder="제목을 입력하세요." style="width: 91%; float: right">
 
 						<textarea name="content" id="content"
-							style="width: 100%; height: 150px;" placeholder="사유를 입력하세요."></textarea>
-
+							style="width: 100%; height: 110px;" placeholder="사유를 입력하세요."></textarea>
+					</form>
 
 					</div>
 					<div class="modal-footer">
@@ -721,8 +698,8 @@
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 		<div class="px-3 py-3 my-4">
 			<div class="card-body">
 				<h4 class="card-title" style="color: rgb(124, 127, 251)">
@@ -882,11 +859,11 @@
 
 		</div>
 
-	
-	
+
+
 	</div>
 
-	
+
 	<jsp:include page="../common/bottom.jsp" />
 
 
