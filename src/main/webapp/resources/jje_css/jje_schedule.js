@@ -207,28 +207,20 @@ function clickDetailBtn(result)  {
 	
 	if(colorCode=="C1"){
 		$("#detail_color_pink").attr("checked", true);
-		console.log("C1입니다.")
 	}else if(colorCode=="C2"){
 		$("#detail_color_blue").attr("checked", true);
-		console.log("C2입니다.")
 	}else if(colorCode=="C3"){
 		$("#detail_color_yellow").attr("checked", true);
-		console.log("C3입니다.")
 	}else if(colorCode=="C4"){
 		$("#detail_color_purple").attr("checked", true);
-		console.log("C4입니다.")
 	}else if(colorCode=="C5"){
 		$("#detail_color_red").attr("checked", true);
-		console.log("C5입니다.")
 	}else if(colorCode=="C6"){
 		$("#detail_color_lightGray").attr("checked", true);
-		console.log("C6입니다.")
 	}else if(colorCode=="C7"){
 		$("#detail_color_gray").attr("checked", true);
-		console.log("C7입니다.")
 	}else if(colorCode=="C8"){
 		$("#detail_color_darkGray").attr("checked", true);
-		console.log("C8입니다.")
 	}else{
 		console.log("없습니다.")
 	}
