@@ -79,7 +79,7 @@
       
         <div class="d-flex align-items-start align-items-sm-center gap-4">
         
-          <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="150" width="200" id="uploadedAvatar" />
+          <img src="${pageContext.request.contextPath}/resources/emp_files/${e.changeName}" alt="user-avatar" class="d-block rounded" height="150" width="200" id="uploadedAvatar" />
              <div id="topPage" >
                     <div id="title">
                  <h5>이메일 : ${e.empId}@easy.co.kr</h5>

@@ -77,15 +77,15 @@
   <div class="col-md-12">    
     <div class="card mb-4">
       <h4 class="card-header">직원 승인 페이지</h4>
-   <form class="reg-form mb-5" action="insertEmp.do" enctype="multipart/form-data" method="post" >
-      
+   <form class="reg-form mb-5" action="insertUpdateEmp.do" enctype="multipart/form-data" method="post" >
+     <input type="hidden" id="empNo" name="empNo" class="form-control" value="${e.empNo}" required/>  
       <div class="card-body">
      
         <div class="d-flex align-items-start align-items-sm-center gap-4">
     
        		  <div class="field-row mb-3">
-             
-            <img id="titleImg" name="titleImg" width="250" height="200">
+           
+            <img id="titleImg" name="File" width="250" height="200">
          </div>
 
       		 <div id="topPage" >
@@ -100,7 +100,7 @@
         		</div>
         		  <!-- 숨겨져있는 파일영역 -->
            <div id="fileArea">
-             <input type="file" accept="image/*" name="file" id="file" onchange="loadImg(this);">
+             <input type="file" accept="image/*" name="uploadFile" id="file" onchange="loadImg(this);">
           </div> 		
         
       </div>
@@ -157,9 +157,10 @@
             </div>
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
-              <select id="disabledYN" class="select2 form-select">
-    		   <option value="">N</option>
-    		 <option value="-12">Y</option>
+              <select  name="disabledYN" class="select2 form-select">
+              <option>장애여부 선택</option>
+    		   <option value="N">N</option>
+    		 <option value="Y">Y</option>
            	 </select>
             </div>
            <div class="mb-3 col-md-6">

@@ -23,94 +23,113 @@
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="deptName" column="DEPT_NAME"/>
 		<result property="telNo" column="TEL_NO"/>
+		<result property="ctgNo" column="CTG_NO"/>
+		<result property="refNo" column="REF_NO"/>
+		<result property="status" column="STATUS"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
 	</resultMap>
 	
 	
-	  <update id="updateEmp" parameterType="Employee">
-      UPDATE EMPLOYEE SET 
-      EMP_ID= #{empId}, 
-      PHONE= #{phone}, 
-      ADDRESS= #{address}
-      WHERE EMP_ID = #{empId}
+	<update id="updateEmp" parameterType="Employee">
+	        UPDATE EMPLOYEE SET 
+	        EMP_ID= #{empId}
+	      , PHONE= #{phone}
+	      , ADDRESS= #{address}
+	        WHERE EMP_ID = #{empId}
    
    </update>
 	
 	<update id="updatePwd" parameterType="Employee">
-      UPDATE EMPLOYEE SET 
-      EMP_PWD = #{empPwd}
-      WHERE EMP_ID = #{empId}
-   
+	       UPDATE EMPLOYEE SET 
+	       EMP_PWD = #{empPwd}
+	       WHERE EMP_ID = #{empId}
+	   
    </update>
 	 <select id="selectEmpList" resultMap="personnelResult">
-		SELECT 
-		*
-		FROM EMPLOYEE A
-		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
-		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
-		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
-		WHERE ENT_YN= 'Y'
-        ORDER BY EMP_NAME
+	  SELECT 
+			*
+			FROM EMPLOYEE A
+			JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+			JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+			LEFT JOIN (SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND CTG_NO= 'E' ) D ON (A.EMP_NO = D.REF_NO) 
+			WHERE ENT_YN= 'Y'
+            AND APV_YN= 'Y'
+	        ORDER BY EMP_NAME
         </select>
         
         <select id="selectEmp" resultMap="personnelResult">
-	    SELECT 
-		*
-		FROM EMPLOYEE A
-		LEFT JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
-		LEFT JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
-		LEFT JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
-		WHERE EMP_ID = #{eId}
-        AND ENT_YN= 'Y'
+		    SELECT * FROM EMPLOYEE A 
+			LEFT JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+			LEFT JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+			LEFT JOIN (SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND CTG_NO= 'E') D ON (A.EMP_NO = D.REF_NO) 
+			WHERE EMP_ID = #{eId} AND A.ENT_YN = 'Y'
         </select>
        
        	<update id="updateEmpInfo" parameterType="Employee">
-		  UPDATE EMPLOYEE SET 
-		  EMP_NAME = #{empName},
-	      DISABLE_YN = #{disabledYN},
-	      DEPT_CODE=#{deptCode},
-	      JOB_CODE=#{jobCode}
-	      WHERE EMP_ID = #{empId}
+		    UPDATE EMPLOYEE SET 
+		    EMP_NAME = #{empName}
+		  , DISABLE_YN = #{disabledYN}
+	      , DEPT_CODE=#{deptCode}
+	      , JOB_CODE=#{jobCode}
+	      , EMP_NOTE=#{empNote}
+	        WHERE EMP_NO = #{empNo}
       </update>
       
       
       <update id="deleteEmp" parameterType="string">
-		  UPDATE EMPLOYEE SET 
-	      ENT_DATE = SYSDATE,
-	      ENT_YN = 'N'
-	      WHERE EMP_ID = #{eId}
+		    UPDATE EMPLOYEE SET 
+	        ENT_DATE = SYSDATE
+	      , ENT_YN = 'N'
+	        WHERE EMP_ID = #{eId}
       </update>
       
       <select id="selectRetiredEmpList" resultMap="personnelResult">
-		SELECT 
-		*
-		FROM EMPLOYEE A
-		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
-		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
-		JOIN TELEPHONE_BOOK D ON A.EMP_NO = D.EMP_NO
-		WHERE ENT_YN= 'N'
-        ORDER BY EMP_NAME
+			SELECT 
+			*
+			FROM EMPLOYEE A
+			JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+			JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+			WHERE ENT_YN= 'N'
+	        ORDER BY EMP_NAME
         </select>
         
         <select id="selectRetiredEmp" resultMap="personnelResult">
-	    SELECT 
-		*
-		FROM EMPLOYEE A
-		JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
-		JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
-		WHERE EMP_ID = #{eId}
-        AND ENT_YN= 'N'
+		    SELECT 
+			*
+			FROM EMPLOYEE A
+			JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
+			JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
+			LEFT JOIN (SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND CTG_NO= 'E') D ON (A.EMP_NO = D.REF_NO) 
+			WHERE EMP_ID = #{eId}
+	        AND ENT_YN= 'N'
         </select>
         
         <update id="updateReturnEmp" parameterType="string">
-		  UPDATE EMPLOYEE SET 
-	      ENT_DATE = NULL,
-	      ENT_YN = 'Y'
-	      WHERE EMP_ID = #{eId}
+		    UPDATE EMPLOYEE SET 
+	        ENT_DATE = NULL
+	      , ENT_YN = 'Y'
+	        WHERE EMP_ID = #{eId}
         </update>
         
         <select id="selectApvList" resultMap="personnelResult">
 	        SELECT * FROM EMPLOYEE 
 	        WHERE APV_YN = 'N'
+	        ORDER BY EMP_NAME
          </select>
-    
+ 
+          <update id="updateInsertEmp" parameterType="Employee">
+		     UPDATE EMPLOYEE SET 
+	         EMP_NAME = #{empName}
+	       , DEPT_CODE = #{deptCode}
+	       , JOB_CODE = #{jobCode}
+	       , DISABLE_YN = #{disabledYN}
+	       , EMP_NOTE = #{empNote}
+	       , APV_YN = 'Y'
+	       , TEL_NO = 'telNo'
+	         WHERE EMP_NO = #{empNo} AND ENT_YN='Y'
+        </update>
+         
+         
 </mapper>

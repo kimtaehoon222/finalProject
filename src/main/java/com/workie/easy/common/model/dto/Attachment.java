@@ -38,4 +38,7 @@ public class Attachment {
 	private Date uploadDate;					/* 업로드일 */
 	private String status;						/* 상태값 */
 	
+	private String empId;                       /* 직원 아이디 */
+	private String empNo;                       /* 사원 아이디*/
+	
 }

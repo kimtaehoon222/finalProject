@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="attachmentMapper">
-
+          <resultMap type="Attachment" id="AttachmentResult">
+			<result property="fileNo" column="FILE_NO"/>
+			<result property="refNo" column="REF_NO"/>
+			<result property="ctgNo" column="CTG_NO"/>
+			<result property="originName" column="ORIGIN_NAME"/>
+			<result property="changeName" column="CHANGE_NAME"/>
+			<result property="filePath" column="FILE_PATH"/>
+			<result property="uploadDate" column="UPLOAD_DATE"/>
+			<result property="status" column="STATUS"/>
+			<result property="empId" column="EMP_ID"/>
+			<result property="empNo" column="EMP_NO"/>
+	    </resultMap>
+	 <insert id="insertAttachment" parameterType="Attachment">
+		INSERT
+		  INTO  ATTACHMENT VALUES(SEQ_FNO.NEXTVAL, #{refNo}
+		                      ,'E', #{originName}
+		                      , #{changeName}, #{filePath}, SYSDATE, DEFAULT)
+	</insert>
+	 
+	 <update id="updateAttachment" parameterType="Attachment">
+		     UPDATE ATTACHMENT SET 
+	        ORIGIN_NAME = #{originName}
+	      , CHANGE_NAME = #{changeName}
+	        WHERE REF_NO = #{refNo} AND STATUS = 'Y'
+      </update>
 	
 </mapper>
