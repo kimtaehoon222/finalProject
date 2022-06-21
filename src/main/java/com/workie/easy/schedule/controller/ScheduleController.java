@@ -28,6 +28,7 @@ import com.workie.easy.schedule.model.service.ScheduleService;
 * 2022/06/17 (전재은) 일정전체조회 수정
 * 2022/06/18 (전재은) 일정상세조회 추가
 * 2022/06/20 (전재은) 일정등록추가
+* 2022/06/21 (전재은) 일정검색, 선택일자일정목록조회 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -169,4 +170,33 @@ public class ScheduleController {
 		return "schedule/schedule";
 		
 	}
+
+	
+	/*일정 검색*/
+	@RequestMapping("searchSked.do")
+	@ResponseBody
+	public JSONArray searchSchedule(String keyWord) {
+		
+		System.out.println("검색 키워드 : "+keyWord);
+		
+		/*페이지네이션*/
+		
+		/*키워드 검색*/
+		JSONObject jsonSkedList = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		
+		return jsonArr;
+		
+	}
+	
+	/*선택 일자 일정목록 조회*/
+	@RequestMapping("selectDayList.do")
+	@ResponseBody
+	public String selectDayScheduleList() {
+		
+		
+		return "schedule/schedule";
+		
+	}
+
 }
