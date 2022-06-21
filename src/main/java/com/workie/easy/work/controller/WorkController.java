@@ -118,7 +118,7 @@ public class WorkController {
 		
 		/*ArrayList<VacationForm> empVlist = workService.selectEmpVacationList(empNo);
 		model.addAttribute("empVlist", empVlist);*/
-		
+	
 		ArrayList<EmpVacation> empVlist = workService.selectEmpVacationList(empNo);
 		model.addAttribute("empVlist", empVlist);
 		

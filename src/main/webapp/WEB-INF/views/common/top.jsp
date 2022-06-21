@@ -228,19 +228,19 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="work.do" class="menu-link" target="_blank">
+                  <a href="work.do" class="menu-link">
                     <div data-i18n="Basic">내 근태 현황</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="vacation.do" class="menu-link" target="_blank">
+                  <a href="vacation.do" class="menu-link">
                     <div data-i18n="Basic">내 연차 조회</div>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="chat.do" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-chat"></i>
                 <div data-i18n="Misc">채팅</div>
               </a>

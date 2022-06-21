@@ -32,10 +32,10 @@
 		<id property="useNo" column="USE_NO"/>
 		<result property="empNo" column="EMP_NO"/>
 		<result property="vNo" column="V_NO"/>
-		<result property="reason" column="RESON"/>
+		<result property="reason" column="REASON"/>
 		<result property="firstDate" column="FIRST_DATE"/>
 		<result property="lastDate" column="LAST_DATE"/>
-		<result property="usingDay" column="USING_DAY"/>
+		<result property="usingDay" column="USINGDAY"/>
 		<result property="vName" column="V_NAME"/>
 		<result property="deptName" column="DEPT_NAME"/>
 		
@@ -149,27 +149,25 @@
 	</select>
 	
     <select id="selectEmpVacationList" parameterType="_int" resultMap="EmpVacationResultSet">
-  		SELECT
-		    A.USE_NO
-		  , A.EMP_NO
-		  , A.V_NO
-		  , A.RESON
-		  , A.FIRST_DATE
-		  , A.LAST_DATE
-		  , A.USING_DAY
-		  , B.V_NAME 
-		  , C.EMP_NAME 
-		  , D.DEPT_NAME
+  	  	SELECT
+		 	 A.TITLE
+		   , A.REASON
+		   , A.FIRST_DATE
+		   , A.LAST_DATE
+		   , C.V_NAME
+		   , E.DEPT_NAME
+		   , A.LAST_DATE - A.FIRST_DATE + 1 AS USINGDAY
 		 FROM
-		    EMP_VACATION A
-	LEFT JOIN VACATION B ON A.V_NO = B.V_NO
-	LEFT JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
-	LEFT JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
-		WHERE 
-		    A.EMP_NO = #{empNo}
-		    AND A.STATUS_CODE = 'A'
-	 ORDER BY A.FIRST_DATE ASC
-	 
+		    VACATION_FORM A
+   LEFT JOIN SIGN B ON A.SIGN_NO = B.SIGN_NO
+   LEFT JOIN VACATION C ON A.V_NO = C.V_NO
+   LEFT JOIN EMPLOYEE D ON B.EMP_NO = D.EMP_NO
+   LEFT JOIN DEPARTMENT E ON D.DEPT_CODE = E.DEPT_CODE
+ 	   WHERE 
+		    B.EMP_NO = #{empNo}
+		    AND B.STATUS_CODE = 'A'
+		    AND B.TYPE_CODE = 'CC'
+    ORDER BY A.FIRST_DATE ASC
 	 
 	 
 	 
@@ -177,13 +175,14 @@
 	      
 		    
 		    
-	<!--    SELECT
+	<!--      SELECT
 		     A.TITLE
 		   , A.REASON
 		   , A.FIRST_DATE
 		   , A.LAST_DATE
 		   , C.V_NAME
 		   , E.DEPT_NAME
+		   , A.LAST_DATE - A.FIRST_DATE AS usingDay
 		FROM
 		    VACATION_FORM A
    LEFT JOIN SIGN B ON A.SIGN_NO = B.SIGN_NO

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.workie.easy.common.CommException;
 import com.workie.easy.sign.model.dto.VacationForm;
 import com.workie.easy.work.model.dao.WorkDao;
 import com.workie.easy.work.model.dto.EmpVacation;
@@ -32,6 +33,9 @@ public class WorkServiceImpl implements WorkService {
 	public void insertWork(int empNo) {
 		int result = workdao.insertWork(sqlSession, empNo);
 		
+		if(result < 0) {
+			throw new CommException("출근 등록에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
 	}
 
 
@@ -39,6 +43,10 @@ public class WorkServiceImpl implements WorkService {
 	@Override
 	public void updateWork(String wNo) {
 		int result = workdao.updateWork(sqlSession, wNo);
+		
+		if(result < 0) {
+			throw new CommException("퇴근 등록에 실패하였습니다. 관리자에게 문의 바랍니다.");
+		}
 		
 	}
 

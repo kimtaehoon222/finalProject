@@ -16,13 +16,15 @@ import lombok.ToString;
 @ToString
 public class EmpVacation {
 
-	private String useNo;//휴가코드
-	private int empNo;//사원코드
-	private String vNo;//종류코드
-	private String reason;//사유	
-	private Date firstDate;//휴가 시작일
-	private Date lastDate;//휴가 종료일
-	private int usingDay;//휴가 사용일
+	private int signNo; //결재번호
+	private String title; //제목
+	private String reason; //사유
+	private Date firstDate; //휴가 시작일
+	private Date lastDate; //휴가 종료일
+	private String vNo;
+	
+	//사용한 일 
+	private int usingDay;
 	
 	//join
 	private String vName;
