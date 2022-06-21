@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.workie.easy.common.CommException;
+import com.workie.easy.common.model.dto.Attachment;
 import com.workie.easy.employee.model.dao.EmployeeDao;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.personnel.model.dao.PersonnelDao;
@@ -74,17 +75,18 @@ public class PersonnelServiceImpl implements PersonnelService {
 	public Employee selectEmp(String eId) {
 		
 		Employee e = personnelDao.selectEmp(eId, sqlSession);
-	
+	    
 		return e;
 	}
 
 	@Override
-	public void updateEmpInfo(Employee emp) {
+	public void updateEmpInfo(Employee emp, Attachment at) {
 		
-       int result = personnelDao.updateEmpInfo(emp,sqlSession);
-     
-		if(result < 0 ) {
-			throw new CommException("직원 정보 수정에 실패하였습니다. 관리자에게 문의바랍니다.");
+       int result1 = personnelDao.updateEmpInfo(emp,sqlSession);
+       int result2 = personnelDao.updateAttachment(at,sqlSession);
+	    
+       if(result1 * result2 < 0) {
+			throw new CommException("사원 정보 수정에 실패하였습니다. 관리자에게 문의바랍니다.");
 		}
 	}
 
@@ -134,6 +136,19 @@ public class PersonnelServiceImpl implements PersonnelService {
 		
 	    return list;
 	}
+
+	@Override
+	public void insertEmp(Employee e, Attachment at) {
+		
+		int result1 = personnelDao.updateInsertEmp(e,sqlSession);
+		int result2 = personnelDao.insertAttachment(at,sqlSession);
+		
+		if(result1 * result2 < 0) {
+			throw new CommException("미승인 직원 재직 변경에 실패하였습니다. 관리자에게 문의바랍니다.");
+		}
+	}
+
+
 
 }
 

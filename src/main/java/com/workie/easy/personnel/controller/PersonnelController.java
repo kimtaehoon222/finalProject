@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.workie.easy.common.CommException;
+import com.workie.easy.common.model.dto.Attachment;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.personnel.model.service.PersonnelService;
 
@@ -94,13 +95,31 @@ public class PersonnelController {
 		   return mv;
 	   }
 	 @RequestMapping("updateEmpInfo.do")
-	 public ModelAndView updateEmpInfo(@ModelAttribute Employee emp, ModelAndView mv, HttpServletRequest request,
+	 public ModelAndView updateEmpInfo(Employee emp, ModelAndView mv, HttpServletRequest request,
 			                           @RequestParam (name = "reUploadFile", required = false) 
 	                                   MultipartFile file) { 
 		 
-		 
-		   personnelService.updateEmpInfo(emp);
+		    Attachment at = new Attachment();
+		    at.setRefNo(emp.getEmpNo());
+		    String orgChangeName = at.getChangeName();
+		   //기존첨부파일을 orgChangeName변수에 담아주고
 		   
+		   if(!file.getOriginalFilename().equals("")) {
+			   //reUploadFile에 파일이 있으면 원본파일명 
+			   
+		      String changeName = saveFile(file, request, at);
+			   //경로와 바뀐첨부파일명
+			  at.setOriginName(file.getOriginalFilename());
+			  at.setChangeName(changeName);
+		   }
+		   System.out.println("직원 수정ㅂㅈㄷㅂㅈㄷㅂㅈㄷ" + emp);
+		   System.out.println("직원 수정ㅂㅈㄷㅂㅈㄷㅂㅈㄷ" + at);
+		   personnelService.updateEmpInfo(emp,at);
+		   System.out.println("직원 수정ㅂㅈㄷㅂㅈㄷㅂㅈㄷ" + emp);
+		   if(orgChangeName != null) {
+			   deleteFile(orgChangeName, request);
+			   //기존에 첨부파일이 있으면  deleteFile메소드로 삭제
+		   }
 		   mv.addObject("eId", emp.getEmpId()).setViewName("redirect:detailEmp.do");
 		   return mv;
 		 
@@ -117,7 +136,7 @@ public class PersonnelController {
 	      deleteFile.delete();
 	}
 	//전달 받은 파일을 업로드 시키고, 수정된 파일명을 리턴하는 메소드
-	private String saveFile(MultipartFile file, HttpServletRequest request, Employee emp) {
+	private String saveFile(MultipartFile file, HttpServletRequest request,Attachment at) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		//resources 폴더까지의 경로 추출 
 		
@@ -125,13 +144,12 @@ public class PersonnelController {
 	      /* "\\upload_files\\" \ 인식을 위한 \하위폴더로 가주게 하는
 		 webapp -> resources + upload_files 파일*/
 		  
-		   emp.setFilePath(savePath);
-		  //오리지날 파일 이름 담기
+		  at.setFilePath(savePath);
 	      String originName = file.getOriginalFilename();
 	      //date 포맷
 	      String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-	      /*SimpleDateFormat 파일명을 년월일시분초로 바꿔주고
-	      /*SimpleDateFormat 형식지정*/
+	      //SimpleDateFormat 파일명을 년월일시분초로 바꿔주고
+	      //SimpleDateFormat 형식지정
 	      //확장자(jpg,png)
 	      String ext = originName.substring(originName.lastIndexOf("."));
 	      //substring() 메소드는 string 객체의 시작 인덱스로 부터 종료 인덱스 전 까지 문자열의 부분 문자열을 반환합니다.
@@ -140,7 +158,7 @@ public class PersonnelController {
 	      
 	      //파일 이름 변경 날짜시간 + 확장자 
 	      String changeName = currentTime + ext;
-	    
+	      System.out.println("changeName : " + changeName);
 	   
 	      try {
 	         //해당하는 경로에 파일명이 생김
@@ -206,13 +224,33 @@ public class PersonnelController {
 		  
 		 Employee e = personnelService.selectEmp(eId);  
 		 
-		 String reg = e.getEmpReg().substring(0, 6);
-		 e.setEmpReg(reg);
 		 
 		 mv.addObject("e", e).setViewName("personnel/empInsertView");
 		  
 		 return mv;
 	 }
-	 
+	 @RequestMapping("insertUpdateEmp.do")
+	 public String insertEmp(Employee e, HttpServletRequest request, 
+			                 @RequestParam(name="uploadFile", required = false)MultipartFile file) {
+    
+		 Attachment at = new Attachment();
+		 at.setRefNo(e.getEmpNo());
+		 System.out.println("미승인 직원" + at);
+		 if(!file.getOriginalFilename().equals("")) {
+				String changeName = saveFile(file , request, at);
+				//saveFile 메소드를 만들어서 폴더를 지정해주고 수정된 파일명 리턴
+				///saveFile(file의 오리지날네임 , request)
+				//인설트랑 업데이트 둘다 쓰니까 메소드를 하나 만들어서 사용
+				
+				
+				if(changeName != null) {
+					at.setOriginName(file.getOriginalFilename());
+					at.setChangeName(changeName);
+					//받아온 changeName 담아주기
+				}
+			}
+		    personnelService.insertEmp(e, at);
+			return "redirect:empList.do";//재직자 리스트로
+	 }
 	   
 }

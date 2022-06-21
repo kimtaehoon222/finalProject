@@ -77,29 +77,29 @@
     <div class="card mb-4">
       <h4 class="card-header">직원 정보</h4>
       <form class="reg-form mb-5" action="updateEmpInfo.do" enctype="multipart/form-data" method="post" >
-       <input type="hidden" name="empId" value="${e.empId}">
-      <div class="card-body">
+            <input type="hidden" id="empNo" name="empNo" class="form-control" value="${e.empNo}" required/> 
+            <input type="hidden" id="empId" name="empId" class="form-control" value="${e.empId}" required/> 
+          <div class="card-body">
       
         <div class="d-flex align-items-start align-items-sm-center gap-4">
         
-          <img id="titleImg" name="reUploadFile"src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" 
+          <img id="titleImg" name="rFile"src="${pageContext.request.contextPath}/resources/emp_files/${e.changeName}" alt="user-avatar" 
            class="d-block rounded" height="150" width="200"/>
-      		<c:if test="${ !empty e.originName }">
-                                             현재 업로드된 파일 : ${ e.originName } <br>
+      		
           <input type="hidden" name="changeName" value="${ e.changeName }">
           <input type="hidden" name="originName" value="${ e.originName }">
-              </c:if> 
+          
       		 <div id="topPage" >
                     <div id="title">
                     <h5>이메일 : ${e.empId}@easy.co.kr</h5>
 					<h5>전화번호 : ${e.phone}</h5>
-					<h5 name="empReg">생년월일 : ${e.empReg}</h5>
+					<h5>생년월일 : ${e.empReg}</h5>
                     </div>
 					</div>
         </div>
           		  <!-- 숨겨져있는 파일영역 -->
            <div id="fileArea">
-             <input type="file" accept="image/*" name="file" id="file" onchange="loadImg(this);">
+             <input type="file" accept="image/*" name="reUploadFile" id="file" onchange="loadImg(this);">
           </div>
       </div>
       <hr class="my-0">
@@ -116,7 +116,7 @@
                <div class="mb-3 col-md-6">
               <label for="deptCode" class="form-label">부서</label>
               <select name ="deptCode" id="deptCode" class="select2 form-select">
-                <option value="">${e.deptName}</option>
+                <option value="${e.deptCode}">${e.deptName}</option>
                 <option value="D1">인사관리부</option>
                 <option value="D2">회계관리부</option>
                 <option value="D3">마케팅부</option>
@@ -129,7 +129,7 @@
             <div class="mb-3 col-md-6">
               <label for="jobCode" class="form-label">직위</label>
               <select name ="jobCode" id="jobCode" class="select2 form-select">
-                <option value="">${e.jobName}</option>
+                <option value="${e.jobCode}">${e.jobName}</option>
                 <option value="J1">사장</option>
                 <option value="J2">부사장</option>
                 <option value="J3">부장</option>
@@ -153,6 +153,7 @@
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
               <select name="disabledYN" id="disabledYN" class="select2 form-select">
+              <option>${e.disabledYN }</option>
     		   <option value="N">N</option>
     		 <option  value="Y">Y</option>
            	 </select>

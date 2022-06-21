@@ -67,6 +67,7 @@ picture-area{
 #mainImg{float: left;}
 #title{margin-left: 350px; margin-top: 15px;}
 #allButton{margin-left:550px; margin-bottom: 20px;}
+#pwdBut{color:white;}
 </style>
 
 <body>
@@ -84,7 +85,7 @@ picture-area{
                         <hr>	  
             		
          		    <div id="topPage" >
-         		    <img id="mainImg" src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" height="250" width="300"/>
+         		    <img id="mainImg" src="${pageContext.request.contextPath}/resources/emp_files/${loginEmp.changeName}" height="250" width="300"/>
                     <div id="title">
 					<h3  name="empName">이름 : ${loginEmp.empName} </h3>
 					<h3 name="deptName"> 부서 :  ${loginEmp.deptName}</h3>
@@ -125,7 +126,7 @@ picture-area{
                             		
                             </div>
                             	<div id=allButton>
-                            		<a data-toggle="modal" data-target="#passModal">비밀번호 수정하기</a>
+                            		<a class="btn rounded-pill btn-secondary" id="pwdBut" data-toggle="modal" data-target="#passModal">비밀번호 수정하기</a>
                             		<button type="submit" class="off btn waves-effect waves-light btn-success"> 수정하기 </button>
 									<button type="button" class="cancle btn waves-effect waves-light btn-danger"> 목록으로</button>    
                             		</div>
@@ -152,7 +153,7 @@ picture-area{
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">수정</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                    <button type="reset" class="btn btn-danger">취소</button>
                 </div>
             </form>
             </div>

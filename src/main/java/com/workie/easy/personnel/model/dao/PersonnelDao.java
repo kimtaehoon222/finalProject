@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.workie.easy.common.model.dto.Attachment;
 import com.workie.easy.employee.model.dto.Employee;
 
 @Repository
@@ -59,6 +60,21 @@ public class PersonnelDao {
 	public ArrayList<Employee> selectApvList(SqlSessionTemplate sqlSession) {
 		
 		return (ArrayList)sqlSession.selectList("personnelMapper.selectApvList");
+	}
+
+	public int updateAttachment(Attachment at, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.update("attachmentMapper.updateAttachment", at);
+	}
+
+	public int updateInsertEmp(Employee e, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.update("personnelMapper.updateInsertEmp", e);
+	}
+
+	public int insertAttachment(Attachment at, SqlSessionTemplate sqlSession) {
+	
+		return sqlSession.insert("attachmentMapper.insertAttachment", at);
 	}
 
 }
