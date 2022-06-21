@@ -69,6 +69,7 @@ public class ScheduleController {
 		/*HashMap에 값 담기(fullCalendar 형식으로 담기 위해서)*/
 		HashMap<String, Object> hash = new HashMap<>();		
 		
+		/*반복문으로 시간값 정리, hashMap에 값 담고 json처리*/
 		for(int i=0; i < skedlist.size(); i++) {
 			if(skedlist.get(i).getSkedStartTime() != null) {			//시작시간 있는 경우 추가
 				String start = skedlist.get(i).getSkedStart();
