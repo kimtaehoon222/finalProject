@@ -33,7 +33,7 @@
    <!-- 컨테이너 시작 -->
    <div class="container-xxl flex-grow-1 container-p-y">
    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Email /</span> 작성하기
+        <span class="text-muted fw-light"><a href="mailHome.do" style="color:#566a7f;" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="<i class='bx bx-home bx-xs' ></i><span>메일 홈으로 돌아가기</span>">Email</a> /</span> 작성하기
    </h4>
 
    <!-- 행 시작 -->
@@ -54,11 +54,7 @@
                 <h5 class="modal-title" id="exampleModalLabel2">목록으로</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <hr>
               <div class="modal-body">
-                <div>
-	                <a href="mailHome.do" class="btn btn-sm btn-outline-primary mb-2">메일 홈 바로가기</a><br>
-                </div>
                  <a href="receiveMailList.do?receive=r" class="mb-4"><svg class="bi mb-1" width="1.5em" height="1.5em" fill="currentColor">
                  <use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
                  </svg>&nbsp;받은 메일함</a><br>
@@ -87,7 +83,7 @@
              <!-- 보내는 사람 사진 -->
              <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
              <div class="button-wrapper">
-               <label for="" class="btn btn-primary me-2 mb-4" tabindex="0">
+               <label for="" class="btn btn-primary me-2 mb-4" tabindex="0" id="myPageUpdate">
                  <!-- 내 정보 수정하기 페이지로 이동 -->
                  <span class="d-none d-sm-block">내 정보 수정하기</span>
                </label>
@@ -136,7 +132,7 @@
                  <!-- 예약 메일 여부에 대한 y/n 데이터를 넘겨주는 hidden input -->
                  <input type="hidden" name="reserveYn" id="reserveYn" required>
                  <label class="form-label" for="calendar">예약메일</label>
-                 <div><input type="date" class="form-control" name="sendDate" id="sendDate" min="2022-06-20" max=""></div>
+                 <div data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="right" data-bs-html="true" title data-bs-original-title="<i class='bx bx-envelope bx-xs' ></i><span>예약 메일은 다음날부터 지정 가능합니다.</span>"><input type="date" class="form-control" name="sendDate" id="sendDate" min="" max="" ></div>
                </div>
                <div class="mb-3 col-md-7">
                  <label class="form-label" for="upfile">파일첨부<i class="bi bi-upload"></i></label>
@@ -268,14 +264,29 @@
    </div>
 		
    <script type="text/javascript">
-   /* 실패한 함수 */
+      /* 마이 페이지로 이동 */
+	  $(document).ready(function() {
+	    $('#myPageUpdate').click(function() {
+	    	location.href="myPage.do";
+	    })
+	  });
+      
+   /* 예약날짜 min 지정*/   
    $(document).ready(function () {
-	   function getMinDate() {
-		    var today = new Date();
-		 	console.log(today);
-		 	return today;
-	   }
-	 	
+	   
+	    /* 지금 날짜를 밀리초로 얻는다. */
+	    var now_utc = Date.now();
+	    
+	    /* 분단위를 밀리초로 변환 
+	       getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환 */
+	    /* 오늘 이후 부터 되어야 하므로 하루 밀리초(86400000)를 빼준다. (차이를 좁혀야 하므로 빼준다.) */   
+		var timeOff = (new Date().getTimezoneOffset()*60000)-86400000; 
+	    
+	    /* new Date(now_utc-timeOff).toISOString()은 '2022-06-21T19:24:38.134Z'를 반환 */
+		var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+
+	    console.log(today);
+		document.getElementById("sendDate").setAttribute("min", today);
    })
    
      /* form 데이터 유효성 검사 */
@@ -304,7 +315,7 @@
 	 					$.each(list, function(i) {
 							result += '<div class="card accordion-item active">' 
 							  	   + '<h2 class="accordion-header" id="headingOne">'
-							  	   + '<button type="button" onclick="test(this);" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#' + list[i].deptName + '" aria-expanded="true" aria-controls=" ' + list[i].deptName + '">'
+							  	   + '<button type="button" onclick="test(this);" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#' + list[i].deptName + '" aria-expanded="true" aria-controls="' + list[i].deptName + '">'
 					               + '<b style=color:#696cff;>' + list[i].deptName +  '</b>'
 					               + '</button>'
 					               + '</h2>'
@@ -346,10 +357,13 @@
 				var result = "";
 				const element = document.getElementById(selectDept);
 				
+				console.log(element);
 				console.log(list);
+				
 				if(list.length > 0){
 	
 					$.each(list, function(i) {
+						console.log(result);
 						result += '<input type="radio" name="empToId" class="getToEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>'
 					})
 					
@@ -409,8 +423,9 @@
   				type: "post",
   				success: function(list) {
   					var result = "";
-  					const element = document.getElementById('accordionExample2');
+  					const element2 = document.getElementById('accordionExample2');
   					
+  						console.log(element2);
   	 					$.each(list, function(i) {
   							result += '<div class="card accordion-item active">' 
 							  	   + '<h2 class="accordion-header" id="' + i + '">'
@@ -418,19 +433,19 @@
 					               + '<b style=color:#696cff;>' + list[i].deptName +  '</b>'
 					               + '</button>'
 					               + '</h2>'
-					               + '<div id="' + list[i].deptName + '" class="accordion-collapse collapse" aria-labelledby="' + i + '">'
-					               + '<div class="accordion-body mb-2">'
+					               + '<div id="' + list[i].deptName +'" class="accordion-collapse collapse" aria-labelledby="' + i + '">'
+					               + '<div class="accordion-body mb-2" >'
 					               + '</div>'
 					               + '</div>'
 						           + '</div>';
   						})
   					
   					/*결과 출력*/ 
-  					element.innerHTML = result;
+  					element2.innerHTML = result;
   				},
   				
   				error: function(list) {
-  					element.innerHTML = "실패";
+  					element2.innerHTML = "실패";
   				}
   				
   			})
@@ -443,37 +458,41 @@
 		console.log('직원호출');
 		console.log(e);
 		
-		var selectDept = e.innerText;
-		console.log(selectDept);
+		var selectDept2 = e.innerText;
+		console.log(selectDept2);
 			
 		$.ajax({
 			url: "employeeList.do",
 			data:{
-				selectDept : selectDept
+				selectDept : selectDept2
 			},
 			type: "post",
 			success: function(list) {
 				var result = "";
-				const element = document.getElementById(selectDept);
+				const element2 = document.getElementById(selectDept2);
+				console.log(element2);
 				
 				console.log(list);
+				
 				if(list.length > 0){
 	
 					$.each(list, function(i) {
 						result += '<input type="checkbox" name="empCcId" class="getCcEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>';
+						console.log(result);
+						
 					})
 					
 				}else{
-					alert('선택하신 부서 [' + selectDept + '] 에는 조회된 직원이 없습니다.');
+					alert('선택하신 부서 [' + selectDept2 + '] 에는 조회된 직원이 없습니다.');
 				}
 				
 				//결과 뿌려지는 곳
 				//$("#accordionExample").val(result)
-				element.innerHTML = result;
+				element2.innerHTML = result;
 			},
 			
 			error: function(list) {
-				element.innerHTML = "실패";
+				element2.innerHTML = "실패";
 			}
 			
 		})

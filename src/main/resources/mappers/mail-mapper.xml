@@ -84,6 +84,7 @@
 		<result property="fromId" column="FROM_ID"/>
 		<result property="receiveCheck" column="RECEIVE_CHECK"/>
 		<result property="ccId" column="CC_ID"/>
+		<result property="empNo" column="EMP_NO"/>
 	</resultMap>
 	
 	<resultMap type="Department" id="departmentResultSet">
@@ -331,7 +332,7 @@
 		   AND ENT_YN = 'Y'
 	</select>
 	
-	<!-- 처리해야할 예약메일 count -->
+	<!-- 처리해야할 예약메일 count : 수신용 -->
 	<select id="checkReserveMail" resultType="_int">
 		<![CDATA[
 		SELECT COUNT(*) 
@@ -344,7 +345,7 @@
 		 ]]>
 	</select>
 	
-	<!-- 예약메일 update -->
+	<!-- 예약메일 update : 수신용 -->
 	<update id="updateReserveMail">
 		<![CDATA[
 		UPDATE (
@@ -377,7 +378,7 @@
 		ORDER BY B.SEND_DATE DESC) RESULT
 	</select>
 
-	<!-- 읽지 않은 메일 조회 -->
+	<!-- 즐겨찾는사람 조회 -->
 	<select id="selectFavoriteEmpList" resultMap="mailResultSet">
 		<![CDATA[
 		SELECT TO_ID, TO_NAME, CHANGE_NAME 
@@ -401,5 +402,47 @@
 		WHERE ROWNUM <= 3
 		 ]]>
 		</select>
+
+	<!-- 나의 메일 수/발신 현황(개수 count) 조회  -->
+	<select id="seletMailListChart" resultMap="mailResultSet">
+		SELECT '수신' AS RESULT, TO_MAIL AS EMP_NO, COUNT(*) AS COUNT
+		  FROM MAIL_INFO
+	  GROUP BY TO_MAIL
+		HAVING TO_MAIL = #{empNo}
+     UNION ALL
+		SELECT '발신' AS RESULT, FROM_MAIL AS EMP_NO, COUNT(*) AS COUNT
+		  FROM MAIL_INFO
+      GROUP BY FROM_MAIL
+		HAVING FROM_MAIL = #{empNo}
+	</select>
+	
+	<!-- 처리해야할 예약메일 count : 발신용 -->
+	<select id="checkReserveMailFromMe" resultType="_int">
+		<![CDATA[
+		SELECT COUNT(*) 
+		  FROM EASYWORK.MAIL A
+		  JOIN EASYWORK.MAIL_INFO B ON A.MAIL_NO = B.MAIL_NO
+		 WHERE B.FROM_MAIL = #{fromMail}
+		   AND A.RESERVE_YN = 'Y'
+		   AND A.STATE_CODE = 'EP'
+		   AND A.SEND_DATE <= SYSDATE
+		  ]]>
+	</select>
+	
+	<!-- 예약메일 update : 발신용 -->
+	<update id="updateReserveMailFromMe">
+		<![CDATA[
+		UPDATE (
+				SELECT * 
+		          FROM EASYWORK.MAIL A
+		     LEFT JOIN EASYWORK.MAIL_INFO B ON A.MAIL_NO = B.MAIL_NO
+		         WHERE B.FROM_MAIL = #{toMail}
+		           AND A.RESERVE_YN = 'Y'
+		           AND A.STATE_CODE = 'EP'
+		           AND A.SEND_DATE <= SYSDATE
+		        )
+		   SET STATE_CODE = 'FN'
+		]]>
+	</update>
 	
 </mapper>

@@ -55,4 +55,10 @@ public class Mail {
 	
 	private int rowNum;
 	
+	/* 통계 사용 */
+	private String result;
+	private int count;
+	
+	
+	
 }

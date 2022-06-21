@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,10 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.workie.easy.common.CommException;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.mail.model.dto.Department;
 import com.workie.easy.mail.model.dto.Mail;
+import com.workie.easy.mail.model.dto.MailChart;
 import com.workie.easy.mail.model.dto.MailPageInfo;
 import com.workie.easy.mail.model.dto.MailPagination;
 import com.workie.easy.mail.model.dto.MailType;
@@ -66,14 +70,89 @@ public class MailController {
 		/* 즐겨찾는 사람 조회 : Top 3*/
 		ArrayList<Mail> empList = mailService.selectFavoriteEmpList(empNo);
 		
+		/* 메일 수/발신 현황 조회 */
+		ArrayList<Mail> chartList = mailService.seletMailListChart(empNo);
+		
+		/* 위의 chartList의 데이터를 통해 MailChart 객체 얻어오기(값이 모두 set 되어 올 것) */
+		MailChart mailChart = getMailChartInfo(chartList);
+		System.out.println("mailChart 확인 : " + mailChart);
+		
+		Gson gson = new Gson();
+		JSONArray jArray = new JSONArray();
+		
+		/* 위에서 얻은 chartList를 반복하겠다. */
+		Iterator<Mail> it = chartList.iterator();
+		
+		/* 반복자 it를 통해 리스트의 모든 요소 반복 */
+		while(it.hasNext()) {
+			
+			/* 반복되고 있는 현재 mail 객체는 반복자 it가 가리키는 next */
+			Mail mail = it.next();
+			
+			/* JSONArray 배열에 담기위해 JsonObject 객체 생성 */
+			JsonObject object = new JsonObject();
+			
+			/* mail 객체에 담겨있는 값 추출 */
+			String result = mail.getResult();
+			int count = mail.getCount();
+			
+			/* 위에서 추출된 값을 JsonObject 객체에 add 해준다. 키 : 값으로 셋팅해주어야 한다. */
+			object.addProperty("result", result);
+			object.addProperty("count", count);
+			
+			/* 배열에 객체 추가 */
+			jArray.add(object);
+		}
+		
+		String json = gson.toJson(jArray);
+		
+		model.addAttribute("json", json);
+		model.addAttribute("mailChart", mailChart);
 		model.addAttribute("mailList", mailList);
+		model.addAttribute("empList", empList);
 		
 		return "mail/mailHomeView"; 
 	}
 	
+	/* 넘어온 chartList 데이터를 기준으로 화면에 뿌려줄 chart 데이터 값 셋팅 */
+	private MailChart getMailChartInfo(ArrayList<Mail> chartList) {
+
+		MailChart mailChart = new MailChart(); 
+		
+		int totalMail = 0;
+		for(Mail m : chartList) {
+			
+			if(m.getResult().equals("수신")) {
+				mailChart.setToMail(m.getCount());
+			}else if(m.getResult().equals("발신")){
+				mailChart.setFromMail(m.getCount());
+			}
+			
+			totalMail += m.getCount();
+			
+		}
+		
+		/* 수신+발신 = 총 메일 개수 */
+		mailChart.setTotalMail(totalMail); 
+		
+		/* 수신 메일과 발신 메일의 퍼센트 계산(총 메일 수 기준으로) */
+		double percentToMail = Math.round((double)(mailChart.getToMail() / (double)mailChart.getTotalMail()) * 100);
+		double percentFromMail = Math.round((double)mailChart.getFromMail() / (double)(mailChart.getTotalMail()) * 100);
+			
+		mailChart.setPercentToMail(percentToMail);
+		mailChart.setPercentFromMail(percentFromMail);
+		
+		return mailChart;
+	}
+
 	/* 메일 작성 양식 화면 전환 */
 	@RequestMapping("mailSendForm.do")
-	public String insertMailForm() {
+	public String insertMailForm(@RequestParam(value="", required=false) String toReply, Model model) {
+		
+		if(toReply != null) {
+			model.addAttribute("toReply", toReply);
+		}
+		
 		return "mail/mailSendForm"; 
 	}
 	
@@ -325,6 +404,16 @@ public class MailController {
 		/* 쿼리에서 받는사람 기준이 될 변수 */
 		int toMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
 		
+		/* 나에게 들어온 예약메일 중 예약상태를 처리해야 할 메일이 있는지 조회 => 갯수 조회에서 갯수가 0 이상이면 true 넘어올 것. */
+		boolean toMeReserveMailList = mailService.checkReserveMail(toMail);
+		
+		/* 처리해야 할 메일이 있는 경우 (true) */
+		if(toMeReserveMailList) {
+			
+			/* 예약 메일 update => 발송처리상태를 발송예정에서 발송완료로 변경 해야한다. */
+			mailService.updateReserveMail(toMail);
+		}
+
 		/* 해당 요청의 타입을 결정할 dto */
 		MailType mailType = new MailType();
 		mailType.setReceive(receive);
@@ -335,16 +424,6 @@ public class MailController {
 
 		int mailLimit = 10;
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
-		
-		/* 나에게 들어온 예약메일 중 예약상태를 처리해야 할 메일이 있는지 조회 => 갯수 조회에서 갯수가 0 이상이면 true 넘어올 것. */
-		boolean reserveMailList = mailService.checkReserveMail(toMail);
-		
-		/* 처리해야 할 메일이 있는 경우 (true) */
-		if(reserveMailList) {
-			
-			/* 예약 메일 update => 발송처리상태를 발송예정에서 발송완료로 변경 해야한다. */
-			mailService.updateReserveMail(toMail);
-		}
 		
 		/* 화면에 뿌려줄 리스트 조회 */
 		ArrayList<Mail> list = mailService.selectReceiveMailList(toMail, mpi); 
@@ -362,6 +441,9 @@ public class MailController {
 		
 		/* 쿼리에서 보낸사람 기준이 될 변수 */
 		int fromMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		
+		/* 예약 메일 처리 */
+		selectFromMeReserveMailList(fromMail);
 		
 		MailType mailType = new MailType();
 		mailType.setSend(send);
@@ -388,6 +470,9 @@ public class MailController {
 		
 		int fromMail = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
 		
+		/* 예약 메일 처리 */
+		selectFromMeReserveMailList(fromMail);
+		
 		MailType mailType = new MailType();
 		mailType.setReserve(reserve);
 		mailType.setMailEmpNo(fromMail);
@@ -398,6 +483,7 @@ public class MailController {
 		MailPageInfo mpi = MailPagination.getPageInfo(listCount, currentPage, mailLimit);
 
 		ArrayList<Mail> list = mailService.selectReserveMailList(fromMail, mpi); 
+		
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
@@ -427,6 +513,22 @@ public class MailController {
 		model.addAttribute("list", list);
 		
 		return "mail/mailDeleteListView"; 
+	}
+	
+	
+	/* 보낸or예약 메일함 조회시 내가 보낸 예약메일에 대한 처리를 해주는 메소드 */
+	/* selectReserveMailList, selectSendMailList에서 여기를 호출한다. */
+	private void selectFromMeReserveMailList(int fromMail) {
+		
+		boolean fromMeReserveMailList = mailService.checkReserveMailFromMe(fromMail);
+		
+		/* 처리해야 할 메일이 있는 경우 (true) */
+		if(fromMeReserveMailList) {
+			
+			/* 예약 메일 update => 발송처리상태를 발송예정에서 발송완료로 변경 해야한다. */
+			mailService.updateReserveMailFromMe(fromMail);
+		}
+		
 	}
 	
 	/* 메일 상세 조회 : 받은, 보낸, 예약 */
@@ -615,8 +717,6 @@ public class MailController {
 	@RequestMapping(value="employeeList.do", method=RequestMethod.POST) 
 	public JSONArray seletEmployeeList(@RequestParam String selectDept) {
 		
-		System.out.println("직원 조회 컨트롤러 도착");
-		
 		/* 직원의 정보를 담을 list */
 		ArrayList<Employee> list = mailService.seletEmployeeList(selectDept);
 		
@@ -643,7 +743,6 @@ public class MailController {
 		
 		return empList; 
 	}
-	
 	
 	
 }

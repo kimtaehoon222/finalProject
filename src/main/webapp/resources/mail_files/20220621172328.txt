@@ -1,0 +1,6 @@
+int num = 0;
+		while(!sc.hasNextInt()) { //int형이 아니면 계속 반복함
+			sc.next(); //첫글자만 받아옴 -> 문자면..
+			System.out.println("잘못 입력하셨습니다. 번호만 입력해주세요.");
+			System.out.print("▶ 번호 선택 : ");
+		}
