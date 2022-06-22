@@ -27,6 +27,8 @@
 	    
 	    <typeAlias type="com.workie.easy.schedule.model.dto.Schedule" alias="Schedule"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.Department" alias="Department"/>
+	    <typeAlias type="com.workie.easy.chat.model.dto.Chat" alias="Chat"/>
+	    <typeAlias type="com.workie.easy.chat.model.dto.Contect" alias="Contect"/>
 	    
 	</typeAliases>
 		
@@ -39,6 +41,7 @@
 		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/personnel-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
+		<mapper resource="/mappers/chat-mapper.xml"/>
 	</mappers>
 	
 </configuration>

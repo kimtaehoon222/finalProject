@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+
+
+	<resultMap type="Department" id="departmentResultSet">
+		<id column="DEPT_CODE" property="deptCode"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		
+	</resultMap>
+	
+	<resultMap type="Contect" id="ContectResultSet">
+		<id column="EMP_NO" property="empNo"/>
+		<result column="S_CODE" property="sCode"/>
+		<result column="S_NAME" property="sName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="JOB_NAME" property="jobName"/>
+	
+	
+	</resultMap>
+
+	<select id="selectDeptList" resultMap="departmentResultSet">
+		SELECT *
+		FROM DEPARTMENT
+
+	</select>
+	
+	<select id="selectEmpList" parameterType="string" resultMap="ContectResultSet">
+		SELECT 
+		     A.EMP_NO
+		   , E.S_NAME
+		   , B.EMP_NAME
+		   , D.DEPT_NAME
+		   , C.JOB_NAME
+		FROM CONTECT A
+   LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+   LEFT JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
+   LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
+   LEFT JOIN WORK_STATUS_TYPE E ON A.S_CODE = E.S_CODE
+	   WHERE B.ENT_YN = 'Y' AND D.DEPT_NAME = #{deptName}
+	
+	
+	</select>
+</mapper>
