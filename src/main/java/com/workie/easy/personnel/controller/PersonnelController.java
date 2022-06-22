@@ -112,12 +112,10 @@ public class PersonnelController {
 			  at.setOriginName(file.getOriginalFilename());
 			  at.setChangeName(changeName);
 		   }
-		   System.out.println("직원 수정ㅂㅈㄷㅂㅈㄷㅂㅈㄷ" + emp);
-		   System.out.println("직원 수정ㅂㅈㄷㅂㅈㄷㅂㅈㄷ" + at);
+		 
 		   personnelService.updateEmpInfo(emp,at);
-		   System.out.println("직원 수정ㅂㅈㄷㅂㅈㄷㅂㅈㄷ" + emp);
 		   if(orgChangeName != null) {
-			   deleteFile(orgChangeName, request);
+			   deleteFile(orgChangeName, request, at);
 			   //기존에 첨부파일이 있으면  deleteFile메소드로 삭제
 		   }
 		   mv.addObject("eId", emp.getEmpId()).setViewName("redirect:detailEmp.do");
@@ -125,12 +123,12 @@ public class PersonnelController {
 		 
 	 }
 	 
-	 private void deleteFile(String orgChangeName, HttpServletRequest request) {
+	 private void deleteFile(String orgChangeName, HttpServletRequest request, Attachment at) {
 		 String resources = request.getSession().getServletContext().getRealPath("resources");
 	      //getRealPath로 웹컨테이너 안에 있는 리소스 경로 가져오기
 	      String savePath = resources + "\\emp_files\\";            
 	      //webapp -> resources + upload_files 파일
-	      
+	      at.setFilePath(savePath);
 	      File deleteFile = new File(savePath + orgChangeName);
 	      
 	      deleteFile.delete();
@@ -216,6 +214,8 @@ public class PersonnelController {
 		
 		 ArrayList<Employee> list = personnelService.selectApvList();
 			
+		 
+		 
 			model.addAttribute("list", list);
 			return "personnel/noApvListView";		
 	 }
