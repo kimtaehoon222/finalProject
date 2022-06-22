@@ -31,7 +31,7 @@
 	<resultMap type="EmpVacation" id="EmpVacationResultSet">
 		<id property="useNo" column="USE_NO"/>
 		<result property="empNo" column="EMP_NO"/>
-		<result property="vNo" column="V_NO"/>
+		<result property="vCode" column="V_CODE"/>
 		<result property="reason" column="REASON"/>
 		<result property="firstDate" column="FIRST_DATE"/>
 		<result property="lastDate" column="LAST_DATE"/>
@@ -160,7 +160,7 @@
 		 FROM
 		    VACATION_FORM A
    LEFT JOIN SIGN B ON A.SIGN_NO = B.SIGN_NO
-   LEFT JOIN VACATION C ON A.V_NO = C.V_NO
+   LEFT JOIN VACATION C ON A.V_CODE = C.V_CODE
    LEFT JOIN EMPLOYEE D ON B.EMP_NO = D.EMP_NO
    LEFT JOIN DEPARTMENT E ON D.DEPT_CODE = E.DEPT_CODE
  	   WHERE 

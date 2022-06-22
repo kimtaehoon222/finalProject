@@ -15,6 +15,5 @@ public class VacationInfo {
 
 	private int empNo;
 	private int allDays;
-	private int useDays;
 	private int leftDays;
 }

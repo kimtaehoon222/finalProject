@@ -47,7 +47,7 @@
 		 			AND B.STATUS = 'N'
 		 		</when>
 		 		<otherwise>
-		 			AND B.STATUS = 'Y'
+		 			<!-- AND B.STATUS = 'Y' -->
 		 		</otherwise>
 		 	</choose>
 		 </trim>
@@ -109,7 +109,7 @@
      LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
      LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
          WHERE ((CC_MAIL LIKE '%,${toMail}%' OR CC_MAIL LIKE '%${toMail},%') OR A.TO_MAIL = ${toMail})
-           AND C.STATUS = 'Y'
+           AND C.STATUS = 'Y' 
            AND C.STATE_CODE = 'FN'
       ORDER BY C.SEND_DATE DESC
 	</select>

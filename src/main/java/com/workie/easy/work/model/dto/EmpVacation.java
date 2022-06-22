@@ -21,7 +21,7 @@ public class EmpVacation {
 	private String reason; //사유
 	private Date firstDate; //휴가 시작일
 	private Date lastDate; //휴가 종료일
-	private String vNo;
+	private String vCode;
 	
 	//사용한 일 
 	private int usingDay;

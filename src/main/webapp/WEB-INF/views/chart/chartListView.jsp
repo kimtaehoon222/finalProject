@@ -80,7 +80,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 
 <body>
   			
-	<jsp:include page="top.jsp"/>
+	<jsp:include page="../common/top.jsp"/>
 	
     <!-- 내용 시작-->
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -93,42 +93,56 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
           <div class="card-body">
             <h5 class="card-title text-primary"><b>통계항목 선택</b></h5>
             <div class="row">
+           	    <!-- 조회 항목 선택 -->
+           	    <div class="mb-3 col-md-3">
+                <label class="form-label" for="country">카테고리</label>
+                <select id="category" class="select2 form-select">
+                  <option value="mail">메일</option>
+                  <option value="sign">결재</option>
+                  <option value="work">근태</option>
+                  <option value="person">인사</option>
+                  <option value="account">회계</option>
+                </select>
+                </div>
+            	<!-- 조회 연도 선택 -->
 	            <div class="mb-3 col-md-3">
 	              <label class="form-label" for="country">조회연도</label>
-	              <select id="country" class="select2 form-select">
-	                <option value="">전체</option>
-	                <option value="">2022</option>
-	                <option value="">2021</option>
-	                <option value="">2020</option>
-	                <option value="">2019</option>
+	              <select id="year" class="select2 form-select">
+	                <option value="allYear">전체</option>
+	                <option value="2022">2022</option>
+	                <option value="2021">2021</option>
+	                <option value="2020">2020</option>
 	              </select>
 	            </div>
-         	    <div class="mb-3 col-md-3">
-	              <label class="form-label" for="country">항목</label>
-	              <select id="country" class="select2 form-select">
-	                <option value="">결재</option>
-	                <option value="">메일</option>
-	                <option value="">근태</option>
+	            
+	            <!-- 조회 월 선택 -->
+	            <div class="mb-3 col-md-3">
+	              <label class="form-label" for="country">조회월</label>
+	              <select id="month" class="select2 form-select">
+	                <option value="allMonth">전체</option>
+	                <option value="01">01</option>
+	                <option value="02">02</option>
+	                <option value="03">03</option>
+	                <option value="04">04</option>
+	                <option value="05">05</option>
+	                <option value="06">06</option>
+	                <option value="07">07</option>
+	                <option value="08">08</option>
+	                <option value="09">09</option>
+	                <option value="10">10</option>
+	                <option value="11">11</option>
+	                <option value="12">12</option>
 	              </select>
 	            </div>
 	            <div class="mb-3 col-md-3">
-	              <label class="form-label" for="country">그룹1</label>
-	              <select id="country" class="select2 form-select">
-	                <option value="">전체</option>
-	                <option value="">부서별</option>
-	                <option value="">직급별</option>
-	              </select>
-	            </div>
-	            <div class="mb-3 col-md-3">
-	              <label class="form-label" for="country">그룹2</label>
-	              <select id="country" class="select2 form-select">
-	                <option value="">전체</option>
-	                <option value="">남자</option>
-	                <option value="">여자</option>
+	              <label class="form-label" for="country">조회항목</label>
+	              <select id="type" class="select2 form-select">
+	                <option value="toMails">메일 수신 현황</option>
+	                <option value="fromMails">메일 발신 현황</option>
 	              </select>
 	            </div>
             </div>
-            <a href="#" class="btn btn-sm btn-outline-primary">통계 결과</a>
+            <button class="btn btn-sm btn-outline-primary" id="getChartResult">결과 보기</button>
           </div>
        </div>
      </div>
@@ -147,60 +161,18 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 			<thead>
 				<tr>
 					<th width="200">월</th>
-					<th width="200">기획팀</th>
-					<th width="200">영업팀</th>
-					<th width="200">회계팀</th>
-					<th width="200">경영지원팀</th>
-					<th width="200">생산팀</th>
-					<th width="200">월전체평균</th>
+					<th width="200">인사관리부</th>
+					<th width="200">회계관리부</th>
+					<th width="200">마케팅부</th>
+					<th width="200">자재관리부</th>
+					<th width="200">기획영업부</th>
+					<th width="200">경영관리부</th>
+					<th width="200">기술개발부</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>2022/01</td>
-					<td>165</td>
-					<td>938</td>
-					<td>522</td>
-					<td>998</td>
-					<td>450</td>
-					<td>614.6</td>
-				</tr>
-				<tr>
-					<td>2022/02</td>
-					<td>165</td>
-					<td>938</td>
-					<td>522</td>
-					<td>998</td>
-					<td>450</td>
-					<td>614.6</td>
-				</tr>
-				<tr>
-					<td>2022/03</td>
-					<td>165</td>
-					<td>938</td>
-					<td>522</td>
-					<td>998</td>
-					<td>450</td>
-					<td>614.6</td>
-				</tr>
-				<tr>
-					<td>2022/04</td>
-					<td>165</td>
-					<td>938</td>
-					<td>522</td>
-					<td>998</td>
-					<td>450</td>
-					<td>614.6</td>
-				</tr>
-				<tr>
-					<td>2022/05</td>
-					<td>165</td>
-					<td>938</td>
-					<td>522</td>
-					<td>998</td>
-					<td>450</td>
-					<td>614.6</td>
-				</tr>
+			<tbody id="resultList">
+				<!-- 한 행 시작 -->
+				
 			</tbody>
 		</table>
            </div>
@@ -229,7 +201,61 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	</div>
     <!-- 내용 끝-->     	 
 
-	<jsp:include page="bottom.jsp"/>
+	<script type="text/javascript">
+	 $(function () {
+		$('#getChartResult').click(function () {
+			
+			var category = document.getElementById("category").value;
+			var year = document.getElementById("year").value;
+			var month = document.getElementById("month").value;
+			var type = document.getElementById("type").value;
+			
+			$.ajax({
+				url: "chartList.do",	
+				data:{
+					category : category,
+					year : year,
+					month : month,
+					type : type
+				},
+				type: "post",
+				success: function(list) {
+					
+					console.log('성공');
+					console.log(list);
+					
+					var result = "";
+					const element = document.getElementById('resultList');
+					console.log(element);
+					
+ 					$.each(list, function(i) {
+						result += '<tr>'
+							   + '<td>' + ${list[i].groupBy} + '</td>'
+							   + '<td>' + ${list[i].departD1} + '</td>'
+							   + '<td>' + ${list[i].departD2} + '</td>'
+							   + '<td>' + ${list[i].departD3} + '</td>'
+							   + '<td>' + ${list[i].departD4} + '</td>'
+							   + '<td>' + ${list[i].departD5} + '</td>'
+							   + '<td>' + ${list[i].departD6} + '</td>'
+							   + '<td>' + ${list[i].departD7} + '</td>'
+							   + '</tr>'
+ 					})
+					
+					/*결과 출력*/ 
+					element.innerHtml(result);
+				},
+				
+				error: function(list) {
+					element.html('실패');
+				}
+			})
+		})
+	})
+	
+	</script>
+
+
+	<jsp:include page="../common/bottom.jsp"/>
 	
   </body>
 </html>

@@ -167,7 +167,7 @@
           </div>
           <div class="mt-2">
             <button type="submit" class="btn btn-primary me-2">수정하기</button>
-            <button type="reset"  class="btn btn-outline-secondary">취소하기</button>
+            <button onclick="history.back(-1)" type="reset" class="btn btn-outline-secondary">취소하기</button>
           </div> 
       </div>
       <!-- /Account -->
