@@ -23,6 +23,8 @@
 	  	<result property="deptName" column="DEPT_NAME"/>
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="jobVacation" column="JOB_VACATION"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+      	<result property="changeName" column="CHANGE_NAME"/>
 	</resultMap>
 	
 	<select id="loginEmp" parameterType="Employee" resultMap="employeeResultSet">
@@ -31,10 +33,11 @@
 		     , A.GENDER , A.EMP_PWD , A.ADDRESS , A.DEPT_CODE , A.JOB_CODE
 		     , A.DISABLE_YN , A.EMP_NOTE , A.HIRE_DATE , A.ENT_DATE, A.APV_YN
 		     , A.ENT_YN , A.CTG_NO , B.DEPT_NAME , C.JOB_NAME , C.JOB_VACATION
-		     , A.TEL_NO
+		     , A.TEL_NO , D.ORIGIN_NAME , D.CHANGE_NAME
 		  FROM EMPLOYEE A
 		  LEFT JOIN DEPARTMENT B ON(A.DEPT_CODE=B.DEPT_CODE)
 		  LEFT JOIN JOB C ON(A.JOB_CODE=C.JOB_CODE)
+		  LEFT JOIN ATTACHMENT D ON (A.EMP_NO = D.REF_NO)
 		 WHERE EMP_ID = #{empId}
 		   AND APV_YN = 'Y'
 		   AND ENT_YN = 'Y'
@@ -45,7 +48,8 @@
 		  INTO EMPLOYEE VALUES(SEQ_EMNO.NEXTVAL, #{empName}, #{phone}, #{empId}, #{empReg}
 		                      , #{gender}, #{empPwd}, #{address}, NULL, NULL
 		                      , DEFAULT, NULL, SYSDATE, NULL, DEFAULT
-		                      , DEFAULT, DEFAULT, NULL
+                          , DEFAULT, DEFAULT, NULL
+
 		                      )
 	</insert>
 </mapper>

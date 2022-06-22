@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.workie.easy.common.model.Pagination;
+import com.workie.easy.common.model.dto.PageInfo;
 import com.workie.easy.schedule.model.dto.Schedule;
 import com.workie.easy.schedule.model.service.ScheduleService;
 
@@ -175,15 +176,65 @@ public class ScheduleController {
 	/*일정 검색*/
 	@RequestMapping("searchSked.do")
 	@ResponseBody
-	public JSONArray searchSchedule(String keyWord) {
+	public JSONArray searchScheduleList(String keyWord, int empNo,
+				@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
 		
+		/*파라미터 테스트*/
 		System.out.println("검색 키워드 : "+keyWord);
+		System.out.println("로그인 사원 : "+empNo);
 		
-		/*페이지네이션*/
+		/*mapper에 parameter로 넘기기 위한 Map*/
+		Map<String,Object> hash = new HashMap<String,Object>();
 		
-		/*키워드 검색*/
-		JSONObject jsonSkedList = new JSONObject();
+		hash.put("keyWord", "%"+keyWord+"%");
+		hash.put("empNo", empNo);
+		
+		/*----페이지네이션----*/
+		
+		/*검색 일정 수*/
+		int skedListCount = scheduleService.selectListCount(hash);
+		System.out.println("일정 수 : "+skedListCount);
+		
+		/*페이지 정보*/
+		PageInfo pi = Pagination.getPageInfo(skedListCount, currentPage, 10, 5);
+		
+		/*----페이지네이션----*/
+		
+		/*서비스 연결*/
+		ArrayList<Schedule> skedlist = scheduleService.searchScheduleList(hash, pi);
+		
+		/*ArrayList를 담을 JsonObject, Json을 배열로 변환시켜줄 JsonArray*/
 		JSONArray jsonArr = new JSONArray();
+		
+		/*반복문으로 시간값 정리, hashMap에 값 담고 json처리*/
+		for(int i=0; i < skedlist.size(); i++) {
+			if(skedlist.get(i).getSkedStartTime() != null) {				//시작시간 있는 경우 추가
+				String start = skedlist.get(i).getSkedStart();
+				String startTime = skedlist.get(i).getSkedStartTime();
+				skedlist.get(i).setSkedStart(start+"T"+startTime);
+			}
+			if(skedlist.get(i).getSkedEndTime() != null) {					//종료시간 있는 경우 추가
+				String end = skedlist.get(i).getSkedEnd();
+				String endTime = skedlist.get(i).getSkedEndTime();
+				skedlist.get(i).setSkedEnd(end+"T"+endTime);
+			}
+			
+			JSONObject jsonSked = new JSONObject();
+		
+			jsonSked.put("id", skedlist.get(i).getSkedNo()); 				//ID
+			
+			jsonSked.put("start", skedlist.get(i).getSkedStart()); 			//시작일자
+			jsonSked.put("end", skedlist.get(i).getSkedEnd()); 				//종료일자
+			
+			jsonSked.put("title", skedlist.get(i).getSkedTitle()); 			//제목
+			jsonSked.put("content", skedlist.get(i).getSkedContent());		//색상
+
+			jsonSked.put("cat", skedlist.get(i).getSkedCName());			//분류명
+			
+			jsonSked.put("pi", pi);											//pi
+			
+			jsonArr.add(jsonSked); 											// 대괄호 안에 넣어주기[중괄호]
+		}
 		
 		return jsonArr;
 		

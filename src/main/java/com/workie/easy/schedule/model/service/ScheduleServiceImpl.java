@@ -1,11 +1,13 @@
 package com.workie.easy.schedule.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.workie.easy.common.model.dto.PageInfo;
 import com.workie.easy.schedule.model.dao.ScheduleDao;
 import com.workie.easy.schedule.model.dto.Schedule;
 
@@ -69,6 +71,20 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public void deleteSchedule(String skedNo) {
 
 		skedDao.deleteSchedule(sqlSession, skedNo);
+		
+	}
+
+	@Override
+	public ArrayList<Schedule> searchScheduleList(Map<String, Object> hash, PageInfo pi) {
+		
+		return skedDao.searchScheduleList(sqlSession, hash, pi);
+		
+	}
+
+	@Override
+	public int selectListCount(Map<String, Object> hash) {
+
+		return skedDao.selectListCount(sqlSession, hash);
 		
 	}
 	

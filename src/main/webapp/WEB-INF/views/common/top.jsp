@@ -424,7 +424,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="right" data-bs-html="true" title data-bs-original-title="<i class='bx bx-user bx-xs' ></i><span>내 정보 관리</span>">
-                      <img src="<%=contextPath %>/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="${pageContext.request.contextPath}/resources/emp_files/${loginEmp.changeName}" alt class="w-px-40 h-px-40 rounded-circle"/>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -433,7 +433,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="<%=contextPath %>/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="${pageContext.request.contextPath}/resources/emp_files/${loginEmp.changeName}" alt class="w-px-40 h-px-40 rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
