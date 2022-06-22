@@ -52,7 +52,7 @@
 			          </button>
 			          </li>
 			      </ul>
-			      <!------------------- 모달 ------------------->
+			      <!------------------- 등록 모달 ------------------->
 			      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do"  onsubmit="return sked_submit()"method="POST">
 			          <div class="modal-dialog modal-l" role="document">
 			          <div class="modal-content">
@@ -184,7 +184,7 @@
 			          </div>
 			          </div>
 			      </form>
-			      <!------------------- / 모달 ------------------->
+			      <!------------------- / 등록 모달 ------------------->
 			      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sked-insert-modal" id="insert_btn">
 			         	 일정 등록
 			      </button>
@@ -219,7 +219,7 @@
 			                      	<input type="text" name="keyword" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31">
 			                    </div>
 			                    <!-- <button type="submit" class="btn btn-primary search_btn"> -->
-			                    <button type=button" class="btn btn-primary search_btn"id="search-btn">
+			                    <button type=button" class="btn btn-primary search_btn"id="search-btn" onclick="test($('input[name=keyword]').val(), 1)">
 		                       		검색하기
 			                    </button>
 			                </div>
@@ -230,63 +230,130 @@
 			    </div>
 			    <!-- / 검색 -->
 			    
-			    
 			    <!-- 검색 ajax -->
                 <script>
+                	function test(e, n){
+                		if(!e){											//검색어 없는 경우
+	                        alert("검색어가 없습니다.");						//알림창
+                        	return false;	
+                		}
+                		
+                		searchBtnClick(e, n);
+                		document.getElementById('search-modal-btn').click();
+                	}
                 
-	                $(function(){
-	                    $('#search-btn').on("click",function () {			//검색버튼 클릭
+                	/*검색창 호출 함수*/
+                	function searchBtnClick(e, n){
+                		console.log("누른 p값 : "+n);
+                		
+                		var keyWord = e;								//검색어
+                        var loginEmpNo = ${loginEmp.empNo};				//로그인 직원
+                        var currentNo = n;
+                        if(!keyWord){									//검색어 없는 경우
+	                        alert("검색어가 없습니다.");						//알림창
+                        	return false;
+                        }else{											//검색어가 있는 경우
+	                        
+	                        $('input[name=keyword]').val("");			//검색창 지우기
+	                        
+	                        /*ajax 호출*/
+	                        $.ajax({ 
+	            				url: "searchSked.do",
+	            				data: {
+	            					keyWord : keyWord,
+	            					empNo : loginEmpNo,
+	            					currentPage : currentNo
+	            				},
+	            				type: "GET",
+	            				dataType : "json",
+	            				success : function(result){
+	            					
+	            					var list="";
+	            					
+	            					/*결과물 반복문*/
+	            					$.each(result, function(i){
+	            						
+										if(!result[i].end){			//end값이 비어있을 경우
+											result[i].end = "-";
+										}
+	            						
+										/*html 태그 추가*/
+	            						list += "<tr>"
+	                                    + "<td style='display:none;'>" + result[i].id + "</td>"
+	                                    + "<td>" + result[i].start.replace("T"," ") + "</td>"
+	                                    + "<td>" + result[i].end.replace("T"," ") + "</td>"
+	                                    + "<td>" + result[i].title + "</td>"
+	                                    + "<td>" + result[i].content + "</td>"
+	                                    + "<td>" + result[i].cat + "</td>"
+	                                  	+ "</tr>"
+	        	 						
+	        	 					});
+	            					
+	            					$("#resultTable").html(list);	//화면에 출력
+	            					
+	            					var pi = result[0].pi;
+	            					
+	            					console.log("currentPage : " + pi.currentPage);
+	            					console.log("startPage : " + pi.startPage);
+	            					console.log("endPage : " + pi.endPage);
+	            					console.log("maxPage : " + pi.maxPage);
 
-	                        var keyWord = $('input[name=keyword]').val();	//검색어
-							
-	                        if(!keyWord){									//검색어 없는 경우
-		                        alert("검색어가 없습니다.");						//알림창
-	                        	return false;
-	                        }else{											//검색어가 있는 경우
-		                        console.log(keyWord);
-		                        alert("순서 확인 : "+keyWord);
-		                        
-		                        $('input[name=keyword]').val("");			//검색창 지우기
-		                        
-		                        /*ajax 호출*/
-		                        /*$.ajax({ 
-		            				url: "searchSked.do",
-		            				data: keyWord,
-		            				type: "GET",
-		            				dataType : "json",
-		            				success : function(result){
-		            					
-		            					console.log("검색어  : "+result);
-		            					
-		            					console.log("id : "+result.id);
-		
-		            					console.log("category : "+result.category);	//분류
-		            					
-		            					console.log("start : "+result.start);		//시작일
-		            					console.log("end : "+result.end);			//종료일
-		            					
-		            					console.log("title : "+result.title);		//제목
-		            					console.log("content : "+result.content);	//내용
-		            					
-		            				},
-		            				error : function(result){
-		            				 alert('데이터 로딩 실패');
-		            				}
-            		   			});*/
-            		   			
-		                        $("input[name=modal-keyword]").val(keyWord);	//모달 검색창 입력
-            		   			
-		                        document.getElementById('search-modal-btn').click();
-	                        }
-	                    });
-	                });
-                
+	            					var pageSet="";
+	            					
+	            					var clickFunctionP = "searchBtnClick(" + '"' + e + '"' + "," + (pi.currentPage-1) + ")"
+	            					var clickFunctionN = "searchBtnClick(" + '"' + e + '"' + "," + (pi.currentPage+1) + ")"
+	            					/*currentPage가 1이 아닐 때*/
+	            					if(pi.currentPage != 1){
+	            						$("#prevLi").removeClass('disabled'); 			//prev버튼에 클래스 제거(클릭가능)
+	            						$("#prevA").attr('onclick', clickFunctionP); 	//a태그 onclick 추가
+	            					}else{
+	            						$("#prevLi").addClass('disabled');
+	            					}
+	            					
+	            					/*페이지 수 만큼 반복해서 추가*/
+	            					for(var p = pi.startPage ; p <= pi.endPage ; p++ ){
+	            						if(pi.currentPage != p){
+	            							pageSet += "<li class='page-item'>"
+			            							+ "<div class='page-link' href='javascript:void(0);' onclick='searchBtnClick(" + '"' + e + '"' + "," + p + ")'>"
+			            							+ p
+			            							+ "</div>"
+			            							+ "</li>"
+	            						}else{
+	            							pageSet += "<li class='page-item disabled'>"
+	            									+ "<div class='page-link' href='javascript:void(0);'>"
+			            							+ p
+			            							+ "</div>"
+			            							+ "</li>"
+	            						}
+	            					}
+	            					
+	            					$("#navList").html(pageSet);	//화면에 출력
+	            					
+	            					/*currentPage가 끝페이지가 아닐 때*/
+	            					if(pi.currentPage != pi.maxPage){
+	            						$("#nextLi").removeClass('disabled'); 			//next버튼에 클래스 제거(클릭가능)
+	            						$("#nextA").attr('onclick', clickFunctionN); 	//a태그 onclick 추가
+	            					}else{
+	            						$("#nextLi").addClass('disabled');
+	            					}
+
+	            				},
+	            				error : function(result){
+	            				 alert('데이터 로딩 실패');
+	            				}
+        		   			});
+        		   			
+	                        $("input[name=modal-keyword]").val(keyWord);			//모달창 검색칸 입력
+	                        	
+                        }
+                	}
+                	
                 </script>
                 <!-- / 검색 ajax -->
                 
 			    <button type=button" data-bs-toggle="modal" data-bs-target="#search-modal" style="display:none;" id="search-modal-btn"></button>
 			    
-			    <!-- 검색 모달 -->
+			    <!------------------- 검색 결과 모달 ------------------->
 				<form class="modal fade" id="search-modal" tabindex="-1" aria-hidden="true" >
                   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
@@ -311,8 +378,8 @@
                                 <!-- 테이블 헤드 -->
                                 <thead>
                                   <tr>
-                                    <th style="font-size: 15px;">날짜</th>
-                                    <th style="font-size: 15px;">시간</th>
+                                    <th style="font-size: 15px;">시작일</th>
+                                    <th style="font-size: 15px;">종료일</th>
                                     <th style="font-size: 15px;">제목</th>
                                     <th style="font-size: 15px;">내용</th>
                                     <th style="font-size: 15px;">종류</th>
@@ -321,15 +388,7 @@
                                 <!-- / 테이블 헤드 -->
 
                                 <!-- 테이블 바디 -->
-                                <tbody>
-
-                                  <tr>
-                                    <td>06/10</td>
-                                    <td> 14:00~16:00</td>
-                                    <td>비온다</td>
-                                    <td>비가오고있어요</td>
-                                    <td>개인일정</td>
-                                  </tr>
+                                <tbody id="resultTable">
                   
                                 </tbody>
                                 <!-- / 테이블 바디 -->
@@ -345,32 +404,26 @@
                       <!-- 모달 풋터 -->
                       <div class="modal-footer">
                         <nav aria-label="Page navigation">
-                          <ul class="pagination">
-                            <li class="page-item prev">
-                              <a class="page-link" href="javascript:void(0);"
-                                ><i class="tf-icon bx bx-chevron-left"></i
-                              ></a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">1</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">2</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">3</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">4</a>
-                            </li>
-                            <li class="page-item">
-                              <a class="page-link" href="javascript:void(0);">5</a>
-                            </li>
-                            <li class="page-item next">
-                              <a class="page-link" href="javascript:void(0);"
-                                ><i class="tf-icon bx bx-chevron-right"></i
-                              ></a>
-                            </li>
+                          <ul class="pagination" id="pageUl">
+							
+							<!-- prev -->
+							<li class="page-item prev disabled" id="prevLi">
+							  <a class="page-link" href="javascript:void(0);" id="prevA">
+								<i class="tf-icon bx bx-chevron-left"></i>
+							  </a>
+							</li>
+							<!-- / prev -->
+							
+							<li id='navList' style="display: flex; margin-left:3px"></li>
+							
+							<!-- next -->
+							<li class="page-item next disabled" id="nextLi">
+							  <a class="page-link" href="javascript:void(0);" id="nextA">
+								<i class="tf-icon bx bx-chevron-right"></i>
+							  </a>
+							</li>
+							<!-- / next -->
+							
                           </ul>
                         </nav>
                       </div>
@@ -380,7 +433,7 @@
                   </div>
                   
                 </form>
-			    <!-- / 검색 모달 -->
+			    <!------------------- / 검색 결과 모달 ------------------->
 			    
 			
 				<!-- 간단 일정 목록 -->

@@ -1,10 +1,13 @@
 package com.workie.easy.schedule.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.workie.easy.common.model.dto.PageInfo;
 import com.workie.easy.schedule.model.dto.Schedule;
 
 /*
@@ -62,6 +65,21 @@ public class ScheduleDao {
 	public int deleteSchedule(SqlSessionTemplate sqlSession, String skedNo) {
 
 		return sqlSession.update("deleteSchedule",skedNo);
+		
+	}
+
+	public ArrayList<Schedule> searchScheduleList(SqlSessionTemplate sqlSession, Map<String, Object> hash, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("skedMapper.searchScheduleList", hash , rowBounds);
+		
+	}
+
+	public int selectListCount(SqlSessionTemplate sqlSession, Map<String, Object> hash) {
+
+		return sqlSession.selectOne("skedMapper.searchScheduleCount", hash);
 		
 	}
 

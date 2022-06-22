@@ -122,4 +122,39 @@
 		 WHERE SKED_STATUS = 'Y'
 		   AND SKED_NO = #{skedNo}
 	</update>
+	
+	<select id="searchScheduleList" resultMap="scheduleResultSet">
+		SELECT
+		       A.SKED_NO
+		     , TO_CHAR(B.SKED_START, 'YYYY-MM-DD') AS SKED_START
+		     , B.SKED_START_TIME
+		     , TO_CHAR(B.SKED_END, 'YYYY-MM-DD') AS SKED_END
+		     , B.SKED_END_TIME
+		     , A.SKED_TITLE
+		     , A.SKED_CONTENT
+		     , C.SKED_C_NAME
+		  FROM SCHEDULE A
+		  JOIN SCHEDULE_INFO B ON(A.SKED_NO=B.SKED_NO)
+		  JOIN SCHEDULE_CLASS C ON(A.SKED_CODE=C.SKED_CODE)
+		 WHERE A.SKED_STATUS = 'Y'
+		   AND A.EMP_NO = #{empNo}
+		   AND (
+		           A.SKED_TITLE LIKE #{keyWord}
+		        OR A.SKED_CONTENT LIKE #{keyWord}
+		       )
+      ORDER BY SKED_START DESC
+	</select>
+	
+	<select id="searchScheduleCount" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM SCHEDULE A
+		 WHERE A.SKED_STATUS = 'Y'
+		   AND A.EMP_NO = #{empNo}
+		   AND (
+		           A.SKED_TITLE LIKE #{keyWord}
+		        OR A.SKED_CONTENT LIKE #{keyWord}
+		       )	
+	</select>
+	
 </mapper>
