@@ -27,6 +27,7 @@
 	    
 	    <typeAlias type="com.workie.easy.schedule.model.dto.Schedule" alias="Schedule"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.Department" alias="Department"/>
+	    <typeAlias type="com.workie.easy.chart.model.dto.ChartForMail" alias="ChartForMail"/>
 	    
 	</typeAliases>
 		
@@ -39,6 +40,7 @@
 		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/personnel-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
+		<mapper resource="/mappers/chart-mapper.xml"/>
 	</mappers>
 	
 </configuration>
