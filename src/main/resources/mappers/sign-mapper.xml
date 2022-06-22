@@ -22,6 +22,11 @@
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="filePath" column="FILE_PATH"/>
 		<result property="expiryDate" column="EXPIRY_DATE"/>
+		<result property="firstDate" column="FIRST_DATE"/>
+		<result property="lastDate" column="LAST_DATE"/>
+		<result property="title" column="TITLE"/>
+		<result property="reason" column="REASON"/>
+		<result property="vNo" column="V_NO"/>
 		<result property="ctgNo" column="CTG_NO"/>
 		
 	</resultMap>
@@ -100,6 +105,37 @@
 	
 	</insert>	
 	
+	
+	<insert id="insertDay" parameterType="Sign">
+	<if test="reason != null">
+		INSERT ALL 
+		INTO SIGN
+		VALUES(SEQ_GNO.NEXTVAL, 'CC', #{title}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{reason})
+		</if>
+		INTO VACATION_FORM
+		VALUES(SEQ_GNO.CURRVAL, #{title}, #{reason}, #{firstDate}, #{lastDate}, #{vNo})
+		
+		SELECT * 
+	      FROM DUAL
+	</insert>	
+	
+	<select id="selectListCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM SIGN
+	WHERE STATUS_CODE = 'W'
+	AND FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	AND STATUS = 'Y'
+	</select>
+		
+	<select id="selectWaitingList" parameterType="Sign">
+	SELECT 
+		A.SIGN_NO,
+		B.TYPE_NAME,  
+	FROM BOARD
+	WHERE STATUS = 'Y'
+	ORDER BY BOARD_NO DESC
+	</select>
+		
 	</mapper>
 
 		

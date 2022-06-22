@@ -518,8 +518,13 @@
 						<b>휴 가 원</b>
 					</h4>
 					
-					<form>
-					
+					<form id="insertDay" method="post" action="insertDay.do" enctype="multipart/form-data">
+						
+						<input type="hidden" name="createName"
+							value="${ loginEmp.empName }"> <input type="hidden"
+							name="empNo" value="${ loginEmp.empNo }">
+						
+						
 					<div class="modal-header">
 						<h6 class="modal-title" id="exampleModalLabel">결재번호 : </h6>
 					</div>
@@ -538,9 +543,9 @@
 								<b id="center">휴가 종류</b>
 							</p>
 
-							&nbsp<input type="radio" id="huey" name="check" value="Y" checked>
+							&nbsp<input type="radio" id="huey" name="vNo" value="Y" checked>
 							<label for="huey">'Y'=연차</label> &nbsp&nbsp <input type="radio"
-								id="dewey" name="check" value="H"> <label
+								id="dewey" name="vNo" value="H"> <label
 								for="dewey">'H'= 반차</label>
 
 						</fieldset>
@@ -667,6 +672,7 @@
 					</div>
 
 				<!--  	<form method="post" style="margin: 22px"> -->
+				<div style="margin: 22px">
 						<label for="dateIn">휴가 시작일 : </label>
 						<!--포커싱이 어디로 향하는지가 for-->
 						<input type="date" name="firstDate" id="dateIn"><br>
@@ -675,7 +681,9 @@
 						<!--포커싱이 어디로 향하는지가 for-->
 						<input type="date" name="lastDate" id="dateInn"><br>
 				<!--  	</form> -->
-
+					
+					</div>
+					
 					<div class="modal-body">
 
 
@@ -685,15 +693,16 @@
 						<input type="text" id="title" name="title" class="mb-3"
 							placeholder="제목을 입력하세요." style="width: 91%; float: right">
 
-						<textarea name="content" id="content"
+						<textarea name="reason" id="reason"
 							style="width: 100%; height: 110px;" placeholder="사유를 입력하세요."></textarea>
-					</form>
-
 					</div>
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary">상신</button>
+						<button type="submit" class="btn btn-primary">상신</button>
+				
+					</form> <!-- insertDay form 끝 태그 -->
+
 					</div>
 				</div>
 			</div>

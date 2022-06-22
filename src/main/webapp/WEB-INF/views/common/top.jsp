@@ -188,7 +188,7 @@
                   </a>
                 </li>              
                 <li class="menu-item">
-                  <a href="signWaitingView.jsp" class="menu-link">
+                  <a href="signWaitingView.do?empName=${ loginEmp.empName }" class="menu-link">
                     <div data-i18n="Without menu">요청 결재함</div>
                   </a>
                 </li>

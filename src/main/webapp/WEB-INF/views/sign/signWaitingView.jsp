@@ -18,7 +18,7 @@
 
 </head>
 <body>
-	<jsp:include page="top.jsp" />
+	<jsp:include page="../common/top.jsp" />
 	
 		<div class="container">
 	
@@ -57,6 +57,6 @@
 		</div>	
 		
 		</div>
-	<jsp:include page="bottom.jsp" />
+	<jsp:include page="../common/bottom.jsp" />
 </body>
 </html>

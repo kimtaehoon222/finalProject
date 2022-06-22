@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workie.easy.common.CommException;
-import com.workie.easy.common.model.dto.Attachment;
+import com.workie.easy.common.model.Pagination;
+import com.workie.easy.common.model.dto.PageInfo;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.sign.model.dto.Sign;
 import com.workie.easy.sign.model.service.SignService;
@@ -83,8 +85,7 @@ public class SignController {
 				si.setChangeName(changeName);
 			}
 		}
-		
-		System.out.println("si에 데이터 :" + si);
+
 		signService.insertSign(si);
 		
 		String view = "redirect:signView.do";
@@ -132,12 +133,48 @@ public class SignController {
 			}
 		}
 		
-		System.out.println("si에 데이터 :" + si);
 		signService.insertHelp(si);
 		
 		String view = "redirect:signView.do";
 		
 		return view;
+	}
+	
+	@RequestMapping("insertDay.do")
+	public String insertDay(@ModelAttribute Sign si , HttpServletRequest request) { //휴가원 insert
+		
+		signService.insertDay(si);
+		
+		String view = "redirect:signView.do";
+		
+		return view;
+	}
+	
+	/* 요청대기 함 List */
+	@RequestMapping("signWaitingView.do")
+	public String readSignWaitingView( @RequestParam("empName") String empName, 
+									   @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
+		
+		System.out.println("요청 대기함 찍히는지 확인");
+		
+		System.out.println("요청대기함 잘 넘어왔는지 체크 : " +  empName);
+		
+		int listCount = signService.selectListCount(empName);
+		
+		System.out.println(listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Sign> list = signService.selectWaitingList(pi);
+		
+		System.out.println("list 잘 가져왔는지 체크 : " + list);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+
+		return "sign/signWaitingView";
+		
+	
 	}
 
 	

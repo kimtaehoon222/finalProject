@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.workie.easy.common.CommException;
+import com.workie.easy.common.model.dto.PageInfo;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.sign.model.dao.SignDao;
 import com.workie.easy.sign.model.dto.Sign;
@@ -54,6 +55,36 @@ private SignDao signDao;
 		if(result < 0) {
 			throw new CommException("협조 기안 실패");
 		}
+	}
+
+
+
+	@Override
+	public void insertDay(Sign si) {
+		// TODO Auto-generated method stub
+		
+		int result = signDao.insertDay(sqlSession, si);
+		
+		if(result < 0) {
+			throw new CommException("휴가원 기안 실패");
+		}
+		
+	}
+
+
+
+	@Override
+	public int selectListCount(String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectListCount(sqlSession, empName);
+	}
+
+
+
+	@Override
+	public ArrayList<Sign> selectWaitingList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return signDao.selectWaitingList(sqlSession, pi);
 	}
 
 
