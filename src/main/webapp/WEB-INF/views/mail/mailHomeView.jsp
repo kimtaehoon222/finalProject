@@ -62,8 +62,7 @@ tr:hover{
             <div class="sidebar-left">
                <!-- sidebar start -->
                <div class="sidebar">
-                  <div class="sidebar-content email-app-sidebar d-flex">
-
+                  <div class="sidebar-content email-app-sidebar d-flex card">
 
                      <!-- email-app-menu start -->
                      <div class="email-app-menu">
