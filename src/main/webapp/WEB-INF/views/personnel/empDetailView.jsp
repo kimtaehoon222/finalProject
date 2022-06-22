@@ -130,10 +130,10 @@
               <label for="organization" class="form-label">특이사항</label>
               <input type="text" class="form-control" id="empNote" name="empNote" value=" ${e.empNote}" readonly/>
             </div> 
-         
+       
           </div>
           <div class="mt-2">
-          <button type="button"  id= "home"  class="btn btn-primary me-3">목록으로</button>
+          <button type="button"  id= "home"  class="btn btn-primary me-3" onclick="history.back(-1);">목록으로</button>
           <button type="submit" class="btn btn-primary me-2" onclick="postFormSubmit(1);">수정하기</button>
            <button type="submit" id ="o_butt" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">퇴사하기</button>
           </div>

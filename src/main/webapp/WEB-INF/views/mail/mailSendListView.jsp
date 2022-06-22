@@ -149,8 +149,7 @@
 											<!-- 메일 리스트 상단 끝 -->
 
 											<!-- action right start here -->
-											<div
-												class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
+											<div class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
 												<!-- 검색창 시작 -->
 												<div class="email-fixed-search flex-grow-1">
 													<div

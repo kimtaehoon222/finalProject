@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chartMapper">
+	
+	<resultMap type="ChartForMail" id="chartForMailResult">
+		<result property="departD1" column="DEPART_D1"/>
+		<result property="departD2" column="DEPART_D2"/>
+		<result property="departD3" column="DEPART_D3"/>
+		<result property="departD4" column="DEPART_D4"/>
+		<result property="departD5" column="DEPART_D5"/>
+		<result property="departD6" column="DEPART_D6"/>
+		<result property="departD7" column="DEPART_D7"/>
+	</resultMap>
+	
+	<!-- 월별 부서별 조회 -->
+	<select id="selectChartListForMail" resultMap="chartForMailResult">
+		<![CDATA[
+		SELECT DECODE(TO_CHAR(TO_DATE(SEND_DATE), 'YYYY/MM'), NULL, '부서총합계', TO_CHAR(TO_DATE(SEND_DATE), 'YYYY/MM')) GROUPBY, 
+		       COUNT(CASE WHEN DEPT_CODE = 'D1' THEN 1 ELSE NULL END) DEPART_D1,
+		       COUNT(CASE WHEN DEPT_CODE = 'D2' THEN 1 ELSE NULL END) DEPART_D2,
+		       COUNT(CASE WHEN DEPT_CODE = 'D3' THEN 1 ELSE NULL END) DEPART_D3,
+		       COUNT(CASE WHEN DEPT_CODE = 'D4' THEN 1 ELSE NULL END) DEPART_D4,
+		       COUNT(CASE WHEN DEPT_CODE = 'D5' THEN 1 ELSE NULL END) DEPART_D5,
+		       COUNT(CASE WHEN DEPT_CODE = 'D6' THEN 1 ELSE NULL END) DEPART_D6,
+		       COUNT(CASE WHEN DEPT_CODE = 'D7' THEN 1 ELSE NULL END) DEPART_D7
+	      FROM (SELECT A.TO_MAIL AS TO_MAIL, B.DEPT_CODE AS DEPT_CODE, C.SEND_DATE AS SEND_DATE
+		          FROM MAIL_INFO A 
+		          JOIN EMPLOYEE B ON B.EMP_NO = A.TO_MAIL
+		          JOIN MAIL C ON C.MAIL_NO = A.MAIL_NO)
+		 WHERE DEPT_CODE IN ('D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7')
+	       AND (SEND_DATE >= #{startDate} AND SEND_DATE <= #{endDate})
+	  GROUP BY ROLLUP(TO_CHAR(TO_DATE(SEND_DATE), 'YYYY/MM'))
+	  ORDER BY GROUPBY
+	  	]]>
+	</select>
+
+</mapper>

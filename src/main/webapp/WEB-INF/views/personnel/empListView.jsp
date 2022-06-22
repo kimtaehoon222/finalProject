@@ -16,10 +16,8 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/simple-datatables/style.css">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/css/app.css">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/kjh123/images/favicon.svg" type="image/x-icon">
 </head>
 
 <body>
@@ -35,7 +33,7 @@
 
             <div class="page-heading">
                 
-                <section class="section">
+           
                     <div class="card">
                         <div class="card-header">
                           <h2>직원 목록</h2>
@@ -67,10 +65,11 @@
                                  </c:forEach> 
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
 
-                </section>
+             
             </div>
 
          
