@@ -2,9 +2,11 @@ package com.workie.easy.sign.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.workie.easy.common.model.dto.PageInfo;
 import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.sign.model.dto.Sign;
 
@@ -35,6 +37,25 @@ public class SignDao {
 	public int insertHelp(SqlSessionTemplate sqlSession, Sign si) {
 		
 		return sqlSession.insert("signMapper.insertHelp", si);
+	}
+
+	public int insertDay(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("signMapper.insertDay", si);
+	}
+
+	public int selectListCount(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectListCount", empName);
+	}
+
+	public ArrayList<Sign> selectWaitingList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		// TODO Auto-generated method stub
+		
+		int offset = (pi.getCurrentPage() -1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectWaitingList", null, rowBounds);
 	}
 		
 }
