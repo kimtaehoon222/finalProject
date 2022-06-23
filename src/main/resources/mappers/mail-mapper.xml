@@ -47,7 +47,7 @@
 		 			AND B.STATUS = 'N'
 		 		</when>
 		 		<otherwise>
-		 			<!-- AND B.STATUS = 'Y' -->
+		 			 AND B.STATUS = 'Y'
 		 		</otherwise>
 		 	</choose>
 		 </trim>
