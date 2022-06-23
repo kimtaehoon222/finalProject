@@ -16,7 +16,7 @@ import lombok.ToString;
 public class Chat {
 	private int chatNo;
 	private String message;
-	private int receiver;
-	private int sender;
+	private int toChat;
+	private int fromChat;
 	private String sendTime;
 }
