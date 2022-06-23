@@ -5,7 +5,7 @@
 	<resultMap type="Sign" id="singResultSet">
 		<id property="signNo" column="SIGN_NO"/>
 		<result property="typeCode" column="TYPE_CODE"/>
-		<result property="signTitle" column="SING_TITLE"/>
+		<result property="signTitle" column="SIGN_TITLE"/>
 		<result property="empNo" column="EMP_NO"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="firstApprover" column="FIRST_APPROVER"/>
@@ -26,8 +26,15 @@
 		<result property="lastDate" column="LAST_DATE"/>
 		<result property="title" column="TITLE"/>
 		<result property="reason" column="REASON"/>
-		<result property="vNo" column="V_NO"/>
+		<result property="vCode" column="V_CODE"/>
 		<result property="ctgNo" column="CTG_NO"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="deptCode" column="DEPT_CODE"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="jobName" column="JOB_NAME"/>
+		<result property="jobCode" column="JOB_CODE"/>
+		<result property="refNo" column="REF_NO"/>
+		
 		
 	</resultMap>
 
@@ -57,17 +64,17 @@
 	
 	
 	<select id="selectList" resultMap="employeeResultSet">
-  		 SELECT
+  		SELECT
             A.*,
 			B.DEPT_NAME,
             C.JOB_NAME
-			FROM
-			 EMPLOYEE A
+		FROM
+			EMPLOYEE A
 			JOIN DEPARTMENT B ON A.DEPT_CODE = B.DEPT_CODE
             JOIN JOB C ON A.JOB_CODE = C.JOB_CODE
-			WHERE A.JOB_CODE IN ( 'J5', 'J4', 'J3' )
-			AND B.DEPT_NAME IN ( '기획영업부', '마케팅부', '인사관리부')
-			ORDER BY B.DEPT_NAME, A.JOB_CODE DESC
+		WHERE A.JOB_CODE IN ( 'J5', 'J4', 'J3' )
+		AND B.DEPT_NAME IN ( '기획영업부', '마케팅부', '인사관리부')
+		ORDER BY B.DEPT_NAME, A.JOB_CODE DESC
 			
 	</select>
 
@@ -113,29 +120,65 @@
 		VALUES(SEQ_GNO.NEXTVAL, 'CC', #{title}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{reason})
 		</if>
 		INTO VACATION_FORM
-		VALUES(SEQ_GNO.CURRVAL, #{title}, #{reason}, #{firstDate}, #{lastDate}, #{vNo})
+		VALUES(SEQ_GNO.CURRVAL, #{title}, #{reason}, #{firstDate}, #{lastDate}, #{vCode})
 		
 		SELECT * 
 	      FROM DUAL
 	</insert>	
 	
 	<select id="selectListCount" parameterType="string" resultType="_int">
-	SELECT COUNT(*)
-	FROM SIGN
-	WHERE STATUS_CODE = 'W'
-	AND FIRST_APPROVER LIKE '%'||#{empName}||'%'
-	AND STATUS = 'Y'
+	
+		SELECT COUNT(*)
+		FROM SIGN
+		WHERE STATUS_CODE = 'W'
+		AND FIRST_APPROVER LIKE '%'||#{empName}||'%'
+		AND STATUS = 'Y'
+		
 	</select>
 		
-	<select id="selectWaitingList" parameterType="Sign">
-	SELECT 
-		A.SIGN_NO,
-		B.TYPE_NAME,  
-	FROM BOARD
-	WHERE STATUS = 'Y'
-	ORDER BY BOARD_NO DESC
+	<select id="selectWaitingList" resultMap="singResultSet">
+	
+		SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+	        A.SIGN_CONTENT,
+	        D.DEPT_NAME,
+	        A.CREATE_NAME,
+	        A.CREATE_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+	    WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'W'
+	    AND A.STATUS = 'Y'
+	    ORDER BY A.SIGN_NO DESC
+    
 	</select>
-		
+	
+	<select id="selectAAlist" resultMap="singResultSet">
+	SELECT
+	    A.SIGN_NO, <!-- 결재번호  -->
+	    A.CREATE_NAME, <!--기안자 -->
+	    A.CREATE_DATE, <!--기안일 -->
+	    B.JOB_NAME, <!-- 직급명 -->
+	    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+	    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+	    A.SIGN_TITLE,
+	    A.SIGN_CONTENT,
+	    D.CHANGE_NAME <!-- 파일 원래 이름 -->
+    FROM SIGN A
+	    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+	    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+	    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+	    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+    WHERE A.SIGN_NO = #{signNo}
+    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+    AND A.STATUS_CODE = 'W'
+    AND A.STATUS = 'Y'
+	
+	
+	</select>	
 	</mapper>
 
 		

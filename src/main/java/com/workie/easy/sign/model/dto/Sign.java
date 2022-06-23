@@ -34,6 +34,7 @@ public class Sign {
 	
 	private String empName;//사원이름
 	private String jobName;//직위명
+	private String jobCode;//직위코드
 	
 	/* 파일 */
 	private int fileNo;							/* 파일 번호 */
@@ -44,7 +45,7 @@ public class Sign {
 	private Date uploadDate;					/* 업로드일 */
 	
 	/* 품의, 협조 */
-	private Date expiryDate; //문서 만료일
+	private String expiryDate; //문서 만료일
 	private String ctgNo; //분류코드
 	
 	private String check; // 1년
@@ -54,11 +55,15 @@ public class Sign {
 	private String reason; //사유
 	private Date firstDate; //휴가 시작일
 	private Date lastDate; //휴가 종료일
-	private String vNo; //휴가종류
+	private String vCode; //휴가종류
 	
-	private String vName;
+	/* 결재 유형 */
+	private String typeName; //유형명 (품의, 협조, 휴가)
+	
+	/* 부서 */
+	private String deptCode;
 	private String deptName;
-	
+	private String deptPwd;
 	
 }
 
