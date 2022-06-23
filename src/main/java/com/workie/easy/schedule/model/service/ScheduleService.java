@@ -22,4 +22,6 @@ public interface ScheduleService {
 
 	int selectListCount(Map<String, Object> hash);
 
+	ArrayList<Schedule> selectDayScheduleList(Schedule sked);
+
 }

@@ -157,4 +157,24 @@
 		       )	
 	</select>
 	
+	<select id="dayScheduleList" resultMap="scheduleResultSet">
+		SELECT 
+		       A.SKED_NO
+		     , A.SKED_TITLE
+		     , A.SKED_CONTENT
+		     , B.SKED_START_TIME
+		     , B.SKED_END_TIME
+	         , C.RGB_CODE
+		  FROM SCHEDULE A
+		  JOIN SCHEDULE_INFO B ON (A.SKED_NO = B.SKED_NO)
+		  JOIN SCHEDULE_COLOR C ON(A.COLOR_CODE=C.COLOR_CODE)
+		 WHERE A.SKED_STATUS = 'Y'
+		   AND A.EMP_NO = #{empNo}
+		<![CDATA[ 
+		   AND (B.SKED_START BETWEEN #{skedStart} AND #{skedStart})
+		    OR (B.SKED_END BETWEEN #{skedStart} AND #{skedStart})
+		    OR (B.SKED_START <= #{skedStart} AND B.SKED_END >=#{skedStart})
+		]]>
+	</select>
+	
 </mapper>
