@@ -6,7 +6,6 @@
 	<resultMap type="Department" id="departmentResultSet">
 		<id column="DEPT_CODE" property="deptCode"/>
 		<result column="DEPT_NAME" property="deptName"/>
-		
 	</resultMap>
 	
 	<resultMap type="Contect" id="ContectResultSet">
@@ -16,8 +15,15 @@
 		<result column="EMP_NAME" property="empName"/>
 		<result column="DEPT_NAME" property="deptName"/>
 		<result column="JOB_NAME" property="jobName"/>
+		<result column="EMP_ID" property="empId"/>
+	</resultMap>
 	
-	
+	<resultMap type="Chat" id="ChatResultSet">
+		<id column="CHAT_NO" property="chatNo"/>
+		<result column="MESSAGE" property="message"/>
+		<result column="TO_CHAT" property="toChat"/>
+		<result column="FROM_CHAT" property="fromChat"/>
+		<result column="SENDTIME" property="sendTime"/>
 	</resultMap>
 
 	<select id="selectDeptList" resultMap="departmentResultSet">
@@ -39,7 +45,45 @@
    LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
    LEFT JOIN WORK_STATUS_TYPE E ON A.S_CODE = E.S_CODE
 	   WHERE B.ENT_YN = 'Y' AND D.DEPT_NAME = #{deptName}
-	
-	
 	</select>
+	
+	
+	<select id="selectEmployee" parameterType="_int" resultMap="ContectResultSet">
+	  SELECT 
+		     A.EMP_NO
+		   , E.S_NAME
+		   , B.EMP_NAME
+		   , D.DEPT_NAME
+		   , C.JOB_NAME
+		   , B.EMP_ID
+		FROM CONTECT A
+   LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+   LEFT JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
+   LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
+   LEFT JOIN WORK_STATUS_TYPE E ON A.S_CODE = E.S_CODE
+	   WHERE B.ENT_YN = 'Y' AND A.EMP_NO = #{empNo}
+	</select>
+	
+	<select id="selectChatList" parameterType="Chat" resultMap="ChatResultSet">
+ <![CDATA[
+	SELECT 
+		*
+	  FROM CHAT
+	 WHERE (TO_CHAT = #{toChat}
+       AND FROM_CHAT= #{fromChat})
+		OR (TO_CHAT= #{fromChat} AND FROM_CHAT = #{toChat})
+	   AND ROUND((SYSDATE-TO_DATE(SENDTIME,'YYYY-MM-DD HH24:MI:SS'))*24,2) <= 48
+  ORDER BY SENDTIME
+	   ]]>
+	</select>
+	
+	<insert id="insertMessage" parameterType="Chat">
+		INSERT INTO CHAT 
+		VALUES
+		(SEQ_CNO.NEXTVAL, #{message}, #{toChat}, #{fromChat}, TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS'))
+	
+	
+	</insert>
+	
+	
 </mapper>

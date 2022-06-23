@@ -38,6 +38,8 @@ public class EchoHandler extends TextWebSocketHandler { //메세지 전송용 �
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 	       	       
+		 System.out.println("handleTextMessage : " + session + " : " + message);
+			
 			String senderId = getId(session);
 			String text = "";
 			String msg = message.getPayload();
@@ -51,21 +53,21 @@ public class EchoHandler extends TextWebSocketHandler { //메세지 전송용 �
 				String[] strArr = message.getPayload().split(",");
 				if(strArr != null) {
 					
-					func = strArr[0];
+	
 
 
 
-						 sender = strArr[1];
-						 receiver = strArr[2];
-						 receiverNo = strArr[3];
-						 text = strArr[4];
+					 sender = strArr[0];
+					 receiver = strArr[1];
+					 receiverNo = strArr[2];
+					 text = strArr[3];
 
 		
 				
 	
 					WebSocketSession receiverSession = userSessions.get(receiver);
-					if("chat".contentEquals(func) && receiverSession != null) {   //받는 이가 로그인한 상태라면 
-						receiverSession.sendMessage(new TextMessage("<a href='chat.do?eno="+String.valueOf(receiverNo)+"'>새로운 메세지가 도착했습니다</a>"+"," + text ));
+					if(receiverSession != null) {   //받는 이가 로그인한 상태라면 
+						receiverSession.sendMessage(new TextMessage("<a href='chat.do?empNo="+String.valueOf(receiverNo)+"'>새로운 메세지가 도착했습니다</a>"+"," + text ));
 					}
 					
 				

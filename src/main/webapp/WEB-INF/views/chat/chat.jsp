@@ -157,35 +157,38 @@
 
 
 										<div style="float: left;">
-											
+											<img
+												src="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/users/3.jpg"
+												alt="user" class="rounded-circle" width="65">
 										</div>
 
 										<div style="float: left; margin-left: 10px;">
-											
+											<c:choose>
+												<c:when test="${not empty toChat }">
 													<span id='receiverName'
-														style="font-size: 22px; color: #1c2d41; font-weight: bold;"></span>
-													<span id="job" style="font-size: 16px;"></span>
+														style="font-size: 22px; color: #1c2d41; font-weight: bold;">${ toChat.empName}</span>
+													<span id="job" style="font-size: 16px;">${ toChat.jobName}</span>
 													<br>
-													<span id="dept" style="font-size: 12px;"> 
-													</span>
-													<span id="email" style='font-size: 12px;'></span>
-													<span id="phone" style='font-size: 12px;'></span>
+													<span id="dept" style="font-size: 12px;"> ${ toChat.deptName}</span>
 													<input id="receiver" type="hidden" name="receiver"
-														value="" />
-													<input id="receiverId" type="hidden" name="receiverId"
-														value="" />
-				
+														value="${toChat.empNo }" />
+														
+														<input id="receiverId" type="hidden" name="receiverId"
+														value="${toChat.empId }" />
 												
+				
+												</c:when>
+												<c:otherwise>
 
 													<span style="font-size: 14px;"><i class="icon-clock"></i>
 														 채팅 내역은 일주일 동안 보존됩니다.</span>
 													<br>
 													<span style="font-size: 14px;">이후에는 삭제 되므로 이전 기록이 필요하시면
 														 보안실로 문의 해 주세요.</span>
-											
+												</c:otherwise>
 
 
-										
+											</c:choose>
 										</div>
 									</div>
 										<div id="newAlert" style="display:none;" class="alert alert-dark alert-dismissible fade show mb-0" role="alert">
@@ -202,32 +205,32 @@
 
 
 											<!-- 이전 기록 조회 -->
-											
-												
+											<c:forEach items="${ chatList }" var="c">
+												<c:if test="${ c.toChat eq loginEmp.empNo }">
 													<li class="chat-item odd list-style-none mt-3">
 														<div class="chat-content text-right d-inline-block pl-3">
-															<div class="box msg p-2 d-inline-block mb-1">${c.msg}
+															<div class="box msg p-2 d-inline-block mb-1">${c.message}
 															</div>
 															<br>
 														</div>
 													</li>
-											
-											
+												</c:if>
+												<c:if test="${ c.toChat ne loginEmp.empNo }">
 													<li class="chat-item list-style-none mt-3">
 														<div class="chat-img d-inline-block">
 															<img
-																src="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/users/3.jpg"
+																src="${ pageContext.servletContext.contextPath }/resources/assets/images/users/3.jpg"
 																alt="user" class="rounded-circle" width="45">
 														</div>
 														<div class="chat-content d-inline-block pl-3">
-															<div class="msg p-2 d-inline-block mb-1">${c.msg}</div>
+															<div class="msg p-2 d-inline-block mb-1">${c.message}</div>
 														</div>
 
 													</li>
-												
+												</c:if>
 
 
-											
+											</c:forEach>
 
 											<!-- 메시지 올라오는 화면 -->
 										</ul>
@@ -258,20 +261,36 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- ============================================================== -->
+			<!-- End Container fluid  -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- footer -->
+			<!-- ============================================================== -->
 				<jsp:include page="../common/bottom.jsp" />
-		
+			<!-- ============================================================== -->
+			<!-- End footer -->
+			<!-- ============================================================== -->
 		</div>
-		
+		<!-- ============================================================== -->
+		<!-- End Page wrapper  -->
+		<!-- ============================================================== -->
 	</div>
-	
+	<!-- ============================================================== -->
+	<!-- End Wrapper -->
+	<!-- ============================================================== -->
+	<!-- End Wrapper -->
+	<!-- ============================================================== -->
+	<!-- All Jquery -->
+	<!-- ============================================================== -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/jquery/dist/jquery.min.js"></script>
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/popper.js/dist/umd/popper.min.js"></script>
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-
+	<!-- apps -->
+	<!-- apps -->
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_dist/js/app-style-switcher.js"></script>
 	<script
@@ -289,8 +308,81 @@
 	$(function(){
 		
 		selectDeptList();
+		
+
+		
 	});
+
+
 	
+$(function(){
+
+		connectWS();
+})
+
+var socket = null;
+
+function connectWS() {
+    var ws = new WebSocket("ws://localhost:8090/spring/appServlet/echo"); //핸들러 매핑주소로 생성 
+    socket = ws;
+    ws.onopen = function () {
+        console.log('Info: connection opened.');
+    };
+
+    
+    ws.onclose = function (event) { 
+        console.log('Info: connection closed.');
+    };
+    ws.onerror = function (err) { console.log('Error:', err); };
+    
+
+}
+	
+	
+	
+	
+	let target = document.querySelector('.chat-list');
+	// 감시자 인스턴스 만들기
+	let observer = new MutationObserver((mutations) => {
+	    // 노드가 변경 됐을 때의 작업
+	    
+	    //새로운 메세지 오면 스크롤바 제일 아래로
+	      $('.chat-list').parent().animate({
+	          scrollTop: $('.chat-list').height()
+	        }, 300);
+	    
+	})
+	// 감시자의 설정
+	let option = {
+	    attributes: true,
+	    childList: true,
+	    characterData: true
+	};
+	// 대상 노드에 감시자 전달
+	observer.observe(target, option);
+	
+	
+    $('#message').on('keypress',function(e){
+        if (e.keyCode == 13) {
+            var message = $(this).val();
+            var receiver = $("#receiver").val();
+            
+               sendAjax(message);
+
+            $(".chat-list").append( 
+                   `
+                       <li class="chat-item odd list-style-none mt-3">
+                       <div class="chat-content text-right d-inline-block pl-3">
+                           <div class="box msg p-2 d-inline-block mb-1">\${message} </div>
+                           <br>
+                       </div>
+                   </li>`
+                   );
+           $(this).val("");
+           $(this).focus(); 
+       }
+        
+	});
 		var selectDeptList = function(){
 		
 		var contectList = $("#contectListArea");
@@ -337,28 +429,66 @@
         		},
         		success : function(list){
               		list.forEach((e => {
+              			if(e.empNo != ${ loginEmp.empNo }){//값이 넘어온 사원 번호가 session에 empNo랑 같지 않으면 
               		
-              		
-              				deptArea.append(
-    								`<div style="margin-left:20px;">
-            							<a href="chat.do?eno=\${e.empNo}">
+              				deptArea.append(`
+    								<div style="margin-left:20px;">
+            							<a href="chat.do?empNo=\${e.empNo}">
     	        								<li class="nameList">
     	    											<span style="font-size:16px; color:#1C2D41;">\${e.empName}</span>
     	    											<span style="font-size:10px; color:rgb(124, 127, 251); display:inline-block; margin-left:10px;">(\${e.sName})</span>
     	    									</li>
     									</a>
-    								</div>`
-    								       )
-
+    								</div>
+    								`)
+              			}
             		}));
         		}
         	})
-  
+        	
+        	
+        	
+
         }
-
+		var socket = null;
+		
+	       var sendAjax = function(message){
+	    		
+	    		
+	           
+	           
+	           
+	           var message = message;
+	        	var toChat = $("#receiver").val();
+	         	var receiverId = $("#receiverId").val();
+	         	var fromChat = '${ loginEmp.empNo }';
+	        	var senderId = '${ loginEmp.empId }';
+	                       
+	               $.ajax({
+	                  url:'sendMessage.do',
+	                  type:'post',
+	                  data:{
+	                     message : message,
+	                     toChat : toChat,
+	                     fromChat : fromChat
+	                  },
+	                  success:function(result){
+	                     if(result == 1){
+	                     
+	                    	
+	                    	 socket.send(senderId +"," + receiverId+","+fromChat +"," + message);
+	                    	console.log("socket 들어오나 확인" + socket)
+	                     }else{
+	                        alert("현재 서버오류로 채팅이 불가합니다.");
+	                     }
+	                  }
+	               }) 
+	              
+	         }
+	     
 		
 		
-
+		
 </script>
 </body>
 
