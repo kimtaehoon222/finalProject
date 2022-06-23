@@ -30,6 +30,8 @@ import com.workie.easy.schedule.model.service.ScheduleService;
 * 2022/06/18 (전재은) 일정상세조회 추가
 * 2022/06/20 (전재은) 일정등록추가
 * 2022/06/21 (전재은) 일정검색, 선택일자일정목록조회 추가
+* 2022/06/22 (전재은) 일정검색 수정
+* 2022/06/23 (전재은) 선택일자일정목록조회 수정
 * </pre>
 * @version 1
 * @author 전재은
@@ -240,13 +242,36 @@ public class ScheduleController {
 		
 	}
 	
-	/*선택 일자 일정목록 조회*/
+	/*선택일자 일정목록 조회*/
 	@RequestMapping("selectDayList.do")
 	@ResponseBody
-	public String selectDayScheduleList() {
+	public JSONArray selectDayScheduleList(int empNo, String skedDay) {
+		Schedule sked = new Schedule();
+		sked.setEmpNo(empNo);
+		sked.setSkedStart(skedDay);
 		
+		/*서비스 연결*/
+		ArrayList<Schedule> skedlist = scheduleService.selectDayScheduleList(sked);
 		
-		return "schedule/schedule";
+		/*ArrayList를 담을 JsonObject, Json을 배열로 변환시켜줄 JsonArray*/
+		JSONArray jsonArr = new JSONArray();
+		
+		/*반복문으로 시간값 정리, hashMap에 값 담고 json처리*/
+		for(int i=0; i < skedlist.size(); i++) {
+			
+			JSONObject jsonSked = new JSONObject();
+			
+			jsonSked.put("id", skedlist.get(i).getSkedNo()); 				//ID
+			jsonSked.put("title", skedlist.get(i).getSkedTitle()); 			//제목
+			jsonSked.put("content", skedlist.get(i).getSkedContent()); 		//내용
+			jsonSked.put("startTime", skedlist.get(i).getSkedStartTime()); 	//시작시간
+			jsonSked.put("endTime", skedlist.get(i).getSkedEndTime());		//종료시간
+			jsonSked.put("color", "rgba("+skedlist.get(i).getRgbCode()+", 0.5)");		//종료시간
+			
+			jsonArr.add(jsonSked);
+		}
+		
+		return jsonArr;
 		
 	}
 

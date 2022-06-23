@@ -83,5 +83,11 @@ public class ScheduleDao {
 		
 	}
 
+	public ArrayList<Schedule> selectDayScheduleList(SqlSessionTemplate sqlSession, Schedule sked) {
+
+		return (ArrayList)sqlSession.selectList("skedMapper.dayScheduleList", sked);
+		
+	}
+
 
 }
