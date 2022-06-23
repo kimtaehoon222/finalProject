@@ -19,7 +19,7 @@ public class VacationForm {
 	private String reason; //사유
 	private Date firstDate; //휴가 시작일
 	private Date lastDate; //휴가 종료일
-	private String vNo; //휴가종류
+	private String vCode; //휴가종류
 	
 	//조인
 

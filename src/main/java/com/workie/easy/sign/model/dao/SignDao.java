@@ -49,13 +49,18 @@ public class SignDao {
 		return sqlSession.selectOne("signMapper.selectListCount", empName);
 	}
 
-	public ArrayList<Sign> selectWaitingList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Sign> selectWaitingList(SqlSessionTemplate sqlSession, PageInfo pi, String empName) {
 		// TODO Auto-generated method stub
 		
 		int offset = (pi.getCurrentPage() -1)* pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectWaitingList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("signMapper.selectWaitingList", empName, rowBounds);
+	}
+
+	public Sign selectAAList(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectAAlist", si);
 	}
 		
 }

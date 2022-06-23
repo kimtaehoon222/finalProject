@@ -82,9 +82,17 @@ private SignDao signDao;
 
 
 	@Override
-	public ArrayList<Sign> selectWaitingList(PageInfo pi) {
+	public ArrayList<Sign> selectWaitingList(PageInfo pi, String empName) {
 		// TODO Auto-generated method stub
-		return signDao.selectWaitingList(sqlSession, pi);
+		return signDao.selectWaitingList(sqlSession, pi, empName);
+	}
+
+
+
+	@Override
+	public Sign selectAAList(Sign si) {
+		// TODO Auto-generated method stub
+		return signDao.selectAAList(sqlSession, si);
 	}
 
 

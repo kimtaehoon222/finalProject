@@ -543,9 +543,9 @@
 								<b id="center">휴가 종류</b>
 							</p>
 
-							&nbsp<input type="radio" id="huey" name="vNo" value="Y" checked>
+							&nbsp<input type="radio" id="huey" name="vCode" value="Y" checked>
 							<label for="huey">'Y'=연차</label> &nbsp&nbsp <input type="radio"
-								id="dewey" name="vNo" value="H"> <label
+								id="dewey" name="vCode" value="H"> <label
 								for="dewey">'H'= 반차</label>
 
 						</fieldset>

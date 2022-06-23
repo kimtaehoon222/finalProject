@@ -15,7 +15,7 @@ import lombok.ToString;
 public class StandardForm {
 	
 	private int signNo; //결재번호
-	private Date expiryDate; //문서 만료일
+	private String expiryDate; //문서 만료일
 	private String ctgNo; //분류코드
 	private String signContent; //결재 내용
 }

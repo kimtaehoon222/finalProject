@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -143,6 +144,8 @@ public class SignController {
 	@RequestMapping("insertDay.do")
 	public String insertDay(@ModelAttribute Sign si , HttpServletRequest request) { //휴가원 insert
 		
+		System.out.println("controller에 들고 왔는지 체크 : " + si.getVCode());
+		
 		signService.insertDay(si);
 		
 		String view = "redirect:signView.do";
@@ -152,12 +155,12 @@ public class SignController {
 	
 	/* 요청대기 함 List */
 	@RequestMapping("signWaitingView.do")
-	public String readSignWaitingView( @RequestParam("empName") String empName, 
-									   @RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage, Model model) {
+	public String readSignWaitingView(@RequestParam(value="currentPage", required = false, defaultValue = "1")
+									                int currentPage, Model model, HttpSession session) {
 		
-		System.out.println("요청 대기함 찍히는지 확인");
-		
-		System.out.println("요청대기함 잘 넘어왔는지 체크 : " +  empName);
+
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+
 		
 		int listCount = signService.selectListCount(empName);
 		
@@ -165,17 +168,48 @@ public class SignController {
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
-		ArrayList<Sign> list = signService.selectWaitingList(pi);
-		
-		System.out.println("list 잘 가져왔는지 체크 : " + list);
-		
+		ArrayList<Sign> list = signService.selectWaitingList(pi, empName);
+
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 
 		return "sign/signWaitingView";
 		
-	
+		
 	}
 
+
+	@ResponseBody
+	@RequestMapping(value="selectAAList.do",method=RequestMethod.POST)
+	public JSONObject selectAAList (int signNo, HttpSession session) {
+		
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName(); //현재 접속한 사용자의 이름
+		
+		System.out.println("signNo 찍어보기 : " + signNo);
+		
+		/* 파라미터값 set */
+		Sign si = new Sign();
+		si.setSignNo(signNo); //결재 번호 셋팅
+		si.setFirstApprover(empName);
+		
+		/* 서비스 연결  */
+		Sign s = signService.selectAAList(si);
+
+		/* Json에 담기 */
+		JSONObject jsonSign = new JSONObject();
+		jsonSign.put("signNo", s.getSignNo());
+		jsonSign.put("createName", s.getCreateName());
+		jsonSign.put("createDate", s.getCreateDate());
+		jsonSign.put("jobName", s.getJobName());
+		jsonSign.put("expiryDate", s.getExpiryDate());
+		jsonSign.put("finalApprover", s.getFinalApprover());
+		jsonSign.put("signTitle", s.getSignTitle());
+		jsonSign.put("signContent", s.getSignContent());
+		jsonSign.put("changeName", s.getChangeName());
+		
+		
+		return jsonSign;
+
+	}
 	
 }
