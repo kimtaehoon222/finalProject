@@ -39,6 +39,24 @@ public class ChartServiceImpl implements ChartService {
 		return chartDao.selectChartListForMail(sqlSession, chartForMail);
 	}
 
+	@Override
+	public ArrayList<ChartForMail> selectChartListForMailByMonth(ChartForMail chartForMail) {
+
+		return chartDao.selectChartListForMailByMonth(sqlSession, chartForMail);
+	}
+
+	@Override
+	public ArrayList<ChartForMail> selectChartListForMailFrom(ChartForMail chartForMail) {
+
+		return chartDao.selectChartListForMailFrom(sqlSession, chartForMail);
+	}
+
+	@Override
+	public ArrayList<ChartForMail> selectChartListForMailByMonthFrom(ChartForMail chartForMail) {
+
+		return chartDao.selectChartListForMailByMonthFrom(sqlSession, chartForMail);
+	}
+
 
 	
 }

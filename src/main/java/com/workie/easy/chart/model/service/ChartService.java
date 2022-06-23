@@ -8,5 +8,10 @@ public interface ChartService {
 
 	ArrayList<ChartForMail> selectChartListForMail(ChartForMail chartForMail);
 
+	ArrayList<ChartForMail> selectChartListForMailByMonth(ChartForMail chartForMail);
+
+	ArrayList<ChartForMail> selectChartListForMailFrom(ChartForMail chartForMail);
+
+	ArrayList<ChartForMail> selectChartListForMailByMonthFrom(ChartForMail chartForMail);
 
 }

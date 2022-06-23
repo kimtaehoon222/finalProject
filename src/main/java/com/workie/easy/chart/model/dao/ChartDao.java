@@ -30,4 +30,20 @@ public class ChartDao {
 		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForMail", chartForMail);
 	}
 
+	public ArrayList<ChartForMail> selectChartListForMailByMonth(SqlSession sqlSession, ChartForMail chartForMail) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForMailByMonth", chartForMail);
+	}
+
+	public ArrayList<ChartForMail> selectChartListForMailFrom(SqlSession sqlSession, ChartForMail chartForMail) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForMailFrom", chartForMail);
+	}
+
+	public ArrayList<ChartForMail> selectChartListForMailByMonthFrom(SqlSession sqlSession, ChartForMail chartForMail) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForMailByMonthFrom", chartForMail);
+	}
+
+
 }
