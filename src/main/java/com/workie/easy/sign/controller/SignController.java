@@ -172,7 +172,7 @@ public class SignController {
 
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
-
+		
 		return "sign/signWaitingView";
 		
 		
@@ -181,7 +181,7 @@ public class SignController {
 
 	@ResponseBody
 	@RequestMapping(value="selectAAList.do",method=RequestMethod.POST)
-	public JSONObject selectAAList (int signNo, HttpSession session) {
+	public JSONObject selectAAList (int signNo, HttpSession session) { //품의 조회 
 		
 		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName(); //현재 접속한 사용자의 이름
 		
@@ -206,10 +206,49 @@ public class SignController {
 		jsonSign.put("signTitle", s.getSignTitle());
 		jsonSign.put("signContent", s.getSignContent());
 		jsonSign.put("changeName", s.getChangeName());
+		jsonSign.put("originName", s.getOriginName());
+		
 		
 		
 		return jsonSign;
 
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="selectBBList.do",method=RequestMethod.POST)
+	public JSONObject selectBBList (int signNo, HttpSession session) { //협조 조회
+		
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName(); //현재 접속한 사용자의 이름
+		
+		System.out.println("signNo 찍어보기 : " + signNo);
+		
+		/* 파라미터값 set */
+		Sign si = new Sign();
+		si.setSignNo(signNo); //결재 번호 셋팅
+		si.setFirstApprover(empName);
+		
+		/* 서비스 연결  */
+		Sign s = signService.selectBBList(si);
+
+		/* Json에 담기 */ 
+		JSONObject jsonSign = new JSONObject();
+		jsonSign.put("signNo", s.getSignNo());
+		jsonSign.put("createName", s.getCreateName());
+		jsonSign.put("createDate", s.getCreateDate());
+		jsonSign.put("jobName", s.getJobName());
+		jsonSign.put("expiryDate", s.getExpiryDate());
+		jsonSign.put("finalApprover", s.getFinalApprover());
+		jsonSign.put("signTitle", s.getSignTitle());
+		jsonSign.put("signContent", s.getSignContent());
+		jsonSign.put("changeName", s.getChangeName());
+		jsonSign.put("originName", s.getOriginName());
+		
+		
+		return jsonSign;
+
+	}
+	
+	
+
 }

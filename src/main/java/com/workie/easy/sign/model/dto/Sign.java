@@ -20,7 +20,7 @@ public class Sign {
 	private String typeCode; //유형코드 (품의 : AA, 현조 : BB, 휴가 : CC)
 	private String signTitle; //결재제목
 	private int empNo; //사원번호
-	private Date createDate; //기안일
+	private String createDate; //기안일
 	private String firstApprover; //1차 결재자
 	private String finalApprover; //최종 결재자
 	private Date firstSignDate; //1차 승인일

@@ -97,6 +97,14 @@ private SignDao signDao;
 
 
 
+	@Override
+	public Sign selectBBList(Sign si) {
+		// TODO Auto-generated method stub
+		return signDao.selectBBList(sqlSession, si);
+	}
+
+
+
 
 
 }
