@@ -16,7 +16,7 @@ margin-left: 50px;
 .time{width: 900px}
 </style>
 <body>
-<jsp:include page="top.jsp"/>
+  			<jsp:include page="../common/top.jsp"/> 
 <div id="kim">
 <h4 class="fw-bold py-3 mb-4">회의실/상세</h4>
 <div class="col-xl">
@@ -72,6 +72,6 @@ margin-left: 50px;
   </div>
   </div>
   <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-  <jsp:include page="bottom.jsp"/>
+  			<jsp:include page="../common/bottom.jsp"/> 
 </body>
 </html>

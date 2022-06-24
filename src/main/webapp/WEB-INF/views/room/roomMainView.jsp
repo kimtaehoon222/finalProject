@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%--@page import="java.util.ArrayList" import="com.workie.easy.schedule.model.dto.Schedule"--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -10,17 +9,19 @@
 <link href='${pageContext.request.contextPath}/resources/jje_css/FullCalendar/lib/main.css' rel='stylesheet' />
 <script src='${pageContext.request.contextPath}/resources/jje_css/FullCalendar/lib/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/jje_css/FullCalendar/lib/locales-all.js'></script>
+
 </head>
 <body>
 	
-	<jsp:include page="WEB-INF/views/common/top.jsp"/> 
+	<jsp:include page="../common/top.jsp"/> 
 	
-	<link href='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.css' rel='stylesheet' />
+	<link href='${pageContext.request.contextPath}/resources/kjhFullcalendar/kjh_schedule.css' rel='stylesheet' />
 	
 	<div class="container-xxl flex-grow-1 container-p-y">
 	
 		<!----------------------------------- 본문 ----------------------------------->
-		<div class="row">
+				<div class="row"  style="display: flex; justify-content: space-between;">
+		
 			<div class="col-lg-8">
 			  <!-- Pills -->
 			  <div class="nav-align-top mb-4">
@@ -28,28 +29,37 @@
 			      <ul class="nav nav-tabs" role="tablist">
 			          <li class="nav-item">
 			          <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-			              	  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" ria-selected="true"
-			              	  id="C_sked" onclick="selectCatecory(this)">
+			              	  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" aria-selected="true"
+			              	  id="room1" onclick="selectCatecory(this)">
 			                                회의실 1
 			          </button>
+			          <!--role="tab" :보조기기가 탭으로 인식  -->
 			          </li>
 			          <li class="nav-item">
 			          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
 			                  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" aria-selected="false"
-			                  id="P_sked" onclick="selectCatecory(this)">
+			                  id="room2" onclick="selectCatecory(this)">
 			              	   회의실 2
 			          </button>
 			          </li>
 			          <li class="nav-item">
 			          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
 			                  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" aria-selected="false"
-			                  id="D_sked" onclick="selectCatecory(this)">
+			                  id="room3" onclick="selectCatecory(this)">
 			              	   회의실 3
 			          </button>
 			          </li>
+			            <li class="nav-item">
+			          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+			                  data-bs-target="#comb_calendar_p" aria-controls="comb_calendar_p" aria-selected="false"
+			                  id="room4" onclick="selectCatecory(this)">
+			              	   회의실 4
+			          </button>
+			          </li>
+			        
 			      </ul>
 			      <!------------------- 등록 모달 ------------------->
-			      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do"  onsubmit="return sked_submit()"method="POST">
+			   <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertResRoom.do"  onsubmit="return sked_submit()"method="POST">
 			          <div class="modal-dialog modal-l" role="document">
 			          <div class="modal-content">
 			              <!-- 모달 헤더 -->
@@ -66,10 +76,13 @@
 			                  <div class="row">
 			                  <!-- 카테고리 -->
 			                      <div class="col mb-3">
-			                      <label for="sked_code" class="form-label">카테고리</label>
+			                      <label for="sked_code" class="form-label">회의실 선택</label>
 			                          <select id="sked_code" name="skedCode" class="form-select" autofocus required>
-			                              <option value="P" id="sked_code_P">개인</option>
-			                           
+			                              <option value="P" id="sked_code_P">회의실1(5)</option>
+			                              <option value="P" id="sked_code_P">회의실2(2)</option>
+			                              <option value="P" id="sked_code_P">회의실3(4)</option>
+			                              <option value="P" id="sked_code_P">회의실4(7)</option>
+			                              <option value="P" id="sked_code_P">회의실5(8)</option>
 			                          </select>
 			                      </div>
 			                    
@@ -78,8 +91,8 @@
 			                  <!-- 2번줄 -->
 			                  <div class="row">
 			                      <div class="col mb-3">
-			                          <label for="sked_title" class="form-label">제목</label>
-			                          <input type="text" id="sked_title" name="skedTitle" class="form-control" placeholder="제목을 입력하세요." required/>
+			                          <label for="sked_title" class="form-label">회의제목</label>
+			                          <input type="text" id="meetTitle" name="meetTitle" class="form-control" placeholder="제목을 입력하세요." required/>
 			                      </div>
 			                  </div>
 			                  
@@ -87,33 +100,25 @@
 			                  <div class="row" id="line3">
 			                  <!-- 시작 날짜 -->
 			                      <div class="col mb-3">
-			                          <label for="start_date" class="form-label">날짜</label>
+			                          <label for="start_date" class="form-label">예약날짜</label>
 			                          <input id="start_date" name="skedStart" type="date" class="form-control" required>
-			                          <label for="end_date" class="form-label">종료날짜</label>
-			                          <input id="end_date" name="skedEnd" type="date" class="form-control">
+			                      
 			                      </div>
 			                      <!--시간 -->
 			                      <div class="col mb-3">
 			                          <div class="row">
 			                              <label for="start_time" class="form-label">시작 시간</label>
-			                              <input id="start_time" name="skedStartTime" type="time" class="form-control"/>
+			                              <input id="start_time" name="startTime" type="time" class="form-control"/>
 			                              <label for="end_time" class="form-label">종료 시간</label>
-			                              <input id="end_time" name="skedEndTime" type="time" class="form-control"/>
+			                              <input id="end_time" name="endTime" type="time" class="form-control"/>
 			                          </div>
 			                      </div>
 			                  </div>
-			                  
-			                  <!-- 4번줄 -->
+			                  			                  
 			                  <div class="row">
 			                      <div class="col mb-3">
-			                          <label for="sked_content" class="form-label">내용</label>
-			                          <input type="text" name="skedContent" id="sked_content" class="form-control" placeholder="내용을 입력하세요." required/>
-			                      </div>
-			                  </div>			                  
-			                  <div class="row">
-			                      <div class="col mb-3">
-			                          <label for="sked_meno" class="form-label">메모</label>
-			                          <textarea id="sked_meno" name="skedMemo" class="form-control" placeholder="메모 입력"></textarea>
+			                          <label for="meetGoal" class="form-label">회의 목적</label>
+			                          <textarea id="meetGoal" name="meetGoal" class="form-control" placeholder="메모 입력"></textarea>
 			                      </div>
 			                  </div>
 			                  
@@ -121,9 +126,9 @@
 			              <!-- 모달 풋터 -->
 			              <div class="modal-footer">
 			                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                      			취소
+                      			취소하기
 			                  </button>
-			                  <button type="submit" class="btn btn-primary" id="sked_insert_btn">등록</button>
+			                  <button type="submit" class="btn btn-primary" id="sked_insert_btn">예약하기</button>
 			              </div>
 			          </div>
 			          </div>
@@ -146,35 +151,22 @@
 			  </div>
 			  <!-- / Pills -->
 			</div>
-		
-		
-		  
+
 		</div>
 		
+	
 		
 		<!----------------------------- 달력 스크립트 ----------------------------->
-		<script src='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.js'></script>
+		<script src='${pageContext.request.contextPath}/resources/kjhFullcalendar/kjh_schedule.js'></script>
 		
 		<script>
 		
-			$(function(){
-				sked();
-			});
-			var btn_id;								//누른 버튼의 id값
-			var skedCode = "C";						//skedCode
-			
-			/*버튼 클릭 함수*/
-			function selectCatecory(e){				//버튼 눌렀을 때 값이 바뀐다. C->(P/D)
-				btn_id=$(e).attr("id");				//버튼의 id값
-				skedCode = btn_id.substring(0,1);	//id값 첫글자가 skedCode값
-				sked();								//달력 실행
-			}
 			
 			/*달력*/
-			function sked(){
+			function room(){
 				
-				var skedList;							//조회 한 일정 목록을 담을 변수
-				var loginEmpNo=${loginEmp.empNo};		//로그인 사원번호
+				var roomList;							//조회 한 일정 목록을 담을 변수
+				var roomNo= ${r.roomNo};		//로그인 사원번호
 				/*최초 조회 데이터 호출 ajax*/
 				var skedSelectList = $.ajax({ 
 										url: "selectSkedList.do",
@@ -198,10 +190,11 @@
 					
 					var calendarEl = document.getElementById('comb_calendar');
 					var calendar = new FullCalendar.Calendar(calendarEl, {
-					    initialView: 'dayGridMonth',
+						   
+						initialView: 'dayGridMonth',
 					    headerToolbar: {
-					        start: 'prev title next', // will normally be on the left. if RTL, will be on the right
-					        center: '',
+					        start: '', // will normally be on the left. if RTL, will be on the right
+					        center: 'prev title next',
 					        end: 'today timeGridWeek,listWeek' // will normally be on the right. if RTL, will be on the left
 					    },
 					    locale: 'ko',
@@ -433,7 +426,7 @@
 	
 	</div>
 	
-	<jsp:include page="WEB-INF/views/common/bottom.jsp"/> 
+	<jsp:include page="../common/bottom.jsp"/> 
 	
 </body>
 </html>

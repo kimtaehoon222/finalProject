@@ -216,7 +216,7 @@
             </li>
 
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
+              <a href="roomList.do" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bookmarks"></i>
                 <div>회의실 예약</div>
               </a>
