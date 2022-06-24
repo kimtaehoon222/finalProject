@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.workie.easy.chart.model.dto.Chart;
+import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
 import com.workie.easy.chart.model.service.ChartService;
 import com.workie.easy.employee.model.dto.Employee;
@@ -57,8 +58,8 @@ public class ChartController {
 	public JSONArray selectChartList(@ModelAttribute Chart chart, HttpServletResponse response) {
 		
 		System.out.println("category" + chart.getCategory());
-		System.out.println("year" + chart.getYear());
-		System.out.println("month" + chart.getMonth());
+		System.out.println("groupingLarge" + chart.getGroupingLarge());
+		//System.out.println("groupingSmall" + chart.getGroupingSmall());
 		System.out.println("type" + chart.getType());
 		
 		Gson gson = new Gson();
@@ -69,8 +70,8 @@ public class ChartController {
 		case "mail" : 
 			list = selectChartListForMail(chart);
 			break;
-		case "person" : 
-			list = selectChartListForPerson(chart);
+		case "account" : 
+			list = selectChartListForAccount(chart);
 			break;
 		default:
 			break;
@@ -90,9 +91,74 @@ public class ChartController {
 		return list;
 	}
 	
-	/* 인사 관련 통계를 추출하는 메소드 */
-	private JSONArray selectChartListForPerson(Chart chart) {
-		return null;
+	
+	/* 회계 관련 통계를 추출하는 메소드 */
+	private JSONArray selectChartListForAccount(Chart chart) {
+
+		System.out.println("회계용 차트 도착");
+		
+		ChartForAccount chartforAccount = new ChartForAccount();
+		
+		ArrayList<ChartForAccount> chartList = new ArrayList<ChartForAccount>();
+		
+		if(chart.getGroupingLarge().equals("allGroup")) { /* 전체 조회시 (대그룹 전체 선택시) */
+			
+			/* 파라미터 전달할 것 없음 */
+			chartList = chartService.selectSalaryChartListForAccount();
+		}else { /* 부서별 or 직급별 선택한 경우 (대그룹 전체 미선택시) */
+			
+			if(chart.getGroupingLarge().equals("byDept")) { /* 부서별 선택시 */
+				
+				if(chart.getGroupingSmall().equals("전체")) { /* 부서별 -> 전체 선택시 */
+					
+					chartList = chartService.selectSalaryChartListForAccountByDeptAll();
+				}else { /* 부서별 -> 특정 부서 선택시 */
+					
+					/* 특정부서이름 set */
+					chartforAccount.setDeptName(chart.getGroupingSmall());
+					chartList = chartService.selectSalaryChartListForAccountByDeptOne(chartforAccount);
+				}
+				
+			}else if(chart.getGroupingLarge().equals("byJob")) { /* 직급별 선택시 */
+				
+				if(chart.getGroupingSmall().equals("전체")) { /* 직급별 -> 전체 선택시 */
+					
+					chartList = chartService.selectSalaryChartListForAccountByJobAll();
+				}else { /* 직급별 -> 특정 직급 선택시 */
+					
+					/* 특정 직급 이름 set*/
+					chartforAccount.setJobName(chart.getGroupingSmall());
+					chartList = chartService.selectSalaryChartListForAccountByJobOne(chartforAccount);
+				}
+			}
+			
+		}
+		
+		JSONArray jsonChartList = new JSONArray();
+		JSONObject jsonObject = null;
+		
+		if(!chartList.isEmpty()) {
+			for(ChartForAccount chartAccount : chartList) {
+				
+				/* JSON 객체 생성 */
+				jsonObject = new JSONObject();
+				
+				/* 생성된 JSON 객체에 list의 자바 데이터 를 put*/
+				jsonObject.put("deptName", chartAccount.getDeptName());
+				jsonObject.put("jobName", chartAccount.getJobName());
+				jsonObject.put("empName", chartAccount.getEmpName());
+				jsonObject.put("hireDate", chartAccount.getHireDate());
+				jsonObject.put("salary", chartAccount.getSalary());
+				jsonObject.put("percent", chartAccount.getPercent());
+				jsonObject.put("middleSum", chartAccount.getMiddleSum());
+				jsonObject.put("totalSum", chartAccount.getTotalSum());
+				
+				/* 데이터가 담긴 JSON 객체를 JSON배열에 추가 */
+				jsonChartList.add(jsonObject);
+			}
+		}
+		
+		return jsonChartList;
 	}
 
 	/* 메일 관련 통계를 추출하는 메소드 */

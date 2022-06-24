@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
 
 /*
@@ -43,6 +44,33 @@ public class ChartDao {
 	public ArrayList<ChartForMail> selectChartListForMailByMonthFrom(SqlSession sqlSession, ChartForMail chartForMail) {
 
 		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForMailByMonthFrom", chartForMail);
+	}
+
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccount(SqlSession sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectSalaryChartListForAccount");
+	}
+
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByDeptAll(SqlSession sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectSalaryChartListForAccountByDeptAll");
+	}
+
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByDeptOne(SqlSession sqlSession,
+			ChartForAccount chartforAccount) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectSalaryChartListForAccountByDeptOne", chartforAccount);
+	}
+
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobAll(SqlSession sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectSalaryChartListForAccountByJobAll");
+	}
+
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobOne(SqlSession sqlSession,
+			ChartForAccount chartforAccount) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectSalaryChartListForAccountByJobOne", chartforAccount);
 	}
 
 
