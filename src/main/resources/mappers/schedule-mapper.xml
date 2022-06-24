@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="skedMapper">
-	<resultMap type="Schedule" id="scheduleResultSet">
+
+	<resultMap type="Schedule" id="scheduleResult">
 		<result property="skedNo" column="SKED_NO"/>
 		<result property="skedCode" column="SKED_CODE"/>
 		<result property="empNo" column="EMP_NO"/>
@@ -20,7 +21,7 @@
 		<result property="colorName" column="COLOR_NAME"/>
 	</resultMap>
 	
-	<select id="scheduleList" resultMap="scheduleResultSet">
+	<select id="scheduleList" resultMap="scheduleResult">
 		SELECT
 		       A.SKED_NO
 		     , A.SKED_TITLE
@@ -39,7 +40,7 @@
 		   </if>
 	</select>
 	
-	<select id="selectSchedule" resultMap="scheduleResultSet">
+	<select id="selectSchedule" resultMap="scheduleResult">
 		SELECT
 		       A.SKED_NO
 		     , A.SKED_CODE
@@ -123,7 +124,7 @@
 		   AND SKED_NO = #{skedNo}
 	</update>
 	
-	<select id="searchScheduleList" resultMap="scheduleResultSet">
+	<select id="searchScheduleList" resultMap="scheduleResult">
 		SELECT
 		       A.SKED_NO
 		     , TO_CHAR(B.SKED_START, 'YYYY-MM-DD') AS SKED_START
@@ -157,7 +158,7 @@
 		       )	
 	</select>
 	
-	<select id="dayScheduleList" resultMap="scheduleResultSet">
+	<select id="dayScheduleList" resultMap="scheduleResult">
 		SELECT 
 		       A.SKED_NO
 		     , A.SKED_TITLE

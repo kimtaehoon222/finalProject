@@ -26,6 +26,9 @@ html, body {
 }
 
 .i0-1{ grid-column: 1/2; grid-row: 1/3;}
+
+.i0-2, .i0-3{ padding-right:24px;}
+
 /* ----------달력 틀---------- */
 .calendar-container {
     width: 100%px;
@@ -108,6 +111,42 @@ html, body {
     right: 0%;
 }
 
+.fc .fc-button-primary {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: rgb(128, 128, 128);
+    background-color: var(--fc-button-bg-color, rgb(128, 128, 128));
+    border-color: rgb(128, 128, 128);
+    border-color: var(--fc-button-border-color, rgb(128, 128, 128));
+}
+
+.fc .fc-button-primary:disabled {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: rgb(174, 175, 226);
+    background-color: var(--fc-button-bg-color, rgb(174, 175, 226));
+    border-color: rgb(174, 175, 226);
+    border-color: var(--fc-button-border-color, rgb(174, 175, 226));
+}
+
+.fc .fc-button-primary:hover {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: rgb(130, 132, 210);
+    background-color: var(--fc-button-hover-bg-color, rgb(130, 132, 210));
+    border-color: rgb(130, 132, 210);
+    border-color: var(--fc-button-hover-border-color, rgb(130, 132, 210));
+}
+
+.fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active {
+    color: #fff;
+    color: var(--fc-button-text-color, #fff);
+    background-color: rgb(174, 175, 226);
+    background-color: var(--fc-button-active-bg-color, rgb(174, 175, 226));
+    border-color: rgb(174, 175, 226);
+    border-color: var(--fc-button-active-border-color, rgb(174, 175, 226));
+}
+
 /* ----------우측 화면---------- */
 .search_btn{
     width: 100%;
@@ -126,11 +165,6 @@ html, body {
     border-radius: 0.5rem;
 }
 
-#dayListCard{
-    min-height: 130px;
-    max-height: 595px;
-    
-}
 
 .t_header{color: black; padding:1.25rem; padding-bottom: 0.75rem;}
 
