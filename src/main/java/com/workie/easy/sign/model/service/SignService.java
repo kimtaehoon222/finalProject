@@ -22,6 +22,9 @@ public interface SignService {
 	ArrayList<Sign> selectWaitingList(PageInfo pi, String empName);
 
 	Sign selectAAList(Sign si);
+
+	Sign selectBBList(Sign si);
+
 	
 
 	/* void insertName(int eNo); */

@@ -11,7 +11,7 @@
 		<result property="firstApprover" column="FIRST_APPROVER"/>
 		<result property="finalApprover" column="FINAL_APPROVER"/>
 		<result property="firstSignDate" column="FIRST_SIGN_DATE"/>
-		<result property="FINAL_SIGN_DATE" column="finalSignDate"/>
+		<result property="finalSignDate" column="FINAL_SIGN_DATE"/>
 		<result property="rejectDate" column="REJECT_DATE"/>
 		<result property="statusCode" column="STATUS_CODE"/>
 		<result property="status" column="STATUS"/>
@@ -144,11 +144,16 @@
 	        A.SIGN_CONTENT,
 	        D.DEPT_NAME,
 	        A.CREATE_NAME,
-	        A.CREATE_DATE
+	        F.ORIGIN_NAME,
+            F.CHANGE_NAME,
+            E.TYPE_CODE,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
 		FROM SIGN A
 		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
 		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
 		    JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+		    LEFT JOIN ATTACHMENT F ON A.SIGN_NO = F.REF_NO
+		    LEFT JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
 	    WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
 	    AND A.STATUS_CODE = 'W'
 	    AND A.STATUS = 'Y'
@@ -157,28 +162,60 @@
 	</select>
 	
 	<select id="selectAAlist" resultMap="singResultSet">
+	
 	SELECT
 	    A.SIGN_NO, <!-- 결재번호  -->
 	    A.CREATE_NAME, <!--기안자 -->
-	    A.CREATE_DATE, <!--기안일 -->
+	    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
 	    B.JOB_NAME, <!-- 직급명 -->
 	    C.EXPIRY_DATE, <!-- 문서 만료일 -->
 	    A.FINAL_APPROVER, <!-- 최종 결재자 -->
 	    A.SIGN_TITLE,
 	    A.SIGN_CONTENT,
-	    D.CHANGE_NAME <!-- 파일 원래 이름 -->
+	    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+	    D.ORIGIN_NAME  <!-- 파일 원래 이름 -->
     FROM SIGN A
 	    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
 	    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
 	    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
 	    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+	    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
     WHERE A.SIGN_NO = #{signNo}
     AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
     AND A.STATUS_CODE = 'W'
     AND A.STATUS = 'Y'
-	
+    AND E.TYPE_CODE = 'AA'
 	
 	</select>	
+	
+
+	<select id="selectBBlist" resultMap="singResultSet">
+	
+	SELECT
+	    A.SIGN_NO, <!-- 결재번호  -->
+	    A.CREATE_NAME, <!--기안자 -->
+	    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
+	    B.JOB_NAME, <!-- 직급명 -->
+	    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+	    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+	    A.SIGN_TITLE,
+	    A.SIGN_CONTENT,
+	    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+	    D.ORIGIN_NAME  <!-- 파일 원래 이름 -->
+    FROM SIGN A
+	    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+	    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+	    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+	    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+	    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+    WHERE A.SIGN_NO = #{signNo}
+    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+    AND A.STATUS_CODE = 'W'
+    AND A.STATUS = 'Y'
+    AND E.TYPE_CODE = 'BB'
+	
+	</select>	
+
 	</mapper>
 
 		

@@ -62,5 +62,12 @@ public class SignDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("signMapper.selectAAlist", si);
 	}
+
+	public Sign selectBBList(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectBBlist", si);
+	}
+
+
 		
 }
