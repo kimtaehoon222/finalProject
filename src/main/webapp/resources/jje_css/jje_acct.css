@@ -15,8 +15,8 @@
 .container.c0{
     margin-left: 10px;
     gap: 10px;
-    grid-template-columns: 223px 223px 447px;
-    grid-template-rows: 230px 400px;
+    grid-template-columns: 223fr 223fr 447fr;
+    /*grid-template-rows: 230fr 400fr;*/
     box-shadow:none;
 }
 .i0{

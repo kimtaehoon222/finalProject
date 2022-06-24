@@ -47,7 +47,7 @@ public class ScheduleController {
 	
 	/*일정 페이지 전환*/
 	@RequestMapping("schedule.do")
-	public String schedule(Model model) {
+	public String schedule() {
 		
 		return "schedule/schedule";
 		

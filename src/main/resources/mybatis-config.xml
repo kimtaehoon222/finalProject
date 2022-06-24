@@ -10,6 +10,8 @@
 	</settings>
 	
 	<typeAliases>
+	    <typeAlias type="com.workie.easy.common.model.dto.Attachment" alias="Attachment"/>
+	    
 		<typeAlias type="com.workie.easy.employee.model.dto.Employee" alias="Employee"/>
 		
 		<typeAlias type="com.workie.easy.sign.model.dto.Sign" alias="Sign"/>
@@ -18,15 +20,17 @@
 		<typeAlias type="com.workie.easy.work.model.dto.WorkSInfo" alias="WorkSInfo"/>
 		<typeAlias type="com.workie.easy.work.model.dto.VacationInfo" alias="VacationInfo"/>
 		<typeAlias type="com.workie.easy.work.model.dto.EmpVacation" alias="EmpVacation"/>
+		
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailType" alias="MailType"/>
 		<typeAlias type="com.workie.easy.mail.model.dto.Mail" alias="Mail"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPageInfo" alias="MailPageInfo"/>
 	    <typeAlias type="com.workie.easy.mail.model.dto.MailPagination" alias="MailPagination"/>
-	    <typeAlias type="com.workie.easy.common.model.dto.Attachment" alias="Attachment"/>
-	    <typeAlias type="com.workie.easy.employee.model.dto.Employee" alias="Employee"/>
+	    <typeAlias type="com.workie.easy.mail.model.dto.Department" alias="Department"/>
 	    
 	    <typeAlias type="com.workie.easy.schedule.model.dto.Schedule" alias="Schedule"/>
-	    <typeAlias type="com.workie.easy.mail.model.dto.Department" alias="Department"/>
+	    
+	    <typeAlias type="com.workie.easy.acct.model.dto.Card" alias="Card"/>
+	    
 
 	    <typeAlias type="com.workie.easy.chat.model.dto.Chat" alias="Chat"/>
 	    <typeAlias type="com.workie.easy.chat.model.dto.Contect" alias="Contect"/>
@@ -37,19 +41,16 @@
 	</typeAliases>
 		
 	<mappers>
+		<mapper resource="/mappers/attachment-mapper.xml"/>
 		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/sign-mapper.xml"/>
 		<mapper resource="/mappers/work-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>
-		<mapper resource="/mappers/attachment-mapper.xml"/>
-		<mapper resource="/mappers/employee-mapper.xml"/>
 		<mapper resource="/mappers/personnel-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
-
+		<mapper resource="/mappers/card-mapper.xml"/>
 		<mapper resource="/mappers/chat-mapper.xml"/>
-
 		<mapper resource="/mappers/chart-mapper.xml"/>
-
 	</mappers>
 	
 </configuration>

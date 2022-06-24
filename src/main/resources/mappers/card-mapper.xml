@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cardMapper">
+
+	<resultMap type="Card" id="cardResult">
+	
+		<result property="cardRegNo" column="CARD_REG_NO"/>
+		<result property="deptCode" column="DEPT_CODE"/>
+		<result property="cardIssuer" column="CARD_ISSUER"/>
+		<result property="cardName" column="CARD_NAME"/>
+		<result property="cardStatus" column="CARD_STATUS"/>
+		<result property="ctgNo" column="CTG_NO"/>
+		
+		<result property="cardLine" column="CREDIT_LINE"/>
+		<result property="paymentType" column="PAYMENT_TYPE"/>
+		<result property="cardNo" column="CARD_NO"/>
+		<result property="expirationDate" column="EXPIRATION_DATE"/>
+		<result property="securityCode" column="SECURITY_CODE"/>
+		
+		<result property="statNo" column="STAT_NO"/>
+		<result property="empNo" column="EMP_NO"/>
+		<result property="paymentStatus" column="PAYMENT_STATUS"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="transactionDate" column="TRANSACTION_DATE"/>
+		<result property="storeName" column="STORE_NAME"/>
+		<result property="statMemo" column="STAT_MEMO"/>
+		<result property="statStatus" column="STAT_STATUS"/>
+		
+		<result property="empName" column="EMP_NAME"/>
+		
+	</resultMap>
+	
+	<select id="selectCardStatList" resultMap="cardResult">
+		SELECT 
+		       A.STAT_NO
+		     , A.EMP_NO
+		     , B.EMP_NAME
+		     , A.TRANSACTION_DATE
+		     , A.AMOUNT
+		     , A.STORE_NAME
+		     , CASE WHEN A.PAYMENT_STATUS = 'A' THEN '승인'
+		            ELSE '취소'
+		       END AS PAYMENT_STATUS
+		  FROM CARD_STATEMENT A
+		  JOIN EMPLOYEE B ON (A.EMP_NO = B.EMP_NO)
+		  JOIN DEP_CARD C ON (A.CARD_REG_NO = C.CARD_REG_NO)
+		 WHERE A.STAT_STATUS = 'Y'
+  		   AND C.DEPT_CODE = = #{deptCode} 
+	 </select>
+	 
+	 
+	 
+</mapper>

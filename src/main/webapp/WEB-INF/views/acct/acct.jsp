@@ -16,7 +16,7 @@
 	<link href='${pageContext.request.contextPath}/resources/jje_css/jje_acct.css' rel='stylesheet' />
 	<div class="container-xxl flex-grow-1 container-p-y">
 	
-	    <div class="row" style="display: flex; justify-content: space-between;">
+	    <div class="row" style="display: flex; justify-content: space-between; margin-right:10px;">
 	        
 	      <div class="container c0">
 	        <!-- 카드 잔액 정보 -->
@@ -89,7 +89,7 @@
 	          </form>
 	        </div>
 	        <!-- 카드사용내역조회 -->
-	        <div class="i0 container c4">
+	        <div class="i0 container c4  mb-4">
 	          <!-- 제목 -->
 	          <div class="i4-1"><h4><b>카드사용내역조회</b></h4></div>
 	
@@ -165,7 +165,7 @@
 	          <!-- 페이지네이션 -->
 	          <div class="i4-4">
 	            <nav aria-label="Page navigation">
-	              <ul class="pagination pagination-sm justify-content-center">
+	              <ul class="pagination pagination justify-content-center">
 	                <li class="page-item prev">
 	                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
 	                </li>
