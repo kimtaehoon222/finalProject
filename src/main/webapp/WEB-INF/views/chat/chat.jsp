@@ -158,7 +158,7 @@
 
 										<div style="float: left;">
 											<img
-												src="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/users/3.jpg"
+												src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
 												alt="user" class="rounded-circle" width="65">
 										</div>
 
@@ -191,7 +191,7 @@
 											</c:choose>
 										</div>
 									</div>
-										<div id="newAlert" style="display:none;" class="alert alert-dark alert-dismissible fade show mb-0" role="alert">
+										<div id="chatAlert" style="display:none;" class="alert alert-dark alert-dismissible fade show mb-0" role="alert">
 		                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		                                        <span aria-hidden="true">×</span>
 		                                    </button>
@@ -206,7 +206,7 @@
 
 											<!-- 이전 기록 조회 -->
 											<c:forEach items="${ chatList }" var="c">
-												<c:if test="${ c.toChat eq loginEmp.empNo }">
+												<c:if test="${ c.fromChat eq loginEmp.empNo }">
 													<li class="chat-item odd list-style-none mt-3">
 														<div class="chat-content text-right d-inline-block pl-3">
 															<div class="box msg p-2 d-inline-block mb-1">${c.message}
@@ -215,7 +215,7 @@
 														</div>
 													</li>
 												</c:if>
-												<c:if test="${ c.toChat ne loginEmp.empNo }">
+												<c:if test="${ c.fromChat ne loginEmp.empNo }">
 													<li class="chat-item list-style-none mt-3">
 														<div class="chat-img d-inline-block">
 															<img
@@ -320,19 +320,56 @@ $(function(){
 		connectWS();
 })
 
+
+
 var socket = null;
 
 function connectWS() {
-    var ws = new WebSocket("ws://localhost:8090/spring/appServlet/echo"); //핸들러 매핑주소로 생성 
+	//웹소켓 생성
+    var ws = new WebSocket("ws://localhost:8090/echo"); 
     socket = ws;
+    //소켓 오픈
     ws.onopen = function () {
         console.log('Info: connection opened.');
+    	console.log(location.pathname);
+    	console.log(location.search);
     };
-
     
+    //웹소켓에서 메세지를  보내면 여기서 받아서 뿌려줌
+    ws.onmessage = function (event) {
+    	
+    	 var str = event.data;
+         var msgArr = str.split(',');
+         alertMsg = msgArr[0];
+         
+   
+         var resultReceiver = str.substring(20,28)
+         console.log("resultReceiver : " + resultReceiver);
+  
+         console.log("str확인 : " +str)
+         $('#chatAlert').css("display",'block')
+         $('#chatAlert').html(alertMsg);
+         
+         console.log("msgArr : "+msgArr)
+         $('.chat-list').append(`
+					<li class="chat-item list-style-none mt-3">
+					<div class="chat-img d-inline-block">
+						<img
+							src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
+							alt="user" class="rounded-circle" width="45">
+					</div>
+					<div class="chat-content d-inline-block pl-3">
+						<div class="msg p-2 d-inline-block mb-1">\${ msgArr[1]}</div>
+					</div>
+				</li>        			 
+ 			 `);
+    }
+
+    //소켓 닫음
     ws.onclose = function (event) { 
         console.log('Info: connection closed.');
     };
+    //소켓 에러 표시
     ws.onerror = function (err) { console.log('Error:', err); };
     
 
@@ -371,12 +408,12 @@ function connectWS() {
 
             $(".chat-list").append( 
                    `
-                       <li class="chat-item odd list-style-none mt-3">
-                       <div class="chat-content text-right d-inline-block pl-3">
-                           <div class="box msg p-2 d-inline-block mb-1">\${message} </div>
-                           <br>
-                       </div>
-                   </li>`
+                 <li class="chat-item odd list-style-none mt-3">
+						<div class="chat-content text-right d-inline-block pl-3">	
+							<div class="box msg p-2 d-inline-block mb-1">\${message}</div>
+							<br>
+						</div>
+					</li>`
                    );
            $(this).val("");
            $(this).focus(); 
@@ -415,7 +452,7 @@ function connectWS() {
 		})
 	}
 		
-
+ 
 		function selectContectList(deptName){
 		        	
         	var deptArea = $("#"+deptName);
