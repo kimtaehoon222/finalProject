@@ -28,7 +28,7 @@ public class EchoHandler extends TextWebSocketHandler { //메세지 전송용 �
 		
 		users.add(session);
 		String senderId = getId(session);
-		userSessions.put(senderId, session);  //연결 된 사용자의 아이디가 맵에 들어간다./ 로그인이 되어있지 않으면 세션아이디
+		userSessions.put(senderId, session);  //연결 된 사용자의 아이디가 맵에 들어간다. 로그인이 되어있지 않으면 세션아이디
 		
 	}
 
@@ -51,22 +51,24 @@ public class EchoHandler extends TextWebSocketHandler { //메세지 전송용 �
 			
 			if(!StringUtils.isEmpty(msg)) {
 				String[] strArr = message.getPayload().split(",");
+				
 				if(strArr != null) {
 					
-	
-
-
 
 					 sender = strArr[0];
 					 receiver = strArr[1];
 					 receiverNo = strArr[2];
 					 text = strArr[3];
 
-		
+					 System.out.println("sender=====" + sender);
+					 System.out.println("sender=====" + receiver);
+					 System.out.println("sender=====" + receiverNo);
+					 System.out.println("sender=====" + text);
 				
 	
 					WebSocketSession receiverSession = userSessions.get(receiver);
 					if(receiverSession != null) {   //받는 이가 로그인한 상태라면 
+						System.out.println("확인");
 						receiverSession.sendMessage(new TextMessage("<a href='chat.do?empNo="+String.valueOf(receiverNo)+"'>새로운 메세지가 도착했습니다</a>"+"," + text ));
 					}
 					
@@ -86,6 +88,7 @@ public class EchoHandler extends TextWebSocketHandler { //메세지 전송용 �
 		if(loginEmp == null) {
 			return session.getId();
 		}else {
+			
 			return loginEmp.getEmpId();
 		}
 				
