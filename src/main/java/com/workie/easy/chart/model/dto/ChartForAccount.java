@@ -11,18 +11,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Chart {
+public class ChartForAccount {
 
-	private String category; 
-	private String type; 
-
-	/* 메일 */
-	private String year; 
-	private String month; 
-	
-	/* 회계*/
-	private String groupingLarge; 
-	private String groupingSmall; 
-	
+	private String deptName;
+	private String jobName;
+	private String empName;
+	private String hireDate;
+	private long salary;
+	private String percent;
+	private long middleSum;
+	private long totalSum;
 	
 }

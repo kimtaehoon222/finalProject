@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.workie.easy.chart.model.dao.ChartDao;
+import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
 
 /*
@@ -55,6 +56,36 @@ public class ChartServiceImpl implements ChartService {
 	public ArrayList<ChartForMail> selectChartListForMailByMonthFrom(ChartForMail chartForMail) {
 
 		return chartDao.selectChartListForMailByMonthFrom(sqlSession, chartForMail);
+	}
+
+	@Override
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccount() {
+
+		return chartDao.selectSalaryChartListForAccount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByDeptAll() {
+
+		return chartDao.selectSalaryChartListForAccountByDeptAll(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByDeptOne(ChartForAccount chartforAccount) {
+		
+		return chartDao.selectSalaryChartListForAccountByDeptOne(sqlSession, chartforAccount);
+	}
+
+	@Override
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobAll() {
+
+		return chartDao.selectSalaryChartListForAccountByJobAll(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobOne(ChartForAccount chartforAccount) {
+
+		return chartDao.selectSalaryChartListForAccountByJobOne(sqlSession, chartforAccount);
 	}
 
 

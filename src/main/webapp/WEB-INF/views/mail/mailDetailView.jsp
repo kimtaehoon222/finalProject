@@ -288,10 +288,8 @@
 			 var mailNo = $('#mailNo').val();
 	         location.href="deleteMail.do?mailNo="+mailNo;
 		})
-
 		
 	</script>
-
 
    <jsp:include page="../common/bottom.jsp"/>
    

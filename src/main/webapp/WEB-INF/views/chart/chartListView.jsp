@@ -54,7 +54,11 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
   google.charts.load('current', {'packages':['corechart']});
   //google.charts.setOnLoadCallback(drawVisualization);
 
-  function drawVisualization(chartData) {
+  function drawVisualization(chartData, title, xx, yy) {
+	   
+	   console.log(title);
+	   console.log(xx);
+	   console.log(yy);
        console.log(typeof(chartData));
 
        /* 파라미터로 들어온 데이터 chartData가 String 타입이므로 배열로 형변환 */
@@ -62,13 +66,38 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
        
        console.log(typeof(chartArray));
        
+       var arr00 = chartArray[0][0];
+
+       var changeTitle;
+       var changeVAxiss;
+       var changeHAxiss;
+       
+       /* 메일 통계는 수신,발신 두 가지라 확인해야함 */
+       var mailCheck = $('#typeForMail option:checked').val();
+       
+       console.log(mailCheck);
+       
+       if(arr00 == 'Month'){ /* 메일 차트인 경우 */
+    	   if(mailCheck == 'toMails'){
+    		   changeTitle = "메일 수신 현황";
+    	   }else{
+    		   changeTitle = "메일 발신 현황";
+    	   }
+    	   changeVAxiss = "Count of Mails";
+    	   changeHAxiss = "Month";
+       }else{ /* 회계 차트인 경우 */
+    	   changeTitle = "급여 비율 현황";
+    	   changeVAxiss = "Salary of Employee";
+    	   changeHAxiss = "Employee";
+       }
+       
        /* 최종 데이터 : 위에서 변환한 배열 데이터를 파라미터로 넘겨준다. */
        var data = google.visualization.arrayToDataTable(chartArray);
 
        var options = {
-         title : '2022년도 부서별 메일 수신 현황',
-         vAxis: {title: '메일 수신 개수'},
-         hAxis: {title: 'Month'},
+         title : changeTitle,
+         vAxis: {title: changeVAxiss},
+         hAxis: {title: changeHAxiss},
          seriesType: 'bars',
          /*series: {7: {type: 'line'}}*/
        };
@@ -91,65 +120,134 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
     
     <!-- 첫번째 행 시작 -->
     <div class="row">
+    
+     <div class="nav-align-top mb-4">
+     	 <!-- 통계 항목 탭 시작 -->
+	   	 <div class="col-xl-6">
+	     <ul class="nav nav-tabs" role="tablist">
+	    	<li class="nav-item">
+		    	<button type="button" class="nav-link active" role="tab" 
+		    		data-bs-toggle="tab" data-bs-target="#navs-top-mail" aria-controls="#navs-top-mail" aria-selected="true">Mail
+		    	</button>
+	    	</li>
+	    	<li class="nav-item">
+		    	<button type="button" class="nav-link" role="tab" 
+		    		data-bs-toggle="tab" data-bs-target="#navs-top-account" aria-controls="#navs-top-account" aria-selected="false">Account
+		    	</button>
+	    	</li>
+	     </ul>
+	     </div>
+     	<!-- 통계 항목 탭 끝 -->
+     	
      <!-- 통계 항목 선택 영역 시작 -->
-     <div class="col-lg-12 mb-4">
-       <div class="card">
-          <div class="card-body">
-            <h5 class="card-title text-primary"><b>통계항목 선택</b></h5>
-            <div class="row">
-                  <!-- 조회 항목 선택 -->
-                  <div class="mb-3 col-md-3">
-                <label class="form-label" for="country">카테고리</label>
-                <select id="category" class="select2 form-select">
-                  <option value="mail">메일</option>
-                  <option value="person">인사</option>
-                  <option value="sign">결재</option>
-                  <option value="work">근태</option>
-                  <option value="account">회계</option>
-                </select>
-                </div>
-               <!-- 조회 연도 선택 -->
-               <div class="mb-3 col-md-3">
-                 <label class="form-label" for="country">조회연도</label>
-                 <select id="year" class="select2 form-select">
-                   <option value="2022">2022</option>
-                   <option value="2021">2021</option>
-                   <option value="2020">2020</option>
-                 </select>
-               </div>
-               
-               <!-- 조회 월 선택 -->
-               <div class="mb-3 col-md-3">
-                 <label class="form-label" for="country">조회월</label>
-                 <select id="month" class="select2 form-select">
-                   <option value="allMonth">전체</option>
-                   <option value="01">01</option>
-                   <option value="02">02</option>
-                   <option value="03">03</option>
-                   <option value="04">04</option>
-                   <option value="05">05</option>
-                   <option value="06">06</option>
-                   <option value="07">07</option>
-                   <option value="08">08</option>
-                   <option value="09">09</option>
-                   <option value="10">10</option>
-                   <option value="11">11</option>
-                   <option value="12">12</option>
-                 </select>
-               </div>
-               <div class="mb-3 col-md-3">
-                 <label class="form-label" for="country">조회항목</label>
-                 <select id="type" class="select2 form-select">
-                   <option value="toMails">메일 수신 현황</option>
-                   <option value="fromMails">메일 발신 현황</option>
-                 </select>
-               </div>
-            </div>
-            <button class="btn btn-sm btn-outline-primary" id="getChartResult">결과 보기</button>
-          </div>
-       </div>
+     <div class="tab-content">
+	     <!-- 메일 시작 -->
+	     <div class="col-lg-12 mb-4 tab-pane show active" id="navs-top-mail" role="tabpanel">
+	       <div class="card">
+	          <div class="card-body">
+	            <h5 class="card-title text-primary"><b>통계항목 선택</b></h5>
+	            <div class="row">
+	                  <!-- 조회 항목 선택 -->
+	                <div class="mb-3 col-md-3">
+	                <label class="form-label" for="categoryForMail">카테고리</label>
+	                <select id="categoryForMail" class="select2 form-select">
+	                  <option value="mail">메일</option>
+	                </select>
+	                </div>
+	               <!-- 조회 연도 선택 -->
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="year">조회연도</label>
+	                 <select id="year" class="select2 form-select">
+	                   <option value="2022">2022</option>
+	                   <option value="2021">2021</option>
+	                   <option value="2020">2020</option>
+	                 </select>
+	               </div>
+	               
+	               <!-- 조회 월 선택 -->
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="month">조회월</label>
+	                 <select id="month" class="select2 form-select">
+	                   <option value="allMonth">전체</option>
+	                   <option value="01">01</option>
+	                   <option value="02">02</option>
+	                   <option value="03">03</option>
+	                   <option value="04">04</option>
+	                   <option value="05">05</option>
+	                   <option value="06">06</option>
+	                   <option value="07">07</option>
+	                   <option value="08">08</option>
+	                   <option value="09">09</option>
+	                   <option value="10">10</option>
+	                   <option value="11">11</option>
+	                   <option value="12">12</option>
+	                 </select>
+	               </div>
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="typeForMail">조회항목</label>
+	                 <select id="typeForMail" class="select2 form-select">
+	                   <option value="toMails">메일 수신 현황</option>
+	                   <option value="fromMails">메일 발신 현황</option>
+	                 </select>
+	               </div>
+	            </div>
+	            <button class="btn btn-sm btn-outline-primary" id="getMailChartResult">결과 보기</button>
+	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">데이터 초기화</button>
+	          </div>
+	       </div>
+	     </div>
+	     <!-- 메일 끝 -->
+	     
+	     <!-- 회계 시작 -->
+	     <div class="col-lg-12 mb-4 tab-pane" id="navs-top-account" role="tabpanel">
+	       <div class="card">
+	          <div class="card-body">
+	            <h5 class="card-title text-primary"><b>통계항목 선택</b></h5>
+	            <div class="row">
+	                  <!-- 조회 항목 선택 -->
+	                  <div class="mb-3 col-md-3">
+	                <label class="form-label" for="categoryForAccount">카테고리</label>
+	                <select id="categoryForAccount" class="select2 form-select">
+	                  <option value="account">회계</option>
+	                </select>
+	                </div>
+	               <!-- 대그룹 선택 -->
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="groupingLarge">그룹1</label>
+	                 <select id="groupingLarge" class="select2 form-select" onchange="changeForSmallGroup()">
+	                   <option value="allGroup">전체</option>
+	                   <option value="byDept">부서별</option>
+	                   <option value="byJob">직급별</option>
+	                 </select>
+	               </div>
+	               
+	               <!-- 소그룹 선택 -->
+	               <!-- 대그룹 선택 값에 따라 동적으로 option 변함 -->
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="groupingSmall">그룹2</label>
+	                 <select id="groupingSmall" class="select2 form-select" disabled>
+	                 	<option value="allGroup">전체</option>
+	                 </select>
+	               </div>
+	               
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="typeForAccount">조회항목</label>
+	                 <select id="typeForAccount" class="select2 form-select">
+	                   <option value="salayPercent">급여 비율 현황</option>
+	                 </select>
+	               </div>
+	            </div>
+	            <button class="btn btn-sm btn-outline-primary" id="getAccountChartResult">결과 보기</button>
+	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">데이터 초기화</button>
+	          </div>
+	       </div>
+	     </div>
+	     <!-- 회계 끝 -->
+	     
      </div>
      <!-- 통계 항목 선택 영역 끝 -->
+    </div>
+     
     </div>
     <!-- 첫번째 행 끝-->
      
@@ -180,10 +278,10 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
            <div class="col-md-12">
              <h5 class="card-body m-0 me-2 pb-3 text-primary"><b>통계결과 Graph</b></h5>
              <!-- <div id="totalRevenueChart" class="px-2"></div>  -->
-             
+             <span id="noChart" class="mx-3"></span>
              <!-- 통계 결과 그래프형 시작 -->
              <div id="chart_div" style="width: 900px; height: 500px;"></div>
-             
+             	
            </div>
        </div>
      </div>
@@ -195,16 +293,88 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
     <!-- 내용 끝-->         
 
    <script type="text/javascript">
+   
+   function resetSelected() {
+	   
+	   /* 선택 값 초기화 => 왜 안되는 것인지? */
+	   /*$('#year option:eq(0)').attr('selected', 'selected');
+	   $('#month option:eq(0)').attr('selected', 'selected');
+	   $('#typeForMail option:eq(0)').attr('selected', 'selected');
+	   $('#groupingLarge option:eq(0)').attr('selected', 'selected');*/
+	   
+	   /* 데이터 모두 초기화 */ 
+		$('#resultList').html(""); 
+	   	$('#noList').html("");
+	   	$('#noChart').html("");
+	   	$('#chart_div').empty();
+   }
+   
+   /* 탭 클릭시 */
+   $(function () {
+		$('.nav-link').click(function () {
+
+			/*resetSelected();*/
+			
+	    	/* 데이터 모두 초기화 */ 
+			$('#resultList').html(""); 
+	    	$('#noList').html("");
+	    	$('#noChart').html("");
+	    	$('#chart_div').empty();
+	    	
+		})
+   })
+   
+   
+   
+   /* 큰그룹 선택 값에 따른 작은그룹 출력 항목 */
+   function changeForSmallGroup() {
+	   
+	   /* 그룹1 선택값에 따라 뿌려줄 데이터 배열 */
+	   var deptName = ["전체", "인사관리부", "회계관리부", "마케팅부", "자재관리부", "기획영업부", "경영관리부", "기술개발부"];
+	   var jobName = ["전체", "대표", "부사장", "부장", "차장", "과장", "대리", "사원", "인턴"];
+	   
+	   /* 그룹1에서 선택한 값 추출 */
+	   var selectGroupLarge = $('#groupingLarge').val();
+
+	   /* 그룹1의 선택 값에 따라 위에 생성해놓은 배열 대입 */
+	   if(selectGroupLarge == 'byDept'){
+		   $('#groupingSmall').attr('disabled', false);
+		   changeGroupSmall = deptName;
+	   }else if(selectGroupLarge == 'byJob'){
+		   $('#groupingSmall').attr('disabled', false);
+		   changeGroupSmall = jobName;
+	   }else if(selectGroupLarge == 'allGroup'){
+		   $('#groupingSmall').attr('disabled', true);
+	   }
+	   
+	   /* 비우기 : 비우지 않으면 그룹1에서 선택한 값이 누적되어버리는 현상 있음 */
+	   $('#groupingSmall').empty();
+	   
+	   console.log(changeGroupSmall);
+	   
+	   /* changeGroupSmall 배열에 담겨있는 모든 요소를 꺼내서 option 태그안에 넣는다. */
+	   for(var i=0; i<changeGroupSmall.length; i++){
+		   var option = $("<option>" + changeGroupSmall[i] + "</option>");
+		   
+		   /* 그룹2에 추가(연결)한다. */
+		   $('#groupingSmall').append(option);
+	   }
+   }
+   
+   
+    /* 메일 차트결과 버튼 */
     $(function () {
-      $('#getChartResult').click(function () {
+      $('#getMailChartResult').click(function () {
     	  
     	  $('#resultList').html(""); 
-    	  $('#noList').html("")
+    	  $('#noList').html("");
+    	  $('#noChart').html("");
+    	  $('#chart_div').empty();
     	  
-         var category = document.getElementById("category").value;
+         var category = document.getElementById("categoryForMail").value;
          var year = document.getElementById("year").value;
          var month = document.getElementById("month").value;
-         var type = document.getElementById("type").value;
+         var type = document.getElementById("typeForMail").value;
          
          $.ajax({
             url: "chartList.do",   
@@ -217,7 +387,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
             type: "post",
             success: function(list) {
                
-               console.log('성공');
+               console.log('메일차트성공');
                console.log(list);
                
                if(list.length > 0){
@@ -250,6 +420,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	                $('#resultList').html(result);
                 }else{
                 	$('#noList').html('조회 결과가 없습니다');
+                	$('#noChart').html('조회 결과가 없습니다');
                 }
                 
 				/* 그래프 부분 */                
@@ -271,8 +442,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
                 
                 console.log(chartData);
                 
-                /* 구글 차트를 그려주는 함수 호출 */
-                drawVisualization(chartData);
+                var title = "안녕";
+                var xx = "x축";
+                var yy = "y축";
+                
+                /* 구글 차트를 그려주는 함수 호출 : list가 있는 경우에만 호출! */
+                if(list.length > 0){
+	                drawVisualization(chartData, title, xx, yy);
+                }
             },
             
             error: function(list) {
@@ -282,6 +459,99 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
       })
    })
    
+   /* 회계 차트결과 버튼 */
+   $(function () {
+      $('#getAccountChartResult').click(function () {
+    	  
+	   	  $('#resultList').html(""); 
+	   	  $('#noList').html("");
+	   	  $('#noChart').html("");
+	   	  $('#chart_div').empty();
+    	  
+         var category = document.getElementById("categoryForAccount").value;
+         var groupingLarge = document.getElementById("groupingLarge").value;
+         //var groupingSmall = document.getElementById("groupingSmall").value;
+         var groupingSmall = $("#groupingSmall option:checked").text();
+         var type = document.getElementById("typeForAccount").value;
+         
+         $.ajax({
+            url: "chartList.do",   
+            data:{
+               category : category,
+               groupingLarge : groupingLarge,
+               groupingSmall : groupingSmall,
+               type : type
+            },
+            type: "post",
+            success: function(list) {
+               
+               console.log('회계차트성공');
+               console.log(list);
+               
+               if(list.length > 0){
+	               var result = '<thead>' + '<tr>'
+	               				+ '<th width="200">' + '부서' + '</th>'
+	               				+ '<th width="200">' + '직급' + '</th>'
+	               				+ '<th width="200">' + '이름' + '</th>'
+	               				+ '<th width="200">' + '입사일' + '</th>'
+	               				+ '<th width="200">' + '급여' + '</th>'
+	               				+ '<th width="200">' + '비율' + '</th>'
+	               				+ '<th width="200">' + '누적합계' + '</th>'
+	               				+ '<th width="200">' + '총합계' + '</th>'
+	               			    + '</thead>' 
+	               			    + '</tr>' + '<tbody>';   				
+	                
+	                $.each(list, function(i) {
+	                  result += '<tr>'
+	                         + '<td>' + list[i].deptName + '</td>'
+	                         + '<td>' + list[i].jobName + '</td>'
+	                         + '<td>' + list[i].empName + '</td>'
+	                         + '<td>' + list[i].hireDate + '</td>'
+	                         + '<td>' + list[i].salary + '</td>'
+	                         + '<td>' + list[i].percent + '</td>'
+	                         + '<td>' + list[i].middleSum + '</td>'
+	                         + '<td>' + list[i].totalSum + '</td>'
+	                         + '</tr>'
+	                })
+                
+	                /*리스트결과 출력*/ 
+	                $('#resultList').html(result);
+                }else{
+                	$('#noList').html('조회 결과가 없습니다');
+                	$('#noChart').html('조회 결과가 없습니다');
+                }
+                
+				/* 그래프 부분 */                
+                /* 구글 차트로 넘기기 위한 데이터 일단 String으로 보낸다. */
+                var chartData = '[[' + '"' + '이름' + '","' + '급여' + '","' + '누적합' + '"' + '],';
+                
+                $.each(list, function(i) {
+                	chartData += '["' + list[i].empName + '",' + list[i].salary + "," + list[i].middleSum + ']';
+                	if(i != list.length-1){
+                		chartData += ',';
+                	}
+                })
+                
+                chartData += ']';
+                
+                console.log(chartData);
+                
+                var titleTest = "타이틀변경";
+                var xTest = "x변경";
+                var yTest = "y변경";
+
+                /* 구글 차트를 그려주는 함수 호출 : list가 있는 경우에만 호출! */
+                if(list.length > 0){
+	                drawVisualization(chartData);
+                }
+            },
+            
+            error: function(list) {
+               element.html('실패');
+            }
+         })
+      })
+   })
    </script>
 
 
