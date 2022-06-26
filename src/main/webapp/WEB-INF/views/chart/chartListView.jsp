@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.workie.easy.employee.model.dto.Employee"%>
+<%
+	Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,41 +59,16 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 
   function drawVisualization(chartData, title, xx, yy) {
 	   
-	   console.log(title);
-	   console.log(xx);
-	   console.log(yy);
+	   var changeTitle = title;
+	   var changeVAxiss = xx;
+	   var changeHAxiss = yy;
+	   
        console.log(typeof(chartData));
 
        /* 파라미터로 들어온 데이터 chartData가 String 타입이므로 배열로 형변환 */
        var chartArray = JSON.parse(chartData);
        
        console.log(typeof(chartArray));
-       
-       var arr00 = chartArray[0][0];
-
-       var changeTitle;
-       var changeVAxiss;
-       var changeHAxiss;
-       
-       /* 메일 통계는 수신,발신 두 가지라 확인해야함 */
-       var mailCheck = $('#typeForMail option:checked').val();
-       
-       console.log(mailCheck);
-       
-       if(arr00 == 'Month'){ /* 메일 차트인 경우 */
-    	   if(mailCheck == 'toMails'){
-    		   changeTitle = "메일 수신 현황";
-    	   }else{
-    		   changeTitle = "메일 발신 현황";
-    	   }
-    	   changeVAxiss = "Count of Mails";
-    	   changeHAxiss = "Month";
-       }else{ /* 회계 차트인 경우 */
-    	   changeTitle = "급여 비율 현황";
-    	   changeVAxiss = "Salary of Employee";
-    	   changeHAxiss = "Employee";
-       }
-       
        /* 최종 데이터 : 위에서 변환한 배열 데이터를 파라미터로 넘겨준다. */
        var data = google.visualization.arrayToDataTable(chartArray);
 
@@ -130,11 +108,22 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 		    		data-bs-toggle="tab" data-bs-target="#navs-top-mail" aria-controls="#navs-top-mail" aria-selected="true">Mail
 		    	</button>
 	    	</li>
+	    	<!-- 회계관리부의 직원만 보이는 Tab -->
+	    	<% if(loginEmp.getDeptCode().equals("D2")) {%>
 	    	<li class="nav-item">
-		    	<button type="button" class="nav-link" role="tab" 
+		    	<button type="button" class="nav-link" role="tab" id="accountChart"
 		    		data-bs-toggle="tab" data-bs-target="#navs-top-account" aria-controls="#navs-top-account" aria-selected="false">Account
 		    	</button>
 	    	</li>
+	    	<%} %>
+	    	<!-- 인사관리부의 직원만 보이는 Tab -->
+	    	<% if(loginEmp.getDeptCode().equals("D1")) {%>
+	    	<li class="nav-item">
+		    	<button type="button" class="nav-link" role="tab" id="personnelChart"
+		    		data-bs-toggle="tab" data-bs-target="#navs-top-personnel" aria-controls="#navs-top-personnel" aria-selected="false">HRM
+		    	</button>
+	    	</li>
+	    	<%} %>
 	     </ul>
 	     </div>
      	<!-- 통계 항목 탭 끝 -->
@@ -145,9 +134,11 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	     <div class="col-lg-12 mb-4 tab-pane show active" id="navs-top-mail" role="tabpanel">
 	       <div class="card">
 	          <div class="card-body">
-	            <h5 class="card-title text-primary"><b>통계항목 선택</b></h5>
+	            <form>
+	            <h5 class="card-title text-primary"><b>통계항목 선택<button class="btn btn-sm btn-outline-primary mx-2" type="reset" id="">선택 초기화</button></b></h5>
 	            <div class="row">
-	                  <!-- 조회 항목 선택 -->
+	            	
+	                <!-- 조회 항목 선택 -->
 	                <div class="mb-3 col-md-3">
 	                <label class="form-label" for="categoryForMail">카테고리</label>
 	                <select id="categoryForMail" class="select2 form-select">
@@ -186,13 +177,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	               <div class="mb-3 col-md-3">
 	                 <label class="form-label" for="typeForMail">조회항목</label>
 	                 <select id="typeForMail" class="select2 form-select">
-	                   <option value="toMails">메일 수신 현황</option>
-	                   <option value="fromMails">메일 발신 현황</option>
+	                   <option value="toMails">메일 수신 집계</option>
+	                   <option value="fromMails">메일 발신 집계</option>
 	                 </select>
 	               </div>
 	            </div>
+	            </form>
 	            <button class="btn btn-sm btn-outline-primary" id="getMailChartResult">결과 보기</button>
-	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">데이터 초기화</button>
+	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">결과 삭제</button>
 	          </div>
 	       </div>
 	     </div>
@@ -202,7 +194,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	     <div class="col-lg-12 mb-4 tab-pane" id="navs-top-account" role="tabpanel">
 	       <div class="card">
 	          <div class="card-body">
-	            <h5 class="card-title text-primary"><b>통계항목 선택</b></h5>
+	            <form>
+	            <h5 class="card-title text-primary"><b>통계항목 선택<button class="btn btn-sm btn-outline-primary mx-2" type="reset" id="">선택 초기화</button></b></h5>
 	            <div class="row">
 	                  <!-- 조회 항목 선택 -->
 	                  <div class="mb-3 col-md-3">
@@ -237,12 +230,73 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	                 </select>
 	               </div>
 	            </div>
+	            </form>
 	            <button class="btn btn-sm btn-outline-primary" id="getAccountChartResult">결과 보기</button>
-	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">데이터 초기화</button>
+	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">결과 삭제</button>
 	          </div>
 	       </div>
 	     </div>
 	     <!-- 회계 끝 -->
+	     
+	     <!-- 인사 시작 -->
+	     <div class="col-lg-12 mb-4 tab-pane" id="navs-top-personnel" role="tabpanel">
+	       <div class="card">
+	          <div class="card-body">
+	            <form>
+	            <h5 class="card-title text-primary"><b>통계항목 선택<button class="btn btn-sm btn-outline-primary mx-2" type="reset" id="">선택 초기화</button></b></h5>
+	            <div class="row">
+	            	
+	                <!-- 조회 항목 선택 -->
+	                <div class="mb-3 col-md-3">
+	                <label class="form-label" for="categoryForPersonnel">카테고리</label>
+	                <select id="categoryForPersonnel" class="select2 form-select">
+	                  <option value="personnel">인사</option>
+	                </select>
+	                </div>
+	               <!-- 조회 연도 선택 -->
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="years">조회연도</label>
+	                 <select id="years" class="select2 form-select">
+	                   <option value="2022">2022</option>
+	                   <option value="2021">2021</option>
+	                   <option value="2020">2020</option>
+	                 </select>
+	               </div>
+	               
+	               <!-- 조회 월 선택 -->
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="months">조회월</label>
+	                 <select id="months" class="select2 form-select">
+	                   <option value="allMonth">전체</option>
+	                   <option value="01">01</option>
+	                   <option value="02">02</option>
+	                   <option value="03">03</option>
+	                   <option value="04">04</option>
+	                   <option value="05">05</option>
+	                   <option value="06">06</option>
+	                   <option value="07">07</option>
+	                   <option value="08">08</option>
+	                   <option value="09">09</option>
+	                   <option value="10">10</option>
+	                   <option value="11">11</option>
+	                   <option value="12">12</option>
+	                 </select>
+	               </div>
+	               <div class="mb-3 col-md-3">
+	                 <label class="form-label" for="typeForPersonnel">조회항목</label>
+	                 <select id="typeForPersonnel" class="select2 form-select">
+	                   <option value="byIn">입사자 집계</option>
+	                   <option value="byOut">퇴사자 집계</option>
+	                 </select>
+	               </div>
+	            </div>
+	            </form>
+	            <button class="btn btn-sm btn-outline-primary" id="getPersonnelChartResult">결과 보기</button>
+	            <button class="btn btn-sm btn-outline-danger" type="button" onclick="resetSelected();">결과 삭제</button>
+	          </div>
+	       </div>
+	     </div>
+	     <!-- 인사 끝 -->
 	     
      </div>
      <!-- 통계 항목 선택 영역 끝 -->
@@ -296,12 +350,6 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
    
    function resetSelected() {
 	   
-	   /* 선택 값 초기화 => 왜 안되는 것인지? */
-	   /*$('#year option:eq(0)').attr('selected', 'selected');
-	   $('#month option:eq(0)').attr('selected', 'selected');
-	   $('#typeForMail option:eq(0)').attr('selected', 'selected');
-	   $('#groupingLarge option:eq(0)').attr('selected', 'selected');*/
-	   
 	   /* 데이터 모두 초기화 */ 
 		$('#resultList').html(""); 
 	   	$('#noList').html("");
@@ -313,8 +361,6 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
    $(function () {
 		$('.nav-link').click(function () {
 
-			/*resetSelected();*/
-			
 	    	/* 데이터 모두 초기화 */ 
 			$('#resultList').html(""); 
 	    	$('#noList').html("");
@@ -323,7 +369,6 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	    	
 		})
    })
-   
    
    
    /* 큰그룹 선택 값에 따른 작은그룹 출력 항목 */
@@ -441,10 +486,125 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
                 chartData += ']';
                 
                 console.log(chartData);
+
+                /* 메일 통계는 수신,발신 두 가지라 확인해야함 */
+                var mailCheck = $('#typeForMail option:checked').val();
                 
-                var title = "안녕";
-                var xx = "x축";
-                var yy = "y축";
+                var title;
+                
+                if(mailCheck == 'toMails'){
+                	title = "메일 수신 현황";
+                }else{
+                	title = "메일 발신 현황";
+                }
+                var xx = "Count of Mails";
+                var yy = "Month";
+                
+                /* 구글 차트를 그려주는 함수 호출 : list가 있는 경우에만 호출! */
+                if(list.length > 0){
+	                drawVisualization(chartData, title, xx, yy);
+                }
+            },
+            
+            error: function(list) {
+               element.html('실패');
+            }
+         })
+      })
+   })
+   
+   /* 인사 차트결과 버튼 */
+    $(function () {
+      $('#getPersonnelChartResult').click(function () {
+    	  
+    	  $('#resultList').html(""); 
+    	  $('#noList').html("");
+    	  $('#noChart').html("");
+    	  $('#chart_div').empty();
+    	  
+         var category = document.getElementById("categoryForPersonnel").value;
+         var year = document.getElementById("years").value;
+         var month = document.getElementById("months").value;
+         var type = document.getElementById("typeForPersonnel").value;
+         
+         $.ajax({
+            url: "chartList.do",   
+            data:{
+               category : category,
+               year : year,
+               month : month,
+               type : type
+            },
+            type: "post",
+            success: function(list) {
+               
+               console.log('인사차트성공');
+               console.log(list);
+               
+               if(list.length > 0){
+	               var result = '<thead>' + '<tr>'
+	               				+ '<th width="200">' + '월' + '</th>'
+	               				+ '<th width="200">' + '인사관리부' + '</th>'
+	               				+ '<th width="200">' + '회계관리부' + '</th>'
+	               				+ '<th width="200">' + '마케팅부' + '</th>'
+	               				+ '<th width="200">' + '자재관리부' + '</th>'
+	               				+ '<th width="200">' + '기획영업부' + '</th>'
+	               				+ '<th width="200">' + '경영관리부' + '</th>'
+	               				+ '<th width="200">' + '경영관리부' + '</th>'
+	               			    + '</thead>' 
+	               			    + '</tr>' + '<tbody>';   				
+	                
+	                $.each(list, function(i) {
+	                  result += '<tr>'
+	                         + '<td>' + list[i].groupBy + '</td>'
+	                         + '<td>' + list[i].departD1 + '</td>'
+	                         + '<td>' + list[i].departD2 + '</td>'
+	                         + '<td>' + list[i].departD3 + '</td>'
+	                         + '<td>' + list[i].departD4 + '</td>'
+	                         + '<td>' + list[i].departD5 + '</td>'
+	                         + '<td>' + list[i].departD6 + '</td>'
+	                         + '<td>' + list[i].departD7 + '</td>'
+	                         + '</tr>'
+	                })
+                
+	                /*리스트결과 출력*/ 
+	                $('#resultList').html(result);
+                }else{
+                	$('#noList').html('조회 결과가 없습니다');
+                	$('#noChart').html('조회 결과가 없습니다');
+                }
+                
+				/* 그래프 부분 */                
+                /* 구글 차트로 넘기기 위한 데이터 일단 String으로 보낸다. */
+                var chartData = '[[' + '"' + 'Month' + '","' + '인사관리부' + '","' + '회계관리부' 
+                	                 + '","' + '마케팅부' + '","' + '자재관리부' + '","' + '기획영업부' 
+                	                 + '","' + '경영관리부' + '","' + '기술개발부' + '"' + '],';
+                $.each(list, function(i) {
+                	chartData += '["' + list[i].groupBy + '",' +  list[i].departD1 
+                			  + "," + list[i].departD2 + "," +  list[i].departD3 
+                			  + "," + list[i].departD4 + "," +  list[i].departD5 
+                			  + "," + list[i].departD6 + "," +  list[i].departD7 + ']';
+                	if(i != list.length-1){
+                		chartData += ',';
+                	}
+                })
+                
+                chartData += ']';
+                
+                console.log(chartData);
+
+                /* 메일 통계는 수신,발신 두 가지라 확인해야함 */
+                var mailCheck = $('#typeForPersonnel option:checked').val();
+                
+                var title;
+                
+                if(mailCheck == 'byIn'){
+                	title = "입사자 현황";
+                }else{
+                	title = "퇴사자 현황";
+                }
+                var xx = "Count of Employees";
+                var yy = "Month";
                 
                 /* 구글 차트를 그려주는 함수 호출 : list가 있는 경우에만 호출! */
                 if(list.length > 0){
@@ -535,14 +695,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
                 chartData += ']';
                 
                 console.log(chartData);
-                
-                var titleTest = "타이틀변경";
-                var xTest = "x변경";
-                var yTest = "y변경";
+               
+                var title = "급여 비율 현황";
+                var xx = "Salary of Employee";
+                var yy = "Employee";
 
                 /* 구글 차트를 그려주는 함수 호출 : list가 있는 경우에만 호출! */
                 if(list.length > 0){
-	                drawVisualization(chartData);
+	                drawVisualization(chartData, title, xx, yy);
                 }
             },
             

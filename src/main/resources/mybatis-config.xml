@@ -37,6 +37,7 @@
 
 	    <typeAlias type="com.workie.easy.chart.model.dto.ChartForMail" alias="ChartForMail"/>
 	    <typeAlias type="com.workie.easy.chart.model.dto.ChartForAccount" alias="ChartForAccount"/>
+	    <typeAlias type="com.workie.easy.chart.model.dto.ChartForPersonnel" alias="ChartForPersonnel"/>
 
 	    
 	</typeAliases>

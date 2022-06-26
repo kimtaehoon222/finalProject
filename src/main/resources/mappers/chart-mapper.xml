@@ -191,5 +191,39 @@
 		   AND D.JOB_NAME= #{jobName}
 	</select>
 	
+	<resultMap type="ChartForPersonnel" id="chartForPersonnelResult">
+		<result property="departD1" column="DEPART_D1"/>
+		<result property="departD2" column="DEPART_D2"/>
+		<result property="departD3" column="DEPART_D3"/>
+		<result property="departD4" column="DEPART_D4"/>
+		<result property="departD5" column="DEPART_D5"/>
+		<result property="departD6" column="DEPART_D6"/>
+		<result property="departD7" column="DEPART_D7"/>
+	</resultMap>
 	
+	<!-- 월별 부서별 조회 : 입사자 현황 -->
+	<select id="selectChartListForPersonnelIn" resultMap="chartForPersonnelResult">
+		<![CDATA[
+		SELECT DECODE(TO_CHAR(TO_DATE(HIRE_DATE), 'YYYY/MM'), NULL, '부서총합계', TO_CHAR(TO_DATE(HIRE_DATE), 'YYYY/MM')) GROUPBY 
+		     , COUNT(CASE WHEN DEPT_CODE = 'D1' THEN 1 ELSE NULL END) DEPART_D1
+		     , COUNT(CASE WHEN DEPT_CODE = 'D2' THEN 1 ELSE NULL END) DEPART_D2
+		     , COUNT(CASE WHEN DEPT_CODE = 'D3' THEN 1 ELSE NULL END) DEPART_D3
+		     , COUNT(CASE WHEN DEPT_CODE = 'D4' THEN 1 ELSE NULL END) DEPART_D4
+		     , COUNT(CASE WHEN DEPT_CODE = 'D5' THEN 1 ELSE NULL END) DEPART_D5
+		     , COUNT(CASE WHEN DEPT_CODE = 'D6' THEN 1 ELSE NULL END) DEPART_D6
+		     , COUNT(CASE WHEN DEPT_CODE = 'D7' THEN 1 ELSE NULL END) DEPART_D7
+		 FROM EMPLOYEE
+		WHERE DEPT_CODE IN ('D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7')
+		  AND HIRE_DATE >= #{startDate} AND HIRE_DATE <= #{endDate}
+	 GROUP BY ROLLUP(TO_CHAR(TO_DATE(HIRE_DATE), 'YYYY/MM'))
+ 	 ORDER BY GROUPBY
+	  	]]>
+	</select>
+	
+	<!-- 일별 부서별 조회 : 입사자 현황 -->
+	<select id="selectChartListForPersonnelInByMonth" resultMap="chartForPersonnelResult">
+		<![CDATA[
+		
+	  	]]>
+	</select>
 </mapper>

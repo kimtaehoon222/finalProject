@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
+import com.workie.easy.chart.model.dto.ChartForPersonnel;
 
 public interface ChartService {
 
@@ -24,5 +25,9 @@ public interface ChartService {
 	ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobAll();
 
 	ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobOne(ChartForAccount chartforAccount);
+
+	ArrayList<ChartForPersonnel> selectChartListForPersonnelIn(ChartForPersonnel chartForPersonnel);
+
+	ArrayList<ChartForPersonnel> selectChartListForPersonnelInByMonth(ChartForPersonnel chartForPersonnel);
 
 }
