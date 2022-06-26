@@ -10,7 +10,7 @@
 	
 	<resultMap type="Contect" id="ContectResultSet">
 		<id column="EMP_NO" property="empNo"/>
-		<result column="S_CODE" property="sCode"/>
+		<result column="S_NO" property="sNo"/>
 		<result column="S_NAME" property="sName"/>
 		<result column="EMP_NAME" property="empName"/>
 		<result column="DEPT_NAME" property="deptName"/>
@@ -43,7 +43,7 @@
    LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
    LEFT JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
    LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
-   LEFT JOIN WORK_STATUS_TYPE E ON A.S_CODE = E.S_CODE
+   LEFT JOIN WORK_STATUS_TYPE E ON A.S_NO = E.S_NO
 	   WHERE B.ENT_YN = 'Y' AND D.DEPT_NAME = #{deptName}
 	</select>
 	
@@ -60,7 +60,7 @@
    LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
    LEFT JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
    LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
-   LEFT JOIN WORK_STATUS_TYPE E ON A.S_CODE = E.S_CODE
+   LEFT JOIN WORK_STATUS_TYPE E ON A.S_NO = E.S_NO
 	   WHERE B.ENT_YN = 'Y' AND A.EMP_NO = #{empNo}
 	</select>
 	
@@ -84,6 +84,14 @@
 	
 	
 	</insert>
+	
+	<update id="updateStatus" parameterType="Contect">
+		UPDATE CONTECT SET
+		       S_NO = #{sNo}
+		 WHERE EMP_NO = #{empNo}
+	
+	
+	</update>
 	
 	
 </mapper>

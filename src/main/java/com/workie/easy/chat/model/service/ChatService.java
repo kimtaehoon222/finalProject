@@ -18,4 +18,8 @@ public interface ChatService {
 
 	int insertMessage(Chat chat);
 
+	int updateStatus(Contect contect);
+
+	
+
 }

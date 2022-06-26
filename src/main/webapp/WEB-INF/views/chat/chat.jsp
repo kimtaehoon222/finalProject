@@ -44,10 +44,10 @@
 .contectDeptList button:hover {
 	font-weight: bold;
 }
-.accordion {
+.accordion {<%-- 지워도 된다.--%>
 	height: 80px;
 }
-.accordion-button {
+.accordion-button { <%-- 지워도 된다.--%>
 	height: 60px;
 }
 </style>
@@ -180,23 +180,29 @@
 												</c:when>
 												<c:otherwise>
 
-													<span style="font-size: 14px;"><i class="icon-clock"></i>
+													<span style="font-size: 15px;"><i class="icon-clock"></i>
 														 채팅 내역은 일주일 동안 보존됩니다.</span>
 													<br>
-													<span style="font-size: 14px;">이후에는 삭제 되므로 이전 기록이 필요하시면
-														 보안실로 문의 해 주세요.</span>
+													<span style="font-size: 15px;">이후에는 자동으로 삭제 되므로,</span>
+													<br>
+													<span style="font-size: 15px;"> 이전 기록이 필요하시면 보안실로 문의 해 주세요.</span>
 												</c:otherwise>
 
 
 											</c:choose>
 										</div>
 									</div>
-										<div id="chatAlert" style="display:none;" class="alert alert-dark alert-dismissible fade show mb-0" role="alert">
+										<!--  <div id="chatAlert" style="display:none;" class="alert alert-dark alert-dismissible fade show mb-0" role="alert">
 		                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		                                        <span aria-hidden="true">×</span>
 		                                    </button>
 		                                    <strong>새로운 메세지 도착 </strong>
-		                                </div>
+		                                </div>-->
+		                                
+		                                <div id="chatAlert"  style="display:none;" class="alert alert-primary alert-dismissible" role="alert">
+								          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+								          </button>
+								        </div>
 									<div class="chat-box scrollable position-relative"
 										style="height: calc(100vh - 400px); ">
 
@@ -219,7 +225,7 @@
 													<li class="chat-item list-style-none mt-3">
 														<div class="chat-img d-inline-block">
 															<img
-																src="${ pageContext.servletContext.contextPath }/resources/assets/images/users/3.jpg"
+																src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
 																alt="user" class="rounded-circle" width="45">
 														</div>
 														<div class="chat-content d-inline-block pl-3">
@@ -236,7 +242,7 @@
 										</ul>
 									</div>
 									
-
+										<c:if test="${not empty toChat }">
 										<div class="card-body border-top">
 											<div class="row">
 												<div class="col-9">
@@ -254,7 +260,7 @@
 												</div>
 											</div>
 										</div>
-							
+								   </c:if>
 								</div>
 							</div>
 						</div>
@@ -305,26 +311,59 @@
 	<!--This page JavaScript -->
 
 <script>
+
+$("#status").on('change',function(){
+	var sNo = $(this).val();
+ 	var empNo = '${ loginEmp.empNo }';
+ 	console.log(sNo);
+ 	console.log(empNo);
+	$.ajax({
+		url:'updateStatus.do',
+		data: {
+			sNo : sNo,
+			empNo : empNo
+			
+		},
+		type:'post',
+		success:function(result){
+			console.log("result " + result);
+			if(result <= 0){
+				alert(" 상태를 바꿀 수 없습니다. 관리자에게 문의 바랍니다.");
+			}
+		},error:function(){
+			alert("상태를 바꿀 수 없습니다. 관리자에게 문의 바랍니다.");
+		}
+	
+	})
+});
+
+
+
+
 	$(function(){
 		
 		selectDeptList();
 		
 
+
 		
 	});
+	
+	
+
 
 
 	
 $(function(){
 
-		connectWS();
+	connectSocket();
 })
 
 
 
 var socket = null;
 
-function connectWS() {
+function connectSocket() {
 	//웹소켓 생성
     var ws = new WebSocket("ws://localhost:8090/echo"); 
     socket = ws;
