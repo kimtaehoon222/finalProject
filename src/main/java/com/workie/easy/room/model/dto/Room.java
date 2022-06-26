@@ -1,7 +1,5 @@
 package com.workie.easy.room.model.dto;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RoomDto {
+public class Room {
  
 	private int roomNo;//회의실번호
 	private String roomName;//회의실이름
@@ -23,9 +21,10 @@ public class RoomDto {
 	private int empNo;//사원번호
 	private String meetTitle;//예약 번호
 	private String meetGoal;//예약 목적
-	private Date resDate;//예약날짜
-	private String startTime;//시작시간
-	private String endTime;//종료시간
+	private String startDate;//시작시간
+	private String endDate;//종료시간
 	private String resStatus;//상태값
+	
+	private String empName; //사원 이름
 
 }

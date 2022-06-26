@@ -39,7 +39,7 @@
 	    <typeAlias type="com.workie.easy.chart.model.dto.ChartForAccount" alias="ChartForAccount"/>
 	    <typeAlias type="com.workie.easy.chart.model.dto.ChartForPersonnel" alias="ChartForPersonnel"/>
 
-	    
+	    <typeAlias type="com.workie.easy.room.model.dto.Room" alias="Room"/>
 	</typeAliases>
 		
 	<mappers>
@@ -53,6 +53,7 @@
 		<mapper resource="/mappers/card-mapper.xml"/>
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/chart-mapper.xml"/>
+		<mapper resource="/mappers/room-mapper.xml"/>
 	</mappers>
 	
 </configuration>
