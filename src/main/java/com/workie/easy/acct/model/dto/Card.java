@@ -42,5 +42,9 @@ public class Card {
 //	private String ctgNo;			//분류코드
 	
 	private String empName;			//카드사용인(사원이름)
+	
+	private String originName;		//수정전이름
+	private String changeName;		//수정후이름
+	private String filePath;		//파일경로
 
 }
