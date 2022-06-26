@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="roomMapper">
+          <resultMap type="room" id="roomResult">
+			<result property="resNo" column="RES_NO"/>
+			<result property="roomNo" column="ROOM_NO"/>
+			<result property="empNo" column="EMP_NO"/>
+			<result property="meetTitle" column="MEET_TITLE"/>
+			<result property="meetGoal" column="MEET_GOAL"/>
+			<result property="startDate" column="START_DATE"/>
+			<result property="endDate" column="END_DATE"/>
+			<result property="resStatus" column="RES_STATUS"/>
+		    <result property="roomName" column="ROOM_NAME"/>
+		    <result property="capacity" column="CAPACITY"/>
+	    </resultMap>
+
+	   <select id="selectResList" resultMap="roomResult">
+	    SELECT 
+		*
+		FROM RESERVATION A 
+		JOIN MEETING_ROOM B ON A.ROOM_NO = B.ROOM_NO
+		JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		WHERE RES_STATUS = 'Y'
+		AND A.ROOM_NO = #{roomNo}
+        </select>
+	
+	
+</mapper>
