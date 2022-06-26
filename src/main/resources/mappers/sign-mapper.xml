@@ -34,6 +34,10 @@
 		<result property="jobName" column="JOB_NAME"/>
 		<result property="jobCode" column="JOB_CODE"/>
 		<result property="refNo" column="REF_NO"/>
+		<result property="firstSignName" column="FIRST_SIGN_NAME"/>
+		<result property="firstSignJob" column="FIRST_SIGN_JOB"/>
+		<result property="finalSignName" column="FINAL_SIGN_NAME"/>
+		<result property="finalSignJob" column="FINAL_SIGN_JOB"/>
 		
 		
 	</resultMap>
@@ -81,7 +85,7 @@
 	<insert id="insertSign" parameterType="Sign">
 		INSERT ALL 
 		INTO SIGN
-		VALUES(SEQ_GNO.NEXTVAL, 'AA', #{signTitle}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{signContent})
+		VALUES(SEQ_GNO.NEXTVAL, 'AA', #{signTitle}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{signContent}, NULL, NULL, NULL, NULL)
 		
 		INTO STANDARD_FORM
 		VALUES(SEQ_GNO.CURRVAL, #{check}, #{signContent}, 'SF')
@@ -98,7 +102,7 @@
 	<insert id="insertHelp" parameterType="Sign">
 		INSERT ALL 
 		INTO SIGN
-		VALUES(SEQ_GNO.NEXTVAL, 'BB', #{signTitle}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{signContent})
+		VALUES(SEQ_GNO.NEXTVAL, 'BB', #{signTitle}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{signContent}, NULL, NULL, NULL, NULL)
 		
 		INTO STANDARD_FORM
 		VALUES(SEQ_GNO.CURRVAL, #{check}, #{signContent}, 'SF')
@@ -117,7 +121,7 @@
 	<if test="reason != null">
 		INSERT ALL 
 		INTO SIGN
-		VALUES(SEQ_GNO.NEXTVAL, 'CC', #{title}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{reason})
+		VALUES(SEQ_GNO.NEXTVAL, 'CC', #{title}, #{empNo}, SYSDATE, #{firstApprover}, #{finalApprover}, NULL, NULL, NULL, 'W', 'Y', NULL, #{createName}, #{reason}, NULL, NULL, NULL, NULL)
 		</if>
 		INTO VACATION_FORM
 		VALUES(SEQ_GNO.CURRVAL, #{title}, #{reason}, #{firstDate}, #{lastDate}, #{vCode})
@@ -215,7 +219,114 @@
     AND E.TYPE_CODE = 'BB'
 	
 	</select>	
-
+	
+	<select id="selectCClist" resultMap="singResultSet">
+		
+    SELECT 
+        A.SIGN_NO,
+        B.V_CODE,
+        A.FINAL_APPROVER, 
+        C.JOB_NAME,
+        A.CREATE_NAME, 
+        TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE,
+        TO_CHAR(B.FIRST_DATE, 'YY/MM/DD') AS FIRST_DATE,
+        TO_CHAR(B.LAST_DATE, 'YY/MM/DD') AS LAST_DATE,
+        A.SIGN_TITLE,
+        A.SIGN_CONTENT
+     FROM SIGN A
+        JOIN VACATION_FORM B ON A.SIGN_NO = B.SIGN_NO
+        JOIN EMPLOYEE D ON A.EMP_NO = D.EMP_NO
+        JOIN JOB C ON D.JOB_CODE = C.JOB_CODE
+        JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+     WHERE A.SIGN_NO =  #{signNo}
+	    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'W'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'CC'
+		
+	
+	</select>
+	
+	<update id="updateR" parameterType="Sign">
+	
+	UPDATE SIGN 
+	   SET STATUS_CODE = 'R' , MODIFY_DATE = SYSDATE , FIRST_SIGN_NAME = #{empName} , FIRST_SIGN_JOB = #{jobName}
+    WHERE SIGN_NO = #{signNo}
+	
+	</update>
+	
+	<update id="updateP" parameterType="Sign">
+	
+	UPDATE SIGN 
+	   SET STATUS_CODE = 'P' , FIRST_SIGN_DATE = SYSDATE , FIRST_SIGN_NAME = #{empName} , FIRST_SIGN_JOB = #{jobName}
+    WHERE SIGN_NO = #{signNo}
+	
+	</update>
+	
+	<select id="selectPListCount" parameterType="string" resultType="_int">
+	
+	SELECT COUNT(*) <!-- 최종 결재자 -->
+		FROM SIGN
+		WHERE STATUS_CODE = 'P'
+		AND FINAL_APPROVER LIKE '%'||#{empName}||'%'
+		AND STATUS = 'Y' 
+		
+	</select>
+	
+	<select id="selectGoList" resultMap="singResultSet">
+	
+		SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+	        A.SIGN_CONTENT,
+	        D.DEPT_NAME,
+	        A.CREATE_NAME,
+	        F.ORIGIN_NAME,
+            F.CHANGE_NAME,
+            E.TYPE_CODE,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+            TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+		    LEFT JOIN ATTACHMENT F ON A.SIGN_NO = F.REF_NO
+		    LEFT JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.FINAL_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'P'
+	    AND A.STATUS = 'Y'
+	    ORDER BY A.SIGN_NO DESC
+		
+	</select>	
+	
+	<select id="selectAAPlist" resultMap="singResultSet"> <!-- 진행 상태 품의 조회 -->
+	
+	SELECT
+	    A.SIGN_NO, <!-- 결재번호  -->
+	    A.CREATE_NAME, <!--기안자 -->
+	    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
+	    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+	    B.JOB_NAME, <!-- 직급명 -->
+	    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+	    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+	    A.SIGN_TITLE,
+	    A.SIGN_CONTENT,
+	    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+	    D.ORIGIN_NAME  <!-- 파일 원래 이름 -->
+    FROM SIGN A
+	    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+	    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+	    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+	    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+	    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+    WHERE A.SIGN_NO = #{signNo}
+    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+    AND A.STATUS_CODE = 'P'
+    AND A.STATUS = 'Y'
+    AND E.TYPE_CODE = 'AA'
+	
+	</select>	
+	
 	</mapper>
 
 		

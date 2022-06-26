@@ -25,6 +25,18 @@ public interface SignService {
 
 	Sign selectBBList(Sign si);
 
+	Sign selectCCList(Sign si);
+
+	void updateR(Sign si);
+
+	void updateP(Sign si);
+
+	int selectPListCount(String empName);
+
+	ArrayList<Sign> selectGoList(PageInfo pi, String empName);
+
+	Sign selectAAPList(Sign si);
+
 	
 
 	/* void insertName(int eNo); */

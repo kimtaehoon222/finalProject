@@ -249,6 +249,161 @@ public class SignController {
 
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="selectCCList.do",method=RequestMethod.POST)
+	public JSONObject selectCCList (int signNo, HttpSession session) { //협조 조회
+		
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName(); //현재 접속한 사용자의 이름
+		
+		System.out.println("signNo 찍어보기 : " + signNo);
+		
+		/* 파라미터값 set */
+		Sign si = new Sign();
+		si.setSignNo(signNo); //결재 번호 셋팅
+		si.setFirstApprover(empName);
+		
+		/* 서비스 연결  */
+		Sign s = signService.selectCCList(si);
+
+		/* Json에 담기 */ 
+		JSONObject jsonSign = new JSONObject();
+		jsonSign.put("signNo", s.getSignNo());
+		jsonSign.put("createName", s.getCreateName());
+		jsonSign.put("createDate", s.getCreateDate());
+		jsonSign.put("jobName", s.getJobName());
+		jsonSign.put("vCode", s.getVCode());
+		jsonSign.put("firstDate", s.getFirstDate());
+		jsonSign.put("lastDate", s.getLastDate());
+		jsonSign.put("finalApprover", s.getFinalApprover());
+		jsonSign.put("signTitle", s.getSignTitle());
+		jsonSign.put("signContent", s.getSignContent());
+
+		
 	
+		return jsonSign;
+
+	}
+
+	@RequestMapping("updateR.do")
+	public String updateR( String signNo, HttpSession session ) { //품의 요청대기함 -> 반려 
+
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+		
+		String empJob = ((Employee)session.getAttribute("loginEmp")).getJobName();
+		
+		String[] array = signNo.split(",");
+		
+		for(int i=0; i<array.length; i++) {
+			System.out.println(array[i]);
+				signNo = array[0];
+			}
+		
+		System.out.println(signNo + "잘 짤렸는지 체크");
+		
+		int sNo = Integer.parseInt(signNo); //detail 번호가 붕 떠있는 상황이며 ajax에서 넘어오기에 string으로 넘어오니 int로 형변환 해준다. 
+		
+		Sign si = new Sign();
+		si.setSignNo(sNo);
+		si.setEmpName(empName);
+		si.setJobName(empJob);
+		
+		
+		signService.updateR(si);
+		
+		String view = "redirect:signWaitingView.do";
+		
+		return view;
+	}
+	
+	
+	@RequestMapping("updateP.do")
+	public String insertSign(String signNo, HttpSession session ) { // 품의 요청 대기함 -> 결재 진행함
+
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+		
+		String empJob = ((Employee)session.getAttribute("loginEmp")).getJobName();
+		
+		String[] array = signNo.split(",");
+		
+		for(int i=0; i<array.length; i++) {
+			System.out.println(array[i]);
+				signNo = array[0];
+			}
+		
+		int sNo = Integer.parseInt(signNo);
+		
+		Sign si = new Sign();
+		si.setSignNo(sNo);
+		si.setEmpName(empName);
+		si.setJobName(empJob);
+		
+		signService.updateP(si);
+		
+		String view = "redirect:signView.do";
+		
+		return view;
+		
+		
+	}
+
+	/* 결재 진행함 List */
+	@RequestMapping("signGoView.do")
+	public String readSignGoView(@RequestParam(value="currentPage", required = false, defaultValue = "1")
+									                int currentPage, Model model, HttpSession session) {
+		
+
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+
+
+		int listCount = signService.selectPListCount(empName);
+		
+		System.out.println(listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Sign> list = signService.selectGoList(pi, empName);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+
+		return "sign/signGoView";
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectAAPList.do",method=RequestMethod.POST)
+	public JSONObject selectAAPList (int signNo, HttpSession session) { //'P' 진행 품의 조회  
+		
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName(); //현재 접속한 사용자의 이름
+		
+		System.out.println("signNo 찍어보기 : " + signNo);
+		
+		/* 파라미터값 set */
+		Sign si = new Sign();
+		si.setSignNo(signNo); //결재 번호 셋팅
+		si.setFirstApprover(empName);
+		
+		/* 서비스 연결  */
+		Sign s = signService.selectAAPList(si);
+
+		/* Json에 담기 */
+		JSONObject jsonSign = new JSONObject();
+		jsonSign.put("signNo", s.getSignNo());
+		jsonSign.put("createName", s.getCreateName());
+		jsonSign.put("createDate", s.getCreateDate());
+		jsonSign.put("jobName", s.getJobName());
+		jsonSign.put("expiryDate", s.getExpiryDate());
+		jsonSign.put("finalApprover", s.getFinalApprover());
+		jsonSign.put("signTitle", s.getSignTitle());
+		jsonSign.put("signContent", s.getSignContent());
+		jsonSign.put("changeName", s.getChangeName());
+		jsonSign.put("originName", s.getOriginName());
+		jsonSign.put("fistSignDate", s.getFinalSignDate());
+		
+		
+		return jsonSign;
+
+	}
 
 }
