@@ -53,7 +53,7 @@ public class EmployeeController {
 		Employee loginEmp = empService.loginEmp(bCryptPasswordEncoder, emp);
 		model.addAttribute("loginEmp",loginEmp);
 
-		return "redirect:/";
+		return "main";
 		
 	}
 	
