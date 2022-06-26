@@ -27,15 +27,28 @@
 		<result property="statStatus" column="STAT_STATUS"/>
 		
 		<result property="empName" column="EMP_NAME"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
 		
 	</resultMap>
+	
+	<select id="cardStatListCount" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM CARD_STATEMENT A
+		  JOIN EMPLOYEE B ON (A.EMP_NO = B.EMP_NO)
+		  JOIN DEP_CARD C ON (A.CARD_REG_NO = C.CARD_REG_NO)
+		 WHERE A.STAT_STATUS = 'Y'
+  		   AND C.DEPT_CODE = #{deptCode}
+	 </select>
 	
 	<select id="selectCardStatList" resultMap="cardResult">
 		SELECT 
 		       A.STAT_NO
 		     , A.EMP_NO
 		     , B.EMP_NAME
-		     , A.TRANSACTION_DATE
+		     , TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM-DD') AS TRANSACTION_DATE
 		     , A.AMOUNT
 		     , A.STORE_NAME
 		     , CASE WHEN A.PAYMENT_STATUS = 'A' THEN '승인'
@@ -45,9 +58,52 @@
 		  JOIN EMPLOYEE B ON (A.EMP_NO = B.EMP_NO)
 		  JOIN DEP_CARD C ON (A.CARD_REG_NO = C.CARD_REG_NO)
 		 WHERE A.STAT_STATUS = 'Y'
-  		   AND C.DEPT_CODE = = #{deptCode} 
+  		   AND C.DEPT_CODE = #{deptCode}
+  		 ORDER BY A.TRANSACTION_DATE DESC
 	 </select>
 	 
-	 
+	<insert id="insertCardStat">
+		INSERT ALL
+		  INTO CARD_STATEMENT
+		VALUES( SEQ_CSNO.NEXTVAL 
+		      , ( SELECT A.CARD_REG_NO 
+		            FROM DEP_CARD A 
+		           WHERE DEPT_CODE = ( SELECT B.DEPT_CODE 
+		                                 FROM EMPLOYEE B 
+		                                WHERE EMP_NO = #{empNo}
+		                             ) 
+		        ) 
+		      , #{empNo} , #{paymentStatus} , #{amount} , #{transactionDate} , #{storeName} 
+		      , #{statMemo} , DEFAULT , DEFAULT
+		      )
+		  INTO ATTACHMENT
+		VALUES( SEQ_FNO.NEXTVAL , SEQ_CSNO.CURRVAL , 'CS' , #{originName} , #{changeName}
+		      , #{filePath} , SYSDATE , DEFAULT )
+		SELECT *
+		  FROM DUAL 	
+	</insert>
+	
+	<select id="selectCardStat" resultMap="cardResult">
+		SELECT 
+		       A.STAT_NO
+		     , B.EMP_NAME
+		     , CASE WHEN A.PAYMENT_STATUS = 'A' THEN '승인'
+		            ELSE '취소'
+		       END AS PAYMENT_STATUS
+		     , A.AMOUNT
+		     , TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM-DD') AS TRANSACTION_DATE
+		     , A.STORE_NAME
+		     , A.STAT_MEMO
+		     , D.CHANGE_NAME
+		     , D.ORIGIN_NAME
+		     , D.FILE_PATH
+		  FROM CARD_STATEMENT A
+		  JOIN EMPLOYEE B ON (A.EMP_NO = B.EMP_NO)
+		  JOIN DEP_CARD C ON (A.CARD_REG_NO = C.CARD_REG_NO)
+		  LEFT JOIN ATTACHMENT D ON (A.CTG_NO=D.CTG_NO)
+		 WHERE A.STAT_STATUS = 'Y'
+		   AND D.CTG_NO = 'CS'
+		   AND A.STAT_NO = #{statNo}
+	</select>
 	 
 </mapper>

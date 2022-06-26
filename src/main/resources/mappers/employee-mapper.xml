@@ -46,11 +46,10 @@
 	
 	<insert id="insertEmp" parameterType="Employee">
 		INSERT
-		  INTO EMPLOYEE VALUES(SEQ_EMNO.NEXTVAL, #{empName}, #{phone}, #{empId}, #{empReg}
+		  INTO EMPLOYEE VALUES( SEQ_EMNO.NEXTVAL, #{empName}, #{phone}, #{empId}, #{empReg}
 		                      , #{gender}, #{empPwd}, #{address}, NULL, NULL
 		                      , DEFAULT, NULL, SYSDATE, NULL, DEFAULT
-                          , DEFAULT, DEFAULT, NULL
-
+                              , DEFAULT, DEFAULT, NULL
 		                      )
 	</insert>
 </mapper>

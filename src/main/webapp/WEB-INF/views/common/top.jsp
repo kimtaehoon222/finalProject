@@ -255,7 +255,7 @@
             </li>
             <!-- User interface -->
             <li class="menu-item">
-              <a href="acct.do" class="menu-link">
+              <a href="acct.do?deptCode=${loginEmp.deptCode}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-credit-card"></i>
                 <div data-i18n="User interface">회계 관리</div>
               </a>
