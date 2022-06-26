@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.workie.easy.chart.model.dto.Chart;
 import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
+import com.workie.easy.chart.model.dto.ChartForPersonnel;
 import com.workie.easy.chart.model.service.ChartService;
 import com.workie.easy.employee.model.dto.Employee;
 
@@ -58,7 +59,7 @@ public class ChartController {
 	public JSONArray selectChartList(@ModelAttribute Chart chart, HttpServletResponse response) {
 		
 		System.out.println("category" + chart.getCategory());
-		System.out.println("groupingLarge" + chart.getGroupingLarge());
+		//System.out.println("groupingLarge" + chart.getGroupingLarge());
 		//System.out.println("groupingSmall" + chart.getGroupingSmall());
 		System.out.println("type" + chart.getType());
 		
@@ -73,6 +74,9 @@ public class ChartController {
 		case "account" : 
 			list = selectChartListForAccount(chart);
 			break;
+		case "personnel" : 
+			list = selectChartListForPersonnel(chart);
+			break;	
 		default:
 			break;
 		}
@@ -90,7 +94,6 @@ public class ChartController {
 		
 		return list;
 	}
-	
 	
 	/* 회계 관련 통계를 추출하는 메소드 */
 	private JSONArray selectChartListForAccount(Chart chart) {
@@ -228,6 +231,82 @@ public class ChartController {
 				jsonObject.put("departD5", chartMail.getDepartD5());
 				jsonObject.put("departD6", chartMail.getDepartD6());
 				jsonObject.put("departD7", chartMail.getDepartD7());
+				
+				/* 데이터가 담긴 JSON 객체를 JSON배열에 추가 */
+				jsonChartList.add(jsonObject);
+			}
+		}
+		
+		return jsonChartList;
+	}
+	
+	/* 인사 관련 통계를 추출하는 메소드 */
+	private JSONArray selectChartListForPersonnel(Chart chart) {
+
+		ChartForPersonnel chartForPersonnel = new ChartForPersonnel();
+		
+		ArrayList<ChartForPersonnel> chartList = new ArrayList<ChartForPersonnel>();
+		
+		if(chart.getMonth().equals("allMonth")) { /* 연도만 선택하고 해당 연도의 전체 월 조회시  */
+			chartForPersonnel.setStartDate(chart.getYear()+"/01/01");
+			chartForPersonnel.setEndDate(chart.getYear()+"/12/31");
+
+			if(chart.getType().contentEquals("byIn")) { 
+				
+				/* list 조회  : 입사 */
+				chartList = chartService.selectChartListForPersonnelIn(chartForPersonnel);
+			}else {
+				
+				/* list 조회  : 퇴사 */
+				//chartList = chartService.selectChartListForPersonnelOut(chartForPersonnel);
+			}
+			
+		}else { /* 연도도 선택하고 해당 연도의 특정 월 조회시  */
+			
+			/* 시작일 셋팅 : 모든 월의 시작은 01일 */
+			chartForPersonnel.setStartDate(chart.getYear() + "/" + chart.getMonth() + "/01");
+			
+			/* 해당 월의 마지막 날 구하기 */
+			Calendar calendar = Calendar.getInstance();
+			
+			/* Calendar에서 월은 0~11이므로 1을 반드시 빼주어야 한다. */ 
+			calendar.set(Integer.parseInt(chart.getYear()), Integer.parseInt(chart.getMonth())-1, 1);
+			
+			/* 위에서 파라미터로 넣은 해당 월의 마지막 날짜를 구해온다. */
+			int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); 
+			
+			/* 마지막일 셋팅 : 월마다 마지막일이 다르므로 위에서 얻은 해당 월의 마지막 날을 넣는다. */
+			chartForPersonnel.setEndDate(chart.getYear() + "/" + chart.getMonth() + "/" + lastDay);
+			
+			if(chart.getType().contentEquals("byIn")) { 
+				
+				/* list 조회  : 입사 */
+				chartList = chartService.selectChartListForPersonnelInByMonth(chartForPersonnel);
+			}else {
+				
+				/* list 조회  : 퇴사 */
+				//chartList = chartService.selectChartListForPersonnelOutByMonthFrom(chartForPersonnel);
+			}
+		}
+		
+		JSONArray jsonChartList = new JSONArray();
+		JSONObject jsonObject = null;
+		
+		if(!chartList.isEmpty()) {
+			for(ChartForPersonnel chartPersonnel : chartList) {
+				
+				/* JSON 객체 생성 */
+				jsonObject = new JSONObject();
+				
+				/* 생성된 JSON 객체에 list의 자바 데이터 를 put*/
+				jsonObject.put("groupBy", chartPersonnel.getGroupBy());
+				jsonObject.put("departD1", chartPersonnel.getDepartD1());
+				jsonObject.put("departD2", chartPersonnel.getDepartD2());
+				jsonObject.put("departD3", chartPersonnel.getDepartD3());
+				jsonObject.put("departD4", chartPersonnel.getDepartD4());
+				jsonObject.put("departD5", chartPersonnel.getDepartD5());
+				jsonObject.put("departD6", chartPersonnel.getDepartD6());
+				jsonObject.put("departD7", chartPersonnel.getDepartD7());
 				
 				/* 데이터가 담긴 JSON 객체를 JSON배열에 추가 */
 				jsonChartList.add(jsonObject);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
+import com.workie.easy.chart.model.dto.ChartForPersonnel;
 
 /*
 * <pre>
@@ -71,6 +72,18 @@ public class ChartDao {
 			ChartForAccount chartforAccount) {
 
 		return (ArrayList)sqlSession.selectList("chartMapper.selectSalaryChartListForAccountByJobOne", chartforAccount);
+	}
+
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelIn(SqlSession sqlSession,
+			ChartForPersonnel chartForPersonnel) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForPersonnelIn", chartForPersonnel);
+	}
+
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelInByMonth(SqlSession sqlSession,
+			ChartForPersonnel chartForPersonnel) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForPersonnelInByMonth", chartForPersonnel);
 	}
 
 

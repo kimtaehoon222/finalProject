@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.workie.easy.chart.model.dao.ChartDao;
 import com.workie.easy.chart.model.dto.ChartForAccount;
 import com.workie.easy.chart.model.dto.ChartForMail;
+import com.workie.easy.chart.model.dto.ChartForPersonnel;
 
 /*
 * <pre>
@@ -86,6 +87,18 @@ public class ChartServiceImpl implements ChartService {
 	public ArrayList<ChartForAccount> selectSalaryChartListForAccountByJobOne(ChartForAccount chartforAccount) {
 
 		return chartDao.selectSalaryChartListForAccountByJobOne(sqlSession, chartforAccount);
+	}
+
+	@Override
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelIn(ChartForPersonnel chartForPersonnel) {
+
+		return chartDao.selectChartListForPersonnelIn(sqlSession, chartForPersonnel);
+	}
+
+	@Override
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelInByMonth(ChartForPersonnel chartForPersonnel) {
+
+		return chartDao.selectChartListForPersonnelInByMonth(sqlSession, chartForPersonnel);
 	}
 
 
