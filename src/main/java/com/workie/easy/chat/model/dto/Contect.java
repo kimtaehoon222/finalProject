@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class Contect {
 	private int empNo;
+	private int sNo;
 	private String sName;
 	private String empName;
 	private String deptName;

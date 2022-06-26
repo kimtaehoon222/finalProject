@@ -35,4 +35,9 @@ public class ChatDao {
 		return sqlSession.insert("chatMapper.insertMessage",chat);
 	}
 
+	public int updateStatus(SqlSession sqlSession, Contect contect) {
+		
+		return sqlSession.update("chatMapper.updateStatus", contect);
+	}
+
 }

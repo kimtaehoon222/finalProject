@@ -55,4 +55,10 @@ public class ChatServiceImpl implements ChatService {
 		
 		return result;
 	}
+
+	@Override
+	public int updateStatus(Contect contect) {
+		int result = chatdao.updateStatus(sqlSession, contect);
+		return result;
+	}
 }

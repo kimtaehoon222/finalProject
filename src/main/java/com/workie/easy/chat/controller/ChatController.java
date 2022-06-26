@@ -74,4 +74,15 @@ public class ChatController {
 		return String.valueOf(result);
 	}
 	
+	@ResponseBody
+	@RequestMapping("updateStatus.do")
+	public String updateStatus(Contect contect) {
+		int result = chatService.updateStatus(contect);
+		System.out.println("result : "  + result);
+		
+		return String.valueOf(result);
+		
+	}
+	
+	
 }
