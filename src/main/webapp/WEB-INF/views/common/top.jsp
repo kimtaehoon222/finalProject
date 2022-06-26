@@ -193,7 +193,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="signGoView.jsp" class="menu-link">
+                  <a href="signGoView.do?empName=${ loginEmp.empName }" class="menu-link">
                     <div data-i18n="Without navbar">결재 진행함</div>
                   </a>
                 </li>

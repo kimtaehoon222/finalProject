@@ -68,6 +68,40 @@ public class SignDao {
 		return sqlSession.selectOne("signMapper.selectBBlist", si);
 	}
 
+	public Sign selectCCList(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCClist", si);
+	}
+
+	public int updateR(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("signMapper.updateR", si);
+	}
+
+	public int updateP(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("signMapper.updateP", si);
+	}
+
+	public int selectPListCount(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectPListCount", empName);
+	}
+
+	public ArrayList<Sign> selectGoList(SqlSessionTemplate sqlSession, PageInfo pi, String empName) {
+		// TODO Auto-generated method stub
+		
+		int offset = (pi.getCurrentPage() -1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectGoList", empName, rowBounds);
+	}
+
+	public Sign selectAAPList(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectAAPlist", si);
+	}
+
 
 		
 }

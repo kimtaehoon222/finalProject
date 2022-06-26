@@ -83,41 +83,44 @@
 									<td>${ s.createName }</td>
 									<td>${ s.createDate }</td>
 
-						
-									<c:if test="${ s.typeCode eq 'AA' }"> <!-- 품의 상세보기 버튼-->
+
+									<c:if test="${ s.typeCode eq 'AA' }">
+										<!-- 품의 상세보기 버튼-->
 
 										<td>
 
 											<button type="button" class="btn btn-sm btn-outline-primary"
 												style="padding: 10px; width: 85px; float: center"
 												data-bs-toggle="modal" data-bs-target="#exampleModal"
-												id="selectList" onclick="snoComeOn(${s.signNo})">품의상세보기</button> 
-											
+												id="selectList" onclick="snoComeOn(${s.signNo})">상세보기</button>
+
 										</td>
 
 									</c:if>
 
-									<c:if test="${ s.typeCode eq 'BB' }"> <!-- 협조 상세보기 버튼 -->
+									<c:if test="${ s.typeCode eq 'BB' }">
+										<!-- 협조 상세보기 버튼 -->
 
 										<td><button type="button"
 												class="btn btn-sm btn-outline-primary"
 												style="padding: 10px; width: 85px; float: center"
 												data-bs-toggle="modal" data-bs-target="#exampleModal2"
-												id="selectList2" onclick="snoBBComeOn(${s.signNo})">협조상세보기</button> 
-											</td>
+												id="selectList2" onclick="snoBBComeOn(${s.signNo})">상세보기</button>
+										</td>
 									</c:if>
 
 
 
-									<c:if test="${ s.typeCode eq 'CC' }"> <!-- 휴가원 상세보기 버튼 -->
+									<c:if test="${ s.typeCode eq 'CC' }">
+										<!-- 휴가원 상세보기 버튼 -->
 
 										<td><button type="button"
 												class="btn btn-sm btn-outline-primary"
 												style="padding: 10px; width: 85px; float: center"
 												data-bs-toggle="modal" data-bs-target="#exampleModal3"
-												id="selectList3" onclick="snoCCComeOn(${s.signNo})">휴가상세보기</button> 
+												id="selectList3" onclick="snoCCComeOn(${s.signNo})">상세보기</button>
 
-											</td>
+										</td>
 									</c:if>
 
 
@@ -185,7 +188,6 @@
 	<!--           품의 양식                 -->
 
 
-
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -198,71 +200,85 @@
 					<b>품 의</b>
 				</h4>
 
-				<form id="insertSign" method="post" action="insertSign.do"
-					enctype="multipart/form-data">
+				<form id="updateRRRRR" method="post" action="updateR.do">
+					<!-- update form 시작 -->
 
-					<input type="hidden" name="createName"
-						value="${ loginEmp.empName }"> <input type="hidden"
-						name="empNo" value="${ loginEmp.empNo }">
-
-
-					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">
-							결재번호 : <b id="aaSignNo"></b>
-						</h6>
-					</div>
+				<!--  	<form id="updatePPPPP" method="post" action="updateP.do"> -->
+						<!--여기 -->
+						<!-- insert form 시작 -->
 
 
-					<div class="col-md-12">
+						<input type="hidden" id="updateR" name="signNo" value="">
+						<!-- 반려하기 위해 보내는 signNo -->
 
 
-						<fieldset style="width: 30%; float: right; margin: 22px;">
-							<table class="tftable" border="1" hight="10">
+						<input type="hidden" id="updateP" name="signNo" value="">
+						<!-- 상신하기 위해 보내는 signNo -->
+
+
+						<input type="hidden" name="createName"
+							value="${ loginEmp.empName }"> <input type="hidden"
+							name="empNo" value="${ loginEmp.empNo }">
+
+
+						<div class="modal-header">
+							<h6 class="modal-title" id="exampleModalLabel">
+								결재번호 : <b id="aaSignNo"></b>
+							</h6>
+						</div>
+
+
+						<div class="col-md-12">
+
+
+							<fieldset style="width: 30%; float: right; margin: 22px;">
+								<table class="tftable" border="1" hight="10">
+									<tr>
+										<th>문서 보존 기한</th>
+									</tr>
+
+									<tr>
+										<th style="background-color: white"><b id="aaExpiryDate"></b></th>
+									</tr>
+								</table>
+							</fieldset>
+						</div>
+
+
+						<div class="col-md-4">
+
+
+							<table class="tftable" border="1" hight="10" style="margin: 22px"
+								id="selectName">
+
 								<tr>
-									<th>문서 보존 기한</th>
+
+									<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
+									<th><b id="aaJobName"></b></th>
+									<th>${loginEmp.jobName}</th>
+									<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
+									<th></th>
+
 								</tr>
 
 								<tr>
-									<th style="background-color: white"><b id="aaExpiryDate"></b></th>
+
+									<th style="width: 100px; background-color: #ffffff;"><b
+										id="aaCreateName"></b> <b style="color: blue"
+										id="aaCreateDate"></b></th>
+									<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
 								</tr>
 							</table>
-						</fieldset>
-					</div>
 
 
-					<div class="col-md-4">
+						</div>
+						<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp수신처 지정 : &nbsp<b
+							id="aaFinalApprover"></b></b>
+						<div class="col-md-12">
 
 
-						<table class="tftable" border="1" hight="10" style="margin: 22px"
-							id="selectName">
-
-							<tr>
-
-								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
-								<th><b id="aaJobName"></b></th>
-								<th>${loginEmp.jobName}</th>
-								<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
-								<th></th>
-
-							</tr>
-
-							<tr>
-
-								<th style="width: 100px; background-color: #ffffff;"><b
-									id="aaCreateName"></b> <b style="color: blue" id="aaCreateDate"></b></th>
-								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-							</tr>
-						</table>
-
-
-					</div>
-					<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp수신처 지정 : &nbsp<b
-						id="aaFinalApprover"></b></b>
-					<div class="col-md-12">
-
-
-						<script> //수신처 지정 목록 조회 ajax
+							<script> //수신처 지정 목록 조회 ajax
 					/*		$("#selectList").on('click', function () { 
 								
 								$.ajax({
@@ -307,9 +323,9 @@
 								  dataType: "JSON",
 								  
 								  success: function(result) {
-									  	
-									  console.log("signNo : " +result.signNo)
-									  console.log("createName : " +result.createName)
+							  	
+								//	  console.log("signNo : " +result.signNo)
+								/*	  console.log("createName : " +result.createName)
 									  console.log("createDate : " +result.createDate)
 									  console.log("jobName : " +result.jobName)
 									  console.log("expiryDate : " +result.expiryDate)
@@ -318,7 +334,7 @@
 									  console.log("signContent : " +result.signContent)
 									  console.log("changeName : " +result.changeName)
 									  console.log("originName : " +result.originName)
-									
+								*/	
 									  DetailBtn(result);
 
 								  },   //품의 양식을 조회해오기 위한  script success 닫는괄호
@@ -344,6 +360,7 @@
 								var signContent = result.signContent; //결재 내용
 								var changeName = result.changeName; //파일 수정된 이름
 								var originName = result.originName; //파일 원래 이름
+
 								
 								$("#aaSignNo").html(signNo);
 								$("#aaCreateName").html(createName);
@@ -355,50 +372,60 @@
 								$("#aaSignContent").val(signContent);
 								$("#aaChangeName").html(changeName);
 								$("#aaOriginName").val(originName); //val로 한 이유는 값이 없으면 뿌려지면 안되어서 (html의 경우 값이 없고 1개의 값만 있어도 뿌려짐)
-
+							    $("#updateR").val(signNo)
+							    $("#updateP").val(signNo)
+							    //$("#goSign").val(signNo)
 							}
 							
 										
 						</script>
 
 
-					</div>
-					<div class="modal-body">
+						</div>
+						<div class="modal-body">
 
-						<p style="width: 7%; float: left;">
-							<b> 제 목 </b>
-						</p>
-						<input type="text" id="aaSignTitle" name="signTitle" class="mb-3"
-							placeholder="제목을 입력하세요." style="width: 91%; float: right"
-							value="" readonly>
+							<p style="width: 7%; float: left;">
+								<b> 제 목 </b>
+							</p>
+							<input type="text" id="aaSignTitle" name="signTitle" class="mb-3"
+								placeholder="제목을 입력하세요." style="width: 91%; float: right"
+								value="" readonly>
 
-						<textarea name="signContent" id="aaSignContent"
-							style="width: 100%; height: 270px;" placeholder="내용을 입력하세요."
-							value="" readonly></textarea>
+							<textarea name="signContent" id="aaSignContent"
+								style="width: 100%; height: 270px;" placeholder="내용을 입력하세요."
+								value="" readonly></textarea>
 
 
-						<div class="mb-2 col-md-12">
+							<div class="mb-2 col-md-12">
 
-							<br> <input type="text" style="border: 0; width: 100%"
-								id="aaOriginName" value="" readonly />
+								<br> <input type="text" style="border: 0; width: 100%"
+									id="aaOriginName" value="" readonly />
+
+
+							</div>
 
 
 						</div>
 
 
-					</div>
-					<div class="modal-footer">
-						<button type="reset" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-primary" id="endSign">상신</button>
+						<div class="modal-footer">
+							<button type="reset" class="btn btn-secondary"
+								data-bs-dismiss="modal">닫기</button>
 
-					</div>
+							<button type="submit" class="btn btn-danger"
+								style="background-color: red" id="signBack">반려</button>
+								
+								</form> <!-- 품의 updateR Form 끝 태그 -->
+								
+								
+							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">상신</button> <!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
 
-				</form>
-				<!-- 품의 insert Form 끝 태그 -->
+						</div>
 
+			
 			</div>
+
 		</div>
 	</div>
 
@@ -420,65 +447,69 @@
 					<b>협 조</b>
 				</h4>
 
-				<form id="insertSign" method="post" action="insertSign.do"
-					enctype="multipart/form-data">
-
-					<input type="hidden" name="createName"
-						value="${ loginEmp.empName }"> <input type="hidden"
-						name="empNo" value="${ loginEmp.empNo }">
+				<form id="updateRRRRR" method="post" action="updateR.do">
+					<!-- update form 시작 -->
 
 
-					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">
-							결재번호 : <b id="bbSignNo"></b>
-						</h6>
-					</div>
+						<input type="hidden" id="updateRR" name="signNo" value="">
+
+						<input type="hidden" name="createName"
+							value="${ loginEmp.empName }"> <input type="hidden"
+							name="empNo" value="${ loginEmp.empNo }">
 
 
-					<div class="col-md-12">
+						<div class="modal-header">
+							<h6 class="modal-title" id="exampleModalLabel">
+								결재번호 : <b id="bbSignNo"></b>
+							</h6>
+						</div>
 
 
-						<fieldset style="width: 30%; float: right; margin: 22px;">
-							<table class="tftable" border="1" hight="10">
+						<div class="col-md-12">
+
+
+							<fieldset style="width: 30%; float: right; margin: 22px;">
+								<table class="tftable" border="1" hight="10">
+									<tr>
+										<th>문서 보존 기한</th>
+									</tr>
+
+									<tr>
+										<th style="background-color: white"><b id="bbExpiryDate"></b></th>
+									</tr>
+								</table>
+							</fieldset>
+						</div>
+
+
+						<div class="col-md-4">
+
+
+							<table class="tftable" border="1" hight="10" style="margin: 22px"
+								id="selectName">
+
 								<tr>
-									<th>문서 보존 기한</th>
+
+									<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
+									<th><b id="bbJobName"></b></th>
+									<th>${loginEmp.jobName}</th>
+									<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
+									<th></th>
+
 								</tr>
 
 								<tr>
-									<th style="background-color: white"><b id="bbExpiryDate"></b></th>
+
+									<th style="width: 100px; background-color: #ffffff;"><b
+										id="bbCreateName"></b> <b style="color: blue"
+										id="bbCreateDate"></b></th>
+									<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
 								</tr>
 							</table>
-						</fieldset>
-					</div>
 
 
-					<div class="col-md-4">
-
-
-						<table class="tftable" border="1" hight="10" style="margin: 22px"
-							id="selectName">
-
-							<tr>
-
-								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
-								<th><b id="bbJobName"></b></th>
-								<th>${loginEmp.jobName}</th>
-								<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
-								<th></th>
-
-							</tr>
-
-							<tr>
-
-								<th style="width: 100px; background-color: #ffffff;"><b
-									id="bbCreateName"></b> <b style="color: blue" id="bbCreateDate"></b></th>
-								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-							</tr>
-						</table>
-
-
-						<script> 
+							<script> 
 		
 						/* 협조 양식 조회 해오는 ajax 시작 */
 						 function snoBBComeOn(signNo){
@@ -493,22 +524,10 @@
 								  dataType: "JSON",
 								  
 								  success: function(result) {
-									  
-							  	
-									  console.log("signNo : " +result.signNo)
-									  console.log("createName : " +result.createName)
-									  console.log("createDate : " +result.createDate)
-									  console.log("jobName : " +result.jobName)
-									  console.log("expiryDate : " +result.expiryDate)
-									  console.log("finalApprover : " +result.finalApprover)
-									  console.log("signTitle : " +result.signTitle)
-									  console.log("signContent : " +result.signContent)
-									  console.log("changeName : " +result.changeName)
-									  console.log("originName : " +result.originName)
-									
+  	
+							
 									  DetailBtnn(result);
-								
-								
+							
 
 								  },   //협조 양식을 조회해오기 위한  script success 닫는괄호
 									
@@ -544,115 +563,123 @@
 								$("#bbSignContent").val(signContent);
 								$("#bbChangeName").html(changeName);
 								$("#bbOriginName").val(originName); //val로 한 이유는 값이 없으면 뿌려지면 안되어서 (html의 경우 값이 없고 1개의 값만 있어도 뿌려짐)
-
+								$("#updateRR").val(signNo)
 							}
 							
 										
 						</script>
 
-					</div>
+						</div>
 
 
-					<div class="modal-body">
+						<div class="modal-body">
 
-						<p style="width: 10%; float: left;">
-							<b> 담 당 : </b>
-						</p>
+							<p style="width: 10%; float: left;">
+								<b> 담 당 : </b>
+							</p>
 
-						<b id="bbFinalApprover"> </b>
-						 
-							<br>
-							<br>
-							
-							<b> 제 목 </b>
-							<input type="text" id="bbSignTitle" name="SignTitle" class="mb-3" placeholder="제목을 입력하세요." style="width: 91%; float: right" value="">
-						<p style="width: 7%; float: left;">
-						</p>
-						<textarea name="signContent" id="bbSignContent"
-							style="width: 100%; height: 300px;" placeholder="내용을 입력하세요."></textarea>
+							<b id="bbFinalApprover"> </b> <br> <br> <b> 제 목 </b> <input
+								type="text" id="bbSignTitle" name="SignTitle" class="mb-3"
+								placeholder="제목을 입력하세요." style="width: 91%; float: right"
+								value="" readonly>
+							<p style="width: 7%; float: left;"></p>
+							<textarea name="signContent" id="bbSignContent"
+								style="width: 100%; height: 300px;" placeholder="내용을 입력하세요."
+								readonly></textarea>
 
 
 
-						<div class="mb-2 col-md-12">
+							<div class="mb-2 col-md-12">
 
-							<br> <input type="text" style="border: 0; width: 100%"
-								id="bbOriginName" value="" readonly />
+								<br> <input type="text" style="border: 0; width: 100%"
+									id="bbOriginName" value="" readonly />
+
+							</div>
+
+
+						</div>
+						<div class="modal-footer">
+							<button type="reset" class="btn btn-secondary"
+								data-bs-dismiss="modal">닫기</button>
+							<button type="submit" class="btn btn-danger"
+								style="background-color: red" id="signBack">반려</button>
+					</form>
+					<!-- 협조 update Form 끝 태그 -->
+					
+							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">상신</button> 
 
 						</div>
 
 
-					</div>
-					<div class="modal-footer">
-						<button type="reset" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-primary" id="endSign">상신</button>
 
-					</div>
-
-
-				</form>
-				<!-- 협조 insert Form 끝 태그 -->
-			
 			</div>
 		</div>
 	</div>
-	
-	<!--  
+
+
+
+
+
 	<!--           휴가원 양식               -->
-	
+
 	<div class="modal fade" id="exampleModal3" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
 
 
-				<div class="modal-content">
+			<div class="modal-content">
 
-					<br>
-					<h4 id="center">
-						<b>휴 가 원</b>
-					</h4>
-					
-					<form id="insertDay" method="post" action="insertDay.do" enctype="multipart/form-data">
-						
+				<br>
+				<h4 id="center">
+					<b>휴 가 원</b>
+				</h4>
+
+				<form id="updateRRRRR" method="post" action="updateR.do">
+					<!-- update form 시작 -->
+
+
+						<input type="hidden" id="updateRRR" name="signNo" value="">
+
+
 						<input type="hidden" name="createName"
 							value="${ loginEmp.empName }"> <input type="hidden"
 							name="empNo" value="${ loginEmp.empNo }">
-						
-						
-					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">
-							결재번호 : <b id="ccSignNo"></b>
-						</h6>
-					</div>
-					
-	
-					<div class="col-md-12">
-						
-							<fieldset style="width: 30%; float: right; margin: 22px;">
-							<table class="tftable" border="1" hight="10">
-								<tr>
-									<th>휴가 종류</th>
-								</tr>
 
-								<tr>
-									<th style="background-color: white"><b id="ccExpiryDate"></b></th> <!-- 변수명 바꾸기 -->
-								</tr>
-							</table>
-						</fieldset>
-					</div>	
-						
-	
+
+						<div class="modal-header">
+							<h6 class="modal-title" id="exampleModalLabel">
+								결재번호 : <b id="ccSignNo"></b>
+							</h6>
+						</div>
+
+
+						<div class="col-md-12">
+
+							<fieldset style="width: 30%; float: right; margin: 22px;">
+								<table class="tftable" border="1" hight="10">
+									<tr>
+										<th>휴가 종류</th>
+									</tr>
+
+									<tr>
+										<th style="background-color: white"><b id="ccVcode"></b></th>
+									</tr>
+								</table>
+							</fieldset>
+						</div>
+
+
 						<div>
-						<br>
-						<b style="margin:22px; color:rgb(124, 127, 251)">최종 결재선 지정</b>
-					</div>
-						
-						<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp최종 결재선 지정 : &nbsp<b
-						id="ccFinalApprover"></b></b>
-					<div class="col-md-12">
-						
-					
-						<script>
+							<br>
+
+						</div>
+
+						<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp최종 결재선 지정 : <b
+							id="ccFinalApprover"></b> &nbsp<b id="ccFinalApprover"></b></b>
+						<div class="col-md-12">
+
+
+							<script>
 						 function snoCCComeOn(signNo){
 								$.ajax({ //휴가 내용 select 해오기
 
@@ -665,20 +692,12 @@
 									  dataType: "JSON",
 									  
 									  success: function(result) {
-									/*	  	
-										  console.log("signNo : " +result.signNo)
-										  console.log("createName : " +result.createName)
-										  console.log("createDate : " +result.createDate)
-										  console.log("jobName : " +result.jobName)
-										  console.log("expiryDate : " +result.expiryDate)
-										  console.log("finalApprover : " +result.finalApprover)
-										  console.log("signTitle : " +result.signTitle)
-										  console.log("signContent : " +result.signContent)
-										  console.log("changeName : " +result.changeName)
-										  console.log("originName : " +result.originName)
 										
+										  console.log(result.firstDate)
+										  console.log(result.lastDate)
+										  
 										  DetailBtnnn(result);
-										*/
+										
 									  },   //휴가 양식을 조회해오기 위한  script success 닫는괄호
 										
 									  error:function(e) {
@@ -691,102 +710,118 @@
 								};
 								
 								//휴가 양식조회 뿌려주기 위한 함수 (상세)
-						<!-- 	function DetailBtnnn(result)  {
+					 		function DetailBtnnn(result)  {
 									var signNo = result.signNo; //결재 번호
 									var createName = result.createName; //기안자
 									var createDate = result.createDate; //기안일
 									var jobName = result.jobName; //기안자 직급
-									var expiryDate = result.expiryDate; //문서 만료일
+									var vCode = result.vCode; //휴가 종류
 									var finalApprover = result.finalApprover; //최종 결재자
 									var signTitle = result.signTitle; //결재 제목
 									var signContent = result.signContent; //결재 내용
-									var changeName = result.changeName; //파일 수정된 이름
-									var originName = result.originName; //파일 원래 이름
+									var firstDate = result.firstDate; //휴가 시작일
+									var lastDate = result.lastDate; //휴가 종료일
 									
-									$("#aaSignNo").html(signNo);
-									$("#aaCreateName").html(createName);
-									$("#aaCreateDate").html(createDate);
-									$("#aaJobName").html(jobName);
-									$("#aaExpiryDate").html(expiryDate);
-									$("#aaFinalApprover").html(finalApprover);
-									$("#aaSignTitle").val(signTitle);
-									$("#aaSignContent").val(signContent);
-									$("#aaChangeName").html(changeName);
-									$("#aaOriginName").val(originName); //val로 한 이유는 값이 없으면 뿌려지면 안되어서 (html의 경우 값이 없고 1개의 값만 있어도 뿌려짐)
-
+									$("#ccSignNo").html(signNo);
+									$("#ccCreateName").html(createName);
+									$("#ccCreateDate").html(createDate);
+									$("#ccJobName").html(jobName);
+									$("#ccVcode").html(vCode);
+									$("#ccFirstDate").val(firstDate);
+									$("#ccLastDate").val(lastDate);
+									$("#ccFinalApprover").html(finalApprover);
+									$("#ccSignTitle").val(signTitle);
+									$("#ccSignContent").val(signContent);					
+									$("#updateRRR").val(signNo)
 								}
-						-->
+					
 											
 							</script>
 
+
+						</div>
+
+
+
+
+						<div class="col-md-4">
+
+							<table class="tftable" border="1" hight="10" style="margin: 22px">
+								<tr>
+
+									<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
+									<th><b id="ccJobName"></b></th>
+									<th>${ loginEmp.jobName }</th>
+									<th></th>
+
+								</tr>
+
+								<tr>
+
+									<th style="width: 100px; background-color: #ffffff;"><b
+										id="ccCreateName"></b> <b style="color: blue"
+										id="ccCreateDate"></b></th>
+									<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
+									<th style="width: 100px; background-color: #ffffff;"></th>
+								</tr>
+
+							</table>
+
+
+						</div>
+
+
+						<div style="margin: 22px">
+
+							<p style="width: 15%; float: left;">
+								<b style="color: rgb(124, 127, 251)"> 휴가 시작 :</b>
+							</p>
+
+							<input type="text" id="ccFirstDate" name="firstDate" value=""
+								style="width: 84%; float: right; border: 0" readonly /> <br>
+
+							<br>
+
+							<p style="width: 15%; float: left;">
+								<b style="color: rgb(124, 127, 251)"> 휴가 종료 :</b>
+							</p>
+
+							<input type="text" id="ccLastDate" name="LastDate" value=""
+								style="width: 84%; float: right; border: 0" readonly />
+
+						</div>
+
+						<div class="modal-body">
+
+
+							<p style="width: 7%; float: left;">
+								<b> 제 목 </b>
+							</p>
+							<input type="text" id="ccSignTitle" name="title" class="mb-3"
+								placeholder="제목을 입력하세요." style="width: 91%; float: right"
+								readonly>
+
+							<textarea name="reason" id="ccSignContent"
+								style="width: 100%; height: 250px;" placeholder="사유를 입력하세요."
+								readonly></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="reset" class="btn btn-secondary"
+								data-bs-dismiss="modal">닫기</button>
+							<button type="submit" class="btn btn-danger"
+								style="background-color: red" id="signBack">반려</button>
+								
+					</form>
+					<!-- 휴가 update Form 끝 태그 -->
 					
-					</div>
+							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">상신</button>
 
 
-
-
-					<div class="col-md-4">
-
-						<table class="tftable" border="1" hight="10" style="margin: 22px">
-							<tr>
-
-								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
-								<th>${ loginEmp.jobName }</th>
-								<th></th>
-								<th></th>
-
-							</tr>
-
-							<tr>
-
-								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}
-									</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
-							</tr>
-
-						</table>
-
-
-					</div>
-
-				<!--  	<form method="post" style="margin: 22px"> -->
-				<div style="margin: 22px">
-						<label for="dateIn">휴가 시작일 : </label>
-						<!--포커싱이 어디로 향하는지가 for-->
-						<input type="date" name="firstDate" id="dateIn"><br>
-
-						<br> <label for="dateIn">휴가 종료일 : </label>
-						<!--포커싱이 어디로 향하는지가 for-->
-						<input type="date" name="lastDate" id="dateInn"><br>
-				<!--  	</form> -->
-					
-					</div>
-					
-					<div class="modal-body">
-
-
-						<p style="width: 7%; float: left;">
-							<b> 제 목 </b>
-						</p>
-						<input type="text" id="title" name="title" class="mb-3"
-							placeholder="제목을 입력하세요." style="width: 91%; float: right">
-
-						<textarea name="reason" id="reason"
-							style="width: 100%; height: 110px;" placeholder="사유를 입력하세요."></textarea>
-					</div>
-					<div class="modal-footer">
-						<button type="reset" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-primary">상신</button>
-				
-					</form> <!-- insertDay form 끝 태그 -->
-
-					</div>
-				</div>
 			</div>
 		</div>
-	
+	</div>
+	</div>
+
 	<jsp:include page="../common/bottom.jsp" />
 </body>
 </html>

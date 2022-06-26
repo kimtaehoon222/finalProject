@@ -23,9 +23,9 @@ public class Sign {
 	private String createDate; //기안일
 	private String firstApprover; //1차 결재자
 	private String finalApprover; //최종 결재자
-	private Date firstSignDate; //1차 승인일
-	private Date finalSignDate; //최종 승인일
-	private Date rejectDate; //반려일
+	private String firstSignDate; //1차 승인일
+	private String finalSignDate; //최종 승인일
+	private String rejectDate; //반려일
 	private String statusCode; //처리 상태코드
 	private String status; // 상태값
 	private Date modifyDate; //수정일
@@ -53,8 +53,8 @@ public class Sign {
 	/* 휴가원 */
 	private String title; //제목
 	private String reason; //사유
-	private Date firstDate; //휴가 시작일
-	private Date lastDate; //휴가 종료일
+	private String firstDate; //휴가 시작일
+	private String lastDate; //휴가 종료일
 	private String vCode; //휴가종류
 	
 	/* 결재 유형 */
@@ -64,6 +64,13 @@ public class Sign {
 	private String deptCode;
 	private String deptName;
 	private String deptPwd;
+	
+	/* 1차 결재자, 최종 결재자 이름 / 직급 */
+	
+	private String firstSignName;
+	private String firstSignJob;
+	private String finalSignName;
+	private String finalSignJob;
 	
 }
 

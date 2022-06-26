@@ -105,6 +105,62 @@ private SignDao signDao;
 
 
 
+	@Override
+	public Sign selectCCList(Sign si) {
+		// TODO Auto-generated method stub
+		return signDao.selectCCList(sqlSession, si);
+	}
+
+
+
+	@Override
+	public void updateR(Sign si) {
+		// TODO Auto-generated method stub
+		int result = signDao.updateR(sqlSession, si);
+		
+		if(result < 0) {
+			throw new CommException("휴가원 기안 실패");
+		}
+	}
+
+
+
+	@Override
+	public void updateP(Sign si) {
+		// TODO Auto-generated method stub
+		int result = signDao.updateP(sqlSession, si);	
+		
+		if(result < 0) {
+			throw new CommException("휴가원 기안 실패");
+		}
+	}
+
+
+
+	@Override
+	public int selectPListCount(String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectPListCount(sqlSession, empName);
+	}
+
+
+
+	@Override
+	public ArrayList<Sign> selectGoList(PageInfo pi, String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectGoList(sqlSession, pi, empName);
+	}
+
+
+
+	@Override
+	public Sign selectAAPList(Sign si) {
+		// TODO Auto-generated method stub
+		return signDao.selectAAPList(sqlSession, si);
+	}
+
+
+
 
 
 }
