@@ -28,7 +28,7 @@ public class Sign {
 	private String rejectDate; //반려일
 	private String statusCode; //처리 상태코드
 	private String status; // 상태값
-	private Date modifyDate; //수정일
+	private String modifyDate; //수정일
 	private String createName; //기안자
 	private String signContent; //결재내용
 	
