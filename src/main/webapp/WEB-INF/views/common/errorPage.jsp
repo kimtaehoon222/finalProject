@@ -21,7 +21,7 @@
         <h2 class="mb-2 mx-2">${ msg }</h2>
         <h2>${ ref_form }</h2>
         <p class="mb-4 mx-2">${ requestScope['javax.servlet.error.message'] }</p>
-        <a href="/" class="btn btn-primary">Back to home</a>
+        <a href="main.do" class="btn btn-primary">Back to home</a>
         <div class="mt-4">
           <img
             src="${pageContext.request.contextPath}/resources/assets/img/illustrations/girl-doing-yoga-light.png"
