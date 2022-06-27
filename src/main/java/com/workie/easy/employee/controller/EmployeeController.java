@@ -45,6 +45,29 @@ public class EmployeeController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	/*메인 화면 연결*/
+	@RequestMapping("main.do")
+	public String mainRead(HttpSession session, Model model){
+		
+		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+		model.addAttribute("loginEmp", loginEmp);
+		
+		/* 김지수 : 읽지 않은 메일 개수 조회 */
+		int unReadmailListCount = mailService.selectMailListNoRead(loginEmp.getEmpNo()).size();
+		model.addAttribute("mailCount", unReadmailListCount);
+		
+		/* 김재호 : */
+		
+		
+		/* 임현빈 : */
+		
+		
+		/* 전재은 : */
+		
+		return "main";
+		
+	}
+	
 	/*로그인 화면 연결*/
 	@RequestMapping("loginForm.do")
 	public String loginForm(){
@@ -60,20 +83,7 @@ public class EmployeeController {
 		Employee loginEmp = empService.loginEmp(bCryptPasswordEncoder, emp);
 		model.addAttribute("loginEmp",loginEmp);
 
-		/* 김지수 : 읽지 않은 메일 개수 조회 */
-		int unReadmailListCount = mailService.selectMailListNoRead(loginEmp.getEmpNo()).size();
-		model.addAttribute("mailCount", unReadmailListCount);
-		
-		/* 김재호 : */
-		
-		
-		/* 임현빈 : */
-		
-		
-		/* 전재은 : */
-		
-		
-		return "main";
+		return "redirect:main.do";
 		
 	}
 

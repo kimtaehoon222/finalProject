@@ -101,13 +101,13 @@
   </head>
 
   <body>
-	<!-- <c:if test="${ !empty msg }">
+	<c:if test="${ !empty msg }">
 		<script>
 			alert("${msg}");
 		</script>
 		<c:remove var="msg" scope="session"/>
 
-	</c:if>-->
+	</c:if> 
 
     <div id="mainAlert" style="text-align: center; display:none;" class="alert alert-primary alert-dismissible" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -128,7 +128,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="/" class="app-brand-link">
+            <a href="main.do" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -431,7 +431,7 @@
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 			
-			<span class="text-primary" id="msgBox">${ msg }</span>
+			<span class="text-primary" id="msgBox">${ topMsg }</span>
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
