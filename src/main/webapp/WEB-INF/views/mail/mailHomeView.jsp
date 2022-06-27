@@ -32,7 +32,20 @@ tr:hover{
    background-color: #696cff;
    color: white;
 }
+.mailCnt::-webkit-scrollbar {
+    width: 8px;  /* 스크롤바의 너비 */
+}
 
+.mailCnt::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #696cff; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.mailCnt::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
 </style>
 </head>
 <body>
@@ -62,10 +75,10 @@ tr:hover{
             <div class="sidebar-left">
                <!-- sidebar start -->
                <div class="sidebar">
-                  <div class="sidebar-content email-app-sidebar d-flex card">
+                  <div class="sidebar-content email-app-sidebar">
 
                      <!-- email-app-menu start -->
-                     <div class="email-app-menu">
+                     <div class="email-app-menu" style="height:830px;">
                         <div class="form-group form-group-compose">
                            <!-- 작성하기 버튼  -->
                            <a href="mailSendForm.do" class="btn btn-primary btn-block my-4 compose-btn" id="center">작성하기</a>
@@ -117,7 +130,7 @@ tr:hover{
             <!-- 좌측 : 메일 사이드바 끝 -->
 
          <!-- 우측 : 메일 리스트 시작 -->
-         <div class="content-right">
+         <div class="content-right"  style="height:830px;">
           <div class="content-wrapper">
             <div class="row">
               <div class="col-12 grid-margin stretch-card">
@@ -178,7 +191,7 @@ tr:hover{
                             </div>
                           </div>
                         </li>
-                        <li class="d-flex mb-4 pb-1">
+                        <li class="d-flex mb-0 pb-1">
                           <div class="avatar flex-shrink-0 me-3">
                             <span class="avatar-initial rounded bg-label-primary">
                             <i class="bx bx-mail-send"></i></span>
@@ -243,13 +256,13 @@ tr:hover{
             <form>
             <div class="row mx-2">
                <!-- 읽지않은메일 시작 -->
-                <div class="col-md-12 col-lg-12 order-0 email-user-list list-group card overflow-hidden ps ps--active-y" id="mailList">
-                  <div class="card h-100" >
+                <div class="col-md-12 col-lg-12 order-0 email-user-list" id="mailList">
+                  <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h4 class="card-title mt-0 me-2 text-primary">읽지않은메일</h4>
+                      <h4 class="card-title m-0 text-primary mb-1">읽지않은메일</h4>
                     </div>
                     <!-- 메일 리스트 시작 -->
-                    <div class="card-body ps ps--active-y" id="vertical-example">
+                    <div class="card-body mailCnt" style="height: 150px; overflow: auto;" id="vertical-example">
                       <table class="table">
                         <thead>
                           <tr>
@@ -292,12 +305,7 @@ tr:hover{
                   </div>
                 </div>
                 <!-- 읽지않은메일 끝 -->
-                <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-               <div class="ps__thumb-x" tabindex="0"style="left: 0px; width: 0px;"></div>
-            </div>
-            <div class="ps__rail-y" style="top: 0px; height: 733px; right: 0px;">
-               <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 567px;"></div>
-            </div>
+             
             </div>
             </form>
             

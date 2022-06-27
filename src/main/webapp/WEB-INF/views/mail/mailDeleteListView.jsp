@@ -149,12 +149,15 @@
 												<div class="email-fixed-search flex-grow-1">
 													<div
 														class="form-group position-relative  mb-0 has-icon-left">
-														<input type="text" class="form-control" placeholder="Searched Title..">
+														<!-- <input type="text" class="form-control"
+															placeholder="Searched Title..">
 														<div class="form-control-icon">
-															<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-                                                        		<use xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
-                                                   			</svg>
-														</div>
+															<svg class="bi" width="1.5em" height="1.5em"
+																fill="currentColor">
+                                                        <use
+																	xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
+                                                    </svg>
+														</div>  -->
 													</div>
 												</div>
 												<!-- 검색창 끝 -->
@@ -259,10 +262,10 @@
 															<!-- 첨부파일 표시 -->
 															<div class="mail-meta-item">
 																<span class="float-right d-flex align-items-center">
-																	<c:if test="${ !empty mail.changeName }">
+																	<c:if test="${ !empty mail.attchangeName }">
 																		<i class="bx bx-paperclip me-3"></i>
 																	</c:if>
-																	<c:if test="${ empty mail.changeName }">
+																	<c:if test="${ empty mail.attchangeName }">
 																		<i class="">&nbsp;</i>
 																	</c:if>
 																</span>

@@ -86,5 +86,17 @@ public class ChartDao {
 		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForPersonnelInByMonth", chartForPersonnel);
 	}
 
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelOut(SqlSession sqlSession,
+			ChartForPersonnel chartForPersonnel) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForPersonnelOut", chartForPersonnel);
+	}
+
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelOutByMonth(SqlSession sqlSession,
+			ChartForPersonnel chartForPersonnel) {
+
+		return (ArrayList)sqlSession.selectList("chartMapper.selectChartListForPersonnelOutByMonth", chartForPersonnel);
+	}
+
 
 }
