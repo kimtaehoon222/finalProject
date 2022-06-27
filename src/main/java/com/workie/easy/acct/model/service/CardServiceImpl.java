@@ -17,6 +17,9 @@ import com.workie.easy.common.model.dto.PageInfo;
 * Comment : controller에서 넘어온 요청을 처리해서 dao로 넘긴다.
 * History
 * 2022/06/24 (전재은) 처음 작성, 카드사용내역조회 추가
+* 2022/06/25 (전재은) 카드사용내역조회 수정
+* 2022/06/26 (전재은) 카드사용내역등록, 파일업로드, 상세조회 추가
+* 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -50,7 +53,7 @@ public class CardServiceImpl implements CardService {
 		
 		int result = cardDao.insertCardStat(sqlSession, c);
 		
-		if(result<0) {
+		if(result < 0) {
 			throw new CommException("카드내역 등록에 실패했습니다. 관리자에게 문의 바랍니다.");
 		}
 		
@@ -62,4 +65,39 @@ public class CardServiceImpl implements CardService {
 		return cardDao.selectCardStat(sqlSession, statNo);
 		
 	}
+
+	@Override
+	public void updateCardStat(Card c, String string) {
+
+		int result = cardDao.updateCardStat(sqlSession, c);
+		
+		if(result > 0) {
+			
+			int result2 = 0;
+			
+			if(string.equals("insert")){
+				
+				result2 = cardDao.insertAttachment(sqlSession, c);
+				
+			}else {
+				
+				result2 = cardDao.updateAttachment(sqlSession, c);
+				
+			}
+			
+			
+			if(result2 < 0) {
+				
+				throw new CommException("카드내역 첨부파일 수정에 실패했습니다. 관리자에게 문의 바랍니다.");
+				
+			}
+			
+		}else {
+			
+			throw new CommException("카드내역 수정에 실패했습니다. 관리자에게 문의 바랍니다.");
+			
+		}
+		
+	}
+	
 }

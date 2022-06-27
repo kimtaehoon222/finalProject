@@ -59,7 +59,7 @@
 		  JOIN DEP_CARD C ON (A.CARD_REG_NO = C.CARD_REG_NO)
 		 WHERE A.STAT_STATUS = 'Y'
   		   AND C.DEPT_CODE = #{deptCode}
-  		 ORDER BY A.TRANSACTION_DATE DESC
+		 ORDER BY A.STAT_NO DESC
 	 </select>
 	 
 	<insert id="insertCardStat">
@@ -86,24 +86,56 @@
 	<select id="selectCardStat" resultMap="cardResult">
 		SELECT 
 		       A.STAT_NO
+		     , A.EMP_NO
 		     , B.EMP_NAME
-		     , CASE WHEN A.PAYMENT_STATUS = 'A' THEN '승인'
-		            ELSE '취소'
-		       END AS PAYMENT_STATUS
+		     , A.PAYMENT_STATUS
 		     , A.AMOUNT
 		     , TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM-DD') AS TRANSACTION_DATE
 		     , A.STORE_NAME
 		     , A.STAT_MEMO
-		     , D.CHANGE_NAME
-		     , D.ORIGIN_NAME
-		     , D.FILE_PATH
+		     , C.CHANGE_NAME
+		     , C.ORIGIN_NAME
 		  FROM CARD_STATEMENT A
-		  JOIN EMPLOYEE B ON (A.EMP_NO = B.EMP_NO)
-		  JOIN DEP_CARD C ON (A.CARD_REG_NO = C.CARD_REG_NO)
-		  LEFT JOIN ATTACHMENT D ON (A.CTG_NO=D.CTG_NO)
+		  LEFT JOIN EMPLOYEE B ON (A.EMP_NO = B.EMP_NO)
+		  LEFT JOIN ATTACHMENT C ON (A.STAT_NO = C.REF_NO AND A.CTG_NO = C.CTG_NO)
 		 WHERE A.STAT_STATUS = 'Y'
-		   AND D.CTG_NO = 'CS'
 		   AND A.STAT_NO = #{statNo}
 	</select>
+	
+	<update id="updateCardStat">
+		UPDATE CARD_STATEMENT
+		   SET
+		       PAYMENT_STATUS = #{paymentStatus}
+		     , AMOUNT = #{amount}
+		     , TRANSACTION_DATE = #{transactionDate}
+		     , STORE_NAME = #{storeName}
+		     , STAT_MEMO = #{statMemo}
+		 WHERE STAT_STATUS = 'Y'
+		   AND STAT_NO = #{statNo}
+	</update>
+	
+	<insert id="insertAttachment">
+		INSERT ATTACHMENT
+		VALUES (
+		       SEQ_FNO.NEXTVAL
+		     ,  #{statNo}
+		     , 'CS'
+		     , #{changeName}
+		     , #{originName}
+		     , #{filePath}
+		     , SYSDATE
+		     , DEFAULT
+		       )
+	</insert>
+	
+	<update id="updateAttachment">
+		UPDATE ATTACHMENT
+		   SET
+		       CHANGE_NAME = #{changeName}
+		     , ORIGIN_NAME = #{originName}
+		 WHERE STATUS = 'Y'
+		   AND CTG_NO = 'CS'
+		   AND REF_NO = #{statNo}
+	</update>
 	 
 </mapper>

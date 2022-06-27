@@ -15,6 +15,9 @@ import com.workie.easy.common.model.dto.PageInfo;
 * Comment : service에서 넘어온 값으로 DB에 접근한다.
 * History
 * 2022/06/24 (전재은) 처음 작성, 카드사용내역조회 추가
+* 2022/06/25 (전재은) 카드사용내역조회 수정
+* 2022/06/26 (전재은) 카드사용내역등록, 파일업로드, 상세조회 추가
+* 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -49,6 +52,24 @@ public class CardDao {
 
 		return sqlSession.selectOne("cardMapper.selectCardStat",statNo);
 	
+	}
+
+	public int updateCardStat(SqlSessionTemplate sqlSession, Card c) {
+
+		return sqlSession.update("cardMapper.updateCardStat",c);
+		
+	}
+	
+	public int insertAttachment(SqlSessionTemplate sqlSession, Card c) {
+		
+		return sqlSession.insert("cardMapper.insertAttachment",c);
+		
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Card c) {
+
+		return sqlSession.update("cardMapper.updateAttachment",c);
+		
 	}
 
 }
