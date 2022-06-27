@@ -250,7 +250,7 @@
 	<update id="updateR" parameterType="Sign">
 	
 	UPDATE SIGN 
-	   SET STATUS_CODE = 'R' , MODIFY_DATE = SYSDATE , FIRST_SIGN_NAME = #{empName} , FIRST_SIGN_JOB = #{jobName}
+	   SET STATUS_CODE = 'R' , REJECT_DATE = SYSDATE , FIRST_SIGN_NAME = #{empName} , FIRST_SIGN_JOB = #{jobName}
     WHERE SIGN_NO = #{signNo}
 	
 	</update>
@@ -301,31 +301,321 @@
 	
 	<select id="selectAAPlist" resultMap="singResultSet"> <!-- 진행 상태 품의 조회 -->
 	
-	SELECT
-	    A.SIGN_NO, <!-- 결재번호  -->
-	    A.CREATE_NAME, <!--기안자 -->
-	    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
-	    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
-	    B.JOB_NAME, <!-- 직급명 -->
-	    C.EXPIRY_DATE, <!-- 문서 만료일 -->
-	    A.FINAL_APPROVER, <!-- 최종 결재자 -->
-	    A.SIGN_TITLE,
-	    A.SIGN_CONTENT,
-	    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
-	    D.ORIGIN_NAME  <!-- 파일 원래 이름 -->
-    FROM SIGN A
-	    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
-	    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
-	    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
-	    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
-	    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
-    WHERE A.SIGN_NO = #{signNo}
-    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
-    AND A.STATUS_CODE = 'P'
-    AND A.STATUS = 'Y'
-    AND E.TYPE_CODE = 'AA'
+		SELECT
+		    A.SIGN_NO, <!-- 결재번호  -->
+		    A.CREATE_NAME, <!--기안자 -->
+		    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
+		    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+		    B.JOB_NAME, <!-- 직급명 -->
+		    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+		    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+		    A.SIGN_TITLE,
+		    A.SIGN_CONTENT,
+		    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+		    D.ORIGIN_NAME,  <!-- 파일 원래 이름 -->
+	        A.FIRST_SIGN_NAME,
+	        A.FIRST_SIGN_JOB
+	    FROM SIGN A
+		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.SIGN_NO = #{signNo}
+	    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'P'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'AA'
 	
 	</select>	
+	
+	<select id="selectBBPlist" resultMap="singResultSet"> <!-- 진행 상태 협조 조회 -->
+	
+		SELECT
+		    A.SIGN_NO, <!-- 결재번호  -->
+		    A.CREATE_NAME, <!--기안자 -->
+		    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
+		    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+		    B.JOB_NAME, <!-- 직급명 -->
+		    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+		    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+		    A.SIGN_TITLE,
+		    A.SIGN_CONTENT,
+		    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+		    D.ORIGIN_NAME,  <!-- 파일 원래 이름 -->
+	        A.FIRST_SIGN_NAME,
+	        A.FIRST_SIGN_JOB
+	    FROM SIGN A
+		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.SIGN_NO = #{signNo}
+	    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'P'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'BB'
+	
+	</select>	
+	
+	<select id="selectCCPlist" resultMap="singResultSet"> <!-- 진행 상태 휴가 조회 -->
+	
+  		SELECT 
+        A.SIGN_NO,
+        B.V_CODE,
+        A.FINAL_APPROVER, 
+        C.JOB_NAME,
+        A.CREATE_NAME, 
+        TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE,
+        TO_CHAR(B.FIRST_DATE, 'YY/MM/DD') AS FIRST_DATE,
+        TO_CHAR(B.LAST_DATE, 'YY/MM/DD') AS LAST_DATE,
+        A.SIGN_TITLE,
+        A.SIGN_CONTENT,
+ 	    A.FIRST_SIGN_NAME,
+	    A.FIRST_SIGN_JOB, 
+	    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE
+     FROM SIGN A
+        JOIN VACATION_FORM B ON A.SIGN_NO = B.SIGN_NO
+        JOIN EMPLOYEE D ON A.EMP_NO = D.EMP_NO
+        JOIN JOB C ON D.JOB_CODE = C.JOB_CODE
+        JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+     WHERE A.SIGN_NO =  #{signNo}
+	    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'P'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'CC'
+		
+	</select>	
+	
+	<update id="updateRR" parameterType="Sign">
+	
+	UPDATE SIGN 
+	   SET STATUS_CODE = 'R' , REJECT_DATE = SYSDATE , FINAL_SIGN_NAME = #{empName} , FINAL_SIGN_JOB = #{jobName}
+    WHERE SIGN_NO = #{signNo}
+	
+	</update>
+	
+	<update id="updateA" parameterType="Sign">
+	
+	UPDATE SIGN 
+	   SET STATUS_CODE = 'A' , FINAL_SIGN_DATE = SYSDATE , FINAL_SIGN_NAME = #{empName} , FINAL_SIGN_JOB = #{jobName}
+    WHERE SIGN_NO = #{signNo}
+	
+	</update>
+	
+	<select id="selectRListCount" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*)
+			FROM SIGN
+			WHERE STATUS_CODE = 'R'
+			AND CREATE_NAME LIKE '%'||#{empName}||'%'
+			AND STATUS = 'Y'
+			
+	</select>
+	
+	<select id="selectBackList" resultMap="singResultSet">
+	
+		SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+	        A.SIGN_CONTENT,
+	        D.DEPT_NAME,
+	        A.CREATE_NAME,
+	        F.ORIGIN_NAME,
+            F.CHANGE_NAME,
+            E.TYPE_CODE,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+            TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+            TO_CHAR(A.REJECT_DATE, 'YY.MM.DD') AS REJECT_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+		    LEFT JOIN ATTACHMENT F ON A.SIGN_NO = F.REF_NO
+		    LEFT JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.CREATE_NAME LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'R'
+	    AND A.STATUS = 'Y'
+	    ORDER BY A.SIGN_NO DESC
+		
+	</select>
+	
+	
+	<select id="selectAARlist" resultMap="singResultSet"> <!-- 반려 상태 품의 조회 -->
+	
+		SELECT
+		    A.SIGN_NO, <!-- 결재번호  -->
+		    A.CREATE_NAME, <!--기안자 -->
+		    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
+		    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+		    B.JOB_NAME, <!-- 직급명 -->
+		    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+		    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+		    A.FIRST_APPROVER,
+		    A.SIGN_TITLE,
+		    A.SIGN_CONTENT,
+		    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+		    D.ORIGIN_NAME,  <!-- 파일 원래 이름 -->    
+	        A.FIRST_SIGN_NAME,		        
+	        A.FIRST_SIGN_JOB,	                
+	        A.FINAL_SIGN_NAME,	        
+	        A.FINAL_SIGN_JOB,
+	        TO_CHAR(A.REJECT_DATE, 'YY.MM.DD') AS REJECT_DATE
+	    FROM SIGN A
+		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.SIGN_NO = #{signNo}
+	    AND A.CREATE_NAME LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'R'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'AA'
+	
+	</select>
+	
+		<select id="selectBBRlist" resultMap="singResultSet"> <!-- 반려 상태 협조 조회 -->
+	
+		SELECT
+		    A.SIGN_NO, <!-- 결재번호  -->
+		    A.CREATE_NAME, <!--기안자 -->
+		    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, <!--기안일 DATE FORMAT 변경 -->
+		    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+		    B.JOB_NAME, <!-- 직급명 -->
+		    C.EXPIRY_DATE, <!-- 문서 만료일 -->
+		    A.FINAL_APPROVER, <!-- 최종 결재자 -->
+		    A.FIRST_APPROVER,
+		    A.SIGN_TITLE,
+		    A.SIGN_CONTENT,
+		    D.CHANGE_NAME, <!-- 파일 바뀐 이름 -->
+		    D.ORIGIN_NAME,  <!-- 파일 원래 이름 -->
+	        A.FIRST_SIGN_NAME,     		   
+	        A.FIRST_SIGN_JOB,  	    
+	        A.FINAL_SIGN_NAME,      
+	        A.FINAL_SIGN_JOB,
+	        TO_CHAR(A.REJECT_DATE, 'YY.MM.DD') AS REJECT_DATE
+	    FROM SIGN A
+		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.SIGN_NO = #{signNo}
+	    AND A.CREATE_NAME LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'R'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'BB'
+	
+	</select>	
+	
+	<select id="selectCCRlist" resultMap="singResultSet"> <!-- 진행 상태 휴가 조회 -->
+	
+	SELECT 
+        A.SIGN_NO,
+        B.V_CODE,
+        A.FINAL_APPROVER, 
+        A.FIRST_APPROVER,
+        C.JOB_NAME,
+        A.CREATE_NAME, 
+        TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE,
+        TO_CHAR(B.FIRST_DATE, 'YY/MM/DD') AS FIRST_DATE,
+        TO_CHAR(B.LAST_DATE, 'YY/MM/DD') AS LAST_DATE,
+        A.SIGN_TITLE,
+        A.SIGN_CONTENT,
+ 	    A.FIRST_SIGN_NAME,
+	    A.FIRST_SIGN_JOB, 
+	    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+	    TO_CHAR(A.REJECT_DATE, 'YY.MM.DD') AS REJECT_DATE
+     FROM SIGN A
+        JOIN VACATION_FORM B ON A.SIGN_NO = B.SIGN_NO
+        JOIN EMPLOYEE D ON A.EMP_NO = D.EMP_NO
+        JOIN JOB C ON D.JOB_CODE = C.JOB_CODE
+        JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+     WHERE A.SIGN_NO =  #{signNo}
+	    AND A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	    AND A.STATUS_CODE = 'R'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'CC'
+		
+	</select>	
+	
+	<select id="selectAListCount" parameterType="string" resultType="_int">
+	
+			SELECT COUNT(*)  <!-- 로그인한 유저와 부서가 같은 경우 모두 조회 가능 -->
+			FROM SIGN A
+            JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+			WHERE A.STATUS_CODE = 'A'
+			AND B.DEPT_CODE LIKE '%'||#{deptCode}||'%'
+			AND A.STATUS = 'Y'
+		
+	</select>
+	
+	<select id="selectEndList" resultMap="singResultSet">
+	
+		SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+	        A.SIGN_CONTENT,
+	        D.DEPT_NAME,
+	        A.CREATE_NAME,
+            G.EXPIRY_DATE, 
+            H.V_CODE, 
+	        F.ORIGIN_NAME,
+            F.CHANGE_NAME,
+            E.TYPE_CODE,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+            TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+            TO_CHAR(A.FINAL_SIGN_DATE, 'YY.MM.DD') AS FINAL_SIGN_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN DEPARTMENT D ON C.DEPT_CODE = D.DEPT_CODE
+		    LEFT JOIN ATTACHMENT F ON A.SIGN_NO = F.REF_NO
+		    LEFT JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+            LEFT JOIN STANDARD_FORM G ON A.SIGN_NO = G.SIGN_NO
+            LEFT JOIN VACATION_FORM H ON A.SIGN_NO = H.SIGN_NO
+	    WHERE C.DEPT_CODE LIKE '%'||#{deptCode}||'%'
+	    AND A.STATUS_CODE = 'A'
+        AND A.FINAL_SIGN_DATE IS NOT NULL
+	    AND A.STATUS = 'Y'
+	    ORDER BY A.SIGN_NO DESC
+		
+	</select>	
+	
+	<select id="selectAAAlist" resultMap="singResultSet"> <!-- 완료 상태 품의 조회 -->
+	
+		SELECT
+		    A.SIGN_NO,
+		    A.CREATE_NAME, 
+		    TO_CHAR(A.CREATE_DATE, 'YY.MM.DD') AS CREATE_DATE, 
+		    TO_CHAR(A.FIRST_SIGN_DATE, 'YY.MM.DD') AS FIRST_SIGN_DATE,
+            TO_CHAR(A.FINAL_SIGN_DATE, 'YY.MM.DD') AS FINAL_SIGN_DATE,
+		    B.JOB_NAME,
+		    C.EXPIRY_DATE, 
+		    A.SIGN_TITLE,
+		    A.SIGN_CONTENT,
+		    D.CHANGE_NAME,
+		    D.ORIGIN_NAME, 
+	        A.FIRST_SIGN_NAME,
+            A.FINAL_SIGN_NAME,
+	        A.FIRST_SIGN_JOB,
+            A.FINAL_SIGN_JOB
+	    FROM SIGN A
+		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
+		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
+		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
+		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
+	    WHERE A.SIGN_NO = #{signNo}
+	    AND F.DEPT_CODE LIKE '%'||#{deptCode}||'%'
+	    AND A.STATUS_CODE = 'A'
+	    AND A.STATUS = 'Y'
+	    AND E.TYPE_CODE = 'AA'
+	
+	</select>	
+	
 	
 	</mapper>
 

@@ -198,12 +198,12 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="signBackView.jsp" class="menu-link">
+                  <a href="signBackView.do?empName=${ loginEmp.empName }" class="menu-link">
                     <div data-i18n="Container">반려 문서함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="signEndView.jsp" class="menu-link">
+                  <a href="signEndView.do?empName=${ loginEmp.empName }" class="menu-link">
                     <div data-i18n="Fluid">완료 문서함</div>
                   </a>
                 </li>

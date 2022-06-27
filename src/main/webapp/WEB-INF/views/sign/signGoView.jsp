@@ -199,21 +199,16 @@
 					<b>품 의</b>
 				</h4>
 
-				<form id="updateRRRRR" method="post" action="updateR.do">
+				<form id="updateRRR" method="post" action="updateRR.do">
 					<!-- update form 시작 -->
 
-					<!--  	<form id="updatePPPPP" method="post" action="updateP.do"> -->
-					<!--여기 -->
-					<!-- insert form 시작 -->
+
+						<input type="hidden" id="updateR" name="signNo" value="">
+						<!-- 반려하기 위해 보내는 signNo -->
 
 
-					<input type="hidden" id="updateR" name="signNo" value="">
-					<!-- 반려하기 위해 보내는 signNo -->
-
-
-					<input type="hidden" id="updateP" name="signNo" value="">
-					<!-- 상신하기 위해 보내는 signNo -->
-
+						<input type="hidden" id="updateP" name="signNo" value="">
+						<!-- 상신하기 위해 보내는 signNo -->
 
 					<input type="hidden" name="createName"
 						value="${ loginEmp.empName }"> <input type="hidden"
@@ -254,8 +249,7 @@
 
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 								<th><b id="aaJobName"></b></th>
-								<th></th>
-								<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
+								<th><b id="aaFirstSignJob"></b></th>
 								<th>${loginEmp.jobName}</th>
 
 							</tr>
@@ -264,7 +258,9 @@
 
 								<th style="width: 100px; background-color: #ffffff;"><b
 									id="aaCreateName"></b> <b style="color: blue" id="aaCreateDate"></b></th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
+								<th style="width: 100px; background-color: #ffffff;"><b
+									id="aaFirstSignName"></b> <b style="color: blue"
+									id="aaFirstSignDate"></b></th>
 								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
 							</tr>
 						</table>
@@ -291,7 +287,9 @@
 								  dataType: "JSON",
 								  
 								  success: function(result) {
-							  	
+							  		
+									  console.log(signNo)
+									  
 								//	  console.log("signNo : " +result.signNo)
 								/*	  console.log("createName : " +result.createName)
 									  console.log("createDate : " +result.createDate)
@@ -329,7 +327,10 @@
 								var changeName = result.changeName; //파일 수정된 이름
 								var originName = result.originName; //파일 원래 이름
 								var firstSignDate = result.firstSignDate; //1차 결재일
-
+								var firstSignName = result.firstSignName; //1차 결재자 이름
+								var firstSignJob = result.firstSignJob; //1차 결재자 직급
+								
+								console.log(signNo)
 								
 								$("#aaSignNo").html(signNo);
 								$("#aaCreateName").html(createName);
@@ -341,10 +342,11 @@
 								$("#aaSignContent").val(signContent);
 								$("#aaChangeName").html(changeName);
 								$("#aaOriginName").val(originName); //val로 한 이유는 값이 없으면 뿌려지면 안되어서 (html의 경우 값이 없고 1개의 값만 있어도 뿌려짐)
-							    $("#updateR").val(signNo)
-							    $("#updateP").val(signNo)
-							    $("#aafirstSignDate").html(firstSignDate);
-							    //$("#goSign").val(signNo)
+							    $("#updateR").val(signNo);
+							   	$("#updateP").val(signNo);
+							    $("#aaFirstSignDate").html(firstSignDate);
+							    $("#aaFirstSignName").html(firstSignName);
+							    $("#aaFirstSignJob").html(firstSignJob);
 							}
 							
 										
@@ -389,7 +391,7 @@
 
 
 				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateP.do';">상신</button>
+					onclick="javascript: form.action='updateA.do';">상신</button>
 				<!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
 
@@ -419,11 +421,13 @@
 					<b>협 조</b>
 				</h4>
 
-				<form id="updateRRRRR" method="post" action="updateR.do">
+				<form id="updateRRRRR" method="post" action="updateRR.do">
 					<!-- update form 시작 -->
 
 
 					<input type="hidden" id="updateRR" name="signNo" value="">
+						<!-- 반려하기 위해 보내는 signNo -->
+
 
 					<input type="hidden" name="createName"
 						value="${ loginEmp.empName }"> <input type="hidden"
@@ -464,9 +468,8 @@
 
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 								<th><b id="bbJobName"></b></th>
+								<th><b id="bbFirstSignJob"></b></th>
 								<th>${loginEmp.jobName}</th>
-								<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
-								<th></th>
 
 							</tr>
 
@@ -474,8 +477,10 @@
 
 								<th style="width: 100px; background-color: #ffffff;"><b
 									id="bbCreateName"></b> <b style="color: blue" id="bbCreateDate"></b></th>
+								<th style="width: 100px; background-color: #ffffff;"><b
+									id="bbFirstSignName"></b> <b style="color: blue"
+									id="bbFirstSignDate"></b></th>
 								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
 							</tr>
 						</table>
 
@@ -486,7 +491,7 @@
 						 function snoBBComeOn(signNo){
 						$.ajax({ //협조 내용 select 해오기
 
-								  url: "selectBBList.do",
+								  url: "selectBBPList.do",
 								
 								  type: "POST",
 
@@ -523,6 +528,9 @@
 								var signContent = result.signContent; //결재 내용
 								var changeName = result.changeName; //파일 수정된 이름
 								var originName = result.originName; //파일 원래 이름
+								var firstSignDate = result.firstSignDate; //1차 결재일
+								var firstSignName = result.firstSignName; //1차 결재자 이름
+								var firstSignJob = result.firstSignJob; //1차 결재자 직급
 								
 								$("#bbSignNo").html(signNo);
 								$("#bbCreateName").html(createName);
@@ -534,7 +542,11 @@
 								$("#bbSignContent").val(signContent);
 								$("#bbChangeName").html(changeName);
 								$("#bbOriginName").val(originName); //val로 한 이유는 값이 없으면 뿌려지면 안되어서 (html의 경우 값이 없고 1개의 값만 있어도 뿌려짐)
-								$("#updateRR").val(signNo)
+								$("#updateRR").val(signNo);
+								$("#updateP").val(signNo);
+								$("#bbFirstSignDate").html(firstSignDate);
+							    $("#bbFirstSignName").html(firstSignName);
+							    $("#bbFirstSignJob").html(firstSignJob);
 							}
 							
 										
@@ -578,7 +590,7 @@
 				<!-- 협조 update Form 끝 태그 -->
 
 				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateP.do';">상신</button>
+					onclick="javascript: form.action='updateA.do';">상신</button>
 
 			</div>
 
@@ -606,11 +618,16 @@
 					<b>휴 가 원</b>
 				</h4>
 
-				<form id="updateRRRRR" method="post" action="updateR.do">
+				<form id="updateRRRRR" method="post" action="updateRR.do">
 					<!-- update form 시작 -->
 
 
-					<input type="hidden" id="updateRRR" name="signNo" value="">
+					<input type="hidden" id="updateRRRR" name="signNo" value="">
+						<!-- 반려하기 위해 보내는 signNo -->
+
+
+					<input type="hidden" id="updateP" name="signNo" value="">
+						<!-- 상신하기 위해 보내는 signNo -->
 
 
 					<input type="hidden" name="createName"
@@ -655,7 +672,7 @@
 						 function snoCCComeOn(signNo){
 								$.ajax({ //휴가 내용 select 해오기
 
-									  url: "selectCCList.do",
+									  url: "selectCCPList.do",
 									
 									  type: "POST",
 
@@ -664,9 +681,7 @@
 									  dataType: "JSON",
 									  
 									  success: function(result) {
-										
-										  console.log(result.firstDate)
-										  console.log(result.lastDate)
+											
 										  
 										  DetailBtnnn(result);
 										
@@ -693,6 +708,9 @@
 									var signContent = result.signContent; //결재 내용
 									var firstDate = result.firstDate; //휴가 시작일
 									var lastDate = result.lastDate; //휴가 종료일
+									var firstSignDate = result.firstSignDate; //1차 결재일
+									var firstSignName = result.firstSignName; //1차 결재자 이름
+									var firstSignJob = result.firstSignJob; //1차 결재자 직급
 									
 									$("#ccSignNo").html(signNo);
 									$("#ccCreateName").html(createName);
@@ -704,7 +722,12 @@
 									$("#ccFinalApprover").html(finalApprover);
 									$("#ccSignTitle").val(signTitle);
 									$("#ccSignContent").val(signContent);					
-									$("#updateRRR").val(signNo)
+									$("#updateRRRR").val(signNo);
+									$("#updateP").val(signNo);
+									$("#ccFirstSignDate").html(firstSignDate);
+							    	$("#ccFirstSignName").html(firstSignName);
+							    	$("#ccFirstSignJob").html(firstSignJob);
+							    	
 								}
 					
 											
@@ -723,8 +746,8 @@
 
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 								<th><b id="ccJobName"></b></th>
-								<th>${ loginEmp.jobName }</th>
-								<th></th>
+								<th><b id="ccFirstSignJob"></b></th>
+								<th>${loginEmp.jobName}</th>
 
 							</tr>
 
@@ -732,8 +755,10 @@
 
 								<th style="width: 100px; background-color: #ffffff;"><b
 									id="ccCreateName"></b> <b style="color: blue" id="ccCreateDate"></b></th>
+								<th style="width: 100px; background-color: #ffffff;"><b
+									id="ccFirstSignName"></b> <b style="color: blue"
+									id="ccFirstSignDate"></b></th>
 								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
-								<th style="width: 100px; background-color: #ffffff;"></th>
 							</tr>
 
 						</table>
@@ -785,7 +810,7 @@
 				<!-- 휴가 update Form 끝 태그 -->
 
 				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateP.do';">상신</button>
+					onclick="javascript: form.action='updateA.do';">상신</button>
 
 
 			</div>
