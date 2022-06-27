@@ -132,7 +132,7 @@
 										<select
 											style="height: 35px; width: 100px; font-size: 13px; position: absolute; right: 10px; color: #5F76E8;"
 											class="mr-sm-2 custom-select form-control bg-white custom-radius custom-shadow border-1"
-											name="status" id="status">
+											name="status" id="status" >
 											<option value="1" selected>온라인</option>
 											<option value="2">자리 비움</option>
 										</select>
@@ -156,15 +156,16 @@
 									<div class="border-bottom" style="padding: 15px; height: 90px;">
 
 
-										<div style="float: left;">
-											<img
-												src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
-												alt="user" class="rounded-circle" width="65">
-										</div>
+										
 
 										<div style="float: left; margin-left: 10px;">
 											<c:choose>
 												<c:when test="${not empty toChat }">
+												<div style="float: left;">
+													<img
+														src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
+														alt="user" class="rounded-circle" width="65">
+												</div>
 													<span id='receiverName'
 														style="font-size: 22px; color: #1c2d41; font-weight: bold;">${ toChat.empName}</span>
 													<span id="job" style="font-size: 16px;">${ toChat.jobName}</span>
@@ -179,12 +180,17 @@
 				
 												</c:when>
 												<c:otherwise>
+												<div style="float: left;">
+													<img
+														src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/8.png"
+														alt="user" class="rounded-circle" width="65">
+												</div>
 
 													<span style="font-size: 15px;"><i class="icon-clock"></i>
 														 채팅 내역은 일주일 동안 보존됩니다.</span>
 													<br>
 													<span style="font-size: 15px;">이후에는 자동으로 삭제 되므로,</span>
-													<br>
+											
 													<span style="font-size: 15px;"> 이전 기록이 필요하시면 보안실로 문의 해 주세요.</span>
 												</c:otherwise>
 
@@ -354,65 +360,7 @@ $("#status").on('change',function(){
 
 
 	
-$(function(){
 
-	connectSocket();
-})
-
-
-
-var socket = null;
-
-function connectSocket() {
-	//웹소켓 생성
-    var ws = new WebSocket("ws://localhost:8090/echo"); 
-    socket = ws;
-    //소켓 오픈
-    ws.onopen = function () {
-        console.log('Info: connection opened.');
-    	console.log(location.pathname);
-    	console.log(location.search);
-    };
-    
-    //웹소켓에서 메세지를  보내면 여기서 받아서 뿌려줌
-    ws.onmessage = function (event) {
-    	
-    	 var str = event.data;
-         var msgArr = str.split(',');
-         alertMsg = msgArr[0];
-         
-   
-         var resultReceiver = str.substring(20,28)
-         console.log("resultReceiver : " + resultReceiver);
-  
-         console.log("str확인 : " +str)
-         $('#chatAlert').css("display",'block')
-         $('#chatAlert').html(alertMsg);
-         
-         console.log("msgArr : "+msgArr)
-         $('.chat-list').append(`
-					<li class="chat-item list-style-none mt-3">
-					<div class="chat-img d-inline-block">
-						<img
-							src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
-							alt="user" class="rounded-circle" width="45">
-					</div>
-					<div class="chat-content d-inline-block pl-3">
-						<div class="msg p-2 d-inline-block mb-1">\${ msgArr[1]}</div>
-					</div>
-				</li>        			 
- 			 `);
-    }
-
-    //소켓 닫음
-    ws.onclose = function (event) { 
-        console.log('Info: connection closed.');
-    };
-    //소켓 에러 표시
-    ws.onerror = function (err) { console.log('Error:', err); };
-    
-
-}
 	
 	
 	
@@ -491,7 +439,7 @@ function connectSocket() {
 		})
 	}
 		
- 
+    
 		function selectContectList(deptName){
 		        	
         	var deptArea = $("#"+deptName);
@@ -526,7 +474,7 @@ function connectSocket() {
         	
 
         }
-		var socket = null;
+
 		
 	       var sendAjax = function(message){
 	    		

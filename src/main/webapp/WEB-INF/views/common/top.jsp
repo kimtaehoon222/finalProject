@@ -106,11 +106,24 @@
 			alert("${msg}");
 		</script>
 		<c:remove var="msg" scope="session"/>
-	</c:if> -->
+
+	</c:if>-->
+
+    <div id="mainAlert" style="text-align: center; display:none;" class="alert alert-primary alert-dismissible" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    
+
+
+
   
+
   <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
+      
+   
         <!-- Menu -->
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -404,6 +417,7 @@
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
+          
 
           <nav
             class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
@@ -495,6 +509,78 @@
           
 
   
+  
+  <script>
+  $(function(){
+
+		connectSocket();
+	})
+
+
+
+	var socket = null;
+
+	function connectSocket() {
+		//웹소켓 생성
+	    var ws = new WebSocket("ws://localhost:8090/echo"); 
+	    socket = ws;
+	    //소켓 오픈
+	    ws.onopen = function () {
+	        console.log('Info: connection opened.');
+	    	console.log(location.pathname);
+	    	console.log("search : " + location.search);
+	    };
+	    
+	    //웹소켓에서 메세지를  보내면 여기에서 받아서 뿌려줌
+	    ws.onmessage = function (event) {
+	    	 let mainAlert = $("div#mainAlert");
+	    	 var str = event.data;
+	         var msgArr = str.split(',');
+	         alertMsg = msgArr[0];
+	         
+	   
+	         var resultReceiver = str.substring(16,25)
+	         console.log("resultReceiver : " + resultReceiver);
+	  
+	         if(location.pathname != "/chat.do"){
+	        	 mainAlert.css("display",'block');
+	        	 mainAlert.html(alertMsg);
+	        	 
+             }else if(location.search != resultReceiver){
+	         console.log("str확인 : " +str)
+	         
+	         $('#chatAlert').css("display",'block')
+	         $('#chatAlert').html(alertMsg);
+             }else if(location.pathname == "/chat.do"){
+	         
+	         console.log("msgArr : "+msgArr)
+	         $('.chat-list').append(`
+						<li class="chat-item list-style-none mt-3">
+						<div class="chat-img d-inline-block">
+							<img
+								src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
+								alt="user" class="rounded-circle" width="45">
+						</div>
+						<div class="chat-content d-inline-block pl-3">
+							<div class="msg p-2 d-inline-block mb-1">\${ msgArr[1]}</div>
+						</div>
+					</li>        			 
+	 			 `);
+	         
+	         }
+	    }
+ 
+	    //소켓 닫음
+	    ws.onclose = function (event) { 
+	        console.log('Info: connection closed.');
+	    };
+	    //소켓 에러 표시
+	    ws.onerror = function (err) { console.log('Error:', err); };
+	    
+
+	}
+  
+  </script>
       
   </body>
 </html>
