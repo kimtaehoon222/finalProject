@@ -23,6 +23,7 @@
 }
 
 </style>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -81,7 +82,7 @@
          <div class="card-body">
            <div class="d-flex align-items-start align-items-sm-center gap-4">
              <!-- 보내는 사람 사진 -->
-             <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
+             <img src="${pageContext.request.contextPath}/resources/emp_files/<%=loginEmp.getChangeName() %>" alt="empPhoto" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
              <div class="button-wrapper">
                <label for="" class="btn btn-primary me-2 mb-4" tabindex="0" id="myPageUpdate">
                  <!-- 내 정보 수정하기 페이지로 이동 -->
@@ -241,7 +242,7 @@
 			    <button class="btn btn-outline-primary mt-2" id="choiceEmployeeList">직원추가/수정</button>
 			    
 			    <!-- 부서리스트 영역 시작 -->
-			    <div class="accordion mt-3" id="accordionExample2">
+			    <div class="accordion mt-3" id="accordionExampleList">
 			      <!-- 부서 1개 시작 -->
 
 			      <!-- 부서 1개 끝 -->
@@ -358,12 +359,12 @@
 				const element = document.getElementById(selectDept);
 				
 				console.log(element);
-				console.log(list);
+				//console.log(list);
 				
 				if(list.length > 0){
 	
 					$.each(list, function(i) {
-						console.log(result);
+						//console.log(result);
 						result += '<input type="radio" name="empToId" class="getToEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>'
 					})
 					
@@ -423,14 +424,14 @@
   				type: "post",
   				success: function(list) {
   					var result = "";
-  					const element2 = document.getElementById('accordionExample2');
+  					const element2 = document.getElementById('accordionExampleList');
   					
   						console.log(element2);
   	 					$.each(list, function(i) {
   							result += '<div class="card accordion-item active">' 
 							  	   + '<h2 class="accordion-header" id="' + i + '">'
 							  	   + '<button type="button" onclick="test2(this);" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#' + list[i].deptName + '" aria-expanded="true" aria-controls="' + list[i].deptName + '">'
-					               + '<b style=color:#696cff;>' + list[i].deptName +  '</b>'
+					               + '<b style=color:#696cff;>' + list[i].deptName + '</b>'
 					               + '</button>'
 					               + '</h2>'
 					               + '<div id="' + list[i].deptName +'" class="accordion-collapse collapse" aria-labelledby="' + i + '">'
@@ -470,16 +471,15 @@
 			success: function(list) {
 				var result = "";
 				const element2 = document.getElementById(selectDept2);
-				console.log(element2);
 				
-				console.log(list);
+				console.log(element2);
+				//console.log(list);
 				
 				if(list.length > 0){
 	
 					$.each(list, function(i) {
 						result += '<input type="checkbox" name="empCcId" class="getCcEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>';
-						console.log(result);
-						
+						//console.log(result);
 					})
 					
 				}else{
@@ -542,10 +542,24 @@
          
          $("#ckbox").on('click', function () {
             if($(this).prop('checked')){
-               alert('예약 메일은 보낸 메일함이 아닌 예약 메일함에서 확인이 가능합니다.');
-               $('#reserveYn').val('Y');
-               $('#sendDate').attr('required', 'required');
-               $("#sendDate").show();
+               //alert('예약 메일은 지정한 날짜의 9:00에 발송됩니다.');
+               Swal.fire({
+            	   title: '※ 필수확인 ※',
+            	   text: "예약 메일은 지정한 날짜의 9:00에 발송됩니다.",
+            	   icon: 'warning',
+            	   showCancelButton: true,
+            	   confirmButtonColor: '#3085d6',
+            	   cancelButtonColor: '#d33',
+            	   confirmButtonText: '확인',
+            	   cancelButtonText: '취소'
+          	 	}).then((result) => {
+            	   if (result.isConfirmed) {
+            		   $('#reserveYn').val('Y');
+                       $('#sendDate').attr('required', 'required');
+                       $("#sendDate").show();
+            	   }
+            	 })
+               
             }else{
                $('#reserveYn').val('N');
                $('#sendDate').attr('required', false);

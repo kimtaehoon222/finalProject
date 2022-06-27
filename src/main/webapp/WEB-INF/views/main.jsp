@@ -65,6 +65,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -102,42 +103,38 @@
                     </div>
                   </div>
                 </div>
+                
+                <!-- 첫 번째 행 시작 -->
                 <div class="col-lg-4 col-md-4 order-1">
                   <div class="row">
+                    <!-- 읽지않은메일 -->
                     <div class="col-lg-6 col-md-12 col-6 mb-4">
                       <div class="card">
                         <div class="card-body">
                           <div class="card-title d-flex align-items-start justify-content-between">
                             <div class="avatar flex-shrink-0">
-                              <img
-                                src="${pageContext.request.contextPath}/resources/assets/img/icons/unicons/chart-success.png"
-                                alt="chart success"
-                                class="rounded"
-                              />
+                              <i class="bx bx-envelope bx-md bx-tada-hover" style="color:#696cff;"></i>
                             </div>
                             <div class="dropdown">
-                              <button
-                                class="btn p-0"
-                                type="button"
-                                id="cardOpt3"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
+                              <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="bx bx-dots-vertical-rounded"></i>
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                <a class="dropdown-item" href="receiveMailList.do?receive=r">받은 메일함</a>
+                                <a class="dropdown-item" href="sendMailList.do?send=s">보낸 메일함</a>
+                                <a class="dropdown-item" href="reserveMailList.do?reserve=re">예약 메일함</a>
+                                <a class="dropdown-item" href="deleteMailList.do?delete=d">휴지통</a>
                               </div>
                             </div>
                           </div>
-                          <span class="fw-semibold d-block mb-1">Profit</span>
-                          <h3 class="card-title mb-2">$12,628</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                          <span class="fw-semibold d-block mb-1">미확인 메일</span>
+                          <h3 class="card-title mb-2 text-danger">${ mailCount }</h3>
+                          <small><a href="mailHome.do" class="text-primary fw-semibold">>mail home</a></small>
                         </div>
                       </div>
                     </div>
+                    
+                    <!-- 시계 -->
                     <div class="col-lg-6 col-md-12 col-6 mb-4">
                       <div class="card">
                         <div class="card-body">
@@ -172,9 +169,11 @@
                         </div>
                       </div>
                     </div>
+                    
                   </div>
                 </div>
-                <!-- Total Revenue -->
+                <!-- 첫 번째 행 끝 -->
+
                 <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
                   <div class="card">
                     <div class="row row-bordered g-0">
@@ -231,7 +230,8 @@
                     </div>
                   </div>
                 </div>
-                <!--/ Total Revenue -->
+
+				<!-- 두 번째 행 시작 -->
                 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
                   <div class="row">
                     <div class="col-6 mb-4">
@@ -264,6 +264,7 @@
                         </div>
                       </div>
                     </div>
+                    
                     <div class="col-6 mb-4">
                       <div class="card">
                         <div class="card-body">
@@ -296,29 +297,31 @@
                     </div>
                     <!-- </div>
     <div class="row"> -->
+    
+    				<!-- 날씨 -->
                     <div class="col-12 mb-4">
                       <div class="card">
                         <div class="card-body">
-                          <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                            <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                          <div class="">
+                            <div class="">
                               <div class="card-title">
-                                <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                                <h5 class="mb-3 text-primary"><b>오늘의 날씨</b></h5>
+                                <!-- <span class="badge bg-label-warning rounded-pill">Year 2022</span>  -->
                               </div>
-                              <div class="mt-sm-auto">
-                                <small class="text-success text-nowrap fw-semibold"
-                                  ><i class="bx bx-chevron-up"></i> 68.2%</small
-                                >
-                                <h3 class="mb-0">$84,686k</h3>
+                              <div class="weather row">
+	                                <div class="CurrIcon col-md-4"></div>
+	                                <div class="col-md-3"><h2 class="CurrTemp text-primary"></h2></div>
+	                                <div class="col-md-5"><h4 class="City"></h4></div>
                               </div>
                             </div>
-                            <div id="profileReportChart"></div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    
                   </div>
                 </div>
+                <!--  -->
               </div>
               <div class="row">
                 <!-- Order Statistics -->
@@ -622,8 +625,40 @@
               </div>
             </footer>
             <!-- / Footer -->
-
-
+			
+			<script type="text/javascript">
+				/* 날씨 가져오기 */
+			    $(document).ready(function() {
+			      let weatherIcon = {
+			        '01' : 'fas fa-5x fa-sun',
+			        '02' : 'fas fa-5x fa-cloud-sun',
+			        '03' : 'fas fa-5x fa-cloud',
+			        '04' : 'fas fa-5x fa-cloud-meatball',
+			        '09' : 'fas fa-5x fa-cloud-sun-rain',
+			        '10' : 'fas fa-5x fa-cloud-showers-heavy',
+			        '11' : 'fas fa-5x fa-poo-storm',
+			        '13' : 'far fa-5x fa-snowflake',
+			        '50' : 'fas fa-5x fa-smog'
+			      };
+	
+				    $.ajax({
+					    url:'http://api.openweathermap.org/data/2.5/weather?q=Seoul&APPID=c3b23636376dacd84cd5e11612108a86&units=metric',
+					    dataType:'json',
+					    type:'GET',
+					    success:function(data){
+					    console.log(data)
+					      var $Icon = (data.weather[0].icon).substr(0,2);
+					      var $Temp = Math.floor(data.main.temp) + 'º';
+					      var $city = data.name;
+			
+					      $('.CurrIcon').append('<i class="' + weatherIcon[$Icon] +'"></i>');
+					      $('.CurrTemp').prepend($Temp);
+					      $('.City').append($city).append(',<br>SouthKorea');
+					      }
+					    })
+				    });
+			  </script>
+			
          	<jsp:include page="common/bottom.jsp"/> 
   </body>
 </html>

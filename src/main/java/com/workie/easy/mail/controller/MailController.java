@@ -430,6 +430,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
+		model.addAttribute("msg", "받은 메일 리스트 입니다.");
 		
 		return "mail/mailReceiveListView";
 	}
@@ -459,6 +460,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
+		model.addAttribute("msg", "보낸 메일 리스트 입니다.");
 		
 		return "mail/mailSendListView"; 
 	}
@@ -487,6 +489,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
+		model.addAttribute("msg", "예약 메일 리스트 입니다.");
 		
 		return "mail/mailReserveListView"; 
 	}
