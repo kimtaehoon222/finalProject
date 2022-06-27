@@ -15,4 +15,6 @@ public interface CardService {
 
 	Card selectCardStat(int statNo);
 
+	void updateCardStat(Card c, String string);
+
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workie.easy.acct.model.dto.Card;
@@ -32,6 +33,7 @@ import com.workie.easy.employee.model.dto.Employee;
 * 2022/06/24 (전재은) 처음 작성, 카드사용내역조회 추가
 * 2022/06/25 (전재은) 카드사용내역조회 수정
 * 2022/06/26 (전재은) 카드사용내역등록, 파일업로드, 상세조회 추가
+* 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -46,7 +48,7 @@ public class CardController {
 	/*회계관리 페이지 전환*/
 	/*카드사용내역조회*/
 	@RequestMapping("acct.do")
-	private String selectCardStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage 
+	public String selectCardStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage 
 									, String deptCode,  Model model, HttpSession session) {
 		
 //		System.out.println("deptCode 비어있나요?"+deptCode);
@@ -74,8 +76,8 @@ public class CardController {
 
 	/*카드사용내역등록*/
 	@RequestMapping("insertStat.do")
-	private String insertCardStat(Card c , HttpServletRequest request,
-								  @RequestParam(name="uploadFile", required=false) MultipartFile file) {
+	public String insertCardStat(Card c , HttpServletRequest request , 
+								  @RequestParam(name = "uploadFile" , required = false) MultipartFile file) {
 		
 		/*출력테스트*/
 		System.out.println("empName : "+c.getEmpName());
@@ -104,11 +106,8 @@ public class CardController {
 	
 	/*카드사용내역상세조회*/
 	@RequestMapping("statDetail.do")
-	private JSONObject selectCardStat(int statNo, Model model) {
-		
-		System.out.println("statNo 테스트 : "+statNo);
-		
-		//model.addAttribute("c", cardService.selectCardStat(stat_no));
+	@ResponseBody
+	public JSONObject selectCardStat(int statNo) {
 		
 		/*서비스연결*/
 		Card c = cardService.selectCardStat(statNo);
@@ -116,20 +115,79 @@ public class CardController {
 		/*Json에 담기*/
 		JSONObject jsonStat = new JSONObject();
 		jsonStat.put("statNo", c.getStatNo());
-		jsonStat.put("empName", c.getStatNo());
-		jsonStat.put("paymentStatus", c.getStatNo());
-		jsonStat.put("amount", c.getStatNo());
-		jsonStat.put("transactionDate", c.getStatNo());
-		jsonStat.put("storeName", c.getStatNo());
-		jsonStat.put("statMemo", c.getStatNo());
-		jsonStat.put("statNo", c.getStatNo());
+		jsonStat.put("empNo", c.getEmpNo());
+		
+		jsonStat.put("empName", c.getEmpName());
+		jsonStat.put("paymentStatus", c.getPaymentStatus());
+		jsonStat.put("amount", c.getAmount());
+		jsonStat.put("transactionDate", c.getTransactionDate());
+		jsonStat.put("storeName", c.getStoreName());
+		jsonStat.put("statMemo", c.getStatMemo());
+		
+		jsonStat.put("originName", c.getOriginName());
+		jsonStat.put("changeName", c.getChangeName());
 		
 		return jsonStat;
 		
 	}
 	
+	/*카드내역 수정*/
+	@RequestMapping("updateStat.do")
+	public String updateCardStat(Card c , HttpServletRequest request , 
+								  @RequestParam(name = "reUploadFile" , required = false) MultipartFile file) {
+		
+		System.out.println(c.toString());
+		
+		/*새로운 첨부파일이 있는 경우*/
+		if(!file.getOriginalFilename().equals("")) {
 
-	/*첨부파일 설정*/
+			
+			String orgChangeName = c.getChangeName();	//기존 첨부파일
+			
+			String test ="";
+			
+//			if(!c.getChangeName().equals("")) {		/*기존 첨부파일이 있는 경우*/
+			if(!test.equals(c.getChangeName())) {		/*기존 첨부파일이 있는 경우*/
+				/*파일이름 수정*/
+				String changeName = saveFile(file, request, c);
+				c.setOriginName(file.getOriginalFilename());
+				c.setChangeName(changeName);
+				
+				/*[UPDATE]*/
+				cardService.updateCardStat(c, "update");
+				
+				/*기존 첨부파일 지우기*/
+				deleteFile(orgChangeName, request);
+				
+			}else { 							/*기존 첨부파일이 없는 경우*/
+				/*파일이름 수정*/
+				String changeName = saveFile(file, request, c);
+				c.setOriginName(file.getOriginalFilename());
+				c.setChangeName(changeName);
+				/*[INSERT]*/
+				cardService.updateCardStat(c, "insert");
+				
+			}
+		}else { /*새로운 첨부파일이 없는 경우*/
+			/*기존 첨부파일을 삭제하는 경우*/
+			/*기존 첨부파일을 삭제하지 않는 경우*/
+		}
+		
+		return "redirect:acct.do";
+		
+	}
+
+	/*카드내역 삭제*/
+	@RequestMapping("deleteStat.do")
+	public String deleteCardStat() {
+		
+		
+		
+		return "redirect:acct.do";
+		
+	}
+
+	/*첨부파일 추가*/
 	private String saveFile(MultipartFile file, HttpServletRequest request, Card c) {
 		
 		/*경로 설정*/
@@ -156,4 +214,17 @@ public class CardController {
 		return changeName;
 		
 	}
+	
+	/*첨부파일 삭제*/
+	private void deleteFile(String orgChangeName, HttpServletRequest request) {
+		
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savaPath = resources + "\\acct_files\\";
+		
+		File deleteFile = new File(savaPath+orgChangeName);
+		
+		deleteFile.delete();
+		
+	}
+
 }
