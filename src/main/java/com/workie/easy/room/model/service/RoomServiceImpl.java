@@ -25,6 +25,13 @@ public class RoomServiceImpl implements RoomService {
 		
 		return roomDao.selectResList(room, sqlSession);
 	}
+
+
+	@Override
+	public Room selectRes(Room room) {
+	
+		return roomDao.selectRes(room, sqlSession);
+	}
 	
 	
 }

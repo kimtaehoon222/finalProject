@@ -12,17 +12,45 @@
 			<result property="resStatus" column="RES_STATUS"/>
 		    <result property="roomName" column="ROOM_NAME"/>
 		    <result property="capacity" column="CAPACITY"/>
+		    <result property="empName" column="EMP_NAME"/>
+		    <result property="deptCode" column="DEPT_CODE"/>
+		    <result property="deptName" column="DEPT_NAME"/>
 	    </resultMap>
 
 	   <select id="selectResList" resultMap="roomResult">
 	    SELECT 
-		*
-		FROM RESERVATION A 
-		JOIN MEETING_ROOM B ON A.ROOM_NO = B.ROOM_NO
-		JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
-		WHERE RES_STATUS = 'Y'
-		AND A.ROOM_NO = #{roomNo}
+	          A.RES_NO
+	        , A.ROOM_NO
+	        , A.EMP_NO
+	        , A.MEET_TITLE
+	        , A.MEET_GOAL
+	        , A.START_DATE
+	        , A.END_DATE
+	        , B.EMP_NAME
+			FROM RESERVATION A
+			LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+			WHERE RES_STATUS = 'Y'
+			AND ROOM_NO =  #{roomNo}
         </select>
-	
+	  
+	 <select id="selectRes" resultMap="roomResult">
+	      SELECT 
+	          RES_NO
+	        , A.ROOM_NO
+	        , A.EMP_NO
+	        , MEET_TITLE
+	        , MEET_GOAL
+	        , START_DATE
+	        , END_DATE
+	        , EMP_NAME
+            , ROOM_NAME
+            , DEPT_NAME
+			FROM RESERVATION A
+			LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+            LEFT JOIN MEETING_ROOM C ON A.ROOM_NO = C.ROOM_NO
+            LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
+			WHERE RES_STATUS = 'Y'
+			AND RES_NO =  #{resNo}
+	</select>
 	
 </mapper>
