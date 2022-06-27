@@ -25,6 +25,7 @@ public class EmpVacation {
 	
 	//사용한 일 
 	private int usingDay;
+	private double hDay;
 	
 	//join
 	private String vName;

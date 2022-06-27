@@ -97,7 +97,7 @@ a {
 										<!-- 연차 내역  상단 시작(로그인된 유저의 정보) -->
 										<div class="email-action">
 												<img
-												src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
+												src="${pageContext.request.contextPath}/resources/emp_files/${loginEmp.changeName}"
 												alt="user" class="rounded-circle" width="65">
 												<div class="col-3 m-auto" style="height:100%; padding:10px 0px">
 											
@@ -151,8 +151,13 @@ a {
 					                                </c:choose>
 					                                <td>${vacation.firstDate} ~ ${vacation.lastDate}</td>
 					                                <td>${vacation.VName}</td>
-					                                <td>${vacation.usingDay}</td>
-					                                <td>${vacation.reason}</td>
+						                           <c:if test="${vacation.VName eq '연차'}">
+	                                               <td>${vacation.usingDay}</td>
+	                                               </c:if>
+	                                               <c:if test="${vacation.VName ne '연차'}">
+	                                               <td>${vacation.HDay}</td>
+	                                               </c:if>
+	                                               <td>${vacation.reason}</td>
 					                            </tr>
 					                          </c:forEach>
 					                          

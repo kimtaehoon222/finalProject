@@ -152,21 +152,14 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 													</c:choose>
 												
 													</div>
-													<div class="d-flex align-items-center">
-														<button type="button" id="selectStatus" class="btn btn-rounded btn-outline-primary col-12" style="margin:2px 2px 0px 2px;">근무상태변경<i data-feather="chevron-down" class="feather-icon"></i></button>
-													</div>
-													<div id="status" class="align-items-center" style="border: 1px solid rgb(95,118,232); border-radius: 10px; background-color:white;">
-														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none; border-top-left-radius: 9px; border-top-right-radius: 9px;" value="3" name="status">업무중</button>
-														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="4" name="status">외출중</button>
-														<button type="submit" class="d-flex col-12 btn btn-outline-primary" style="border:none;" value="5" name="status">출장중</button>
-													</div>
+											
 													<input type="hidden" name="workNo" value="${w.workNo}">
 												</form>
 											</div> 
-						<div class="list-group"> 
-		<a href="work.do" class="list-group-item">내 근태 현황</a>
-	    <a href="vacation.do" class="list-group-item">내 연차 내역</a>  
-    </div>					
+											<div class="list-group"> 
+												<a href="work.do" class="list-group-item">내 근태 현황</a>
+											    <a href="vacation.do" class="list-group-item">내 연차 내역</a>  
+										    </div>					
 					
 					
 									</div>
