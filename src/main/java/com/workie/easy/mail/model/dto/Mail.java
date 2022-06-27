@@ -40,6 +40,8 @@ public class Mail {
 	/* attachment 테이블에 insert 하기 위한 정보를 담는 필드 */
 	private String originName;
 	private String changeName;
+	private String empchangeName;
+	private String attchangeName;
 	private String filePath;
 	
 	/* join시 사용하는 필드*/
@@ -51,6 +53,7 @@ public class Mail {
 	private String ccName;
 	private String fromId;
 	private String toId;
+	private String ccId;
 	private int empNo;
 	
 	private int rowNum;

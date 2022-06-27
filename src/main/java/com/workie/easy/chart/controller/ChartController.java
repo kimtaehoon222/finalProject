@@ -258,7 +258,7 @@ public class ChartController {
 			}else {
 				
 				/* list 조회  : 퇴사 */
-				//chartList = chartService.selectChartListForPersonnelOut(chartForPersonnel);
+				chartList = chartService.selectChartListForPersonnelOut(chartForPersonnel);
 			}
 			
 		}else { /* 연도도 선택하고 해당 연도의 특정 월 조회시  */
@@ -285,7 +285,7 @@ public class ChartController {
 			}else {
 				
 				/* list 조회  : 퇴사 */
-				//chartList = chartService.selectChartListForPersonnelOutByMonthFrom(chartForPersonnel);
+				chartList = chartService.selectChartListForPersonnelOutByMonth(chartForPersonnel);
 			}
 		}
 		

@@ -125,6 +125,7 @@ public class ScheduleController {
 		jsonSked.put("title", s.getSkedTitle());
 		jsonSked.put("content", s.getSkedContent());
 		jsonSked.put("memo", s.getSkedMemo());
+	
 		
 		jsonSked.put("start", s.getSkedStart());
 		jsonSked.put("startTime", s.getSkedStartTime());

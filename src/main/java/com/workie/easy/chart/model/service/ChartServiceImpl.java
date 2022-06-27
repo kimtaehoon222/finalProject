@@ -101,6 +101,18 @@ public class ChartServiceImpl implements ChartService {
 		return chartDao.selectChartListForPersonnelInByMonth(sqlSession, chartForPersonnel);
 	}
 
+	@Override
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelOut(ChartForPersonnel chartForPersonnel) {
+
+		return chartDao.selectChartListForPersonnelOut(sqlSession, chartForPersonnel);
+	}
+
+	@Override
+	public ArrayList<ChartForPersonnel> selectChartListForPersonnelOutByMonth(ChartForPersonnel chartForPersonnel) {
+
+		return chartDao.selectChartListForPersonnelOutByMonth(sqlSession, chartForPersonnel);
+	}
+
 
 	
 }

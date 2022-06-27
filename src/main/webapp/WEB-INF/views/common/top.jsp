@@ -83,22 +83,41 @@
 			   justify-content: center;
 			   display: flex;
 			}
+	@keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -100%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    }
+    #msgBox {
+        position: relative;
+        animation: fadeInDown 1s;
+    }
 	</style>
   </head>
 
   <body>
-	<c:if test="${ !empty msg }">
+	<!-- <c:if test="${ !empty msg }">
 		<script>
 			alert("${msg}");
 		</script>
 		<c:remove var="msg" scope="session"/>
-	</c:if>
+
+	</c:if>-->
 
     <div id="mainAlert" style="text-align: center; display:none;" class="alert alert-primary alert-dismissible" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     
     
+
+
+
+  
 
   <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -206,12 +225,12 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="signBackView.jsp" class="menu-link">
+                  <a href="signBackView.do?empName=${ loginEmp.empName }" class="menu-link">
                     <div data-i18n="Container">반려 문서함</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="signEndView.jsp" class="menu-link">
+                  <a href="signEndView.do?empName=${ loginEmp.empName }" class="menu-link">
                     <div data-i18n="Fluid">완료 문서함</div>
                   </a>
                 </li>
@@ -302,7 +321,7 @@
               </ul>
             </li>
 
-            <li class="menu-item">
+             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Extended UI">커뮤니티</div>
@@ -322,7 +341,7 @@
             </li>
 
             <!-- Forms -->
-            <li class="menu-item">
+              <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-notepad"></i>
                 <div data-i18n="Form Elements">공지사항</div>
@@ -357,7 +376,8 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> 
+            
             <!-- Tables -->
             <li class="menu-item">
               <a href="chartHome.do" class="menu-link">
@@ -410,10 +430,12 @@
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
+			
+			<span class="text-primary" id="msgBox">${ msg }</span>
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
+                
                 <li class="nav-item lh-1 me-3">
                   <!-- <a
                     class="github-button"

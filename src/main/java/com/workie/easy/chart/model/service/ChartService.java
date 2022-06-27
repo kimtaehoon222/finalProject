@@ -30,4 +30,8 @@ public interface ChartService {
 
 	ArrayList<ChartForPersonnel> selectChartListForPersonnelInByMonth(ChartForPersonnel chartForPersonnel);
 
+	ArrayList<ChartForPersonnel> selectChartListForPersonnelOut(ChartForPersonnel chartForPersonnel);
+
+	ArrayList<ChartForPersonnel> selectChartListForPersonnelOutByMonth(ChartForPersonnel chartForPersonnel);
+
 }

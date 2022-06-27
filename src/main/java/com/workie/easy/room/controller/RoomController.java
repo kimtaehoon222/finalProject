@@ -35,14 +35,14 @@ public class RoomController {
 		
 	}
 	
+
 	@ResponseBody
-	@RequestMapping(value ="selectResList.do", method=RequestMethod.GET, produces="application/json; charset=utf-8")
+	@RequestMapping(value ="selectResList.do", produces="application/json; charset=utf-8")
 	/*consumes는 클라이언트가 서버에게 보내는 데이터 타입을 명시한다.
 	  produces는 서버가 클라이언트에게 반환하는 데이터 타입을 명시한다 response.setContentType
 	  charset=utf-8 한글이 들어올 수 있으므로 인코딩*/
 	public List<Map<String, Object>> selectResList(HttpSession session, HttpServletRequest request,int roomNo) {
 		
-		System.out.println("ggggggggggg");
        Room room = new Room();
        room.setRoomNo(roomNo);
 	
@@ -61,10 +61,9 @@ public class RoomController {
 			hash.put("roomNo", r.getRoomNo());
 			hash.put("empNo", r.getEmpNo());
 			hash.put("empName", r.getEmpName());
-			hash.put("roomName", r.getRoomName());
 			hash.put("startDate", r.getStartDate());
 			hash.put("endDate", r.getEndDate());
-			hash.put("roomNo", r.getRoomNo());
+		
 			
 			jsonObj = new JSONObject(hash); 						
             jsonArr.add(jsonObj);
@@ -73,6 +72,31 @@ public class RoomController {
 		
 	
 		}
-
+	@ResponseBody
+	@RequestMapping(value ="detailRes.do", produces="application/json; charset=utf-8")
+	public JSONObject selectRes(int resNo) {
+		
+		System.out.println("회의실 회의실 " + resNo);
 	
+		Room room = new Room();
+	    room.setResNo(resNo);
+	  
+	    
+	    Room r = roomService.selectRes(room);
+	    
+		/*Json에 담기*/
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("resNo", r.getResNo());
+		jsonObj.put("roomNo", r.getRoomNo());
+		jsonObj.put("empNo", r.getEmpNo());
+		jsonObj.put("meetTitle", r.getMeetTitle());
+		jsonObj.put("meetGoal", r.getMeetGoal());		
+		jsonObj.put("empName", r.getEmpName());
+		jsonObj.put("roomName", r.getRoomName());
+		jsonObj.put("startDate", r.getStartDate());
+		jsonObj.put("endDate", r.getEndDate());
+		jsonObj.put("deptName", r.getDeptName());
+		return jsonObj;
+		
+	}
 }

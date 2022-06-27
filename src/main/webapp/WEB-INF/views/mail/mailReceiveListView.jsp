@@ -156,7 +156,7 @@
 												<div class="email-fixed-search flex-grow-1">
 													<div
 														class="form-group position-relative  mb-0 has-icon-left">
-														<input type="text" class="form-control"
+														<!-- <input type="text" class="form-control"
 															placeholder="Searched Title..">
 														<div class="form-control-icon">
 															<svg class="bi" width="1.5em" height="1.5em"
@@ -164,7 +164,7 @@
                                                         <use
 																	xlink:href="${pageContext.request.contextPath}/resources/kjs_assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
                                                     </svg>
-														</div>
+														</div>  -->
 													</div>
 												</div>
 												<!-- 검색창 끝 -->
@@ -250,7 +250,7 @@
 													<!-- 받는 사람 이미지 -->
 													<div class="pr-50">
 														<div class="avatar">
-															<img src="${pageContext.request.contextPath}/resources/kjs_assets/images/faces/1.jpg" alt="avtar img holder">
+															<img src="${pageContext.request.contextPath}/resources/emp_files/${mail.empchangeName}" alt="empPhoto">
 														</div>
 													</div>
 													<!-- 받는 사람 이름 -->
@@ -263,12 +263,7 @@
 														<div class="user-details">
 															<!-- 메일 제목 -->
 															<div class="mail-items">
-																<c:if test="${ mail.receiveCheck == 'Y' }">
-																	<span class="list-group-item-text text-truncate text-light">${ mail.title }</span>
-																</c:if>
-																<c:if test="${ mail.receiveCheck == 'N' }">
-																	<span class="list-group-item-text text-truncate text-dark">${ mail.title }</span>
-																</c:if>
+																<span class="list-group-item-text text-truncate">${ mail.title }</span>
 															</div>
 															<!-- 메일 보낸 날짜 및 시간 -->
 															<div class="mail-meta-item">
@@ -280,19 +275,14 @@
 														<!-- 내용의 하단 -->
 														<div class="mail-message">
 															<!-- 메일 내용 -->
-															<c:if test="${ mail.receiveCheck == 'Y' }">
-																<p class="list-group-item-text truncate mb-0 text-light">${ mail.content }</p>
-															</c:if>
-															<c:if test="${ mail.receiveCheck == 'N' }">
-																<p class="list-group-item-text truncate mb-0 text-dark">${ mail.content }</p>
-															</c:if>
+															<p class="list-group-item-text truncate mb-0">${ mail.content }</p>
 															<!-- 첨부파일 표시 -->
 															<div class="mail-meta-item">
 																<span class="float-right d-flex align-items-center">
-																	<c:if test="${ !empty mail.changeName }">
+																	<c:if test="${ !empty mail.attchangeName }">
 																		<i class="bx bx-paperclip me-3"></i>
 																	</c:if>
-																	<c:if test="${ empty mail.changeName }">
+																	<c:if test="${ empty mail.attchangeName }">
 																		<i class="">&nbsp;</i>
 																	</c:if>
 																</span>

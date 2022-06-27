@@ -1,5 +1,7 @@
 package com.workie.easy.employee.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.workie.easy.employee.model.service.EmployeeService;
+import com.workie.easy.mail.model.dto.Mail;
+import com.workie.easy.mail.model.service.MailService;
 import com.workie.easy.employee.model.dto.Employee;
 
 /*
@@ -34,6 +38,9 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService empService;
 	
+	@Autowired
+	private MailService mailService;
+	
 	/*암호화를 위한 Autowired*/
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -53,10 +60,23 @@ public class EmployeeController {
 		Employee loginEmp = empService.loginEmp(bCryptPasswordEncoder, emp);
 		model.addAttribute("loginEmp",loginEmp);
 
+		/* 김지수 : 읽지 않은 메일 개수 조회 */
+		int unReadmailListCount = mailService.selectMailListNoRead(loginEmp.getEmpNo()).size();
+		model.addAttribute("mailCount", unReadmailListCount);
+		
+		/* 김재호 : */
+		
+		
+		/* 임현빈 : */
+		
+		
+		/* 전재은 : */
+		
+		
 		return "main";
 		
 	}
-	
+
 	/*회원가입*/
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status){

@@ -29,6 +29,23 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/kjs_assets/images/favicon.svg"
 	type="image/x-icon">
+<style type="text/css">
+.mailCnt::-webkit-scrollbar {
+    width: 8px;  /* 스크롤바의 너비 */
+}
+
+.mailCnt::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #696cff; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.mailCnt::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
+</style>	
 </head>
 <body>
 
@@ -147,15 +164,15 @@
 										<!-- 메일 리스트 상단 끝 -->
 
 										<!-- 메일 리스트 하단 시작 -->
-										<div class="email-user-list list-group ps ps--active-y">
+										<div class="email-user-list list-group">
 																				
-										<div class="card-body">
+										<div class="card-body" >
 									        <form id="formAccountSettings" method="POST" onsubmit="return false">
 									        
 									          <!-- 메일 정보 영역 시작 -->
 											  <input type="hidden" id="mailNo" name="mailNo" value="${ mail.mailNo }">
 									          <div class="row">
-									          	<div class="col-md-12">
+									          	<div class="col-md-12 mb-1">
 									              <b class="text-danger">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
 									            </div>
 									            
@@ -166,14 +183,14 @@
 									          	<!-- 발신인/수신인/참조인 영역 -->
 									            <div class="mb-1 col-md-12 toFromMaill">
 									              <label for="firstName" class="form-label">발신 : </label>
-									              <span class="badge rounded-pill bg-label-info">
+									              <span class="badge rounded-pill bg-label-info" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="<span>${ mail.fromId}</span>">
 									              	${ mail.fromName }
 									              <input type="hidden" name="" id="fromMail" value="${ mail.fromMail}" />
 									              </span>
 									            </div>
 									            <div class="mb-1 col-md-12 toFromMaill">
 									              <label for="firstName" class="form-label">수신 : </label>
-									              <span class="badge rounded-pill bg-label-primary">
+									              <span class="badge rounded-pill bg-label-primary"  data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="<span>${ mail.toId}</span>">
 									                 ${ mail.toName }
 									                 <input type="hidden" name="" id="toMail" value="${ mail.toMail}"/>
 									              </span>
@@ -181,7 +198,7 @@
 									            <div class="mb-1 col-md-12">
 									              <label for="lastName" class="form-label">참조 : </label>
 									              <c:forEach items="${ ccList }" var="cc">
-									              	<span class="badge rounded-pill bg-label-warning">
+									              	<span class="badge rounded-pill bg-label-warning" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="<span>${ cc.ccId}</span>">
 									              		${ cc.ccName }
 									              		<input type="hidden" name="" value="${ cc.ccMail}"/>
 									              	</span>
@@ -191,7 +208,7 @@
 									            
 									            <hr>
 									            <!-- 내용 영역 -->
-									            <div class="mb-2 col-md-12" style="height: 300px;">
+									            <div class="mb-2 col-md-12 mailCnt" style="height: 400px; overflow: auto;">
 									            	${ mail.content }
 									            </div>
 									           
@@ -211,7 +228,6 @@
 									          
 									        </form>
 									      </div>
-											
 										</div>
 										<!-- 메일 리스트 하단 끝 -->
 									</div>

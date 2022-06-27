@@ -200,7 +200,7 @@
 	<!----------------------------------------------------------------------------------------------------------->
 	<!-------------------모달------------------->
 	<!-- 등록 -->
-	<form class="modal fade" id="stat-insert-modal" tabindex="-1" aria-hidden="true" action="insertStat.do"  enctype="multipart/form-data" method="POST"><!-- onsubmit="return stat_submit()"  -->
+	<form class="modal fade" id="stat-insert-modal" tabindex="-1" aria-hidden="true" action="insertStat.do"  enctype="multipart/form-data" method="POST">
 	  <div class="modal-dialog modal-l" role="document">
 	    <div class="modal-content">
 	        <!-- 모달 헤더 -->
@@ -285,7 +285,7 @@
 	<!-- / 등록 -->
 	
 	<!-- 상세조회 -->
-	<form class="modal fade" id="stat-detail-modal" tabindex="-1" aria-hidden="true" action="statDetail.do" enctype="multipart/form-data" method="POST">
+	<form class="modal fade" id="stat-detail-modal" tabindex="-1" aria-hidden="true" action="updateStat.do" enctype="multipart/form-data" method="POST">
 	  <div class="modal-dialog modal-l" role="document">
 	    <div class="modal-content">
 	        <!-- 모달 헤더 -->
@@ -295,13 +295,16 @@
 	        <!-- 모달 바디 -->
 	        <div class="modal-body">
 	        
+              <input id="detail_stat_no" type="hidden" name="statNo"/>
+              <input id="detail_emp_no" type="hidden" name="empNo"/>
+              
 	          <!-- 1번줄 -->
 	          <div class="row">
 	            <!-- 사용자 -->
 	              <div class="col mb-3">
-	                <input id="detail_emp_no" type="hidden" class="form-control" value="${loginEmp.empNo}" name="empNo"/>
+	                
 	                <label for="detail_emp_name" class="form-label">사용자</label>
-	                <input id="emp_name" type="text" class="form-control" value="${loginEmp.empName}" name="empName" readOnly required/>
+	                <input id="detail_emp_name" type="text" class="form-control" name="empName" readOnly required/>
 	              </div>
 	          </div>
 	          
@@ -340,20 +343,12 @@
 	          
 	          <!-- 4번줄 -->
 	          <div class="row" id="line3">
-	            <!-- 시작 날짜 -->
+	            <!-- 첨부파일 -->
 	            <div class="col mb-6">
 	                <label for="detail_bill_file" class="form-label">영수증 첨부</label>
-	                <!-- <input id="detail_bill_file" class="form-control" type="file" name="uploadFile"> -->
-	                
                     <input id="detail_bill_file" class="form-control" type="file" name="reUploadFile">
-                    <c:if test="${ !empty c.originName }">
-                       	<a href="${ pageContext.servletContext.contextPath }/resources/acct_files/${c.changeName}" download="${ c.originName }"> 현재 업로드된 파일 : ${ c.originName }</a>
-                       	<input type="hidden" name="changeName" value="${ c.changeName }">
-	                    <input type="hidden" name="originName" value="${ c.originName }">
-                     </c:if>
-                     <c:if test="${ empty c.originName }">
-                      	첨부파일이 없습니다.
-                     </c:if>
+                    <br>
+                    <p id="test"></p>
 	            </div>
 	          </div>
 	          
@@ -370,7 +365,7 @@
 	        <!-- 모달 풋터 -->
 	        <div class="modal-footer">
 	            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
-	            <button type="submit" class="btn btn-primary" id="stat_update_btn">등록</button>
+	            <button type="submit" class="btn btn-primary" id="stat_update_btn">수정</button>
 	            <button type="button" class="btn btn-danger" id="stat_delete_btn">삭제</button>
 	        </div>
 	    </div>
@@ -403,16 +398,33 @@
 					type: "GET",
 					dataType : "json",
 					success : function(result){
-						console.log("statNo : "+result.statNo);							 
-						console.log("empName : "+result.empName);							 
-						console.log("paymentStatus : "+result.paymentStatus);							 
-						console.log("amount : "+result.amount);							 
-						console.log("transactionDate : "+result.transactionDate);							 
-						console.log("storeName : "+result.storeName);							 
-						console.log("statMemo : "+result.statMemo);							 
-						console.log("originName : "+result.originName);							 
-						console.log("changeName : "+result.changeName);							 
-						console.log("filePath : "+result.filePath);							 
+						
+						$("#detail_stat_no").val(result.statNo);
+						$("#detail_emp_no").val(result.empNo);
+						
+						$("#detail_emp_name").val(result.empName);
+						$("#detail_payment_status").val(result.paymentStatus);
+						$("#detail_amount").val(result.amount);
+						$("#detail_transaction_date").val(result.transactionDate);
+						$("#detail_store_name").val(result.storeName);
+						$("#detail_stas_meno").val(result.statMemo);
+						
+						/*첨부파일*/
+						var originName = result.originName;
+						var changeName = result.changeName
+						var filePath = result.filePath;
+						
+						var attc = "";
+						
+						if(originName){
+							attc += '<a href="${pageContext.request.contextPath}/resources/acct_files/' + changeName + '" download="'+originName+'"> 현재 업로드된 파일 : '+originName+'</a>' 
+								+'<input type="hidden" name="changeName" value=' + changeName + '></input>'
+								+'<input type="hidden" name="originName" value='+originName+'></input>';
+						}else{
+							attc = "첨부파일이 없습니다.";
+						}
+						
+						$("#test").html(attc);
 	
 					},
 					error : function(result){

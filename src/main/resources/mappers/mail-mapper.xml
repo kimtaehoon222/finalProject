@@ -70,6 +70,8 @@
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="cancelDate" column="CANCEL_DATE"/>
 		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="empchangeName" column="EMPCHANGE_NAME"/>
+		<result property="attchangeName" column="ATTCHANGE_NAME"/>
 		<result property="originName" column="ORIGIN_NAME"/>
 		<result property="filePath" column="FILE_PATH"/>
 		<result property="stateCode" column="STATE_CODE"/>
@@ -82,6 +84,7 @@
 		<result property="ccName" column="CC_NAME"/>
 		<result property="toId" column="TO_ID"/>
 		<result property="fromId" column="FROM_ID"/>
+		<result property="ccId" column="CC_ID"/>
 		<result property="receiveCheck" column="RECEIVE_CHECK"/>
 		<result property="ccId" column="CC_ID"/>
 		<result property="empNo" column="EMP_NO"/>
@@ -102,12 +105,14 @@
 	<!-- 메일 리스트 조회(받은 메일함) -->
 	<select id="selectReceiveMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME, C.RECEIVE_CHECK
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE, C.RECEIVE_CHECK 
+    		 , E.CHANGE_NAME AS EMPCHANGE_NAME, F.CHANGE_NAME AS ATTCHANGE_NAME
 		  FROM EASYWORK.MAIL_INFO A
      LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.FROM_MAIL AND B.ENT_YN = 'Y'
      LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
      LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
-     LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+     LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = B.CTG_NO AND E.REF_NO = B.EMP_NO AND E.STATUS = 'Y'
+     LEFT JOIN EASYWORK.ATTACHMENT F ON F.CTG_NO = C.CTG_NO AND F.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
          WHERE ((CC_MAIL LIKE '%,${toMail}%' OR CC_MAIL LIKE '%${toMail},%') OR A.TO_MAIL = ${toMail})
            AND C.STATUS = 'Y' 
            AND C.STATE_CODE = 'FN'
@@ -118,12 +123,14 @@
 	<select id="selectSendMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, D.TYPE_NAME, B.EMP_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
 		     , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
-		     , E.CHANGE_NAME, DECODE(C.RECEIVE_CHECK, 'Y', '읽음', '읽지않음') AS STATE_CODE
+		     , E.CHANGE_NAME AS EMPCHANGE_NAME, F.CHANGE_NAME AS ATTCHANGE_NAME
+		     , DECODE(C.RECEIVE_CHECK, 'Y', '읽음', '읽지않음') AS STATE_CODE
 		  FROM EASYWORK.MAIL_INFO A
      LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
      LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO
      LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
-     LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+     LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = B.CTG_NO AND E.REF_NO = B.EMP_NO AND E.STATUS = 'Y'
+     LEFT JOIN EASYWORK.ATTACHMENT F ON F.CTG_NO = C.CTG_NO AND F.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
 	  	 WHERE A.FROM_MAIL = #{fromMail}
 		   AND C.STATE_CODE = 'FN'
 		   AND C.STATUS = 'Y'
@@ -136,14 +143,15 @@
      		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
      		 , TO_CHAR(C.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CREATE_DATE
      		 , TO_CHAR(C.CANCEL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CANCEL_DATE
-     		 , E.CHANGE_NAME
+     		 , E.CHANGE_NAME AS EMPCHANGE_NAME, G.CHANGE_NAME AS ATTCHANGE_NAME
      		 , C.STATE_CODE, F.STATE_NAME
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
 	 LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO
 	 LEFT JOIN EASYWORK.TYPE D ON D.TYPE_CODE = C.TYPE_NO
-	 LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+	 LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = B.CTG_NO AND E.REF_NO = B.EMP_NO AND E.STATUS = 'Y'
 	 LEFT JOIN EASYWORK.MAIL_STATE F ON F.STATE_CODE = C.STATE_CODE
+	 LEFT JOIN EASYWORK.ATTACHMENT G ON G.CTG_NO = C.CTG_NO AND G.REF_NO = C.MAIL_NO AND G.STATUS = 'Y'
 	     WHERE A.FROM_MAIL = #{fromMail}
 	       AND C.RESERVE_YN = 'Y'
 	       AND C.STATE_CODE IN('EP', 'CN') 
@@ -154,7 +162,8 @@
 	<!-- 메일 리스트 조회(휴지통) -->
 	<select id="selectDeleteMailList" parameterType="_int" resultMap="mailResultSet">
 		SELECT A.MAIL_NO, DECODE(A.TO_MAIL, #{toFromMail}, '수신', '발신') AS STATE_NAME, A.TITLE, SUBSTR(A.CONTENT, 1, 15) AS CONTENT
-    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE, E.CHANGE_NAME
+    		 , TO_CHAR(C.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
+    		 , E.CHANGE_NAME AS EMPCHANGE_NAME, F.CHANGE_NAME AS ATTCHANGE_NAME
     		 , (SELECT EMP_NAME 
 		          FROM EMPLOYEE
 		         WHERE EMP_NO = A.TO_MAIL) AS TO_NAME
@@ -164,7 +173,8 @@
 		  FROM EASYWORK.MAIL_INFO A
 	 LEFT JOIN EASYWORK.EMPLOYEE B ON B.EMP_NO = A.TO_MAIL AND B.ENT_YN = 'Y'
 	 LEFT JOIN EASYWORK.MAIL C ON C.MAIL_NO = A.MAIL_NO 
-	 LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = C.CTG_NO AND E.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
+	 LEFT JOIN EASYWORK.ATTACHMENT E ON E.CTG_NO = B.CTG_NO AND E.REF_NO = B.EMP_NO AND E.STATUS = 'Y'
+	 LEFT JOIN EASYWORK.ATTACHMENT F ON F.CTG_NO = C.CTG_NO AND F.REF_NO = C.MAIL_NO AND E.STATUS = 'Y'
 	     WHERE C.STATUS = 'N'
 	       AND (A.FROM_MAIL = #{toFromMail} OR A.TO_MAIL = #{toFromMail})
 	  ORDER BY C.SEND_DATE DESC
@@ -181,13 +191,19 @@
 	
 	<!-- 메일 상세 조회  : 받은, 보낸, 예약 -->
 	<select id="selectDetailMail" parameterType="_int" resultMap="mailResultSet">
-		SELECT A.MAIL_NO, C.TYPE_NAME, A.TITLE, B.SEND_DATE
-		     , (SELECT EMP_NAME 
+		SELECT A.MAIL_NO, C.TYPE_NAME, A.TITLE, TO_CHAR(B.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
+		     , (SELECT EMP_NAME
 		        FROM EMPLOYEE
 		        WHERE EMP_NO = TO_MAIL AND ENT_YN = 'Y') AS TO_NAME
+             , (SELECT EMP_ID || '@easy.co.kr'
+                FROM EMPLOYEE
+                WHERE EMP_NO = TO_MAIL AND ENT_YN = 'Y') AS TO_ID  
 		     , (SELECT EMP_NAME  
 		        FROM EMPLOYEE
 		        WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_NAME
+            ,  (SELECT EMP_ID || '@easy.co.kr'
+                FROM EMPLOYEE
+                WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_ID  
 		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT
 		     , D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH, B.STATUS
 		  FROM EASYWORK.MAIL_INFO A
@@ -201,7 +217,7 @@
 	<!-- 참조인 조회 -->
 	<select id="selectCcMembers" resultMap="mailResultSet">
 		<![CDATA[
-		SELECT TO_CHAR(EMP_NO) AS CC_MAIL, EMP_NAME AS CC_NAME
+		SELECT TO_CHAR(EMP_NO) AS CC_MAIL, EMP_NAME AS CC_NAME, EMP_ID || '@easy.co.kr' AS CC_ID
 		  FROM EASYWORK.EMPLOYEE
 		 WHERE EMP_NO IN(
 						 WITH TMP AS (SELECT #{ccMail} AS STR FROM DUAL)
@@ -221,13 +237,19 @@
 	
 	<!-- 메일 상세 조회 : 휴지통 -->
 	<select id="selectDetailDeleteMail" parameterType="_int" resultMap="mailResultSet">
-		SELECT A.MAIL_NO, C.TYPE_NAME, A.TITLE, B.SEND_DATE
-		     , (SELECT EMP_NAME 
+		SELECT A.MAIL_NO, C.TYPE_NAME, A.TITLE, TO_CHAR(B.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
+		     , (SELECT EMP_NAME
 		        FROM EMPLOYEE
 		        WHERE EMP_NO = TO_MAIL AND ENT_YN = 'Y') AS TO_NAME
+             , (SELECT EMP_ID || '@easy.co.kr'
+                FROM EMPLOYEE
+                WHERE EMP_NO = TO_MAIL AND ENT_YN = 'Y') AS TO_ID  
 		     , (SELECT EMP_NAME  
 		        FROM EMPLOYEE
 		        WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_NAME
+            ,  (SELECT EMP_ID || '@easy.co.kr'
+                FROM EMPLOYEE
+                WHERE EMP_NO = FROM_MAIL AND ENT_YN = 'Y') AS FROM_ID  
 		     , A.TO_MAIL, A.FROM_MAIL, A.CC_MAIL, A.CONTENT
 		     , D.CHANGE_NAME, D.ORIGIN_NAME, D.FILE_PATH, B.STATUS
 		  FROM EASYWORK.MAIL_INFO A
@@ -239,7 +261,7 @@
 	</select>
 	
 	<select id="selectDetailMailForReply" parameterType="_int" resultMap="mailResultSet">
-		SELECT A.*, B.SEND_DATE
+		SELECT A.*, TO_CHAR(B.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
 		     , (SELECT CONCAT(EMP_ID, '@easy.co.kr')
 		        FROM EASYWORK.EMPLOYEE
 		        WHERE EMP_NO = TO_MAIL) AS TO_ID
@@ -365,7 +387,7 @@
 	<select id="selectMailListNoRead" resultMap="mailResultSet">
 		SELECT ROWNUM, RESULT.*
 		FROM
-		(SELECT A.MAIL_NO, A.TITLE, B.SEND_DATE
+		(SELECT A.MAIL_NO, A.TITLE, TO_CHAR(B.SEND_DATE, 'YYYY-MM-DD HH24:MI:SS') AS SEND_DATE
 		      ,C.EMP_NAME AS FROM_NAME, D.TYPE_NAME
 		FROM EASYWORK.MAIL_INFO A 
 		LEFT JOIN EASYWORK.MAIL B ON B.MAIL_NO = A.MAIL_NO
