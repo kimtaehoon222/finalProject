@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 <title>회의실</title>
 <!---------------------------------------------달력----------------------------------------------------------------->
-<link href='${ pageContext.request.contextPath }/resources/kjhPackages/core/main.css' rel='stylesheet' />  
+<link href='${ pageContext.request.contextPath }/resources/kjhPackages/core/main.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath }/resources/kjhPackages/daygrid/main.css' rel='stylesheet' />
 <link href='${ pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.css' rel='stylesheet' />
 <script src='${pageContext.request.contextPath}/resources/kjhPackages/core/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/kjhPackages/daygrid/main.js'></script>
 <script src="${pageContext.request.contextPath}/resources/kjhPackages/interaction/main.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.js"></script></head>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
@@ -416,7 +414,7 @@
     
    info.dateStr
    info.event.title
-      ` 
+       
    calendar.refetchEvents() => 모든 소스의 이벤트를 다시 가져와 화면에 다시 렌더링
    calendar.addEvent( {'title':'evt4', 'start':'2020-12-04', 'end':'2020-12-04'});  ==> 이벤트를 추가하는 함수
    calendar.gotoDate (날짜) => 달력을 임의의 날짜로 이동
@@ -482,30 +480,30 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       locale: 'ko',
       dateClick: function(info) {
-          
-          // 이전날짜에 예약 불가
-          var sysdate = new Date();
-          sysdate = moment(sysdate).format("YYYY-MM-DD HH:mm:ss");
-          
-          var date = moment(info.dateStr).format("YYYY-MM-DD");
-          
-          // 오늘만 시간이 지났어도 예약 가능하게 함
-          if (sysdate > date + 1) {
-          alert("지난 시간은 예약할 수 없습니다.");
-       }else{
-          addRs();   // 모달을 초기화하고 자원명을 불러오는 함수
-          
-          // 클릭한 시각으로 모달의 datepicker를 변경시킴
-            $("input[name=startday]").val(date);   
-           $("input[name=endday]").val(date);
+           
+            // 이전날짜에 예약 불가
+            var sysdate = new Date();
+            sysdate = moment(sysdate).format("YYYY-MM-DD HH:mm:ss");
             
-           var hhmm = moment(info.dateStr).format("HH:mm");
-            $("select.startday_hour").val(hhmm).change();
-            $("select.endday_hour").val(hhmm).change();
-       }
-          
-       
-    },
+            var date = moment(info.dateStr).format("YYYY-MM-DD");
+            
+            // 오늘만 시간이 지났어도 예약 가능하게 함
+            if (sysdate > date + 1) {
+            alert("지난 시간은 예약할 수 없습니다.");
+         }else{
+            addRs();   // 모달을 초기화하고 자원명을 불러오는 함수
+            
+            // 클릭한 시각으로 모달의 datepicker를 변경시킴
+             $("input[name=startDate]").val(date);   
+             $("input[name=endDate]").val(date);
+              
+             var hhmm = moment(info.dateStr).format("HH:mm");
+              $("select.startDate_hour").val(hhmm).change();
+              $("select.endDate_hour").val(hhmm).change();
+         }
+            
+         
+      },
       eventClick: function(info) {
               viewRsv(info.event.id);
       },
@@ -515,26 +513,26 @@ document.addEventListener('DOMContentLoaded', function() {
       eventLimit: true,            // 셀에 너무 많은 일정이 들어갔을 시 more로 처리
       allDaySlot: false,
       customButtons: { //주말 숨기기 & 보이기 버튼
-          today : {
-             text  : '오늘',
-             click : function () {
-                calendar.today();
-             }
-           },
-           prev : {
-              click : function () {
-                 calendar.prev();
-          }
-           },
-           next : {
-              click : function () {
-                 calendar.next();
-          }
-           }
-           
-           
+         today : {
+            text  : '오늘',
+            click : function () {
+               calendar.today();
+            }
           },
-      events: function (info, successCallback, failureCallback){
+          prev : {
+             click : function () {
+                calendar.prev();
+         }
+          },
+          next : {
+             click : function () {
+                calendar.next();
+         }
+          }
+          
+          
+         },
+         events: function (info, successCallback, failureCallback){
             $.ajax({
               url:"selectResList.do",
               data:{roomNo:roomNo},
@@ -542,17 +540,15 @@ document.addEventListener('DOMContentLoaded', function() {
               dataType:"JSON",
               success:function(json){
               console.log(json);
-              var events = [];
-             $.each(json, function(index, item){
-            	   console.log("이치이치");
+                 var events = [];
+               $.each(json, function(index, item){
+                  
                   if (json.length > 0) {
-                	  console.log("이프문");
                      events.push({
-                               title: item.empName,                             
+                               title: item.empName,
                                start: item.startDate,
                                end: item.endDate,
-                               textColor: "white",
-                               color: "rgb(124, 127, 251)",
+                               color: "skyblue",
                                id: item.resNo
                             });
                   }else{
@@ -562,71 +558,208 @@ document.addEventListener('DOMContentLoaded', function() {
                   
                });
                 successCallback(events);  
-                console.log("확인" +events);           
+                
               },
               error: function(request, status, error){
             	  alert('데이터 로딩 실패');
-               },
+               }
            });
             
-         },
+         }
     });
     
     calendar.render();
   });
-// 자원을 변경했을 시 자원 변수값을 변경해주는 함수
-function changeResource(rsNo) {
-   roomNo = rsNo;
-    calendar.refetchEvents();
- } 
-function viewRsv(resNo){
-    $.ajax({
-        url:"detailRes.do",
-        type:"GET",
-        data: {resNo:resNo},
-        dataType:"JSON",
-        success:function(json){
-           var html = "";
-           html += "<tr>";
-              html += "<th>회의실 명</th>";
-              html += "<td>" + json.roomName + "</td>";
-           html += "</tr>";
-           html += "<tr>";
-              html += "<th>시작시간</th>";
-              html += "<td>" + json.startDate + "</td>";
-           html += "</tr>";
-           html += "<tr>";
-              html += "<th>종료시간</th>";
-              html += "<td>" + json.endDate + "</td>";
-           html += "</tr>";
-           html += "<tr>";
-           html += "<th>부서</th>";
-           html += "<td>" + json.deptName + "</td>";
-        html += "</tr>";
-           html += "<tr>";
-              html += "<th>예약자</th>";
-              html += "<td>" + json.empName + "</td>";
-           html += "</tr>";
-           html += "<tr>";
-              html += "<th>예약목적</th>";
-              html += "<td>" + json.meetGoal+ "</td>";
-              html += "<input type='hidden' class='resNo' value='" + resNo + "' >";
-           html += "</tr>";
-           
-           $("tbody.detailTbody").html(html);//tbody 부분에 보여주기
-           $(".rsvCancelBtn").hide();
-           if (json.empNo == "${loginEmp.empNo}") {//예약자랑 로그인 직원 번호 일치시 보이게
-              $(".rsvCancelBtn").show();
-           }
-        },
-        error: function(){
-           alert("예약 상세 조회에 실패하였습니다. 관리자에 문의 바랍니다.");
+  
+  // (modal) 예약하기 모달에 이용가능한 자원명 리스트를 select 해옴
+  function addRs(){
+     
+     // 모달 form에 입력돼있는 정보를 모두 삭제하고 모달을 보이게 함(모달 초기화)
+     $('#addRsvModal').find('form')[0].reset();
+     $('#addRsvModal').modal('show');
+     
+     $.ajax({
+      url:"<%= request.getContextPath() %>/readRsList.os",
+      type:"get",
+      dataType:"JSON",
+      success:function(json){
+         var html = "";
+         if (json.length > 0) {
+            $.each(json, function(index, item){
+               if (item.roomNo == roomNo) {
+                  html += "<option value='" + item.roomNo + "' selected >" + item.name + "</option>";
+               }else{
+                  html += "<option value='" + item.roomNo + "'>" + item.name + "</option>";
+               }
+               
+            });
+         }else{
+            html += "<li style='height: 20px;'>";
+            html += "</li>";
          }
-     });
+         
+         $("select.addRsSelect").html(html);
+      },
+      error: function(request, status, error){
+         alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+       }
+   });
+   
+  }
+  
+  // (modal) 예약하기에서 확인버튼을 클릭했을시 실행하는 함수
+  function addRsvModalBtn(){
+     
+     // 입력받은 값들 유효성 검사: 시작
+     var startDate = $("input[name=startDate]").val() + " " + $("select.startDate_hour").val() + ":00";
+     var endDate = "";
+     
+     // 종일 체크 시 시작 날짜를 기준으로 변경
+     if ($("input#allday:checked").val()) {
+        startDate = $("input[name=startDate]").val() + " 00:00:00";
+        endDate = $("input[name=startDate]").val() + " 23:59:59";
+     }else{
+        endDate = $("input[name=endDate]").val() + " " + $("select.endDate_hour").val() + ":00";
+     }
+     
+     // true: 통과   false: 불통
+     if (!(startDate < endDate && startDate != endDate)) {
+        alert("올바른 일시를 선택해주세요.");
+        return false;
+     }
+     var roomNo = $("select[name=roomNo]").val();
+     if (roomNo.trim() == "") {
+        alert("회의실을 선택해주세요.");
+        return false;
+     }
+     
+     var meetGoal = $("input[name=meetGoal]").val();
+     if (meetGoal.trim() == "") {
+        alert("사용목적를 입력해주세요.");
+        $("input[name=meetGoal]").focus();
+        return false;
+     }
+     
+   // 입력받은 값들 유효성 검사: 끝
+   
+   // db에 넣기
+   $.ajax({
+      url:"<%= request.getContextPath() %>/addModalRsv.os",
+      data:{startDate:startDate, endDate:endDate, roomNo:roomNo, meetGoal:meetGoal},
+      type:"POST",
+      dataType:"JSON",
+      success:function(json){
+         
+         // 예약일로 입력한 값이 db에서 중복되는지 안되는지로 나눔
+         if (json.n == 1) {
+            // 에약이 정상적으로 등록됐을 때
+            window.closeModal();
+            calendar.refetchEvents();
+            
+         }else if (json.n == -1) {
+            // 중복된 예약(시간)으로 예약에 실패했을 때
+            alert("해당 시간에는 이미 예약이 되어있어 예약할 수 없습니다.");
+         }
+         else{
+            // db오류
+            alert("DB 오류");
+         }
+         
+      },
+      error: function(request, status, error){
+         alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+       }
+   });
     
-    $("#showDetailRsvModal").modal('show');
- }
- 
+     
+  }
+  
+  // 이벤트를 클릭시 예약 상세보기 모달 띄우기
+  function viewRsv(resNo){
+     $.ajax({
+         url:"<%= request.getContextPath() %>/readDetailRsvList.os",
+         type:"get",
+         data: {resNo:resNo},
+         dataType:"JSON",
+         success:function(json){
+            var html = "";
+            
+            html += "<tr>";
+               html += "<th>분류명</th>";
+               html += "<td>" + json.Rname + "</td>";
+            html += "</tr>";
+            html += "<tr>";
+               html += "<th>회의실명</th>";
+               html += "<td>" + json.roomName + "</td>";
+            html += "</tr>";
+            html += "<tr>";
+               html += "<th>자원정보</th>";
+               html += "<td>" + json.info + "</td>";
+            html += "</tr>";
+            html += "<tr>";
+               html += "<th>시작시간</th>";
+               html += "<td>" + json.startDate + "</td>";
+            html += "</tr>";
+            html += "<tr>";
+               html += "<th>종료시간</th>";
+               html += "<td>" + json.endDate + "</td>";
+            html += "</tr>";
+            html += "<tr>";
+               html += "<th>등록자</th>";
+               html += "<td>" + json.empName + "</td>";
+            html += "</tr>";
+            html += "<tr>";
+               html += "<th>사용목적</th>";
+               html += "<td>" + json.meetGoal+ "</td>";
+               html += "<input type='hidden' class='resNo' value='" + resNo + "' >";
+            html += "</tr>";
+            
+            $("tbody.detailTbody").html(html);
+            $(".rsvCancelBtn").hide();
+            if (json.empNo == "${loginEmp.empNo}") {
+               $(".rsvCancelBtn").show();
+            }
+         },
+         error: function(request, status, error){
+            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+          }
+      });
+     
+     $("#showDetailRsvModal").modal('show');
+  }
+  
+  // 자원을 변경했을 시 자원 변수값을 변경해주는 함수
+  function changeResource(roomNo) {
+	  roomNo = rsNo;
+     calendar.refetchEvents();
+  }
+  
+  // 예약취소 버튼 클릭시 예약 취소하는 함수
+  function cancelRsv() {
+     var resNo = $("input.resNo").val();
+      
+      $.ajax({
+         url:"<%= request.getContextPath() %>/rsvCancel.os",
+         type:"get",
+         data: {resNo:resNo},
+         dataType:"JSON",
+         success:function(json){
+            
+            if (json.n == 1) {
+               calendar.refetchEvents();
+               window.closeModal();
+            }else{
+               alert("DB오류");
+            }
+            
+         },
+         error: function(request, status, error){
+            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+          }
+      });
+  }
+  
+   
 </script>
 </body>
 </html>

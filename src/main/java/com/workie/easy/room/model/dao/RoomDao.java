@@ -16,4 +16,9 @@ public class RoomDao {
 		return (ArrayList)sqlSession.selectList("roomMapper.selectResList",room);
 	}
 
+	public Room selectRes(Room room, SqlSessionTemplate sqlSession) {
+	
+		return sqlSession.selectOne("roomMapper.selectRes", room);
+	}
+
 }

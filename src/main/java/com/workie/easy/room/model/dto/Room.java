@@ -26,5 +26,8 @@ public class Room {
 	private String resStatus;//상태값
 	
 	private String empName; //사원 이름
+	
+	private String deptCode; //부서코드
+	private String deptName; //부서명
 
 }

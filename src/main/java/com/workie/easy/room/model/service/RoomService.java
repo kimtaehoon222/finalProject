@@ -9,4 +9,6 @@ public interface RoomService {
 
 	ArrayList<Room> selectResList(Room room);
 
+	Room selectRes(Room room);
+
 }
