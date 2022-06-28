@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -153,6 +156,8 @@ public class MailController {
 			model.addAttribute("toReply", toReply);
 		}
 		
+		model.addAttribute("topMsg", "메일을 작성해주세요.");
+		
 		return "mail/mailSendForm"; 
 	}
 	
@@ -270,7 +275,7 @@ public class MailController {
 	@RequestMapping("insertMail.do")
 	public String insertMail(@ModelAttribute Mail mail, HttpServletRequest request, 
 							 @RequestParam(name="uploadFile", required=false) MultipartFile file,
-							 String toMailEmpId, String ccMailEmpId) {
+							 String toMailEmpId, String ccMailEmpId, RedirectAttributes redirectAttributes) {
 
 		/* 파라미터로 넘어온 아이디 기준으로 수신인의 회원번호를 추출하여 set 해준다. */
 		int toMail = selectEmpNo(toMailEmpId);
@@ -313,6 +318,7 @@ public class MailController {
 		}
 		
 		mailService.insertMail(mail);
+		redirectAttributes.addFlashAttribute("topMsg", "메일이 전송되었습니다.");
 		
 		return view; 
 	}
@@ -430,7 +436,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
-		model.addAttribute("msg", "받은 메일 리스트 입니다.");
+		//model.addAttribute("topMsg", "받은 메일 리스트 입니다.");
 		
 		return "mail/mailReceiveListView";
 	}
@@ -460,7 +466,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
-		model.addAttribute("msg", "보낸 메일 리스트 입니다.");
+		//model.addAttribute("topMsg", "보낸 메일 리스트 입니다.");
 		
 		return "mail/mailSendListView"; 
 	}
@@ -489,7 +495,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
-		model.addAttribute("msg", "예약 메일 리스트 입니다.");
+		//model.addAttribute("topMsg", "예약 메일 리스트 입니다.");
 		
 		return "mail/mailReserveListView"; 
 	}
@@ -514,6 +520,7 @@ public class MailController {
 		
 		model.addAttribute("mpi", mpi);
 		model.addAttribute("list", list);
+		//model.addAttribute("topMsg", "휴지통 리스트 입니다.");
 		
 		return "mail/mailDeleteListView"; 
 	}
@@ -599,7 +606,7 @@ public class MailController {
 	
 	/* 메일 발송 취소  : 예약 메일에서만 가능 */
 	@RequestMapping(value="cancelMail.do", method=RequestMethod.POST) 
-	public String cancelMail(String mailNoList) {
+	public String cancelMail(String mailNoList, RedirectAttributes redirectAttributes) {
 		
 		/* 파라미터로 전달받은 mailNo를 구분자로 분리하여 배열에 담는다. */
 		String[] mailNoArr = mailNoList.split(",");
@@ -611,12 +618,13 @@ public class MailController {
 			mailService.cancelMail(Integer.parseInt(mailNo));
 		}
 		
+		redirectAttributes.addFlashAttribute("topMsg", "메일 발송이 취소되었습니다.");
 		return "redirect:reserveMailList.do"; 
 	}
 	
 	/* 메일 삭제  : 보낸, 받은, 예약 메일 리스트에서 호출 */
 	@RequestMapping(value="deleteMailList.do", method=RequestMethod.POST) 
-	public String deleteMailList(String mailNoList, String listType) {
+	public String deleteMailList(String mailNoList, String listType, RedirectAttributes redirectAttributes) {
 		
 		String view = "";
 
@@ -635,12 +643,13 @@ public class MailController {
 			mailService.deleteMail(Integer.parseInt(mailNo));
 		}
 		
+		redirectAttributes.addFlashAttribute("topMsg", "메일이  삭제되었습니다.");
 		return view; 
 	}
 	
 	/* 메일 복원  : 휴지통 리스트에서 호출 */
 	@RequestMapping(value="restoreMail.do", method=RequestMethod.POST) 
-	public String restoreMail(String mailNoList) {
+	public String restoreMail(String mailNoList, RedirectAttributes redirectAttributes) {
 		
 		String[] mailNoArr = mailNoList.split(",");
 		
@@ -648,12 +657,13 @@ public class MailController {
 			mailService.restoreMail(Integer.parseInt(mailNo));
 		}
 		
+		redirectAttributes.addFlashAttribute("topMsg", "메일이  복원되었습니다.");
 		return "redirect:deleteMailList.do"; 
 	}
 	
 	/* 메일 완전삭제  : 휴지통 리스트에서 호출 */
 	@RequestMapping(value="permanentDeleteMailList.do", method=RequestMethod.POST) 
-	public String permanentDeleteMailList(String mailNoList) {
+	public String permanentDeleteMailList(String mailNoList, RedirectAttributes redirectAttributes) {
 		
 		String[] mailNoArr = mailNoList.split(",");
 		
@@ -662,24 +672,27 @@ public class MailController {
 			mailService.permanentDeleteMail(Integer.parseInt(mailNo));
 		}
 		
+		redirectAttributes.addFlashAttribute("topMsg", "메일이  영구적으로 삭제되었습니다.");
 		return "redirect:deleteMailList.do"; 
 	}
 	
 	/* 메일 삭제  : 상세조회에서만 호출 */
 	@RequestMapping("deleteMail.do") 
-	public String deleteMail(int mailNo) {
+	public String deleteMail(int mailNo, RedirectAttributes redirectAttributes) {
 		
 		mailService.deleteMail(mailNo);
 		
+		redirectAttributes.addFlashAttribute("topMsg", "메일이  삭제되었습니다.");
 		return "redirect:deleteMailList.do"; 
 	}
 	
 	/* 메일 완전삭제 : 휴지통 상세에서만 호출 */
 	@RequestMapping("permanentDeleteMail.do") 
-	public String permanentDeleteMailOne(int mailNo) {
+	public String permanentDeleteMailOne(int mailNo, RedirectAttributes redirectAttributes) {
 		
 		mailService.permanentDeleteMail(mailNo);
 		
+		redirectAttributes.addFlashAttribute("topMsg", "메일이  영구적으로 삭제되었습니다.");
 		return "redirect:deleteMailList.do"; 
 	}
 	
