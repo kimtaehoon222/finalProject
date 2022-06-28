@@ -265,6 +265,63 @@ private SignDao signDao;
 
 
 
+	@Override
+	public Sign selectBBAList(Sign si) {
+		// TODO Auto-generated method stub
+		return signDao.selectBBAList(sqlSession, si);
+	}
+
+
+
+	@Override
+	public Sign selectCCAList(Sign si) {
+		// TODO Auto-generated method stub
+		return signDao.selectCCAList(sqlSession, si);
+	}
+
+
+
+	@Override
+	public int selectMywListCount(String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectMywListCount(sqlSession, empName);
+	}
+
+
+
+	@Override
+	public ArrayList<Sign> selectMySignWaitingList(PageInfo pi, String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectMySignWaitingList(sqlSession, pi, empName);
+	}
+
+
+
+	@Override
+	public void updateAAsign(Sign si) {  //업데이트를 3개 한번에 하는게 아닌 하나씩 실행
+		// TODO Auto-generated method stub
+		
+		int result = signDao.updateAAsign(sqlSession, si);
+		
+		if(result < 0 ) {
+			
+			throw new CommException("품의 수정 실패");
+			
+		}else if( result > 0 ) { //Sign 테이블 업데이트 성공 시 
+			
+			int result2 = signDao.updateAAstandard(sqlSession, si);
+			
+	/*	}else if ( result2 > 0 ) {
+			
+			int result3 = signDao.updateAtt(sqlSession, si);	*/
+		}
+		
+	
+	}
+
+
+
+
 
 
 }

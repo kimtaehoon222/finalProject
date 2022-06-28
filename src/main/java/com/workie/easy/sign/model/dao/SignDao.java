@@ -170,6 +170,39 @@ public class SignDao {
 		return sqlSession.selectOne("signMapper.selectAAAlist", si);
 	}
 
+	public Sign selectBBAList(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectBBAlist", si);
+	}
+
+	public Sign selectCCAList(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCCAlist", si);
+	}
+
+	public int selectMywListCount(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectMywListCount", empName);
+	}
+
+	public ArrayList<Sign> selectMySignWaitingList(SqlSessionTemplate sqlSession, PageInfo pi, String empName) {
+		// TODO Auto-generated method stub
+		
+		int offset = (pi.getCurrentPage() -1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectMySignWaitingList", empName, rowBounds);
+	}
+
+	public int updateAAsign(SqlSessionTemplate sqlSession, Sign si) { //Sign 테이블 수정
+		// TODO Auto-generated method stub
+		return sqlSession.update("signMapper.updateAAsign", si);
+	}
+
+	public int updateAAstandard(SqlSessionTemplate sqlSession, Sign si) { //Standard_FORM 테이블 수정
+		// TODO Auto-generated method stub
+		return sqlSession.update("signMapper.updateAAstandard", si);
+	}
 
 		
 }

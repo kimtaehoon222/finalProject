@@ -61,6 +61,16 @@ public interface SignService {
 
 	Sign selectAAAList(Sign si);
 
+	Sign selectBBAList(Sign si);
+
+	Sign selectCCAList(Sign si);
+
+	int selectMywListCount(String empName);
+
+	ArrayList<Sign> selectMySignWaitingList(PageInfo pi, String empName);
+
+	void updateAAsign(Sign si);
+
 	
 
 	/* void insertName(int eNo); */
