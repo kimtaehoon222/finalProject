@@ -34,6 +34,7 @@ import com.workie.easy.employee.model.dto.Employee;
 * 2022/06/25 (전재은) 카드사용내역조회 수정
 * 2022/06/26 (전재은) 카드사용내역등록, 파일업로드, 상세조회 추가
 * 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
+* 2022/06/28 (전재은) 내역삭제 수정, 내역검색, 카드조회 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -46,13 +47,12 @@ public class CardController {
 	private CardService cardService;
 	
 	/*회계관리 페이지 전환*/
-	/*카드사용내역조회*/
 	@RequestMapping("acct.do")
 	public String selectCardStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage 
 									, String deptCode,  Model model, HttpSession session) {
 		
-//		System.out.println("deptCode 비어있나요?"+deptCode);
 		
+		/*카드사용내역조회*/
 		if(deptCode == null) {
 			deptCode=((Employee)session.getAttribute("loginEmp")).getDeptCode();
 		}
@@ -69,6 +69,8 @@ public class CardController {
 		/*세션에 올리기*/
 		model.addAttribute("cardList", cardList);
 		model.addAttribute("pi", pi);
+		
+		/*카드 조회*/
 		
 		return "acct/acct";
 		
@@ -144,30 +146,39 @@ public class CardController {
 			
 			String orgChangeName = c.getChangeName();	//기존 첨부파일
 			
-			String test ="";
-			
-//			if(!c.getChangeName().equals("")) {		/*기존 첨부파일이 있는 경우*/
-			if(!test.equals(c.getChangeName())) {		/*기존 첨부파일이 있는 경우*/
+			try {
+				if(!orgChangeName.equals("")) {			/*기존 첨부파일이 있는 경우*/
+					
+					System.out.println("왜 안되는지 모르겠는중");
+					
+					/*파일이름 수정*/
+					String changeName = saveFile(file, request, c);
+					c.setOriginName(file.getOriginalFilename());
+					c.setChangeName(changeName);
+					
+					/*[UPDATE]*/
+					cardService.updateCardStat(c, "update");
+					
+					/*기존 첨부파일 지우기*/
+					deleteFile(orgChangeName, request);
+					
+				}else { 		/*기존 첨부파일이 없는 경우*/
+					
+				}
+			}catch(NullPointerException e){
+				System.out.println("기존첨부파일이 없어서 파일 추가하는중2");
+				
 				/*파일이름 수정*/
 				String changeName = saveFile(file, request, c);
 				c.setOriginName(file.getOriginalFilename());
 				c.setChangeName(changeName);
 				
-				/*[UPDATE]*/
-				cardService.updateCardStat(c, "update");
-				
-				/*기존 첨부파일 지우기*/
-				deleteFile(orgChangeName, request);
-				
-			}else { 							/*기존 첨부파일이 없는 경우*/
-				/*파일이름 수정*/
-				String changeName = saveFile(file, request, c);
-				c.setOriginName(file.getOriginalFilename());
-				c.setChangeName(changeName);
 				/*[INSERT]*/
 				cardService.updateCardStat(c, "insert");
-				
 			}
+			
+			
+			
 		}else { /*새로운 첨부파일이 없는 경우*/
 			/*기존 첨부파일을 삭제하는 경우*/
 			/*기존 첨부파일을 삭제하지 않는 경우*/
@@ -179,8 +190,24 @@ public class CardController {
 
 	/*카드내역 삭제*/
 	@RequestMapping("deleteStat.do")
-	public String deleteCardStat() {
+	public String deleteCardStat(int statNo , HttpServletRequest request , 
+								@RequestParam(name = "changeName" , required = false)String changeName) {
 		
+		System.out.println("changeName : "+changeName);
+		
+		/*내역 삭제*/
+		cardService.deleteCardStat(statNo);
+		try {
+			/*첨부파일 삭제*/
+			if(!changeName.equals("")) {
+				System.out.println("삭제중...1");
+				deleteFile(changeName, request);
+			}
+		}catch(NullPointerException e) {
+			
+			System.out.println("삭제중...2");
+			deleteFile(changeName, request);
+		}
 		
 		
 		return "redirect:acct.do";
@@ -216,15 +243,33 @@ public class CardController {
 	}
 	
 	/*첨부파일 삭제*/
-	private void deleteFile(String orgChangeName, HttpServletRequest request) {
+	private void deleteFile(String changeName, HttpServletRequest request) {
 		
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savaPath = resources + "\\acct_files\\";
 		
-		File deleteFile = new File(savaPath+orgChangeName);
+		File deleteFile = new File(savaPath+changeName);
 		
 		deleteFile.delete();
 		
 	}
 
+	/*카드내역 검색*/
+	@RequestMapping("searchStat.do")
+	@ResponseBody
+	private JSONObject searchStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage ,
+									  @RequestParam(value="keyWord", required = false) String keyWord ,
+									  @RequestParam(value="empName", required = false) String empName ,
+									  String startDate , String endDate
+									  ) {
+		System.out.println("currentPage"+currentPage);
+		System.out.println("startDate"+startDate);
+		System.out.println("endDate"+endDate);
+		System.out.println("keyWord"+keyWord);
+		System.out.println("empName"+empName);
+		
+		JSONObject jsonStat = new JSONObject();
+		
+		return jsonStat;
+	}
 }

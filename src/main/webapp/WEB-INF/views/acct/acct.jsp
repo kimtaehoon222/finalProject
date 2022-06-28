@@ -58,36 +58,171 @@
 	        <div class="i0 container c3-1">
 	          <h5 class="fw-bold" style="margin: 5px 0;">검색조건<hr style="margin: 5px 0;"></h5>
 	          
-	          <form action="" method="post" class="container c3-2">
+	          <form class="container c3-2" action="javascript:void(0)"><!-- action="statSearch.do"  method="post" onsubmit="return checkValue();" -->
 	            <div class="i3-1">
 	              <b>기간</b>
 	            </div>
 	            <div class="i3-2">
-	              <input id="start_date" type="date" class="form-control" required>
-	              <input id="end_date" type="date" class="form-control" required>
+	              <input id="start_date" type="date" class="form-control" name="startDate" required>
+	              <input id="end_date" type="date" class="form-control" name="endDate" required>
 	            </div>
 	            <div class="i3-3">
 	              <b>금액</b>
 	            </div>
 	            <div class="i3-4">
-	              <input id="m_range" type="range" class="form-range" min="0" max="10000000" step="100000" required>
-	              <input class="form-control" value="0">
+	              <input id="m_range" type="range" class="form-range" min="0" max="1000000" step="10000" name="amount" value="0" onchange="SetValue(this)" required>
+	              <input type="text" value="0" id="m_no" class="form-control" readOnly>
 	            </div>
 	            <div class="i3-5">
 	              <b>단어</b>
 	            </div>
 	            <div class="i3-6">
-	              <input type="text" class="form-control">
+	              <input type="text" class="form-control" name="keyWord">
 	            </div>
 	            <div class="i3-7">
 	              <b>사용자</b>
 	            </div>
 	            <div class="i3-8">
-	              <input type="text" class="form-control">
+	              <input type="text" class="form-control" name="empName">
 	            </div>
-	            <div class="i3-9"><button type="submit" class="btn btn-primary">검색</button></div>
+	            <div class="i3-9"><button type="submit" class="btn btn-primary" onclick="checkValue()">검색</button></div>
 	            
 	          </form>
+	          <script>
+          		/*숫자 출력*/
+				function SetValue(e){
+					$("#m_no").val(e.value);
+				}
+				
+          		/*검색 값 검사*/
+				function checkValue(){
+					var startD = $("#start_date").val();
+					var endD = $("#end_date").val();
+					var empName = $("input[name=empName]").val();
+					var keyWord = $("input[name=keyWord]").val();
+					
+					/*날짜검사*/
+					if(endD && startD){
+						if(endD < startD){
+							alert("시작일이 종료일보다 클 수 없습니다.");
+							$("#end_date").focus();
+	
+							return false;
+						}
+					}else{
+						return false;
+					}
+
+					/*이름검사*/
+					if(empName){
+						var chkName = /^[가-힣]{2,6}$/;
+	                	if(!chkName.test(empName)){
+							alert("이름은 두글자 이상의 한글로 입력하십시오.");
+							$("input[name=empName]").focus();
+							return false;
+	                	}
+					}
+					
+					toAjax(startD, endD, empName, keyWord, 1);
+					
+				}
+          		
+          		/*검색 ajax호출*/
+          		function toAjax(startD, endD, empName, keyWord, currentNo){
+          			
+                    var startD = startD;		//시작일
+                    var endD = endD;			//종료일
+                    var empName = empName;		//이름
+          			var keyWord = keyWord;		//검색어
+          			var currentNo = currentNo;	//검색어
+          			
+          			console.log(startD, endD, empName, keyWord, currentNo);
+          			
+          			$.ajax({ 
+        				url: "searchStat.do",
+        				data: {
+        					currentPage : currentNo,
+        					keyWord : keyWord,
+        					empName : empName,
+        					startDate : startD,
+        					endDate : endD
+        				},
+        				type: "GET",
+        				dataType : "json",
+        				success : function(result){
+        					
+        					var list="";
+        					
+        					/*결과물 반복문*/
+        					$.each(result, function(i){
+        						
+								/*html 태그 추가*/
+        						list += "<tr>"
+                                + "<td>" + result[i].statNo + "</td>"
+                                + "<td>" + result[i].empName + "</td>"
+                                + "<td>" + result[i].transactionDate + "</td>"
+                                + "<td>" + result[i].amount + "</td>"
+                                + "<td>" + result[i].storeName + "</td>"
+                                + "<td>" + result[i].paymentStatus + "</td>"
+                                + "<td><button type='button' class='btn btn-primary detail_btn'>확인</button></td>"
+                              	+ "</tr>"
+    	 					});
+        					
+        					$("#resultTable").html(list);	//화면에 출력
+        					
+        					var pi = result[0].pi;
+        					
+        					/*console.log("currentPage : " + pi.currentPage);
+        					console.log("startPage : " + pi.startPage);
+        					console.log("endPage : " + pi.endPage);
+        					console.log("maxPage : " + pi.maxPage);*/
+
+        					var pageSet="";
+        					
+        					var clickFunctionP = "toAjax(" + '"' + startD + '"' + "," + '"' + endD + '"' + "," + '"' + empName + '"' + "," + '"' + keyWord + '"' + "," + (pi.currentPage-1) + ")"
+        					var clickFunctionN = "toAjax(" + '"' + startD + '"' + "," + '"' + endD + '"' + "," + '"' + empName + '"' + "," + '"' + keyWord + '"' + "," + (pi.currentPage+1) + ")"
+        					/*currentPage가 1이 아닐 때*/
+        					if(pi.currentPage != 1){
+        						$("#prevLi").removeClass('disabled'); 			//prev버튼에 클래스 제거(클릭가능)
+        						$("#prevA").attr('onclick', clickFunctionP); 	//a태그 onclick 추가
+        					}else{
+        						$("#prevLi").addClass('disabled');
+        					}
+        					
+        					/*페이지 수 만큼 반복해서 추가*/
+        					for(var p = pi.startPage ; p <= pi.endPage ; p++ ){
+        						if(pi.currentPage != p){
+        							pageSet += "<li class='page-item'>"
+	            							+ "<div class='page-link' href='javascript:void(0);' onclick='toAjax(" + '"' + startD + '"' + "," + '"' + endD + '"' + "," + '"' + empName + '"' + "," + '"' + keyWord + '"' + "," + p + ")'>"
+	            							+ p
+	            							+ "</div>"
+	            							+ "</li>"
+        						}else{
+        							pageSet += "<li class='page-item disabled'>"
+        									+ "<div class='page-link' href='javascript:void(0);'>"
+	            							+ p
+	            							+ "</div>"
+	            							+ "</li>"
+        						}
+        					}
+        					
+        					$("#navList").html(pageSet);	//화면에 출력
+        					
+        					/*currentPage가 끝페이지가 아닐 때*/
+        					if(pi.currentPage != pi.maxPage){
+        						$("#nextLi").removeClass('disabled'); 			//next버튼에 클래스 제거(클릭가능)
+        						$("#nextA").attr('onclick', clickFunctionN); 	//a태그 onclick 추가
+        					}else{
+        						$("#nextLi").addClass('disabled');
+        					}
+
+        				},
+        				error : function(result){
+        				 alert('데이터 로딩 실패');
+        				}
+		   			});
+          		}
+			  </script>
 	        </div>
 	        <!-- 카드사용내역조회 -->
 	        <div class="i0 container c4  mb-4">
@@ -101,7 +236,7 @@
 	          
 	          <!-- 내역 -->
 	          <div class="i4-3">
-	            <table class="table table-striped a_table">
+	            <table class="table table-striped a_table" id="resultTable">
 	              <thead>
 	                <tr>
 	                  <th>NO.</th>
@@ -133,23 +268,27 @@
 	          <div class="i4-4">
 				<nav aria-label="Page navigation">
 					<ul class="pagination" style="justify-content: center;">
+						<!-- prev -->
 						<c:choose>
 							<c:when test="${ pi.currentPage ne 1 }">
-								<li class="page-item prev">
-									<a class="page-link" href="acct.do?deptCode=${loginEmp.deptCode}&currentPage=${ pi.currentPage-1 }">
+								<li class="page-item prev" id="prevLi">
+									<a class="page-link" href="acct.do?deptCode=${loginEmp.deptCode}&currentPage=${ pi.currentPage-1 }" id="prevA">
 										<i class="tf-icon bx bx-chevron-left"></i>
 									</a>
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item prev disabled">
-									<a class="page-link" href="">
+								<li class="page-item prev disabled" id="prevLi">
+									<a class="page-link" href="" id="prevA">
 										<i class="tf-icon bx bx-chevron-left"></i>
 									</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
+						<!-- / prev -->
 						
+						<li id='navList' style="display: none; margin-left:3px;"></li>
+						<!-- num -->
 						<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 							<c:choose>
 								<c:when test="${ pi.currentPage ne p }">
@@ -168,24 +307,26 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
+						<!-- num -->
 						
-						
+						<!-- next -->
 						<c:choose>
 							<c:when test="${ pi.currentPage ne pi.maxPage }">
-								<li class="page-item next">
-									<a class="page-link" href="acct.do?deptCode=${loginEmp.deptCode}&currentPage=${ pi.currentPage+1 }">
+								<li class="page-item next" id="nextLi">
+									<a class="page-link" href="acct.do?deptCode=${loginEmp.deptCode}&currentPage=${ pi.currentPage+1 }" id="nextA">
 										<i class="tf-icon bx bx-chevron-right"></i>
 									</a>
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item next disabled">
-									<a class="page-link" href="">
+								<li class="page-item next disabled" id="nextLi">
+									<a class="page-link" href="" id="nextA">
 										<i class="tf-icon bx bx-chevron-right"></i>
 									</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
+						<!-- / next -->
 					</ul>
 				</nav>
 	          </div>
@@ -366,7 +507,7 @@
 	        <div class="modal-footer">
 	            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
 	            <button type="submit" class="btn btn-primary" id="stat_update_btn">수정</button>
-	            <button type="button" class="btn btn-danger" id="stat_delete_btn">삭제</button>
+	            <button type="button" class="btn btn-danger" id="stat_delete_btn" onclick="deleteStat()">삭제</button>
 	        </div>
 	    </div>
 	  </div>
@@ -376,12 +517,6 @@
 	<!-------------------모달------------------->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><!-- jQuery library -->
 	<script>
-		/*등록모달 등록버튼*/
-		/*function stat_submit(){
-			$("#bill_file")
-			
-			return false;
-		}*/
 			
 		/*상세조회*/
 		$(function(){
@@ -436,6 +571,11 @@
       			$("#stat_detail_btn").click();
 			});
 		});
+		
+		/*내역삭제*/
+		function deleteStat(){
+			location.href = "deleteStat.do?statNo="+$('#detail_stat_no').val()+"&changeName="+$('input[name=changeName]').val();
+		}
 	</script>
 	<jsp:include page="../common/bottom.jsp"/>
 </body>
