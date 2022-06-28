@@ -141,31 +141,15 @@
                           <div class="card-title d-flex align-items-start justify-content-between">
                             <div class="avatar flex-shrink-0">
                               <img
-                                src="${pageContext.request.contextPath}/resources/assets/img/icons/unicons/wallet-info.png"
+                                src="${pageContext.request.contextPath}/resources/assets/img/icons/unicons/chart.png"
                                 alt="Credit Card"
                                 class="rounded"
                               />
                             </div>
-                            <div class="dropdown">
-                              <button
-                                class="btn p-0"
-                                type="button"
-                                id="cardOpt6"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                              </div>
-                            </div>
+                           
                           </div>
-                          <span>Sales</span>
-                          <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                          <p id="mainDate" style="font-size:15px"></p>
+                          <p id="mainClock" style="font-size:23px"></p>
                         </div>
                       </div>
                     </div>
@@ -657,6 +641,62 @@
 					      }
 					    })
 				    });
+				
+				
+				
+				/* 시간 스크립트*/
+				function printClock() {
+				    //출력 위치
+				    var clock = document.getElementById("mainClock");
+				    
+				    var date = document.getElementById("mainDate");
+				    //현재 시간을 currentDate에 담음
+				    var currentDate = new Date();	
+				    //현재 날짜를 calendar에 담음
+				    var calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate()
+					//시간
+				    var currentHours = addZeros(currentDate.getHours(),2); 
+					//분
+				    var currentMinute = addZeros(currentDate.getMinutes() ,2);
+					//초
+				    var currentSeconds =  addZeros(currentDate.getSeconds(),2);
+					
+					var nowYear = currentDate.getFullYear();
+					
+				
+					var month = currentDate.getMonth();
+				
+					
+					var clockDate = currentDate.getDate();
+				
+					
+					var day = currentDate.getDay();
+				
+				    
+					var week = ['일', '월', '화', '수', '목', '금', '토'];
+					
+					
+				    
+				    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds; //날짜를 출력해 줌
+				    date.innerHTML = nowYear+"- "+(month+1)+"- "+ clockDate+" (" +week[day]+")"
+				    
+				    setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+				    
+				    function addZeros(num, digit) { // 자릿수 맞춰주기
+					  	var zero = '';
+					  	num = num.toString();
+					  	if (num.length < digit) {
+						  	for (i = 0; i < digit - num.length; i++) {
+						  		zero += '0';
+						  	}
+					  	}
+					  	return zero + num;
+					}
+				}
+				
+				$(document).ready(function(){
+					printClock();
+				});
 			  </script>
 			
          	<jsp:include page="common/bottom.jsp"/> 

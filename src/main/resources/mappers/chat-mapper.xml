@@ -16,6 +16,7 @@
 		<result column="DEPT_NAME" property="deptName"/>
 		<result column="JOB_NAME" property="jobName"/>
 		<result column="EMP_ID" property="empId"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 	</resultMap>
 	
 	<resultMap type="Chat" id="ChatResultSet">
@@ -24,6 +25,7 @@
 		<result column="TO_CHAT" property="toChat"/>
 		<result column="FROM_CHAT" property="fromChat"/>
 		<result column="SENDTIME" property="sendTime"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 	</resultMap>
 
 	<select id="selectDeptList" resultMap="departmentResultSet">
@@ -56,19 +58,28 @@
 		   , D.DEPT_NAME
 		   , C.JOB_NAME
 		   , B.EMP_ID
+		   , F.CHANGE_NAME AS CHANGE_NAME
 		FROM CONTECT A
    LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
    LEFT JOIN JOB C ON B.JOB_CODE = C.JOB_CODE
    LEFT JOIN DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
    LEFT JOIN WORK_STATUS_TYPE E ON A.S_NO = E.S_NO
+   LEFT JOIN ATTACHMENT F ON F.CTG_NO = B.CTG_NO AND F.REF_NO = B.EMP_NO AND F.STATUS = 'Y'
 	   WHERE B.ENT_YN = 'Y' AND A.EMP_NO = #{empNo}
 	</select>
 	
 	<select id="selectChatList" parameterType="Chat" resultMap="ChatResultSet">
  <![CDATA[
 	SELECT 
-		*
-	  FROM CHAT
+		  A.CHAT_NO
+	    , A.MESSAGE
+	    , A.TO_CHAT
+	    , A.FROM_CHAT
+	    , A.SENDTIME
+	    , C.CHANGE_NAME AS CHANGE_NAME
+	  FROM CHAT A
+ LEFT JOIN EMPLOYEE B ON B.EMP_NO = A.FROM_CHAT AND B.ENT_YN = 'Y'
+ LEFT JOIN ATTACHMENT C ON C.CTG_NO = B.CTG_NO AND C.REF_NO = B.EMP_NO AND C.STATUS = 'Y'
 	 WHERE (TO_CHAT = #{toChat}
        AND FROM_CHAT= #{fromChat})
 		OR (TO_CHAT= #{fromChat} AND FROM_CHAT = #{toChat})

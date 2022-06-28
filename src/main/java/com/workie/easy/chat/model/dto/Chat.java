@@ -19,4 +19,5 @@ public class Chat {
 	private int toChat;
 	private int fromChat;
 	private String sendTime;
+	private String changeName;
 }
