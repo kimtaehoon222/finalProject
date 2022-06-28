@@ -67,8 +67,20 @@ public class CardDao {
 	}
 
 	public int updateAttachment(SqlSessionTemplate sqlSession, Card c) {
-
+		
 		return sqlSession.update("cardMapper.updateAttachment",c);
+		
+	}
+
+	public int deleteCardStat(SqlSessionTemplate sqlSession, int statNo) {
+		
+		return sqlSession.update("cardMapper.deleteCardStat",statNo);
+		
+	}
+
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int statNo) {
+		
+		return sqlSession.update("cardMapper.deleteAttachment",statNo);
 		
 	}
 

@@ -76,11 +76,12 @@ public class CardServiceImpl implements CardService {
 			int result2 = 0;
 			
 			if(string.equals("insert")){
-				
+				System.out.println("서비스단에서 첨부파일 넣는중");
 				result2 = cardDao.insertAttachment(sqlSession, c);
 				
-			}else {
-				
+			}
+			if(string.equals("update")){
+				System.out.println("서비스업데이트");
 				result2 = cardDao.updateAttachment(sqlSession, c);
 				
 			}
@@ -95,6 +96,29 @@ public class CardServiceImpl implements CardService {
 		}else {
 			
 			throw new CommException("카드내역 수정에 실패했습니다. 관리자에게 문의 바랍니다.");
+			
+		}
+		
+	}
+
+	@Override
+	public void deleteCardStat(int statNo) {
+		
+		int result = cardDao.deleteCardStat(sqlSession, statNo);
+		
+		if(result > 0) {
+			
+			int result2 = cardDao.deleteAttachment(sqlSession, statNo);
+			
+			if(result2 < 0) {
+				
+				throw new CommException("카드내역 첨부파일 삭제에 실패했습니다. 관리자에게 문의 바랍니다.");
+				
+			}
+			
+		}else {
+			
+			throw new CommException("카드내역 삭제에 실패했습니다. 관리자에게 문의 바랍니다.");
 			
 		}
 		

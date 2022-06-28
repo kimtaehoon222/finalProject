@@ -17,4 +17,6 @@ public interface CardService {
 
 	void updateCardStat(Card c, String string);
 
+	void deleteCardStat(int statNo);
+
 }

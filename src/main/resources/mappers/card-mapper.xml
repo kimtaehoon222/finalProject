@@ -115,13 +115,13 @@
 	</update>
 	
 	<insert id="insertAttachment">
-		INSERT ATTACHMENT
+		INSERT INTO ATTACHMENT
 		VALUES (
 		       SEQ_FNO.NEXTVAL
 		     ,  #{statNo}
 		     , 'CS'
-		     , #{changeName}
 		     , #{originName}
+		     , #{changeName}
 		     , #{filePath}
 		     , SYSDATE
 		     , DEFAULT
@@ -137,5 +137,19 @@
 		   AND CTG_NO = 'CS'
 		   AND REF_NO = #{statNo}
 	</update>
-	 
+	
+	<update id="deleteCardStat">
+		UPDATE CARD_STATEMENT
+		   SET STAT_STATUS = 'N'
+		 WHERE STAT_STATUS = 'Y'
+		   AND STAT_NO = #{statNo}
+	</update>
+	
+	<update id="deleteAttachment">
+		UPDATE ATTACHMENT
+		   SET STATUS = 'N'
+		 WHERE STATUS = 'Y'
+		   AND CTG_NO = 'CS'
+		   AND REF_NO = #{statNo}
+	</update>
 </mapper>

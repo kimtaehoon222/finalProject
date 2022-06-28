@@ -70,7 +70,7 @@
 	height: 35px;
 	margin-right: 5px;
 }
-.i3-2>input,.i3-4>input{width:124px;}
+.i3-2>input,.i3-4>input{width:140px;}
 .i3-9{grid-column: 3/4; grid-row: 1/5;}
 .i3-9 button{
     padding: 0px 10px;
