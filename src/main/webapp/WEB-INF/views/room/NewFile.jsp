@@ -9,15 +9,16 @@
 <meta charset="UTF-8">
 <title>일정</title>
 
-<link href='${ pageContext.request.contextPath }/resources/kjhPackages/core/main.css' rel='stylesheet' />
+<link href='${ pageContext.request.contextPath }/resources/kjhPackages/core/main.css' rel='stylesheet' />  
 <link href='${pageContext.request.contextPath }/resources/kjhPackages/daygrid/main.css' rel='stylesheet' />
 <link href='${ pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.css' rel='stylesheet' />
 <script src='${pageContext.request.contextPath}/resources/kjhPackages/core/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/kjhPackages/daygrid/main.js'></script>
 <script src="${pageContext.request.contextPath}/resources/kjhPackages/interaction/main.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.js"></script></head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+</head>
 <style>
    
    body.stop-dragging
@@ -366,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                id: item.reservation_no
                             });
                   }else{
-                	  alert("에러은 예약할 수 없습니다.");
+                     // 검색된 결과가 없을 때
                   }
                   
                   

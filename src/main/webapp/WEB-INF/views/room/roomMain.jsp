@@ -14,11 +14,12 @@
 <script src='${pageContext.request.contextPath}/resources/kjhPackages/core/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/kjhPackages/daygrid/main.js'></script>
 <script src="${pageContext.request.contextPath}/resources/kjhPackages/interaction/main.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.js"></script></head>
+<script src="${pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.js"></script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+</head>
 <style>
    
    body.stop-dragging
@@ -212,6 +213,14 @@
     margin: auto; background-color: white;
     width:90%;
     }
+   .modal-body{
+   width: 700px;
+   background-color: white;}
+ .modal-header{
+   width: 700px;
+   background-color: white;
+ }
+   
 </style>
 </head>
 <body >
@@ -229,7 +238,7 @@
           </div>
          
           <ul class="nav" id="side-menu" style="padding-left: 9%;">
-              <li style="padding: 10px 0 0;" name = 'roomNo'>
+              <li style="padding: 10px 0 0;" name ='roomNo'>
                   <span class="largeText">회의실</span>
                   <ul class="nav_ul">
                      <li>
@@ -251,7 +260,7 @@
           
               <li>
                  <div class="add_calendar_box">
-                     <a class="add_calendar" href="<%= request.getContextPath() %>/goMyRsvList.os" style="color: black;">
+                     <a class="add_calendar" href="myResList.do?eno=${loginEmp.empNo}" style="color: black;">
                      <i class="fa fa-cog" style="padding-right: 10px;"></i>나의 예약 목록</a>
                   </div>
               </li>         
@@ -337,15 +346,18 @@
                  </tr>
                  
                  <tr>
-                   <th>자원선택</th>
+                   <th>회의실 선택</th>
                    <td><select class="addRsSelect" name="roomNo"></select></td>
                  </tr>
                  
                  <tr>
-                   <th>사용용도</th>
+                   <th>예약 제목</th>
+                   <td><input class="form-control modal_input" name="meetTitle" type="text" style="height: 30px;" /></td>
+                 </tr>
+                  <tr>
+                   <th>예약 목적</th>
                    <td><input class="form-control modal_input" name="meetGoal" type="text" style="height: 30px;" /></td>
                  </tr>
-                 
                </tbody>
              </table>
             
@@ -465,7 +477,9 @@ document.addEventListener('DOMContentLoaded', function() {
       itemSelector: '.fc-event',
       eventData: function(eventEl) {
         return {
-          title: eventEl.innerText
+          title: eventEl.innerText,
+          start: eventEl.startDate,
+          end: eventEl.endDate,
         };
         
       }
@@ -489,19 +503,19 @@ document.addEventListener('DOMContentLoaded', function() {
           
           var date = moment(info.dateStr).format("YYYY-MM-DD");
           
-          // 오늘만 시간이 지났어도 예약 가능하게 함
-          if (sysdate > date + 1) {
+          // 현재 시간 기준으로 지난 시간에 예약은 불가능
+          if (sysdate > date ) {
           alert("지난 시간은 예약할 수 없습니다.");
        }else{
           addRs();   // 모달을 초기화하고 자원명을 불러오는 함수
           
           // 클릭한 시각으로 모달의 datepicker를 변경시킴
-            $("input[name=startday]").val(date);   
-           $("input[name=endday]").val(date);
+            $("input[name=startDate]").val(date);   
+           $("input[name=endDate]").val(date);
             
            var hhmm = moment(info.dateStr).format("HH:mm");
-            $("select.startday_hour").val(hhmm).change();
-            $("select.endday_hour").val(hhmm).change();
+            $("select.startDate_hour").val(hhmm).change();
+            $("select.endDate_hour").val(hhmm).change();
        }
           
        
@@ -626,7 +640,107 @@ function viewRsv(resNo){
     
     $("#showDetailRsvModal").modal('show');
  }
+function addRs(){
+    
+    // 모달 form에 입력돼있는 정보를 모두 삭제하고 모달을 보이게 함(모달 초기화)
+    $('#addRsvModal').find('form')[0].reset();
+    $('#addRsvModal').modal('show');
+    
+    $.ajax({
+     url:"selectRoomList.do",
+     type:"get",
+     dataType:"JSON",
+     success:function(json){
+        var html = "";
+        if (json.length > 0) {
+           $.each(json, function(index, item){
+              if (item.roomNo == roomNo) {
+                 html += "<option value='" + item.roomNo + "' selected >" + item.roomName + "</option>";
+              }else{
+                 html += "<option value='" + item.roomNo + "'>" + item.roomName + "</option>";
+              }
+              
+           });
+        }else{
+           html += "<li style='height: 20px;'>";
+           html += "</li>";
+        }
+        
+        $("select.addRsSelect").html(html);
+     },
+     error: function(request, status, error){
+        alert("에러");
+      }
+  });
+  
+ }
  
+function addRsvModalBtn(){
+    
+    // 입력받은 값들 유효성 검사: 시작
+    var startDate = $("input[name=startDate]").val() + " " + $("select.startDate_hour").val() + ":00";
+    var endDate = "";
+    
+    // 종일 체크 시 시작 날짜를 기준으로 변경
+    if ($("input#allday:checked").val()) {
+    	startDate = $("input[name=startDate]").val() + " 00:00:00";
+       endDate = $("input[name=endDate]").val() + " 23:59:59";
+    }else{
+    	endDate = $("input[name=endDate]").val() + " " + $("select.endDate_hour").val() + ":00";
+    }
+    
+    // true: 통과   false: 불통
+    if (!(startDate < endDate && startDate != endDate)) {
+       alert("올바른 일시를 선택해주세요.");
+       return false;
+    }
+
+    var roomNo = $("select[name=roomNo]").val();
+    if (roomNo.trim() == "") {
+       alert("자원을 선택해주세요.");
+       return false;
+    }
+    
+    var meetTitle = $("input[name=meetTitle]").val();
+    if (reason.trim() == "") {
+       alert("예약 제목을 입력해주세요.");
+       $("input[name=meetTitle]").focus();
+       return false;
+    }
+    var meetTitle = $("input[name=meetGoal]").val();
+    if (reason.trim() == "") {
+       alert("회의 목적을 입력해주세요.");
+       $("input[name=meetGoal]").focus();
+       return false;
+    }
+$.ajax({
+    url:"insertRes.do",
+    data:{startDate:startDate, endDate:endDate, roomNo:roomNo, meetTitle:meetTitle,meetGoal:meetGoal},
+    type:"POST",
+    dataType:"JSON",
+    success:function(json){
+       
+       // 예약일로 입력한 값이 db에서 중복되는지 안되는지로 나눔
+       if (json.n == 1) {
+          // 에약이 정상적으로 등록됐을 때
+          window.closeModal();
+          calendar.refetchEvents();//모든 소스의 이벤트를 다시 가져와 화면에 다시 렌더링
+          
+       }else if (json.n == -1) {
+          // 중복된 예약(시간)으로 예약에 실패했을 때
+          alert("해당 시간에는 이미 예약이 되어있어 예약할 수 없습니다.");
+       }
+       else{
+          // db오류
+          alert("DB 오류");
+       }
+       
+    },
+    error: function(request, status, error){
+       alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+     }
+ });
+}
 </script>
 </body>
 </html>

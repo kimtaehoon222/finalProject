@@ -12,10 +12,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sun.jdi.Value;
 import com.workie.easy.employee.model.dto.Employee;
@@ -41,17 +43,16 @@ public class RoomController {
 	/*consumes는 클라이언트가 서버에게 보내는 데이터 타입을 명시한다.
 	  produces는 서버가 클라이언트에게 반환하는 데이터 타입을 명시한다 response.setContentType
 	  charset=utf-8 한글이 들어올 수 있으므로 인코딩*/
-	public List<Map<String, Object>> selectResList(HttpSession session, HttpServletRequest request,int roomNo) {
+	public List<Map<String, Object>> selectResList(int roomNo) {
 		
-       Room room = new Room();
-       room.setRoomNo(roomNo);
+        Room room = new Room();
+        room.setRoomNo(roomNo);
 	
 		ArrayList<Room> resList = roomService.selectResList(room);
 
 		JSONArray jsonArr = new JSONArray();
 		JSONObject jsonObj = new JSONObject();
 
-		System.out.println("회의실 예약 " + resList);
 		HashMap<String, Object> hash = new HashMap<>();		
 
 		for (Room r : resList) {
@@ -97,6 +98,58 @@ public class RoomController {
 		jsonObj.put("endDate", r.getEndDate());
 		jsonObj.put("deptName", r.getDeptName());
 		return jsonObj;
+		
+	}
+	
+	@RequestMapping("myResList.do")
+	public String selectMyResList(int eno, Model model) {
+		
+		ArrayList<Room> list = roomService.selectMyResList(eno);
+		
+		model.addAttribute("list", list);
+		return "room/myResList";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value ="selectRoomList.do" ,produces="application/json; charset=utf-8")
+	public List<Map<String, Object>> selectRoomList() {
+		
+	     
+	     JSONArray jsonArr = new JSONArray();
+		 JSONObject jsonObj = new JSONObject();
+	     
+	     ArrayList<Room> rList = roomService.selectRoomList();
+	 	 System.out.println("회의실 리스트 " + rList);
+	     HashMap<String, Object> hash = new HashMap<>();		
+
+		for (Room r : rList) {
+			hash.put("roomName", r.getRoomName());
+			hash.put("roomNo", r.getRoomNo());
+			jsonObj = new JSONObject(hash); 						
+            jsonArr.add(jsonObj);
+		}
+		return jsonArr;
+	
+	}
+	
+	@ResponseBody
+	@RequestMapping("insertRes.do")
+	public String insertRes(String startDate, String endDate, int roomNo,
+			                String meetTitle, String meetGoal, HttpSession session) {
+		
+		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+		
+		Room room = new Room();
+        room.setStartDate(startDate);
+        room.setEndDate(endDate);
+        room.setRoomNo(roomNo);
+        room.setMeetTitle(meetTitle);
+        room.setMeetGoal(meetGoal);
+        room.setEmpNo(loginEmp.getEmpNo());
+        
+        Room r = roomService.insertRes(room);
+		return null;
 		
 	}
 }

@@ -30,6 +30,7 @@
 			FROM RESERVATION A
 			LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 			WHERE RES_STATUS = 'Y'
+			AND TO_DATE(START_DATE, 'yyyy-MM-dd HH24:MI:SS') > SYSDATE
 			AND ROOM_NO =  #{roomNo}
         </select>
 	  
@@ -53,4 +54,25 @@
 			AND RES_NO =  #{resNo}
 	</select>
 	
+	 <select id="selectMyResList" resultMap="roomResult">
+	  SELECT           
+	         EMP_NO
+	        , MEET_TITLE
+	        , START_DATE
+	        , END_DATE
+	        , ROOM_NAME
+			FROM RESERVATION A
+			LEFT JOIN MEETING_ROOM B ON A.ROOM_NO = B.ROOM_NO
+			WHERE RES_STATUS = 'Y'
+            AND TO_DATE(START_DATE, 'yyyy-MM-dd HH24:MI:SS') > SYSDATE
+			AND EMP_NO = #{eno}
+        </select>
+	  
+	  
+	    <select id="selectRoomList" resultMap="roomResult">
+	    SELECT 
+			* 
+			FROM MEETING_ROOM
+			ORDER BY ROOM_NO
+       </select>
 </mapper>
