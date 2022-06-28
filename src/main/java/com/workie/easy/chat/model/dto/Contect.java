@@ -19,5 +19,6 @@ public class Contect {
 	private String deptName;
 	private String jobName;
 	private String empId;
+	private String changeName;
 
 }

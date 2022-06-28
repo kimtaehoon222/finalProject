@@ -163,8 +163,8 @@
 												<c:when test="${not empty toChat }">
 												<div style="float: left;">
 													<img
-														src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
-														alt="user" class="rounded-circle" width="65">
+														src="${pageContext.request.contextPath}/resources/emp_files/${toChat.changeName}"
+														alt="user" class="w-px-50 h-px-50 rounded-circle" width="65">
 												</div>
 													<span id='receiverName'
 														style="font-size: 22px; color: #1c2d41; font-weight: bold;">${ toChat.empName}</span>
@@ -231,7 +231,7 @@
 													<li class="chat-item list-style-none mt-3">
 														<div class="chat-img d-inline-block">
 															<img
-																src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
+																src="${pageContext.request.contextPath}/resources/emp_files/${c.changeName}"
 																alt="user" class="rounded-circle" width="45">
 														</div>
 														<div class="chat-content d-inline-block pl-3">
@@ -431,7 +431,7 @@ $("#status").on('change',function(){
                           </li>`
         					)
    					console.log(d.deptName)
-					<selectContectList(d.deptName); 
+					selectContectList(d.deptName); 
          		}));  
 	 
 			}

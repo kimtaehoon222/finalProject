@@ -446,7 +446,7 @@
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
                     >Star</a
                   > -->
-                  <i class='bx bx-message-rounded-dots bx-md bx-tada-hover'></i>
+                  <i class='bx bx-message-rounded-dots bx-md bx-tada-hover' id="chatIcon"></i>
                   <i class='bx bx-envelope bx-md bx-tada-hover' ></i>
                   <i class='bx bxs-help-circle bx-md bx-tada-hover'></i>
                 </li>
@@ -536,6 +536,7 @@
 	    	 let mainAlert = $("div#mainAlert");
 	    	 var str = event.data;
 	         var msgArr = str.split(',');
+	         var chatIcon = $("#chatIcon");
 	         alertMsg = msgArr[0];
 	         
 	   
@@ -545,6 +546,7 @@
 	         if(location.pathname != "/chat.do"){
 	        	 mainAlert.css("display",'block');
 	        	 mainAlert.html(alertMsg);
+	        	 chatIcon.css("color","red");
 	        	 
              }else if(location.search != resultReceiver){
 	         console.log("str확인 : " +str)
