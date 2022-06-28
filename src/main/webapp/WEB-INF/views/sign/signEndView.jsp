@@ -60,7 +60,7 @@
 		<div class="px-3 py-3 my-4">
 			<div class="card-body">
 				<h4 class="card-title" style="color: rgb(124, 127, 251)">
-					<b>완료 문서함</b>
+					<b>완료 문서함</b> <b style="color: rgb(124, 127, 251)">( ${ loginEmp.deptName } )</b>
 				</h4>
 				<div class="table-responsive">
 					<table id="signWaitingList" class="table" style="width: 1300px">
@@ -401,15 +401,9 @@
 						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
 
-						<button type="submit" class="btn btn-danger"
-							style="background-color: red" id="signBack">반려</button>
 				</form>
 				<!-- 품의 updateR Form 끝 태그 -->
 
-
-				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateA.do';">상신</button>
-				<!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
 
 			</div>
@@ -435,7 +429,7 @@
 
 				<br>
 				<h4 id="center">
-					<b>협 조</b>
+					<b >협 조&nbsp<b style="color:blue">(완료)</b></b>
 				</h4>
 
 				<form id="updateRRRRR" method="post" action="updateRR.do">
@@ -486,7 +480,7 @@
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 								<th><b id="bbJobName"></b></th>
 								<th><b id="bbFirstSignJob"></b></th>
-								<th>${loginEmp.jobName}</th>
+								<th><b id="bbFinalSignJob"></b></th>
 
 							</tr>
 
@@ -497,8 +491,11 @@
 								<th style="width: 100px; background-color: #ffffff;"><b
 									id="bbFirstSignName"></b> <b style="color: blue"
 									id="bbFirstSignDate"></b></th>
-								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
+								<th style="width: 100px; background-color: #ffffff;"><b
+									id="bbFinalSignName"></b> <b style="color: blue"
+									id="bbFinalSignDate"></b></th>
 							</tr>
+							
 						</table>
 
 
@@ -508,7 +505,7 @@
 						 function snoBBComeOn(signNo){
 						$.ajax({ //협조 내용 select 해오기
 
-								  url: "selectBBPList.do",
+								  url: "selectBBAList.do",
 								
 								  type: "POST",
 
@@ -549,6 +546,10 @@
 								var firstSignName = result.firstSignName; //1차 결재자 이름
 								var firstSignJob = result.firstSignJob; //1차 결재자 직급
 								
+								var finalSignDate = result.finalSignDate; //최종 결재일
+								var finalSignName = result.finalSignName; //최종 결재자 이름
+								var finalSignJob = result.finalSignJob; //최종 결재자 직급
+								
 								$("#bbSignNo").html(signNo);
 								$("#bbCreateName").html(createName);
 								$("#bbCreateDate").html(createDate);
@@ -564,6 +565,10 @@
 								$("#bbFirstSignDate").html(firstSignDate);
 							    $("#bbFirstSignName").html(firstSignName);
 							    $("#bbFirstSignJob").html(firstSignJob);
+							    
+							    $("#bbFinalSignDate").html(finalSignDate);
+							    $("#bbFinalSignName").html(finalSignName);
+							    $("#bbFinalSignJob").html(finalSignJob);
 							}
 							
 										
@@ -574,10 +579,7 @@
 
 					<div class="modal-body">
 
-						<p style="width: 10%; float: left;">
-							<b> 담 당 : </b>
-						</p>
-
+				
 						<b id="bbFinalApprover"> </b> <br> <br> <b> 제 목 </b> <input
 							type="text" id="bbSignTitle" name="SignTitle" class="mb-3"
 							placeholder="제목을 입력하세요." style="width: 91%; float: right"
@@ -601,13 +603,9 @@
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-danger"
-							style="background-color: red" id="signBack">반려</button>
+				
 				</form>
 				<!-- 협조 update Form 끝 태그 -->
-
-				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateA.do';">상신</button>
 
 			</div>
 
@@ -632,7 +630,7 @@
 
 				<br>
 				<h4 id="center">
-					<b>휴 가 원</b>
+					<b >휴 가 원&nbsp<b style="color:blue">(완료)</b></b>
 				</h4>
 
 				<form id="updateRRRRR" method="post" action="updateRR.do">
@@ -675,13 +673,6 @@
 					</div>
 
 
-					<div>
-						<br>
-
-					</div>
-
-					<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp최종 결재선 지정 : <b
-						id="ccFinalApprover"></b> &nbsp<b id="ccFinalApprover"></b></b>
 					<div class="col-md-12">
 
 
@@ -689,7 +680,7 @@
 						 function snoCCComeOn(signNo){
 								$.ajax({ //휴가 내용 select 해오기
 
-									  url: "selectCCPList.do",
+									  url: "selectCCAList.do",
 									
 									  type: "POST",
 
@@ -729,6 +720,12 @@
 									var firstSignName = result.firstSignName; //1차 결재자 이름
 									var firstSignJob = result.firstSignJob; //1차 결재자 직급
 									
+
+									var finalSignDate = result.finalSignDate; //최종 결재일
+									var finalSignName = result.finalSignName; //최종 결재자 이름
+									var finalSignJob = result.finalSignJob; //최종 결재자 직급
+									
+									
 									$("#ccSignNo").html(signNo);
 									$("#ccCreateName").html(createName);
 									$("#ccCreateDate").html(createDate);
@@ -744,6 +741,10 @@
 									$("#ccFirstSignDate").html(firstSignDate);
 							    	$("#ccFirstSignName").html(firstSignName);
 							    	$("#ccFirstSignJob").html(firstSignJob);
+							    	
+						    	    $("#ccFinalSignDate").html(finalSignDate);
+								    $("#ccFinalSignName").html(finalSignName);
+								    $("#ccFinalSignJob").html(finalSignJob);
 							    	
 								}
 					
@@ -764,7 +765,7 @@
 								<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 								<th><b id="ccJobName"></b></th>
 								<th><b id="ccFirstSignJob"></b></th>
-								<th>${loginEmp.jobName}</th>
+								<th><b id="ccFinalSignJob"></b></th>
 
 							</tr>
 
@@ -775,7 +776,9 @@
 								<th style="width: 100px; background-color: #ffffff;"><b
 									id="ccFirstSignName"></b> <b style="color: blue"
 									id="ccFirstSignDate"></b></th>
-								<th style="width: 100px; background-color: #ffffff;">${loginEmp.empName}</th>
+								<th style="width: 100px; background-color: #ffffff;"><b
+									id="ccFinalSignName"></b> <b style="color: blue"
+									id="ccFinalSignDate"></b></th>
 							</tr>
 
 						</table>
@@ -821,13 +824,9 @@
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-danger"
-							style="background-color: red" id="signBack">반려</button>
+
 				</form>
 				<!-- 휴가 update Form 끝 태그 -->
-
-				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateA.do';">상신</button>
 
 
 			</div>

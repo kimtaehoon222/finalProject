@@ -202,6 +202,7 @@ public class SignController {
 		jsonSign.put("createDate", s.getCreateDate());
 		jsonSign.put("jobName", s.getJobName());
 		jsonSign.put("expiryDate", s.getExpiryDate());
+		jsonSign.put("firstApprover", s.getFirstApprover());
 		jsonSign.put("finalApprover", s.getFinalApprover());
 		jsonSign.put("signTitle", s.getSignTitle());
 		jsonSign.put("signContent", s.getSignContent());
@@ -746,5 +747,133 @@ public class SignController {
 		
 		return jsonSign;
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectBBAList.do",method=RequestMethod.POST)
+	public JSONObject selectBBAList (int signNo, HttpSession session) { //'A' 완료 협조 조회  
+		
+		String deptCode = ((Employee)session.getAttribute("loginEmp")).getDeptCode(); //현재 접속한 사용자의 이름
+		
+		
+		/* 파라미터값 set */
+		Sign si = new Sign();
+		si.setSignNo(signNo); //결재 번호 셋팅
+		si.setDeptCode(deptCode);
+		
+		/* 서비스 연결  */
+		Sign s = signService.selectBBAList(si);
+
+		/* Json에 담기 */
+		JSONObject jsonSign = new JSONObject();	
+		
+		jsonSign.put("signNo", s.getSignNo());
+		jsonSign.put("createName", s.getCreateName());
+		jsonSign.put("createDate", s.getCreateDate());
+		jsonSign.put("jobName", s.getJobName());
+		jsonSign.put("expiryDate", s.getExpiryDate());
+		//jsonSign.put("finalApprover", s.getFinalApprover());
+		jsonSign.put("signTitle", s.getSignTitle());
+		jsonSign.put("signContent", s.getSignContent());
+		jsonSign.put("changeName", s.getChangeName());
+		jsonSign.put("originName", s.getOriginName());
+		jsonSign.put("firstSignDate", s.getFirstSignDate());
+		jsonSign.put("firstSignName", s.getFirstSignName());
+		jsonSign.put("firstSignJob", s.getFirstSignJob());
+		jsonSign.put("finalSignDate", s.getFinalSignDate());
+		jsonSign.put("finalSignName", s.getFinalSignName());
+		jsonSign.put("finalSignJob", s.getFinalSignJob());
+		
+		return jsonSign;
+		
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="selectCCAList.do",method=RequestMethod.POST)
+	public JSONObject selectCCAList (int signNo, HttpSession session) { //'A' 완료 휴가 조회  
+		
+		String deptCode = ((Employee)session.getAttribute("loginEmp")).getDeptCode(); //현재 접속한 사용자의 이름
+
+		
+		/* 파라미터값 set */
+		Sign si = new Sign();
+		si.setSignNo(signNo); //결재 번호 셋팅
+		si.setDeptCode(deptCode);
+		
+		/* 서비스 연결  */
+		Sign s = signService.selectCCAList(si);
+
+		/* Json에 담기 */
+		JSONObject jsonSign = new JSONObject();
+		jsonSign.put("signNo", s.getSignNo());
+		jsonSign.put("createName", s.getCreateName());
+		jsonSign.put("createDate", s.getCreateDate());
+		jsonSign.put("jobName", s.getJobName());
+		jsonSign.put("vCode", s.getVCode());
+		jsonSign.put("firstDate", s.getFirstDate());
+		jsonSign.put("lastDate", s.getLastDate());
+		//jsonSign.put("finalApprover", s.getFinalApprover());
+		jsonSign.put("signTitle", s.getSignTitle());
+		jsonSign.put("signContent", s.getSignContent());
+		jsonSign.put("firstSignDate", s.getFirstSignDate());
+		jsonSign.put("firstSignName", s.getFirstSignName() );
+		jsonSign.put("firstSignJob", s.getFirstSignJob());
+		jsonSign.put("finalSignDate", s.getFinalSignDate());
+		jsonSign.put("finalSignName", s.getFinalSignName());
+		jsonSign.put("finalSignJob", s.getFinalSignJob());
+		
+		return jsonSign;
+
+	}
+	
+	/* 내 결재 대기함 List */
+	@RequestMapping("mySignWaitingView.do")
+	public String readMySignWaitingView(@RequestParam(value="currentPage", required = false, defaultValue = "1")
+									                int currentPage, Model model, HttpSession session) {
+		
+			
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+
+
+		int listCount = signService.selectMywListCount(empName); // view에서 완료문서함 글씨 옆에 ( 기획영업부 ) 이런식으로 부서이름 세션에서 가져와서 뿌려주기 까먹을까봐 적어놓음
+		
+		System.out.println(listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+
+		ArrayList<Sign> list = signService.selectMySignWaitingList(pi, empName);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+
+
+		return "sign/mySignWaitingView";
+
+	}
+	
+	@RequestMapping("updateAASign.do")
+	public String updateAAsign(@ModelAttribute Sign si , HttpServletRequest request ,
+			@RequestParam(name = "uploadFile", required = false) MultipartFile file, String signNo) { //내 결재 대기함 품의 수정
+
+	
+		if(!file.getOriginalFilename().equals("")) { //file이 비어있으면 빈문자열로 넘어옴 빈문자열이 아니라면 파일이 들어있다.
+			String changeName = saveFile(file, request, si);
+			
+			if(changeName != null) {
+				si.setOriginName(file.getOriginalFilename());
+				si.setChangeName(changeName);
+			}
+		}
+		
+		int sNo = Integer.parseInt(signNo);
+		
+		si.setSignNo(sNo); 
+		
+		signService.updateAAsign(si);
+		
+		String view = "redirect:mySignWaitingView.do";
+		
+		return view;
 	}
 }

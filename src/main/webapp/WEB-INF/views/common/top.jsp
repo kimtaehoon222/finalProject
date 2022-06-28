@@ -235,8 +235,8 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="documentView.jsp" class="menu-link">
-                    <div data-i18n="Blank">문서 양식 보관함</div>
+                  <a href="mySignWaitingView.do?empName=${ loginEmp.empName }" class="menu-link">
+                    <div data-i18n="Blank">내 결재 대기함</div>
                   </a>
                 </li>
               </ul>
