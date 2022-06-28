@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>DataTable - Mazer Admin Dashboard</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -16,10 +16,8 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/simple-datatables/style.css">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/css/app.css">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/kjh123/images/favicon.svg" type="image/x-icon">
 </head>
 
 <body>
@@ -35,10 +33,10 @@
 
             <div class="page-heading">
                 
-                <section class="section">
+           
                     <div class="card">
                         <div class="card-header">
-                          <h2>퇴사자 목록</h2>
+                          <h2>내 예약 목록</h2>
                           <hr>
                           
                         </div>
@@ -47,44 +45,46 @@
                             <table class="table table-striped" id="table1">
                                 <thead>
                                     <tr>
-                                        <th>이름</th>
-                                        <th>이메일</th>
-                                        <th>핸드폰</th>
-                                        <th>퇴사전 부서</th>
-                                        <th>퇴사전 직위</th>
+                                        <th>회의실 이름</th>
+                                        <th>시작 날짜</th>
+                                        <th>종료 날짜</th>
+                                        <th>취소</th>
                                         
                                     </tr>
                                 </thead>
-                                <tbody>
-                                <c:forEach items="${ list }" var="e">
+                                <tbody >
+                                <c:forEach items="${ list }" var="r">
                                     <tr>
-                                       <td>${e.empName}</td>
-                                        <td onclick="emp(this)">${e.empId}</td>
-                                        <td> ${e.phone}</td>
-                                        <td>${e.deptName}</td>
-                                       	<td>${e.jobName}</td>
-                                    </tr>
-                                
-                                   </c:forEach> 
+                                        <td>${r.roomName}</td>
+                                        <td>${r.startDate}</td>
+                                        <td> ${r.endDate}</td>
+                                       
+                                   </tr>
+                                 </c:forEach> 
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
 
-                </section>
+             
             </div>
 
          
         </div>
         
     </div>
-          <script>
-          function emp(e){
-        		console.log(e.innerText)
-        	    location.href="detailRetiredEmp.do?eId=" +e.innerText;
-          	};
+
+    <!--이름은 동명이인이 있을 수 있어서 id로 -->
+      <script>
+      $(function(){
+  		$("#table1 tbody tr").click(function(){
+  	      location.href="detailEmp.do?eId=" + $(this).children().eq(1).text();
+  		});
+    	});
     </script>
-     <jsp:include page="../common/bottom.jsp" />
+ 
+    <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>
 

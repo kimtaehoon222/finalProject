@@ -11,4 +11,10 @@ public interface RoomService {
 
 	Room selectRes(Room room);
 
+	ArrayList<Room> selectMyResList(int eno);
+
+	ArrayList<Room> selectRoomList();
+
+	Room insertRes(Room room);
+
 }

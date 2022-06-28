@@ -32,6 +32,35 @@ public class RoomServiceImpl implements RoomService {
 	
 		return roomDao.selectRes(room, sqlSession);
 	}
+
+
+	@Override
+	public ArrayList<Room> selectMyResList(int eno) {
+	
+		return roomDao.selectMyResList(eno, sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Room> selectRoomList() {
+		
+		return roomDao.selectRoomList(sqlSession);
+	}
+
+
+	@Override
+	public Room insertRes(Room room) {
+		
+		int result = roomDao.insertRes(room, sqlSession);
+		
+		if(result > 0) {
+			return roomDao.selectRes(room, sqlSession);
+		}else {
+			
+		}
+		return room;
+		
+	}
 	
 	
 }

@@ -42,7 +42,7 @@
                         </div>
                         
                         <div class="card-body">
-                            <table class="table table-striped" id="table1">
+                            <table class="table table-striped kim" id="table1" >
                                 <thead>
                                     <tr>
                                         <th>이름</th>
@@ -57,7 +57,7 @@
                                 <c:forEach items="${ list }" var="e">
                                     <tr>
                                         <td>${e.empName}</td>
-                                        <td>${e.empId}</td>
+                                        <td onclick="emp(this)">${e.empId}</td>
                                         <td> ${e.phone}</td>
                                         <td>${e.deptName}</td>
                                        	<td>${e.jobName}</td>
@@ -79,11 +79,10 @@
 
     <!--이름은 동명이인이 있을 수 있어서 id로 -->
       <script>
-      $(function(){
-  		$("#table1 tbody tr").click(function(){
-  	      location.href="detailEmp.do?eId=" + $(this).children().eq(1).text();
-  		});
-    	});
+      function emp(e){
+  		console.log(e.innerText)
+  	    location.href="detailEmp.do?eId=" +e.innerText;
+    	};
     </script>
  
     <jsp:include page="../common/bottom.jsp" />
