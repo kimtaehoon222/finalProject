@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.workie.easy.employee.model.service.EmployeeService;
 import com.workie.easy.mail.model.dto.Mail;
@@ -78,11 +79,15 @@ public class EmployeeController {
 	
 	/*로그인*/
 	@RequestMapping("login.do")
-	public String loginEpm(Employee emp, Model model){
+	public String loginEpm(Employee emp, Model model, RedirectAttributes redirectAttributes){
 		
 		Employee loginEmp = empService.loginEmp(bCryptPasswordEncoder, emp);
 		model.addAttribute("loginEmp",loginEmp);
-
+		
+		/* 로그인시에만 보여지는 메세지(메인 로고 클릭시엔 보여지면 안됨) */
+		String topMsg = loginEmp.getEmpName() + "님 반갑습니다.";
+		redirectAttributes.addFlashAttribute("topMsg", topMsg);
+		
 		return "redirect:main.do";
 		
 	}

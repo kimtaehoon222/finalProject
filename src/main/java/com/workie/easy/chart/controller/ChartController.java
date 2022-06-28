@@ -92,14 +92,13 @@ public class ChartController {
 			e.printStackTrace();
 		}*/
 		
+		
 		return list;
 	}
 	
 	/* 회계 관련 통계를 추출하는 메소드 */
 	private JSONArray selectChartListForAccount(Chart chart) {
 
-		System.out.println("회계용 차트 도착");
-		
 		ChartForAccount chartforAccount = new ChartForAccount();
 		
 		ArrayList<ChartForAccount> chartList = new ArrayList<ChartForAccount>();
