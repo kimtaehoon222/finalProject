@@ -18,6 +18,8 @@ import com.workie.easy.common.model.dto.PageInfo;
 * 2022/06/25 (전재은) 카드사용내역조회 수정
 * 2022/06/26 (전재은) 카드사용내역등록, 파일업로드, 상세조회 추가
 * 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
+* 2022/06/28 (전재은) 내역삭제 수정, 내역검색, 카드조회 추가
+* 2022/06/28 (전재은) 사용금액 그래프 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -81,6 +83,27 @@ public class CardDao {
 	public int deleteAttachment(SqlSessionTemplate sqlSession, int statNo) {
 		
 		return sqlSession.update("cardMapper.deleteAttachment",statNo);
+		
+	}
+
+	public int searchStatCount(SqlSessionTemplate sqlSession, Card c) {
+		
+		return sqlSession.selectOne("cardMapper.searchStatCount",c);
+		
+	}
+
+	public ArrayList<Card> searchStatList(SqlSessionTemplate sqlSession, Card c, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("cardMapper.searchStatList", c, rowBounds);
+		
+	}
+
+	public Card selectCardInfo(SqlSessionTemplate sqlSession, String deptCode) {
+
+		return sqlSession.selectOne("cardMapper.selectCardInfo", deptCode);
 		
 	}
 

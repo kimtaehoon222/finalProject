@@ -1,5 +1,8 @@
 package com.workie.easy.employee.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.workie.easy.employee.model.service.EmployeeService;
 import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.service.MailService;
+import com.workie.easy.schedule.model.dto.Schedule;
+import com.workie.easy.schedule.model.service.ScheduleService;
 import com.workie.easy.employee.model.dto.Employee;
 
 /*
@@ -42,6 +47,9 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
+	@Autowired
+	private ScheduleService scheduleService;
+	
 	/*암호화를 위한 Autowired*/
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -64,6 +72,18 @@ public class EmployeeController {
 		
 		
 		/* 전재은 : */
+		/*조회 조건*/
+		Schedule sked = new Schedule();
+		String formatDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));	//오늘날짜
+		sked.setEmpNo(loginEmp.getEmpNo());														//로그인 사원번호
+		sked.setSkedStart(formatDate);															//시작일 : 오늘 날짜	
+		
+		ArrayList<Schedule> skedList = scheduleService.selectDayScheduleList(sked);				//결과 목록
+		
+		for(int i=0; i < skedList.size(); i++) {												//for문으로 rgbCode설정(반투명)
+			skedList.get(i).setRgbCode("rgba("+skedList.get(i).getRgbCode()+", 0.5)");
+		}
+		model.addAttribute("skedList", skedList);												//세션에 올리기
 		
 		return "main";
 		

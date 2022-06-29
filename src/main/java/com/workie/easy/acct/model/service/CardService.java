@@ -19,4 +19,10 @@ public interface CardService {
 
 	void deleteCardStat(int statNo);
 
+	int searchStatCount(Card c);
+
+	ArrayList<Card> searchStatList(Card c, PageInfo pi);
+
+	Card selectCardInfo(String deptCode);
+
 }
