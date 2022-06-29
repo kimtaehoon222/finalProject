@@ -4,10 +4,59 @@
 	String contextPath = request.getContextPath(); //컨텍스트 페스 선언
 %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  
+  function drawChart() {
+
+  // Create the data table.
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', '상태');
+  data.addColumn('number', '금액');
+  data.addRows([
+    ['사용금액', 1000000],
+    ['잔액', 4000000],
+  ]);
+
+  // Set chart options
+  var options = {
+    /*도넛그래프*/
+    pieHole: 0.4,
+
+    /*크기*/
+    chartArea: { width: '90%', height: '90%' },
+
+    /*색상*/
+    backgroundColor: 'none',
+    legend: 'none',
+    slices: {
+              0: { color: '#FB8A7C' },
+              1: { color: '#E0E0E0' }
+            },
+    pieSliceTextStyle: {
+        color: 'white',
+        fontSize: '11'
+    },
+    // pieSliceText: 'none',
+
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+  chart.draw(data, options);
+  }
+
+</script>
+
 <title>sked_detail</title>
 </head>
 <body>
@@ -22,34 +71,50 @@
 	      <div class="container c0">
 	        <!-- 카드 잔액 정보 -->
 	        <div class="i0 container c1">
-	          <div class="i1-1"><h5><b>xx부<br>법인카드</b><hr style="margin: 5px 0;"></h5></div>
-	          <div class="i1-2"><img src="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" style="width: 100%; height: 84.37%;"></div>
-	          <div class="i1-3"><small>결제 건 수</small><br><b>0건</b></div>
+	          <div class="i1-1">
+	          	<h5>
+		          	<b>${loginEmp.deptName}<br>
+		          	법인카드</b>
+		          	<hr style="margin: 5px 0;">
+	          	</h5>
+	          	<b id="currentMonth">XX월<br></b>
+	          
+	          </div>
+	          <div class="i1-2">
+	          	<div id="donutchart"style="width: 100%; height: 100%;"></div>
+	          </div>
+	          <div class="i1-3">
+	          	<small>결제 건 수</small><br><b>0건</b>
+	          </div>
 	          <div class="i1-4"><small>사용금액 / 한도</small><br><b>0,000,000 원 / 5,000,000 원</b></div>
 	        </div>
 	        <!-- 카드정보 -->
 	        <div class="i0 container c2">
 	          <div class="i2-1"><h5 style="margin: 0 0 5px 0;"><b>카드정보</b></h5></div>
-	          <div class="i2-2"><img src="${pageContext.request.contextPath}/resources/assets/img/elements/card.png" style="width: 100%; height: 100%;"></div>
-	          <div class="i2-3">카드 이름</div>
+	          <div class="i2-2" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" 
+	          	   title="<span>상세정보 조회 </span>"
+	          	   style="cursor: pointer" id="cardInfoDetail">
+	          	<img src="${pageContext.request.contextPath}/resources/acct_files/${cardInfo.changeName}" style="width: 100%; height: 100%;">
+	          </div>
+	          <div class="i2-3"style="margin-left: 5px;"><b>${cardInfo.cardIssuer}</b><br>${cardInfo.cardName}</div>
 	          <div class="i2-4">
 	            <table class="c_table">
 	              <hr style="margin: 5px 0;">
 	              <tr>
 	                <th>브랜드</th>
-	                <td>MASTER</td>
+	                <td>${cardInfo.paymentType}</td>
 	              </tr>
 	              <tr>
 	                <th>카드번호</th>
-	                <td><small>1234-00**-****-1234</small></td>
+	                <td><small>${fn:substring(cardInfo.cardNo,0,5)}****-****${fn:substring(cardInfo.cardNo,14,19)}</small></td>
 	              </tr>
 	              <tr>
 	                <th>유효기간</th>
-	                <td>12/25</td>
+	                <td>${cardInfo.expirationDate}</td>
 	              </tr>
 	              <tr>
 	                <th>CVV/CVC</th>
-	                <td>****</td>
+	                <td>***</td>
 	              </tr>
 	            </table>
 	          </div>
@@ -89,139 +154,7 @@
 	            
 	          </form>
 	          <script>
-          		/*숫자 출력*/
-				function SetValue(e){
-					$("#m_no").val(e.value);
-				}
-				
-          		/*검색 값 검사*/
-				function checkValue(){
-					var startD = $("#start_date").val();
-					var endD = $("#end_date").val();
-					var empName = $("input[name=empName]").val();
-					var keyWord = $("input[name=keyWord]").val();
-					
-					/*날짜검사*/
-					if(endD && startD){
-						if(endD < startD){
-							alert("시작일이 종료일보다 클 수 없습니다.");
-							$("#end_date").focus();
-	
-							return false;
-						}
-					}else{
-						return false;
-					}
-
-					/*이름검사*/
-					if(empName){
-						var chkName = /^[가-힣]{2,6}$/;
-	                	if(!chkName.test(empName)){
-							alert("이름은 두글자 이상의 한글로 입력하십시오.");
-							$("input[name=empName]").focus();
-							return false;
-	                	}
-					}
-					
-					toAjax(startD, endD, empName, keyWord, 1);
-					
-				}
           		
-          		/*검색 ajax호출*/
-          		function toAjax(startD, endD, empName, keyWord, currentNo){
-          			
-                    var startD = startD;		//시작일
-                    var endD = endD;			//종료일
-                    var empName = empName;		//이름
-          			var keyWord = keyWord;		//검색어
-          			var currentNo = currentNo;	//검색어
-          			
-          			console.log(startD, endD, empName, keyWord, currentNo);
-          			
-          			$.ajax({ 
-        				url: "searchStat.do",
-        				data: {
-        					currentPage : currentNo,
-        					keyWord : keyWord,
-        					empName : empName,
-        					startDate : startD,
-        					endDate : endD
-        				},
-        				type: "GET",
-        				dataType : "json",
-        				success : function(result){
-        					
-        					var list="";
-        					
-        					/*결과물 반복문*/
-        					$.each(result, function(i){
-        						
-								/*html 태그 추가*/
-        						list += "<tr>"
-                                + "<td>" + result[i].statNo + "</td>"
-                                + "<td>" + result[i].empName + "</td>"
-                                + "<td>" + result[i].transactionDate + "</td>"
-                                + "<td>" + result[i].amount + "</td>"
-                                + "<td>" + result[i].storeName + "</td>"
-                                + "<td>" + result[i].paymentStatus + "</td>"
-                                + "<td><button type='button' class='btn btn-primary detail_btn'>확인</button></td>"
-                              	+ "</tr>"
-    	 					});
-        					
-        					$("#resultTable").html(list);	//화면에 출력
-        					
-        					var pi = result[0].pi;
-        					
-        					/*console.log("currentPage : " + pi.currentPage);
-        					console.log("startPage : " + pi.startPage);
-        					console.log("endPage : " + pi.endPage);
-        					console.log("maxPage : " + pi.maxPage);*/
-
-        					var pageSet="";
-        					
-        					var clickFunctionP = "toAjax(" + '"' + startD + '"' + "," + '"' + endD + '"' + "," + '"' + empName + '"' + "," + '"' + keyWord + '"' + "," + (pi.currentPage-1) + ")"
-        					var clickFunctionN = "toAjax(" + '"' + startD + '"' + "," + '"' + endD + '"' + "," + '"' + empName + '"' + "," + '"' + keyWord + '"' + "," + (pi.currentPage+1) + ")"
-        					/*currentPage가 1이 아닐 때*/
-        					if(pi.currentPage != 1){
-        						$("#prevLi").removeClass('disabled'); 			//prev버튼에 클래스 제거(클릭가능)
-        						$("#prevA").attr('onclick', clickFunctionP); 	//a태그 onclick 추가
-        					}else{
-        						$("#prevLi").addClass('disabled');
-        					}
-        					
-        					/*페이지 수 만큼 반복해서 추가*/
-        					for(var p = pi.startPage ; p <= pi.endPage ; p++ ){
-        						if(pi.currentPage != p){
-        							pageSet += "<li class='page-item'>"
-	            							+ "<div class='page-link' href='javascript:void(0);' onclick='toAjax(" + '"' + startD + '"' + "," + '"' + endD + '"' + "," + '"' + empName + '"' + "," + '"' + keyWord + '"' + "," + p + ")'>"
-	            							+ p
-	            							+ "</div>"
-	            							+ "</li>"
-        						}else{
-        							pageSet += "<li class='page-item disabled'>"
-        									+ "<div class='page-link' href='javascript:void(0);'>"
-	            							+ p
-	            							+ "</div>"
-	            							+ "</li>"
-        						}
-        					}
-        					
-        					$("#navList").html(pageSet);	//화면에 출력
-        					
-        					/*currentPage가 끝페이지가 아닐 때*/
-        					if(pi.currentPage != pi.maxPage){
-        						$("#nextLi").removeClass('disabled'); 			//next버튼에 클래스 제거(클릭가능)
-        						$("#nextA").attr('onclick', clickFunctionN); 	//a태그 onclick 추가
-        					}else{
-        						$("#nextLi").addClass('disabled');
-        					}
-
-        				},
-        				error : function(result){
-        				 alert('데이터 로딩 실패');
-        				}
-		   			});
-          		}
 			  </script>
 	        </div>
 	        <!-- 카드사용내역조회 -->
@@ -236,7 +169,7 @@
 	          
 	          <!-- 내역 -->
 	          <div class="i4-3">
-	            <table class="table table-striped a_table" id="resultTable">
+	            <table class="table table-striped a_table">
 	              <thead>
 	                <tr>
 	                  <th>NO.</th>
@@ -248,7 +181,7 @@
 	                  <th>상세</th>
 	                </tr>
 	              </thead>
-	              <tbody>
+	              <tbody id="resultTable">
 	                <c:forEach items="${cardList}" var="c">
 	                    <tr>
 	                        <td>${ c.statNo }</td>
@@ -257,7 +190,7 @@
 	                        <td>${ c.amount }</td>
 	                        <td>${ c.storeName }</td>
 	                        <td>${ c.paymentStatus }</td>
-	                        <td><button type="button" class="btn btn-primary detail_btn">확인</button></td>
+	                        <td><button type="button" class="btn btn-primary detail_btn" onclick="detailModal(this)">확인</button></td>
 	                    </tr>
                     </c:forEach>
 	              </tbody>
@@ -287,28 +220,28 @@
 						</c:choose>
 						<!-- / prev -->
 						
-						<li id='navList' style="display: none; margin-left:3px;"></li>
-						<!-- num -->
-						<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-							<c:choose>
-								<c:when test="${ pi.currentPage ne p }">
-									<li class="page-item">
-										<a class="page-link" href="acct.do?deptCode=${loginEmp.deptCode}&currentPage=${ p }">
-											${ p }
-										</a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="page-item disabled">
-										<a class="page-link" href="">
-											${ p }
-										</a>
-									</li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<!-- num -->
-						
+						<div id='navList' style="display: flex; margin-left:3px;">
+							<!-- num -->
+							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+								<c:choose>
+									<c:when test="${ pi.currentPage ne p }">
+										<li class="page-item numbers">
+											<a class="page-link" href="acct.do?deptCode=${loginEmp.deptCode}&currentPage=${ p }">
+												${ p }
+											</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item numbers disabled">
+											<a class="page-link" href="">
+												${ p }
+											</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<!-- num -->
+						</div>
 						<!-- next -->
 						<c:choose>
 							<c:when test="${ pi.currentPage ne pi.maxPage }">
@@ -504,10 +437,8 @@
 	        </div>
 	        
 	        <!-- 모달 풋터 -->
-	        <div class="modal-footer">
-	            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
-	            <button type="submit" class="btn btn-primary" id="stat_update_btn">수정</button>
-	            <button type="button" class="btn btn-danger" id="stat_delete_btn" onclick="deleteStat()">삭제</button>
+	        <div class="modal-footer" id="detailFooter">
+	            
 	        </div>
 	    </div>
 	  </div>
@@ -519,63 +450,250 @@
 	<script>
 			
 		/*상세조회*/
-		$(function(){
-			$(".detail_btn").click(function(){
-				var stat_no = $(this).parent().siblings().eq(0).text();
-      			console.log(stat_no);
-      			
-      			/*상세조회 ajax*/
-      			$.ajax({ 
-					url: "statDetail.do",
-					data: {
-					 		statNo: stat_no
-					},
-					type: "GET",
-					dataType : "json",
-					success : function(result){
-						
-						$("#detail_stat_no").val(result.statNo);
-						$("#detail_emp_no").val(result.empNo);
-						
-						$("#detail_emp_name").val(result.empName);
-						$("#detail_payment_status").val(result.paymentStatus);
-						$("#detail_amount").val(result.amount);
-						$("#detail_transaction_date").val(result.transactionDate);
-						$("#detail_store_name").val(result.storeName);
-						$("#detail_stas_meno").val(result.statMemo);
-						
-						/*첨부파일*/
-						var originName = result.originName;
-						var changeName = result.changeName
-						var filePath = result.filePath;
-						
-						var attc = "";
-						
-						if(originName){
-							attc += '<a href="${pageContext.request.contextPath}/resources/acct_files/' + changeName + '" download="'+originName+'"> 현재 업로드된 파일 : '+originName+'</a>' 
-								+'<input type="hidden" name="changeName" value=' + changeName + '></input>'
-								+'<input type="hidden" name="originName" value='+originName+'></input>';
-						}else{
-							attc = "첨부파일이 없습니다.";
-						}
-						
-						$("#test").html(attc);
-	
-					},
-					error : function(result){
-					 alert('데이터 로딩 실패');
+		function detailModal(e){
+			var stat_no = $(e).parent().siblings().eq(0).text();
+     			console.log(stat_no);
+     			
+     			/*상세조회 ajax*/
+     			$.ajax({ 
+				url: "statDetail.do",
+				data: {
+				 		statNo: stat_no
+				},
+				type: "GET",
+				dataType : "json",
+				success : function(result){
+					
+					$("#detail_stat_no").val(result.statNo);
+					$("#detail_emp_no").val(result.empNo);
+					
+					$("#detail_emp_name").val(result.empName);
+					$("#detail_payment_status").val(result.paymentStatus);
+					$("#detail_amount").val(result.amount);
+					$("#detail_transaction_date").val(result.transactionDate);
+					$("#detail_store_name").val(result.storeName);
+					$("#detail_stas_meno").val(result.statMemo);
+					
+					/*첨부파일*/
+					var originName = result.originName;
+					var changeName = result.changeName
+					var filePath = result.filePath;
+					
+					var attc = "";
+					
+					if(originName){
+						attc += '<a href="${pageContext.request.contextPath}/resources/acct_files/' + changeName + '" download="'+originName+'"> 현재 업로드된 파일 : '+originName+'</a>' 
+							+'<input type="hidden" name="changeName" value=' + changeName + '></input>'
+							+'<input type="hidden" name="originName" value='+originName+'></input>';
+					}else{
+						attc = "첨부파일이 없습니다.";
 					}
-			   });
-      			//$("input[name=storeName]").val(stat_no);
-				
-      			$("#stat_detail_btn").click();
-			});
-		});
-		
+					
+					$("#test").html(attc);
+					
+					
+					var footerBtns = '<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>';
+					
+					var loginWho = ${loginEmp.empNo}
+			        if(loginWho == result.empNo){
+			        	footerBtns += '<button type="submit" class="btn btn-primary" id="stat_update_btn">수정</button>'
+			        			    + '<button type="button" class="btn btn-danger" id="stat_delete_btn" onclick="deleteStat()">삭제</button>';
+			        }
+			        
+					$("#detailFooter").html(footerBtns);
+			        
+
+				},
+				error : function(result){
+				 alert('데이터 로딩 실패');
+				}
+		   });
+			
+     			$("#stat_detail_btn").click();
+		};
+	
 		/*내역삭제*/
 		function deleteStat(){
 			location.href = "deleteStat.do?statNo="+$('#detail_stat_no').val()+"&changeName="+$('input[name=changeName]').val();
 		}
+		
+		/*숫자 출력*/
+		function SetValue(e){
+			$("#m_no").val(e.value);
+		}
+		
+  		/*검색 값 검사*/
+		function checkValue(){
+			var startD = $("#start_date").val();
+			var endD = $("#end_date").val();
+			var empName = $("input[name=empName]").val();
+			var amount = $("#m_no").val();
+			var keyWord = $("input[name=keyWord]").val();
+			
+			/*날짜검사*/
+			if(endD && startD){
+				if(endD < startD){
+					alert("시작일이 종료일보다 클 수 없습니다.");
+					$("#end_date").focus();
+
+					return false;
+				}
+			}else{
+				return false;
+			}
+
+			/*이름검사*/
+			if(empName){
+				var chkName = /^[가-힣]{2,6}$/;
+            	if(!chkName.test(empName)){
+					alert("이름은 두글자 이상의 한글로 입력하십시오.");
+					$("input[name=empName]").focus();
+					return false;
+            	}
+			}
+			
+			toAjax(startD, endD, empName, amount, keyWord, 1);
+			
+		}
+  		
+  		/*검색 ajax호출*/
+  		function toAjax(startD, endD, empName, amount, keyWord, currentNo){
+  			
+            var startD = startD;		//시작일
+            var endD = endD;			//종료일
+  			var amount = amount;	//가격
+            var empName = empName;		//이름
+  			var keyWord = keyWord;		//검색어
+  			var currentNo = currentNo;	//검색어
+  			
+  			console.log("startD : "+startD);
+  			console.log("endD : "+endD);
+  			console.log("amount : "+amount);
+  			console.log("empName : "+empName);
+  			console.log("keyWord : "+keyWord);
+  			console.log("currentNo : "+currentNo);
+  			
+  			$.ajax({ 
+				url: "searchStat.do",
+				data: {
+					currentPage : currentNo,
+					keyWord : keyWord,
+					empName : empName,
+					startDate : startD,
+					endDate : endD,
+					amount : amount
+				},
+				type: "GET",
+				dataType : "json",
+				success : function(result){
+					
+					console.log(result);
+					
+					var list="";
+					
+					/*결과물 반복문*/
+					$.each(result, function(i){
+						
+						/*html 태그 추가*/
+						list += "<tr>"
+                        + "<td>" + result[i].statNo + "</td>"
+                        + "<td>" + result[i].empName + "</td>"
+                        + "<td>" + result[i].transactionDate + "</td>"
+                        + "<td>" + result[i].amount + "</td>"
+                        + "<td>" + result[i].storeName + "</td>"
+                        + "<td>" + result[i].paymentStatus + "</td>"
+                        + "<td><button type='button' class='btn btn-primary detail_btn' onclick='detailModal(this)'>확인</button></td>"
+                      	+ "</tr>"
+ 					});
+					
+					$("#resultTable").html(list);	//화면에 출력
+					
+					var pi = result[0].pi;
+					
+					console.log("currentPage : " + pi.currentPage);
+					console.log("startPage : " + pi.startPage);
+					console.log("endPage : " + pi.endPage);
+					console.log("maxPage : " + pi.maxPage);
+
+					var pageSet="";
+					
+					var clickFunctionP 
+						= "toAjax(" + '"' + startD + '"' 
+							        + "," + '"' + endD + '"' 
+							        + "," + '"' + empName + '"' 
+							        + "," + '"' + amount + '"' 
+							        + "," + '"' + keyWord + '"' 
+							        + "," + (pi.currentPage-1) + ")"
+							        
+					var clickFunctionN 
+						= "toAjax(" + '"' + startD + '"' 
+								    + "," + '"' + endD + '"' 
+								    + "," + '"' + empName + '"' 
+								    + "," + '"' + amount + '"' 
+								    + "," + '"' + keyWord + '"' 
+								    + "," + (pi.currentPage+1) + ")"
+					/*currentPage가 1이 아닐 때*/
+					if(pi.currentPage != 1){
+						$("#prevLi").removeClass('disabled'); 			//prev버튼에 클래스 제거(클릭가능)
+						$("#prevA").attr('onclick', clickFunctionP); 	//a태그 onclick 추가
+					}else{
+						$("#prevLi").addClass('disabled');
+					}
+					
+					/*페이지 수 만큼 반복해서 추가*/
+					for(var p = pi.startPage ; p <= pi.endPage ; p++ ){
+						if(pi.currentPage != p){
+							pageSet += "<li class='page-item'>"
+        							+ "<div class='page-link' href='javascript:void(0);' onclick='toAjax(" 
+        									+ '"' + startD + '"' 
+        									+ "," + '"' + endD + '"' 
+        									+ "," + '"' + empName + '"' 
+        									+ "," + '"' + amount + '"' 
+        									+ "," + '"' + keyWord + '"' 
+        									+ "," + p + ")'>"
+        							+ p
+        							+ "</div>"
+        							+ "</li>"
+						}else{
+							pageSet += "<li class='page-item disabled'>"
+									+ "<div class='page-link' href='javascript:void(0);'>"
+        							+ p
+        							+ "</div>"
+        							+ "</li>"
+						}
+					}
+					console.log(pageSet)
+					$("#navList").html(pageSet);	//화면에 출력
+					$("#navList").css('display:flex;');	//
+					
+					/*currentPage가 끝페이지가 아닐 때*/
+					if(pi.currentPage != pi.maxPage){
+						$("#nextLi").removeClass('disabled'); 			//next버튼에 클래스 제거(클릭가능)
+						$("#nextA").attr('onclick', clickFunctionN); 	//a태그 onclick 추가
+					}else{
+						$("#nextLi").addClass('disabled');
+					}
+
+				},
+				error : function(result){
+				 alert('데이터 로딩 실패');
+				}
+   			});
+  		}
+	  	
+  		/*카드정보 상세조회*/
+  		/*$(document).on("click", "#cardInfoDetail", function(){
+  			var inputPwd = prompt("부서 비밀번호를 입력하세요.");
+  			var deptPwd = ${cardInfo.deptPwd};
+  			
+  			if(inputPwd == deptPwd){
+  				alert("카드 번호 : " + ${cardInfo.cardNo}+ " , CVC 번호 : " + ${cardInfo.securityCode});  	
+  				//숫자로 인식해서 뺄샘을 하고있음...
+  			}else{
+				alert("비밀번호가 틀렸습니다.");  				
+  			}
+  		});*/
+
 	</script>
 	<jsp:include page="../common/bottom.jsp"/>
 </body>

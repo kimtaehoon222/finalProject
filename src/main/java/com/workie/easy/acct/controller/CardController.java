@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ import com.workie.easy.employee.model.dto.Employee;
 * 2022/06/26 (전재은) 카드사용내역등록, 파일업로드, 상세조회 추가
 * 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * 2022/06/28 (전재은) 내역삭제 수정, 내역검색, 카드조회 추가
+* 2022/06/28 (전재은) 사용금액 그래프 추가
 * </pre>
 * @version 1
 * @author 전재은
@@ -49,10 +51,11 @@ public class CardController {
 	/*회계관리 페이지 전환*/
 	@RequestMapping("acct.do")
 	public String selectCardStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage 
-									, String deptCode,  Model model, HttpSession session) {
+									, String deptCode, Model model, HttpSession session) {
 		
 		
-		/*카드사용내역조회*/
+		/*--카드사용내역조회--*/
+		/*deptCode삽입*/
 		if(deptCode == null) {
 			deptCode=((Employee)session.getAttribute("loginEmp")).getDeptCode();
 		}
@@ -66,11 +69,17 @@ public class CardController {
 		/*카드목록 조회*/
 		ArrayList<Card> cardList = cardService.selectCardStatList(deptCode, pi);
 		
+		/*--카드 조회--*/
+		Card cardInfo = cardService.selectCardInfo(deptCode);
+		
+		/*--사용금액, 한도--*/
+		
+		
+		/*--공통--*/
 		/*세션에 올리기*/
 		model.addAttribute("cardList", cardList);
 		model.addAttribute("pi", pi);
-		
-		/*카드 조회*/
+		model.addAttribute("cardInfo", cardInfo);
 		
 		return "acct/acct";
 		
@@ -257,19 +266,68 @@ public class CardController {
 	/*카드내역 검색*/
 	@RequestMapping("searchStat.do")
 	@ResponseBody
-	private JSONObject searchStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage ,
+	private JSONArray searchStatList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage ,
 									  @RequestParam(value="keyWord", required = false) String keyWord ,
 									  @RequestParam(value="empName", required = false) String empName ,
-									  String startDate , String endDate
+									  @RequestParam(value="amount", defaultValue = "0") int amount ,
+									  String startDate , String endDate , HttpSession session
 									  ) {
-		System.out.println("currentPage"+currentPage);
-		System.out.println("startDate"+startDate);
-		System.out.println("endDate"+endDate);
-		System.out.println("keyWord"+keyWord);
-		System.out.println("empName"+empName);
+		/*값 확인*/
+		System.out.println("currentPage : "+currentPage);
 		
-		JSONObject jsonStat = new JSONObject();
+		System.out.println("startDate : "+startDate);
+		System.out.println("endDate : "+endDate);
+		System.out.println("amount : "+amount);
+		System.out.println("keyWord : "+keyWord);
+		System.out.println("empName : "+empName);
 		
-		return jsonStat;
+		/*부서 설정*/
+		String deptCode=((Employee)session.getAttribute("loginEmp")).getDeptCode();
+		System.out.println("deptCode : "+deptCode); //부서코드 확인 출력
+		
+		/*겁색 값 설정*/
+		Card c = new Card();
+		
+		c.setDeptCode(deptCode);	//부서코드
+		
+		c.setStartDate(startDate);	//검색 시작일
+		c.setEndDate(endDate);		//검색 종료일
+		c.setAmount(amount);		//가격
+		c.setKeyWord("%"+keyWord+"%");		//검색어
+		c.setEmpName(empName);		//사용자
+		
+		/*--페이지 설정--*/
+		/*검색 내역 수*/
+		int cardListCount = cardService.searchStatCount(c);
+		/*페이지 정보*/
+		PageInfo pi = Pagination.getPageInfo(cardListCount, currentPage, 10, 5);
+		
+		/*--검샥 조회--*/
+		/*검색 결과 목록*/
+		ArrayList<Card> statList = cardService.searchStatList(c, pi);
+		
+		/*JSONObject, JSONArray*/
+		JSONArray jsonArr = new JSONArray();
+		
+		for(int i=0; i < statList.size(); i++) {
+			System.out.println("조회 테스트 ("+i+") : "+statList.get(i).toString());
+			
+			JSONObject jsonStat = new JSONObject();
+		
+			jsonStat.put("statNo", statList.get(i).getStatNo()); 					//내역번호
+			jsonStat.put("empName", statList.get(i).getEmpName()); 					//사용자
+			jsonStat.put("transactionDate", statList.get(i).getTransactionDate()); 	//결제일
+			jsonStat.put("amount", statList.get(i).getAmount()); 					//가격
+			jsonStat.put("storeName", statList.get(i).getStoreName());				//가맹점
+			jsonStat.put("paymentStatus", statList.get(i).getPaymentStatus());		//결제상태
+			
+			jsonStat.put("pi", pi);											//pi
+			
+			jsonArr.add(jsonStat); 											// 대괄호 안에 넣어주기[중괄호]
+		}
+		
+		return jsonArr;
 	}
+
+	
 }

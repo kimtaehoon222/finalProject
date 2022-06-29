@@ -444,7 +444,7 @@
 				<!-- 간단 일정 목록 -->
 				<div class="i0 i0-3">
 					<div class="col-12">
-						<div class="card overflow-hidden" style="height: 425px">
+						<div class="card overflow-hidden" style="height: 590px;">
 							<h4 class="card-header" style="text-align: center;">일정 목록</h4>
 							<div class="card-body" id="vertical-example">
 								
