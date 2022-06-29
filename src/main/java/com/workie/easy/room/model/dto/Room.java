@@ -29,5 +29,7 @@ public class Room {
 	
 	private String deptCode; //부서코드
 	private String deptName; //부서명
+	
+	private int empRoomNo;//사용자가 선택한 회의실 번호
 
 }

@@ -31,4 +31,6 @@ public interface PersonnelService {
 	//인사관리에서 미승인 직원 목록 조회하는 메소드
 	void insertEmp(Employee e, Attachment at);
 	//인사관리에서 미승인 직원 정보 추가, 승인 메소드
+	ArrayList<Employee> selectMonthEmpList();
+	//이 달의 입사지 리스트 조회하는 메소드
 }

@@ -131,5 +131,14 @@
 	         WHERE EMP_NO = #{empNo} AND ENT_YN='Y'
         </update>
          
+         <select id="selectMonthEmpList" resultMap="personnelResult">
+	        SELECT 
+			EMP_NAME ,DEPT_NAME
+			FROM EMPLOYEE A 
+			LEFT JOIN DEPARTMENT B ON A.DEPT_CODE = B.DEPT_CODE
+			WHERE TO_CHAR(SYSDATE, 'yymm') = TO_CHAR(HIRE_DATE, 'yymm') 
+			AND APV_YN = 'Y'
+			AND ENT_YN = 'Y'
+         </select>
          
 </mapper>

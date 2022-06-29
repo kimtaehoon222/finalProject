@@ -364,15 +364,15 @@
                 <i class="menu-icon tf-icons bx bx-buildings"></i>
                 <div data-i18n="Form Layouts">부서정보</div>
               </a>
-              <ul class="menu-sub">
+                 <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="form-layouts-vertical.html" class="menu-link">
-                    <div data-i18n="Vertical Form">1</div>
+                  <a href="empSeeList.do" class="menu-link">
+                    <div data-i18n="Vertical Form">주소록</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="form-layouts-horizontal.html" class="menu-link">
-                    <div data-i18n="Horizontal Form">2</div>
+                  <a href="oChartView.do" class="menu-link">
+                    <div data-i18n="Horizontal Form">조직도</div>
                   </a>
                 </li>
               </ul>
@@ -508,7 +508,6 @@
           <div class="content-wrapper">
           
 
-  
   
   <script>
   $(function(){

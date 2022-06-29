@@ -77,4 +77,9 @@ public class PersonnelDao {
 		return sqlSession.insert("attachmentMapper.insertAttachment", at);
 	}
 
+	public ArrayList<Employee> selectMonthEmpList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("personnelMapper.selectMonthEmpList");
+	}
+
 }

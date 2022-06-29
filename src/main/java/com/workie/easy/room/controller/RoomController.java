@@ -100,17 +100,7 @@ public class RoomController {
 		return jsonObj;
 		
 	}
-	
-	@RequestMapping("myResList.do")
-	public String selectMyResList(int eno, Model model) {
 		
-		ArrayList<Room> list = roomService.selectMyResList(eno);
-		
-		model.addAttribute("list", list);
-		return "room/myResList";
-		
-	}
-	
 	@ResponseBody
 	@RequestMapping(value ="selectRoomList.do" ,produces="application/json; charset=utf-8")
 	public List<Map<String, Object>> selectRoomList() {
@@ -120,7 +110,6 @@ public class RoomController {
 		 JSONObject jsonObj = new JSONObject();
 	     
 	     ArrayList<Room> rList = roomService.selectRoomList();
-	 	 System.out.println("회의실 리스트 " + rList);
 	     HashMap<String, Object> hash = new HashMap<>();		
 
 		for (Room r : rList) {
@@ -148,8 +137,75 @@ public class RoomController {
         room.setMeetGoal(meetGoal);
         room.setEmpNo(loginEmp.getEmpNo());
         
-        Room r = roomService.insertRes(room);
-		return null;
+        int checkDate = roomService.selectCheckDate(room);       
+       
+        JSONObject jsonObj = new JSONObject();
+        if (checkDate != 0) {
+			// 사용자가 선택한 시간대에 이미 예약이 있을 경우
+			jsonObj.put("n", -1);
+			
+			return jsonObj.toString();
+			
+		}else {
+			// 예약이 가능한 경우 예약테이블에 데이터 insert 진행
+			int newRes = roomService.insertRes(room);
+			jsonObj.put("n", newRes);
+			
+			return jsonObj.toString();
+		}
 		
+	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteRes.do", produces="application/json; charset=utf-8")
+	public String deleteRes(int resNo) {
+		
+		System.out.println("회의실 삭제 " + resNo);
+		Room room = new Room();
+	    room.setResNo(resNo);
+	    
+	    int n = roomService.deleteRes(room);
+	    
+	    JSONObject jsonObj = new JSONObject();
+	    jsonObj.put("n", n);
+	    
+	    return jsonObj.toString();
+		}
+	
+	@RequestMapping("myResList.do")
+	public String selectMyResListForm() {
+		
+		return "room/myResList";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value ="selectMyResList.do", produces="application/json; charset=utf-8")
+	public List<Map<String, Object>> selectMyResList(HttpSession session) {
+		    
+		    Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+			
+		    Room room = new Room();
+		    room.setEmpNo(loginEmp.getEmpNo());
+	        ArrayList<Room> list = roomService.selectMyResList(room);
+	        
+	        
+	        JSONArray jsonArr = new JSONArray();
+			JSONObject jsonObj = new JSONObject();
+
+			HashMap<String, Object> hash = new HashMap<>();
+	        for (Room r : list) {
+	        	hash.put("roomName", r.getRoomName());
+				hash.put("meetTitle", r.getMeetTitle());	
+				hash.put("startDate", r.getStartDate());
+				hash.put("endDate", r.getEndDate());
+				hash.put("resNo", r.getResNo());
+				
+				jsonObj = new JSONObject(hash); 						
+	            jsonArr.add(jsonObj);
+			}
+	        return jsonArr;
+			
 	}
 }

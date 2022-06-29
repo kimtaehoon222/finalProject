@@ -16,10 +16,14 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/simple-datatables/style.css">
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kjh123/css/app.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/kjh123/images/favicon.svg" type="image/x-icon">
 </head>
-
+<style>
+#apvBut{ background-color: rgb(57, 90, 112); color: white;}
+</style>
 <body>
 	<jsp:include page="../common/top.jsp" />
     <div id="app">
@@ -33,60 +37,49 @@
 
             <div class="page-heading">
                 
-           
+                <section class="section">
                     <div class="card">
                         <div class="card-header">
-                          <h2>직원 목록</h2>
+                          <h2>주소록</h2>
                           <hr>
                           
                         </div>
                         
                         <div class="card-body">
-                            <table class="table table-striped kim" id="table1" >
+                            <table class="table table-striped" id="table1">
                                 <thead>
                                     <tr>
                                         <th>이름</th>
                                         <th>이메일</th>
-                                        <th>핸드폰</th>
+                                        <th>내선번호</th>
                                         <th>부서</th>
-                                        <th>직위</th>
+                                        <th>직급</th>
                                         <th>  </th>
                                     </tr>
                                 </thead>
-                                <tbody >
-                                <c:forEach items="${ list }" var="e">
+                                <tbody>
+                                 <c:forEach items="${list}" var="e">
                                     <tr>
                                         <td>${e.empName}</td>
-                                        <td>${e.empId}<%="@easy.co.kr" %></td>
-                                        <td> ${e.phone}</td>
+                                        <td>${e.empId}<%="@easy.co.kr"%></td>
+                                        <td>${e.telNo}</td>
                                         <td>${e.deptName}</td>
-                                       	<td>${e.jobName}</td>
-                                       <td><a  class="btn btn-primary rounded-pill" href="detailEmp.do?eId=${e.empId}">상세보기</a></td>                                   
-                                       	
-                                   </tr>
-                                 </c:forEach> 
+                                        <td>${e.jobName}</td>
+                                        <td><a  class="btn btn-primary rounded-pill" href="empSeeDetail.do?eId=${e.empId}">상세보기</a></td>                                   
+                                    </tr>
+                                 </c:forEach>                              
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
 
-             
+                </section>
             </div>
 
          
         </div>
         
     </div>
-
-    <!--이름은 동명이인이 있을 수 있어서 id로 -->
-      <script>
-      function emp(e){
-  		console.log(e.innerText)
-  	    location.href="detailEmp.do?eId=" +e.innerText;
-    	};
-    </script>
- 
     <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/kjh123/js/bootstrap.bundle.min.js"></script>

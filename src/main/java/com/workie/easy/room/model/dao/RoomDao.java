@@ -21,9 +21,9 @@ public class RoomDao {
 		return sqlSession.selectOne("roomMapper.selectRes", room);
 	}
 
-	public ArrayList<Room> selectMyResList(int eno, SqlSessionTemplate sqlSession) {
+	public ArrayList<Room> selectMyResList(Room room, SqlSessionTemplate sqlSession) {
 		
-		return (ArrayList)sqlSession.selectList("roomMapper.selectMyResList",eno);
+		return (ArrayList)sqlSession.selectList("roomMapper.selectMyResList",room);
 	}
 
 	public ArrayList<Room> selectRoomList(SqlSessionTemplate sqlSession) {
@@ -34,6 +34,16 @@ public class RoomDao {
 	public int insertRes(Room room, SqlSessionTemplate sqlSession) {
 		
 		return sqlSession.insert("roomMapper.insertRes", room);
+	}
+
+	public int selectCheckDate(Room room, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("roomMapper.selectCheckDate", room);
+	}
+
+	public int deleteRes(Room room, SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.delete("roomMapper.deleteRes",room);
 	}
 
 

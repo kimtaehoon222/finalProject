@@ -241,7 +241,7 @@ body {
   }
    </style>
 <body>
-	<jsp:include page="top.jsp"/>
+	<jsp:include page="../common/top.jsp"/>
 	
 	<div class="kim">
 	<br>
@@ -308,7 +308,7 @@ body {
     </li>
   </ol>
 </div>
-<jsp:include page="bottom.jsp"/>
+<jsp:include page="../common/bottom.jsp"/>
 </div>
 
 </body>

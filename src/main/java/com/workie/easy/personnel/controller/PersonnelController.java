@@ -252,5 +252,33 @@ public class PersonnelController {
 		    personnelService.insertEmp(e, at);
 			return "redirect:empList.do";//재직자 리스트로
 	 }
-	   
+	 
+	 @RequestMapping("empSeeList.do")
+	 public String selectEmpSeeList(Model model) {
+		 
+	  ArrayList<Employee> list = personnelService.selectEmpList();
+
+	  model.addAttribute("list", list);
+		return "personnel/empSeeList";		
+		 
+	 }
+	 
+	 @RequestMapping("empSeeDetail.do")
+	 public ModelAndView selectempSeeDetail(String eId , ModelAndView mv) {
+		  
+	 Employee e = personnelService.selectEmp(eId);
+	 
+	 String reg = e.getEmpReg().substring(0, 6);
+	 e.setEmpReg(reg);
+	 mv.addObject("e",e).setViewName("personnel/empSeeDetail");
+
+	 return mv;	
+		 
+	 }
+	 
+	 @RequestMapping("oChartView.do")
+	 public String oChartView() {
+		return "personnel/oChartView";
+		 
+	 }
 }

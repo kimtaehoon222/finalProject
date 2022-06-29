@@ -65,7 +65,7 @@ margin-left: 50px;
             <textarea id="basic-default-message" class="form-control"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">수정하기</button>
-            <button type="reset" class="btn btn-outline-secondary">취소하기</button>
+           <button type="reset" class="btn btn-outline-secondary">취소하기</button>
         </form>
       </div>
     </div>
