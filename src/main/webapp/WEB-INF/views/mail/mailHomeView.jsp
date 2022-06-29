@@ -228,7 +228,7 @@ tr:hover{
                            <li class="d-flex mb-4 pb-1">
                             <input type="hidden" name="toReply" value="${ emp.toId }">
                              <div class="avatar flex-shrink-0 me-3">
-                               <img src="${pageContext.request.contextPath}/resources/assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
+                               <img src="${pageContext.request.contextPath}/resources/emp_files/${emp.changeName}" alt="empPhoto" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
                              </div>
                              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                <div class="me-2">
