@@ -25,6 +25,7 @@
 		<result property="jobVacation" column="JOB_VACATION"/>
 		<result property="originName" column="ORIGIN_NAME"/>
       	<result property="changeName" column="CHANGE_NAME"/>
+      	<result property="telNo" column="TEL_NO"/>
 	</resultMap>
 	
 	<select id="loginEmp" parameterType="Employee" resultMap="employeeResultSet">
