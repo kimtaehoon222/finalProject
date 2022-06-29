@@ -83,7 +83,7 @@
 								<tr style="text-align: center">
 									<td>${ s.signNo }</td>
 									<td>${ s.typeName }</td>
-									<td style="width: 200px">${ s.signContent }</td>
+									<td style="width: 200px">${ s.signTitle }</td>
 								<c:if test="${ !empty s.VCode }">
 									<td style="color: rgb(124, 127, 251)">${ s.VCode }</td>
 								</c:if>	

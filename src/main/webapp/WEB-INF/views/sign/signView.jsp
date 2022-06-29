@@ -93,7 +93,7 @@
 	<div class="container">
 		<br> <br>
 		<h2 style="color: rgb(124, 127, 251)">
-			<b>결재함</b>
+			<b>결재 함</b>
 		</h2>
 		<div class="col-md-12" id="center">
 			<!-- Button trigger modal -->
@@ -708,7 +708,7 @@
 			</div>
 		</div>
 
-
+<!-- 작업 시작할곳 -->
 		<div class="px-3 py-3 my-4">
 			<div class="card-body">
 				<h4 class="card-title" style="color: rgb(124, 127, 251)">
@@ -717,26 +717,27 @@
 				<div class="table-responsive">
 					<table class="table" style="width: 1300px">
 						<thead>
-							<tr>
-								<th>No</th>
-								<th>분류</th>
-								<th>기안문</th>
-								<th>상태</th>
-								<th>기안자</th>
-								<th>기안일</th>
+							<tr style="text-align: center">
+								<th style="color:rgb(124, 127, 251)">No</th>
+								<th style="color:rgb(124, 127, 251)">분류</th>
+								<th style="color:rgb(124, 127, 251)">기안문</th>
+								<th style="color:rgb(124, 127, 251)">상태</th>
+								<th style="color:rgb(124, 127, 251)">기안자</th>
+								<th style="color:rgb(124, 127, 251)">기안일</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>결재</td>
-								<td style="width: 300px">2/4분기 매출 보고</td>
-								<td><label class="badge badge-gradient-success">요청</label></td>
-								<td>김지수</td>
-								<td>2022-06-09</td>
+						<c:forEach items="${ listW }" var="s">
+							<tr style="text-align: center">
+								<td>${ s.signNo }</td>
+								<td>${ s.typeName }</td>
+								<td style="width: 300px">${ s.signTitle }</td>
+								<td><label class="badge badge-gradient-success">${ s.statusName }</label></td>
+								<td>${ s.createName }</td>
+								<td>${ s.createDate }</td>
 							</tr>
 
-
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -749,33 +750,27 @@
 				<div class="table-responsive">
 					<table class="table" style="width: 1300px">
 						<thead>
-							<tr>
-								<th>No</th>
-								<th>분류</th>
-								<th>기안문</th>
-								<th>상태</th>
-								<th>기안자</th>
-								<th>기안일</th>
+							<tr style="text-align: center">
+								<th style="color: rgb(124, 127, 251)">No</th>
+								<th style="color: rgb(124, 127, 251)">분류</th>
+								<th style="color: rgb(124, 127, 251)">기안문</th>
+								<th style="color: rgb(124, 127, 251)">상태</th>
+								<th style="color: rgb(124, 127, 251)">기안자</th>
+								<th style="color: rgb(124, 127, 251)">기안일</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>협조</td>
-								<td style="width: 300px">교육비 지급 요청의 건</td>
-								<td><label class="badge badge-gradient-success">진행</label></td>
-								<td>김태훈</td>
-								<td>2022-06-02</td>
+						<c:forEach items="${ listP }" var="p">
+							<tr style="text-align: center">
+								<td>${ p.signNo }</td>
+								<td>${ p.typeName }</td>
+								<td style="width: 300px">${ p.signTitle }</td>
+								<td><label class="badge badge-gradient-warning">${ p.statusName }</label></td>
+								<td>${ p.createName }</td>
+								<td>${ p.createDate }</td>
 							</tr>
 
-							<tr>
-								<td>2</td>
-								<td>협조</td>
-								<td style="width: 300px">물품 구매 요청의 건</td>
-								<td><label class="badge badge-gradient-success">대기</label></td>
-								<td>임현빈</td>
-								<td>2022-05-30</td>
-							</tr>
+						</c:forEach>	
 						</tbody>
 					</table>
 				</div>
@@ -788,42 +783,26 @@
 				<div class="table-responsive">
 					<table class="table" style="width: 1300px">
 						<thead>
-							<tr>
-								<th>No</th>
-								<th>분류</th>
-								<th>기안문</th>
-								<th>상태</th>
-								<th>기안자</th>
-								<th>기안일</th>
+						<tr style="text-align: center">
+								<th style="color: rgb(124, 127, 251)">No</th>
+								<th style="color: rgb(124, 127, 251)">분류</th>
+								<th style="color: rgb(124, 127, 251)">기안문</th>
+								<th style="color: rgb(124, 127, 251)">상태</th>
+								<th style="color: rgb(124, 127, 251)">기안자</th>
+								<th style="color: rgb(124, 127, 251)">기안일</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>결재</td>
-								<td style="width: 300px">대표는 보아라</td>
-								<td><label class="badge badge-gradient-danger">반려</label></td>
-								<td>임현빈</td>
-								<td>2022-05-05</td>
+						<c:forEach items="${ listR }" var="r">
+							<tr style="text-align: center">
+								<td>${ r.signNo }</td>
+								<td>${ r.typeName }</td>
+								<td style="width: 300px">${ r.signTitle }</td>
+								<td><label class="badge badge-gradient-danger">${ r.statusName }</label></td>
+								<td>${ r.createName }</td>
+								<td>${ r.createDate }</td>
 							</tr>
-
-							<tr>
-								<td>2</td>
-								<td>협조</td>
-								<td style="width: 300px">잘부탁드립니다.</td>
-								<td><label class="badge badge-gradient-danger">반려</label></td>
-								<td>전재은</td>
-								<td>2022-05-03</td>
-							</tr>
-
-							<tr>
-								<td>3</td>
-								<td>결재</td>
-								<td style="width: 300px">어제 매출 UP~</td>
-								<td><label class="badge badge-gradient-danger">반려</label></td>
-								<td>김지수</td>
-								<td>2022-05-01</td>
-							</tr>
+						</c:forEach>		
 						</tbody>
 					</table>
 				</div>
@@ -831,29 +810,31 @@
 				<br>
 
 				<h4 class="card-title" style="color: rgb(124, 127, 251)">
-					<b>완료 문서함</b>
+					<b>완료 문서함</b> <b style="color: rgb(124, 127, 251)">( ${ loginEmp.deptName } )</b>
 				</h4>
 				<div class="table-responsive">
 					<table class="table" style="width: 1300px">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>분류</th>
-								<th>기안문</th>
-								<th>상태</th>
-								<th>기안자</th>
-								<th>기안일</th>
+							<thead>
+						<tr style="text-align: center">
+								<th style="color: rgb(124, 127, 251)">No</th>
+								<th style="color: rgb(124, 127, 251)">분류</th>
+								<th style="color: rgb(124, 127, 251)">기안문</th>
+								<th style="color: rgb(124, 127, 251)">상태</th>
+								<th style="color: rgb(124, 127, 251)">기안자</th>
+								<th style="color: rgb(124, 127, 251)">기안일</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>결재</td>
-								<td style="width: 300px">1분기 물품 구매 현황</td>
-								<td><label class="badge badge-gradient-info">완료</label></td>
-								<td>임현빈</td>
-								<td>2022-05-31</td>
+						<c:forEach items="${ listA }" var="a">
+							<tr style="text-align: center">
+								<td>${ a.signNo }</td>
+								<td>${ a.typeName }</td>
+								<td style="width: 300px">${ a.signTitle }</td>
+								<td><label class="badge badge-gradient-info">${ a.statusName }</label></td>
+								<td>${ a.createName }</td>
+								<td>${ a.createDate }</td>
 							</tr>
+						</c:forEach>		
 
 						</tbody>
 					</table>

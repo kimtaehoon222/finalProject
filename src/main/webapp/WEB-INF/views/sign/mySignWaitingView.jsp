@@ -17,6 +17,13 @@
 	display: flex;
 }
 
+.center {
+	text-align: center;
+	margin: auto;
+	justify-content: center;
+	display: flex;
+}
+
 .tftable {
 	font-size: 12px;
 	color: #333333;
@@ -230,7 +237,16 @@
 							<h6 class="modal-title" id="exampleModalLabel">
 								결재번호 : <b id="aaSignNo"></b>
 							</h6>
+							
+						<fieldset style="width: 30%; float:right; margin:-1px" id="hideTest4" class="center">
 
+								<label> <input type="radio" id="o" name="check"
+									value="1년"  checked> 1년
+								</label> &nbsp&nbsp <label> <input type="radio" id="t"
+									name="check"  value="2년"> 2년
+								</label>
+
+							</fieldset>
 						</div>
 
 
@@ -247,8 +263,9 @@
 										<th style="background-color: white"><b id="aaExpiryDate"></b></th>
 									</tr>
 								</table>
-									<br>
-									<pre> <b id="hideTest4">&nbsp&nbsp문서보존 : 2년 <input type="radio" id="t" name="check" value="2년"> </b> </pre>
+							<!--  		<br>
+									<pre> <b id="hideTest4">&nbsp&nbsp문서보존 : 1년 <input type="radio" id="t" name="check2" value="1년"> </b> </pre>
+									<pre> <b id="hideTest4">&nbsp&nbsp문서보존 : 2년 <input type="radio" id="t" name="check2" value="2년"> </b> </pre> -->
 							</fieldset>
 						</div>
 
@@ -489,7 +506,7 @@
 								</form> <!-- 품의 updateR Form 끝 태그 -->
 								
 								
-							<button type="submit" class="btn btn-primary" id="endSign" style="background-color: #F56E6E"  onclick="javascript: form.action='updateP.do';">삭제</button> <!-- form이 현재 하나이기에 액션 경로를 수정 -->
+							<button type="submit" class="btn btn-primary" id="endSign" style="background-color: #F56E6E"  onclick="javascript: form.action='DeleteN.do';">삭제</button> <!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
 
 						</div>

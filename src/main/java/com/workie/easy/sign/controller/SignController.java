@@ -35,13 +35,13 @@ public class SignController {
 	@Autowired
 	public SignService signService;
 	
-	/* 결재 함 화면 전환 */
+	/* 결재 함 화면 전환 
 	@RequestMapping("signView.do")
 	public String readSignView() {
 		System.out.println("찍히는지 테스트");
 		return "sign/signView";
 	}
-	
+	*/
 	
 	@ResponseBody
 	@RequestMapping(value="selectList.do",method=RequestMethod.POST)
@@ -856,7 +856,16 @@ public class SignController {
 	public String updateAAsign(@ModelAttribute Sign si , HttpServletRequest request ,
 			@RequestParam(name = "uploadFile", required = false) MultipartFile file, String signNo) { //내 결재 대기함 품의 수정
 
-	
+		
+		String[] array = signNo.split(",");
+		
+		for(int i=0; i<array.length; i++) {
+			System.out.println(array[i]);
+				signNo = array[0];
+			}
+		
+		System.out.println("controller signNo :" + signNo);
+		
 		if(!file.getOriginalFilename().equals("")) { //file이 비어있으면 빈문자열로 넘어옴 빈문자열이 아니라면 파일이 들어있다.
 			String changeName = saveFile(file, request, si);
 			
@@ -875,5 +884,61 @@ public class SignController {
 		String view = "redirect:mySignWaitingView.do";
 		
 		return view;
+	}
+	
+	@RequestMapping("DeleteN.do")
+	public String deleteN( String signNo, HttpSession session ) { //내 결재 대기함 -> 삭제
+
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+		
+		
+		String[] array = signNo.split(",");
+		
+		for(int i=0; i<array.length; i++) {
+			System.out.println(array[i]);
+				signNo = array[0];
+			}
+		
+		System.out.println(signNo + "잘 짤렸는지 체크");
+		
+		int sNo = Integer.parseInt(signNo); //detail 번호가 붕 떠있는 상황이며 ajax에서 넘어오기에 string으로 넘어오니 int로 형변환 해준다. 
+		
+		Sign si = new Sign();
+		si.setSignNo(sNo);
+		si.setEmpName(empName);
+		
+		
+		signService.DeleteN(si);
+		
+		String view = "redirect:mySignWaitingView.do";
+		
+		return view;
+	}
+	
+	
+	@RequestMapping("signView.do")
+	public String readSignViewW(Model model, HttpSession session) { //결재함 각 메뉴별 조회
+		
+
+		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+
+		
+		ArrayList<Sign> listW = signService.selectViewW(empName); //대기
+		
+		ArrayList<Sign> listP = signService.selectViewP(empName); //진행
+		
+		ArrayList<Sign> listR = signService.selectViewR(empName); //반려
+		
+		ArrayList<Sign> listA = signService.selectViewA(empName); //완료
+		
+		
+		
+		model.addAttribute("listW", listW); 
+		model.addAttribute("listP", listP);
+		model.addAttribute("listR", listR);
+		model.addAttribute("listA", listA);
+
+
+		return "sign/signView";
 	}
 }

@@ -78,7 +78,7 @@
 								<tr style="text-align: center">
 									<td>${ s.signNo }</td>
 									<td>${ s.typeName }</td>
-									<td style="width: 300px">${ s.signContent }</td>
+									<td style="width: 300px">${ s.signTitle }</td>
 									<td>${ s.deptName }</td>
 									<td>${ s.createName }</td>
 									<td>${ s.createDate }</td>
