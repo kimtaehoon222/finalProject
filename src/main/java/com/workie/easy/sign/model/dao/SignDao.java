@@ -194,6 +194,7 @@ public class SignDao {
 		return (ArrayList)sqlSession.selectList("signMapper.selectMySignWaitingList", empName, rowBounds);
 	}
 
+	/* 내 결재 대기함 Update 시작 */
 	public int updateAAsign(SqlSessionTemplate sqlSession, Sign si) { //Sign 테이블 수정
 		// TODO Auto-generated method stub
 		return sqlSession.update("signMapper.updateAAsign", si);
@@ -202,6 +203,46 @@ public class SignDao {
 	public int updateAAstandard(SqlSessionTemplate sqlSession, Sign si) { //Standard_FORM 테이블 수정
 		// TODO Auto-generated method stub
 		return sqlSession.update("signMapper.updateAAstandard", si);
+	}
+
+	public int selectCountAttachment(SqlSessionTemplate sqlSession, Sign si) { //파일이
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCountAttachment", si);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Sign si) { 
+		// TODO Auto-generated method stub
+		return sqlSession.update("signMapper.updateAttachment", si);
+	}
+
+	public int insertAttachment(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("signMapper.insertAttachment", si);
+	}
+
+	public int DeleteN(SqlSessionTemplate sqlSession, Sign si) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("signMapper.DeleteN", si);
+	}
+
+	public ArrayList<Sign> selectViewW(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("signMapper.selectViewW", empName);
+	}
+
+	public ArrayList<Sign> selectViewP(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("signMapper.selectViewP", empName);
+	}
+
+	public ArrayList<Sign> selectViewR(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("signMapper.selectViewR", empName);
+	}
+
+	public ArrayList<Sign> selectViewA(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("signMapper.selectViewA", empName);
 	}
 
 		

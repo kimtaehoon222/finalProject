@@ -27,6 +27,7 @@ public class Sign {
 	private String finalSignDate; //최종 승인일
 	private String rejectDate; //반려일
 	private String statusCode; //처리 상태코드
+	private String statusName; //처리 상태이름
 	private String status; // 상태값
 	private String modifyDate; //수정일
 	private String createName; //기안자
@@ -49,6 +50,7 @@ public class Sign {
 	private String ctgNo; //분류코드
 	
 	private String check; // 1년
+	private String check2; // 2년
 	
 	/* 휴가원 */
 	private String title; //제목

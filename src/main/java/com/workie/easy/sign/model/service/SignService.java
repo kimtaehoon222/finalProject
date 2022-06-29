@@ -71,6 +71,16 @@ public interface SignService {
 
 	void updateAAsign(Sign si);
 
+	void DeleteN(Sign si);
+
+	ArrayList<Sign> selectViewW(String empName);
+
+	ArrayList<Sign> selectViewP(String empName);
+
+	ArrayList<Sign> selectViewR(String empName);
+
+	ArrayList<Sign> selectViewA(String empName);
+
 	
 
 	/* void insertName(int eNo); */

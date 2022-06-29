@@ -14,6 +14,7 @@
 		<result property="finalSignDate" column="FINAL_SIGN_DATE"/>
 		<result property="rejectDate" column="REJECT_DATE"/>
 		<result property="statusCode" column="STATUS_CODE"/>
+		<result property="statusName" column="STATUS_NAME"/>
 		<result property="status" column="STATUS"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
 		<result property="createName" column="CREATE_NAME"/>
@@ -145,7 +146,7 @@
 		SELECT 
 			A.SIGN_NO,
 			B.TYPE_NAME,
-	        A.SIGN_CONTENT,
+	        A.SIGN_TITLE,
 	        D.DEPT_NAME,
 	        A.CREATE_NAME,
 	        F.ORIGIN_NAME,
@@ -279,7 +280,7 @@
 		SELECT 
 			A.SIGN_NO,
 			B.TYPE_NAME,
-	        A.SIGN_CONTENT,
+	        A.SIGN_Title,
 	        D.DEPT_NAME,
 	        A.CREATE_NAME,
 	        F.ORIGIN_NAME,
@@ -420,7 +421,7 @@
 		SELECT 
 			A.SIGN_NO,
 			B.TYPE_NAME,
-	        A.SIGN_CONTENT,
+	        A.SIGN_TITLE,
 	        D.DEPT_NAME,
 	        A.CREATE_NAME,
 	        F.ORIGIN_NAME,
@@ -558,7 +559,7 @@
 		SELECT 
 			A.SIGN_NO,
 			B.TYPE_NAME,
-	        A.SIGN_CONTENT,
+	        A.SIGN_TITLE,
 	        D.DEPT_NAME,
 	        A.CREATE_NAME,
             G.EXPIRY_DATE, 
@@ -720,15 +721,179 @@
 		
 	</select>	
 	
-	<update id="updateAAsign" parameterType="Sign">
+	<update id="updateAAsign" parameterType="Sign"> <!-- sign 테이블 업데이트 -->
 	
-<!--  	UPDATE SIGN 
-	   SET STATUS_CODE = 'R' , REJECT_DATE = SYSDATE , FIRST_SIGN_NAME = #{empName} , FIRST_SIGN_JOB = #{jobName}
-    WHERE SIGN_NO = #{signNo}
-	-->
+	 	UPDATE SIGN 
+		   SET FIRST_APPROVER = #{firstApprover} , FINAL_APPROVER = #{finalApprover} , SIGN_TITLE = #{signTitle} , SIGN_CONTENT = #{signContent} , MODIFY_DATE = SYSDATE
+	    WHERE SIGN_NO = #{signNo}
+
 	</update>
 	
+	<update id="updateAAstandard" parameterType="Sign"> <!-- standardForm 테이블 업데이트 -->
+		
+		UPDATE STANDARD_FORM SET EXPIRY_DATE = #{check} , SIGN_CONTENT = #{signContent}
+			
+		WHERE SIGN_NO = #{signNo}
+		
+		AND CTG_NO = 'SF'	
 	
+	</update>
+	
+	<select id="selectCountAttachment" parameterType="Sign" resultType="_int"> <!-- attachment의 카운트를 세와서 update 할지 insert할지 체크할거임 -->
+	
+		SELECT COUNT(*)  
+			FROM ATTACHMENT
+			WHERE REF_NO = #{signNo}
+			AND CTG_NO = 'SF'
+			AND STATUS = 'Y'
+		
+	</select>
+	
+	<update id="updateAttachment" parameterType="Sign"> <!-- attachment 테이블 업데이트 -->
+		
+		UPDATE ATTACHMENT
+			SET ORIGIN_NAME = #{originName} , CHANGE_NAME = #{changeName} , FILE_PATH = #{filePath}
+			WHERE REF_NO = #{signNo}
+			AND CTG_NO = 'SF'
+			AND STATUS = 'Y'
+			
+	</update>
+	
+	<insert id="insertAttachment" parameterType="Sign"> <!-- 첨부파일이 없는 경우 attachment insert -->
+		
+
+		INSERT INTO ATTACHMENT
+		VALUES(SEQ_FNO.NEXTVAL, #{signNo}, 'SF', #{originName}, #{changeName}, #{filePath}, SYSDATE, DEFAULT)
+	
+	</insert>
+	
+	
+	<update id="DeleteN" parameterType="Sign">
+	
+		UPDATE SIGN 
+		   SET STATUS = 'N' 
+	    WHERE SIGN_NO = #{signNo}
+	    AND CREATE_NAME = #{empName}
+		
+	</update>
+	
+	<!-- 결재함 간편 조회 시작 -->
+	
+	<select id="selectViewW" resultMap="singResultSet"> <!-- W 요청 조회 -->
+	
+	<!-- <= 등호 사용으로 인해 CDATA 지정 -->
+	
+	 <![CDATA[  
+	 
+	SELECT G.*
+        FROM ( 
+        SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+            A.SIGN_TITLE,
+            H.STATUS_NAME,        
+	        A.CREATE_NAME,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
+	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+		    AND A.STATUS_CODE = 'W'
+		    AND A.STATUS = 'Y'
+		    ORDER BY A.SIGN_NO DESC
+	        )G
+	        WHERE ROWNUM <= 3
+     ]]>
+     
+	</select>
+	
+	<select id="selectViewP" resultMap="singResultSet"> <!-- P 요청 조회 -->
+	
+	<!-- <= 등호 사용으로 인해 CDATA 지정 -->
+	
+	 <![CDATA[  
+	 
+	SELECT G.*
+        FROM ( 
+        SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+            A.SIGN_TITLE,
+            H.STATUS_NAME,        
+	        A.CREATE_NAME,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
+	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+		    AND A.STATUS_CODE = 'P'
+		    AND A.STATUS = 'Y'
+		    ORDER BY A.SIGN_NO DESC
+	        )G
+	        WHERE ROWNUM <= 3
+     ]]>
+     
+	</select>
+	
+	<select id="selectViewR" resultMap="singResultSet"> <!-- R 요청 조회 -->
+	
+	<!-- <= 등호 사용으로 인해 CDATA 지정 -->
+	
+	 <![CDATA[  
+	 
+	SELECT G.*
+        FROM ( 
+        SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+            A.SIGN_TITLE,
+            H.STATUS_NAME,        
+	        A.CREATE_NAME,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
+	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+		    AND A.STATUS_CODE = 'R'
+		    AND A.STATUS = 'Y'
+		    ORDER BY A.SIGN_NO DESC
+	        )G
+	        WHERE ROWNUM <= 3
+     ]]>
+     
+	</select>
+	
+	<select id="selectViewA" resultMap="singResultSet"> <!-- A 요청 조회 -->
+	
+	<!-- <= 등호 사용으로 인해 CDATA 지정 -->
+	
+	 <![CDATA[  
+	 
+	SELECT G.*
+        FROM ( 
+        SELECT 
+			A.SIGN_NO,
+			B.TYPE_NAME,
+            A.SIGN_TITLE,
+            H.STATUS_NAME,        
+	        A.CREATE_NAME,
+	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
+		FROM SIGN A
+		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
+		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
+		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
+	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+		    AND A.STATUS_CODE = 'A'
+		    AND A.STATUS = 'Y'
+		    ORDER BY A.SIGN_NO DESC
+	        )G
+	        WHERE ROWNUM <= 3
+     ]]>
+     
+	</select>
 	</mapper>
 
 		
