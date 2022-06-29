@@ -260,7 +260,7 @@
           
               <li>
                  <div class="add_calendar_box">
-                     <a class="add_calendar" href="myResList.do?eno=${loginEmp.empNo}" style="color: black;">
+                     <a class="add_calendar" href="myResList.do?" style="color: black;">
                      <i class="fa fa-cog" style="padding-right: 10px;"></i>나의 예약 목록</a>
                   </div>
               </li>         
@@ -402,7 +402,7 @@
     </div>
    </div>
    
-   <%-- 취소 버튼 클릭 시 정말 취소할 것인지 묻는 모달 --%>
+    <%-- 취소 버튼 클릭 시 정말 취소할 것인지 묻는 모달 --%>
    <div class="modal fade" id="cancelRsvCheckModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -412,7 +412,7 @@
         </div>
         <div class="modal-body">
           <label>정말 예약을 취소하시겠습니까?</label>
-          <input class="hidden_resNo" type="hidden">
+          <input class="hidden_reservation_no" type="hidden">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" onclick="rsvCancel()">예</button>
@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
           var sysdate = new Date();
           sysdate = moment(sysdate).format("YYYY-MM-DD HH:mm:ss");
           
-          var date = moment(info.dateStr).format("YYYY-MM-DD");
+          var date = moment(info.dateStr).format("YYYY-MM-DD HH:mm:ss");
           
           // 현재 시간 기준으로 지난 시간에 예약은 불가능
           if (sysdate > date ) {
@@ -702,13 +702,13 @@ function addRsvModalBtn(){
     }
     
     var meetTitle = $("input[name=meetTitle]").val();
-    if (reason.trim() == "") {
+    if (meetTitle.trim() == "") {
        alert("예약 제목을 입력해주세요.");
        $("input[name=meetTitle]").focus();
        return false;
     }
-    var meetTitle = $("input[name=meetGoal]").val();
-    if (reason.trim() == "") {
+    var meetGoal = $("input[name=meetGoal]").val();
+    if (meetGoal.trim() == "") {
        alert("회의 목적을 입력해주세요.");
        $("input[name=meetGoal]").focus();
        return false;
@@ -736,10 +736,37 @@ $.ajax({
        }
        
     },
-    error: function(request, status, error){
-       alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+    error: function(){
+       alert("회의실 예약에 실패하였습니다. 관리자에 문의바랍니다.");
      }
  });
+}
+
+//예약취소 버튼 클릭시 예약 취소하는 함수
+function cancelRsv() {
+   var resNo = $("input.resNo").val();
+    
+    $.ajax({
+       url:"deleteRes.do",
+       type:"get",
+       data: {resNo:resNo},
+       dataType:"JSON",
+       success:function(json){
+          
+          if (json.n == 1) {
+        	  alert("회의실 예약이 취소되었습니다");
+             calendar.refetchEvents();
+             window.closeModal();
+          }else{
+             alert("DB오류");
+          }
+          
+       },
+       error: function(){
+          alert("예약취소에 실패하였습니다. 관리자에 문의바랍니다.");
+        }
+    });
+    $("#cancelRsvCheckModal").modal('show');
 }
 </script>
 </body>

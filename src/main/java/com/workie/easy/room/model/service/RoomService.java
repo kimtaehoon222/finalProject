@@ -11,10 +11,14 @@ public interface RoomService {
 
 	Room selectRes(Room room);
 
-	ArrayList<Room> selectMyResList(int eno);
+	ArrayList<Room> selectMyResList(Room room);
 
 	ArrayList<Room> selectRoomList();
 
-	Room insertRes(Room room);
+	int insertRes(Room room);
+
+	int selectCheckDate(Room room);
+
+	int deleteRes(Room room);
 
 }

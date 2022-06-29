@@ -35,9 +35,9 @@ public class RoomServiceImpl implements RoomService {
 
 
 	@Override
-	public ArrayList<Room> selectMyResList(int eno) {
+	public ArrayList<Room> selectMyResList(Room room) {
 	
-		return roomDao.selectMyResList(eno, sqlSession);
+		return roomDao.selectMyResList(room, sqlSession);
 	}
 
 
@@ -47,20 +47,27 @@ public class RoomServiceImpl implements RoomService {
 		return roomDao.selectRoomList(sqlSession);
 	}
 
+	@Override
+	public int selectCheckDate(Room room) {
+		
+		return roomDao.selectCheckDate(room,sqlSession);
+	}
+	@Override
+	public int insertRes(Room room) {
+				
+		return roomDao.insertRes(room, sqlSession);
+
+	}
+
 
 	@Override
-	public Room insertRes(Room room) {
+	public int deleteRes(Room room) {
 		
-		int result = roomDao.insertRes(room, sqlSession);
-		
-		if(result > 0) {
-			return roomDao.selectRes(room, sqlSession);
-		}else {
-			
-		}
-		return room;
-		
+		return roomDao.deleteRes(room ,sqlSession);
 	}
+
+
+
 	
 	
 }

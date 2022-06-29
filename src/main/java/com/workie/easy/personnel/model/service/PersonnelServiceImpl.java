@@ -148,6 +148,14 @@ public class PersonnelServiceImpl implements PersonnelService {
 		}
 	}
 
+	@Override
+	public ArrayList<Employee> selectMonthEmpList() {
+		
+		ArrayList<Employee> list = personnelDao.selectMonthEmpList(sqlSession);
+		return list;
+	}
+
+
 
 
 }

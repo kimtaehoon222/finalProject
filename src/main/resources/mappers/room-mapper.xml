@@ -18,6 +18,7 @@
 	    </resultMap>
 
 	   <select id="selectResList" resultMap="roomResult">
+	   <![CDATA[
 	    SELECT 
 	          A.RES_NO
 	        , A.ROOM_NO
@@ -32,6 +33,7 @@
 			WHERE RES_STATUS = 'Y'
 			AND TO_DATE(START_DATE, 'yyyy-MM-dd HH24:MI:SS') > SYSDATE
 			AND ROOM_NO =  #{roomNo}
+			]]>
         </select>
 	  
 	 <select id="selectRes" resultMap="roomResult">
@@ -55,8 +57,10 @@
 	</select>
 	
 	 <select id="selectMyResList" resultMap="roomResult">
+	  <![CDATA[
 	  SELECT           
-	         EMP_NO
+	          EMP_NO
+	        , A.RES_NO
 	        , MEET_TITLE
 	        , START_DATE
 	        , END_DATE
@@ -65,7 +69,9 @@
 			LEFT JOIN MEETING_ROOM B ON A.ROOM_NO = B.ROOM_NO
 			WHERE RES_STATUS = 'Y'
             AND TO_DATE(START_DATE, 'yyyy-MM-dd HH24:MI:SS') > SYSDATE
-			AND EMP_NO = #{eno}
+			AND EMP_NO = #{empNo}
+			ORDER BY RES_NO
+			]]>
         </select>
 	  
 	  
@@ -75,4 +81,35 @@
 			FROM MEETING_ROOM
 			ORDER BY ROOM_NO
        </select>
+       
+       <insert id="insertRes" parameterType="Room">
+	    INSERT
+			  INTO RESERVATION VALUES
+			    (SEQ_RENO.NEXTVAL, #{roomNo}, #{empNo}, #{meetTitle}
+			  , #{meetGoal}
+			  , #{startDate}
+	          , #{endDate}
+	          , DEFAULT)
+		</insert>
+		
+	<select id="selectCheckDate" resultType="_int">
+	  <![CDATA[
+	  SELECT COUNT(*)
+		FROM 
+		(
+			SELECT RES_NO
+			FROM RESERVATION
+			WHERE END_DATE > #{startDate}
+			AND START_DATE < #{endDate}
+			AND ROOM_NO = #{roomNo}
+		)
+		]]>
+       </select>
+       <delete id="deleteRes">
+        DELETE 
+               FROM RESERVATION
+               WHERE RES_NO =#{resNo}
+        </delete>
+     
+       
 </mapper>

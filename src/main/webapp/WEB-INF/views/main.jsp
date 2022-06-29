@@ -92,11 +92,10 @@
                         <div class="card-body">
                           <h5 class="card-title text-primary">${loginEmp.empName }</h5>
                           <p class="mb-4">
-                            You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                            your profile.
+                                                       당신의 <span class="fw-bold">미래를</span>응원합니다. -이지웨어-
                           </p>
 
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+                          <a href="myPage.do" class="btn btn-sm btn-outline-primary">마이페이지로 이동</a>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
@@ -237,9 +236,21 @@
                   
                   <div class="row">
                   	<div class="col-12 mb-4">
-	                  	<div class="card">
+	                  	<div class="card mb-4" id="vertical-example" style="height: 160px">
 	                  		<div class="card-body">
 	                  			<div class="card-title">
+	                  			 <h5 class="card-title text-primary">이번 달 입사 사원</h5>
+	                  			  <table class="table table-striped kim" id="" >
+                                 <tbody >
+                                <c:forEach items="${empList}" var="e">
+                                    <tr>
+                                        <td>${e.empName}</td>
+                                        <td>${e.deptName}</td>    
+                                     </tr>
+                                 </c:forEach> 
+                                </tbody>
+                            </table>
+	            
 	                  			</div>
 	                  		</div>
 	                  	</div>

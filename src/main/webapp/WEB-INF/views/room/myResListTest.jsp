@@ -225,7 +225,7 @@
 
 </head>
 <body class="stop-dragging">
-<jsp:include page="WEB-INF/views/common/top.jsp"/>
+<jsp:include page="../common/top.jsp"/>
    <div class="titleBox">
       <h2><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;나의 예약 목록</h2>
    </div>
@@ -302,6 +302,6 @@
     </div>
   </div>
 
-
+<jsp:include page="../common/bottom.jsp"/>
 </body>
 </html>

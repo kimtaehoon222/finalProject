@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.workie.easy.employee.model.service.EmployeeService;
 import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.service.MailService;
+import com.workie.easy.personnel.model.service.PersonnelService;
 import com.workie.easy.schedule.model.dto.Schedule;
 import com.workie.easy.schedule.model.service.ScheduleService;
 import com.workie.easy.employee.model.dto.Employee;
@@ -50,7 +51,9 @@ public class EmployeeController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
-	/*암호화를 위한 Autowired*/
+	@Autowired // 의존성 주입
+	private PersonnelService personnelService;
+	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -66,8 +69,8 @@ public class EmployeeController {
 		model.addAttribute("mailCount", unReadmailListCount);
 		
 		/* 김재호 : */
-		
-		
+		ArrayList<Employee> monthEmpList = personnelService.selectMonthEmpList();
+		model.addAttribute("empList", monthEmpList);
 		/* 임현빈 : */
 		
 		
