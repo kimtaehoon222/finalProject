@@ -350,17 +350,9 @@ $("#status").on('change',function(){
 		
 		selectDeptList();
 		
-
-
+		 
 		
 	});
-	
-	
-
-
-
-	
-
 	
 	
 	
