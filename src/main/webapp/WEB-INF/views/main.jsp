@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -66,6 +67,15 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${pageContext.request.contextPath}/resources/assets/js/config.js"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script>
+  
+  <style type="text/css">
+   tr:hover{
+   cursor: pointer;
+   background-color: #696cff;
+   color: white;
+   }
+  
+  </style>
   </head>
 
   <body>
@@ -80,7 +90,7 @@
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">김재호</h5>
+                          <h5 class="card-title text-primary">${loginEmp.empName }</h5>
                           <p class="mb-4">
                             You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
                             your profile.
@@ -91,13 +101,20 @@
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
                         <div class="card-body pb-0 px-0 px-md-4">
+                          <c:if test="${ loginEmp.gender == 'F' }">
                           <img
+                            src="${pageContext.request.contextPath}/resources/assets/img/illustrations/woman-with-laptop-light.jpg"
+                            height="140"
+                            alt="View Badge User"
+                          />
+                          </c:if>
+                          <c:if test="${ loginEmp.gender == 'M' }">
+                          	<img
                             src="${pageContext.request.contextPath}/resources/assets/img/illustrations/man-with-laptop-light.png"
                             height="140"
                             alt="View Badge User"
-                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                            data-app-light-img="illustrations/man-with-laptop-light.png"
                           />
+                          </c:if>
                         </div>
                       </div>
                     </div>
@@ -308,161 +325,130 @@
                 <!--  -->
               </div>
               <div class="row">
-                <!-- Order Statistics -->
+              
+                <!-- 갤러리 시작 -->
                 <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                       <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Order Statistics</h5>
-                        <small class="text-muted">42.82k Total Sales</small>
+                        <h4 class="m-0 me-2 text-primary mb-3">Last Week</h4>
                       </div>
-                      <div class="dropdown">
-                        <button
-                          class="btn p-0"
-                          type="button"
-                          id="orederStatistics"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                        </div>
-                      </div>
+                      
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex flex-column align-items-center gap-1">
-                          <h2 class="mb-2">8,258</h2>
-                          <span>Total Orders</span>
+                          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+					      <ol class="carousel-indicators">
+					        <li data-bs-target="#carouselExample" data-bs-slide-to="0" class=""></li>
+					        <li data-bs-target="#carouselExample" data-bs-slide-to="1" class=""></li>
+					        <li data-bs-target="#carouselExample" data-bs-slide-to="2" class="active" aria-current="true"></li>
+					      </ol>
+					      <div class="carousel-inner">
+					        <div class="carousel-item">
+					          <img class="d-block w-100" src="${pageContext.request.contextPath}/resources/assets/img/elements/31.jpg" alt="First slide">
+					          <div class="carousel-caption d-none d-md-block">
+					            <h3></h3>
+					            <p></p>
+					          </div>
+					        </div>
+					        <div class="carousel-item">
+					          <img class="d-block w-100" src="${pageContext.request.contextPath}/resources/assets/img/elements/32.jpg" alt="Second slide">
+					          <div class="carousel-caption d-none d-md-block">
+					            <h3></h3>
+					            <p></p>
+					          </div>
+					        </div>
+					        <div class="carousel-item active">
+					          <img class="d-block w-100" src="${pageContext.request.contextPath}/resources/assets/img/elements/33.jpg" alt="Third slide">
+					          <div class="carousel-caption d-none d-md-block">
+					            <h3></h3>
+					            <p></p>
+					          </div>
+					        </div>
+					      </div>
+					      <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+					        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					        <span class="visually-hidden">Previous</span>
+					      </a>
+					      <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+					        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					        <span class="visually-hidden">Next</span>
+					      </a>
+					    </div>
                         </div>
-                        <div id="orderStatisticsChart"></div>
                       </div>
-                      <ul class="p-0 m-0">
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-primary"
-                              ><i class="bx bx-mobile-alt"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Electronic</h6>
-                              <small class="text-muted">Mobile, Earbuds, TV</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">82.5k</small>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-success"><i class="bx bx-closet"></i></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Fashion</h6>
-                              <small class="text-muted">T-shirt, Jeans, Shoes</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">23.8k</small>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-info"><i class="bx bx-home-alt"></i></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Decor</h6>
-                              <small class="text-muted">Fine Art, Dining</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">849k</small>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-secondary"
-                              ><i class="bx bx-football"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Sports</h6>
-                              <small class="text-muted">Football, Cricket Kit</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">99</small>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                      		<h5>지난 주 워크샵 사진</h5>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                      		 이지워크(Easy Work)는 제주도에서 이달 9일~10일
+                      		'2022년 상반기 워크샵'을 진행했습니다.<br>
+							 이번 워크샵은 전 부서의 전 임직원이 참여했고
+							 회사의 단합을 위해 레저 및 컨퍼런스 등 다양한 일정으로 진행했습니다.
+                      </div>
                     </div>
                   </div>
                 </div>
-                <!--/ Order Statistics -->
+                <!-- 갤러리 끝 -->
 
                 <!-- Expense Overview -->
                 <div class="col-md-6 col-lg-4 order-1 mb-4">
                   <div class="card h-100">
                     <div class="card-header">
-                      <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item">
-                          <button
-                            type="button"
-                            class="nav-link active"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-tabs-line-card-income"
-                            aria-controls="navs-tabs-line-card-income"
-                            aria-selected="true"
-                          >
-                            Income
-                          </button>
-                        </li>
-                        <li class="nav-item">
-                          <button type="button" class="nav-link" role="tab">Expenses</button>
-                        </li>
-                        <li class="nav-item">
-                          <button type="button" class="nav-link" role="tab">Profit</button>
-                        </li>
-                      </ul>
+                     	<div class="card-title mb-0">
+                        <h4 class="m-0 me-2 text-primary mb-3">공지사항</h4>
+                      </div>
                     </div>
-                    <div class="card-body px-0">
+                    <div class="card-body px-2">
                       <div class="tab-content p-0">
                         <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
-                          <div class="d-flex p-4 pt-3">
-                            <div class="avatar flex-shrink-0 me-3">
-                              <img src="${pageContext.request.contextPath}/resources/assets/img/icons/unicons/wallet.png" alt="User" />
-                            </div>
-                            <div>
-                              <small class="text-muted d-block">Total Balance</small>
-                              <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
-                                <small class="text-success fw-semibold">
-                                  <i class="bx bx-chevron-up"></i>
-                                  42.9%
-                                </small>
-                              </div>
-                            </div>
-                          </div>
-                          <div id="incomeChart"></div>
-                          <div class="d-flex justify-content-center pt-4 gap-2">
-                            <div class="flex-shrink-0">
-                              <div id="expensesOfWeek"></div>
-                            </div>
-                            <div>
-                              <p class="mb-n1 mt-1">Expenses This Week</p>
-                              <small class="text-muted">$39 less than last week</small>
-                            </div>
-                          </div>
+                          <table class="table" style="text-align: center;">
+	                        <thead>
+	                          <tr>
+	                            <th>분류</th>
+	                            <th>제목</th>
+	                            <th>등록일</th>
+	                          </tr>
+	                        </thead>
+	                        <tbody>
+                             <tr>
+                               <td><span class="favorite badge bg-label-danger">중요</span></td>
+                               <td><span class="pl-2">2023년도 건강검진 안내</span></td>
+                               <td>2022-07-04</td>
+                             </tr>
+                             <tr>
+                               <td><span class="favorite badge bg-label-secondary">일반</span></td>
+                               <td><span class="pl-2">7월 구내식당 메뉴안내</span></td>
+                               <td>2022-06-30</td>
+                             </tr>
+                             <tr>
+                               <td><span class="favorite badge bg-label-secondary">일반</span></td>
+                               <td><span class="pl-2">워크샵 일정안내</span></td>
+                               <td>2022-06-15</td>
+                             </tr>
+                             <tr>
+                               <td><span class="favorite badge bg-label-secondary">일반</span></td>
+                               <td><span class="pl-2">대체공휴일 휴무안내</span></td>
+                               <td>2022-06-01</td>
+                             </tr>
+                             <tr>
+                               <td><span class="favorite badge bg-label-secondary">일반</span></td>
+                               <td><span class="pl-2">성희롱 예방 교육 자료</span></td>
+                               <td>2022-04-01</td>
+                             </tr>
+                             <tr>
+                               <td><span class="favorite badge bg-label-danger">일반</span></td>
+                               <td><span class="pl-2">신입사원 필독</span></td>
+                               <td>2022-03-05</td>
+                             </tr>
+                             <tr>
+                               <td><span class="favorite badge bg-label-secondary">일반</span></td>
+                               <td><span class="pl-2">회사 소개자료 공유</span></td>
+                               <td>2022-02-02</td>
+                             </tr>
+	                        </tbody>
+	                      </table>
                         </div>
                       </div>
                     </div>
