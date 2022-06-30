@@ -911,7 +911,7 @@
 	
 		SELECT COUNT(*)  
 			FROM SIGN A
-			WHERE A.FINAL_APPROVER LIKE '%'||#{empName}||'%
+			WHERE A.FINAL_APPROVER LIKE '%'||#{empName}||'%'
 			AND A.STATUS_CODE = 'P'
 			AND A.STATUS = 'Y'
 		
