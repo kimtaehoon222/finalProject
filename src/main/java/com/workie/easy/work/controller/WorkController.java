@@ -35,7 +35,7 @@ public class WorkController {
 		Work w = workService.selectWork(empNo);
 		
 		mv.addObject("w", w);
-		mv.setViewName("work/workMainView2");
+		mv.setViewName("work/workMainView");
 
 
 		return mv;
@@ -53,8 +53,10 @@ public class WorkController {
 		String wNo = request.getParameter("workNo");
 		if(sNo == 1) {//넘어온 상태값이 1이면 insert 출근
 			workService.insertWork(empNo);
+			session.setAttribute("msg", "성공적으로 출근을 하셨습니다.");
 		}else if(sNo == 2) {//상태값이 2이면 update 퇴근
 			workService.updateWork(wNo);
+			session.setAttribute("msg", "성공적으로 퇴근을 하셨습니다.");
 		}
 		
 		/*WorkSInfo wsi = new WorkSInfo(wNo, sNo);
@@ -96,7 +98,7 @@ public class WorkController {
 		mv.addObject("year", year);
 		mv.addObject("month", month);
 		
-		mv.setViewName("work/workListView2");
+		mv.setViewName("work/workListView");
 		
 		return mv;
 	}
