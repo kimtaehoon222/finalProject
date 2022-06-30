@@ -371,9 +371,9 @@ private SignDao signDao;
 
 
 	@Override
-	public ArrayList<Sign> selectViewA(String empName) {
+	public ArrayList<Sign> selectViewA(String deptCode) {
 		// TODO Auto-generated method stub
-		return signDao.selectViewA(sqlSession, empName);
+		return signDao.selectViewA(sqlSession, deptCode);
 	}
 
 

@@ -240,9 +240,9 @@ public class SignDao {
 		return (ArrayList)sqlSession.selectList("signMapper.selectViewR", empName);
 	}
 
-	public ArrayList<Sign> selectViewA(SqlSessionTemplate sqlSession, String empName) {
+	public ArrayList<Sign> selectViewA(SqlSessionTemplate sqlSession, String deptCode) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("signMapper.selectViewA", empName);
+		return (ArrayList)sqlSession.selectList("signMapper.selectViewA", deptCode);
 	}
 
 		
