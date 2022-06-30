@@ -78,8 +78,9 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
          hAxis: {title: changeHAxiss},
          seriesType: 'bars',
          /*series: {7: {type: 'line'}}*/
+         width: 1300
        };
-	
+       
        /* 차트 그려줄 위치 */
        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
 	   

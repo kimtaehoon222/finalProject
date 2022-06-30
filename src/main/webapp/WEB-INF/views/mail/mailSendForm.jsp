@@ -141,7 +141,7 @@
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="title">제목</label>
-                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" placeholder="제목을 작성하세요" maxlength="33" required/>
+                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" placeholder="제목은 30자 이내로 작성해주세요." maxlength="33" required/>
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="content">내용</label>
@@ -191,7 +191,7 @@
 			  <div class="col-md mb-4 mb-md-0">
 			    <small class="text-light fw-semibold">수신인은 1명만 지정이 가능합니다. 이외의 수신인은 참조인으로 선택해주세요.</small><br>
 			    <button class="btn btn-outline-primary mt-2" id="selectListDept">부서조회</button>
-			    <button class="btn btn-outline-primary mt-2" id="choiceEmployee">직원추가</button>
+			    <button class="btn btn-outline-primary mt-2" id="choiceEmployee">직원추가/수정</button>
 			    
 			    <!-- 부서리스트 영역 시작 -->
 			    <div class="accordion mt-3" id="accordionExample">
@@ -573,7 +573,7 @@
       $(document).ready(function(){
           $('#title').keyup(function(){
               if ($(this).val().length > $(this).attr('maxlength')) {
-                  alert('제한길이 초과');
+                  alert('제목은 30자 이내로 입력해주세요.');
                   //chrome에선 maxlength가 5라면 한글이 6자까지 들어가게 되므로 필히 keyup에서 substr을 통해 maxlength의 글자까지 끊어줘야 한다.
                   $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
               }

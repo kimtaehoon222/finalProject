@@ -69,7 +69,7 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" integrity="sha384-vuFJ2JiSdUpXLKGK+tDteQZBqNlMwAjhZ3TvPaDfN9QmbPb7Q8qUpbSNapQev3YF" crossorigin="anonymous"></script>
   
   <style type="text/css">
-   tr:hover{
+   .hoverOk:hover{
    cursor: pointer;
    background-color: #696cff;
    color: white;
@@ -433,37 +433,37 @@
 	                          </tr>
 	                        </thead>
 	                        <tbody>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-danger">중요</span></td>
                                <td><span class="pl-2">2023년도 건강검진 안내</span></td>
                                <td>2022-07-04</td>
                              </tr>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-secondary">일반</span></td>
                                <td><span class="pl-2">7월 구내식당 메뉴안내</span></td>
                                <td>2022-06-30</td>
                              </tr>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-secondary">일반</span></td>
                                <td><span class="pl-2">워크샵 일정안내</span></td>
                                <td>2022-06-15</td>
                              </tr>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-secondary">일반</span></td>
                                <td><span class="pl-2">대체공휴일 휴무안내</span></td>
                                <td>2022-06-01</td>
                              </tr>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-secondary">일반</span></td>
                                <td><span class="pl-2">성희롱 예방 교육 자료</span></td>
                                <td>2022-04-01</td>
                              </tr>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-danger">일반</span></td>
                                <td><span class="pl-2">신입사원 필독</span></td>
                                <td>2022-03-05</td>
                              </tr>
-                             <tr>
+                             <tr class="hoverOk">
                                <td><span class="favorite badge bg-label-secondary">일반</span></td>
                                <td><span class="pl-2">회사 소개자료 공유</span></td>
                                <td>2022-02-02</td>

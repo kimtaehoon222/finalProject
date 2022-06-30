@@ -760,5 +760,21 @@ public class MailController {
 		return empList; 
 	}
 	
+	/* 직원 조회 : 주소록에서 호출 */
+	@ResponseBody
+	@RequestMapping(value="unReadMailCount.do", method=RequestMethod.POST) 
+	public int selectUnReadMailCount(HttpSession session) {
+		
+		/* 로그인 회원의 회원번호 */
+		int empNo = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		ArrayList<Mail> mailList = mailService.selectMailListNoRead(empNo); 
+			
+		int result = 0;
+		if(!mailList.isEmpty()) {
+			result = 1;
+		}
+		
+		return result;
+	}
 	
 }
