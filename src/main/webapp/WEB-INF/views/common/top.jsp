@@ -221,7 +221,7 @@
                 </li>
                 <li class="menu-item">
                   <a href="signGoView.do?empName=${ loginEmp.empName }" class="menu-link">
-                    <div data-i18n="Without navbar">결재 진행함</div>
+                    <div data-i18n="Without navbar">결재 진행함</div>호
                   </a>
                 </li>
                 <li class="menu-item">
@@ -321,7 +321,7 @@
               </ul>
             </li>
 
-             <li class="menu-item">
+             <!-- <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Extended UI">커뮤니티</div>
@@ -340,7 +340,6 @@
               </ul>
             </li>
 
-            <!-- Forms -->
               <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-notepad"></i>
@@ -358,7 +357,8 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
+            
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-buildings"></i>
@@ -447,7 +447,7 @@
                     >Star</a
                   > -->
                   <i class='bx bx-message-rounded-dots bx-md bx-tada-hover' id="chatIcon"></i>
-                  <i class='bx bx-envelope bx-md bx-tada-hover' ></i>
+                  <a href="mailHome.do"><i class='bx bx-envelope bx-md' id="mailEmoji"></i></a>
                   <i class='bx bxs-help-circle bx-md bx-tada-hover'></i>
                 </li>
 
@@ -582,6 +582,29 @@
 	}
   
 	$('#msgBox').fadeIn(1000).delay(1000).fadeOut(1000);
+	
+	/*상단bar 메일 이모티콘 : 읽지않은메일이 있는경우 아이콘 흔들흔들 */
+	$(document).ready(function (){
+		$.ajax({
+			url: "unReadMailCount.do",
+			type:"post",
+			success:function(count){
+				var emogiElement = $('#mailEmoji');
+				if(count > 0){
+					console.log('읽지않은메일 있음');
+					/* 색상 레드로 */
+					emogiElement.css("color", "red");
+					
+					/* 흔들흔들 기능 추가*/
+					document.getElementById('mailEmoji').className += ' bx-tada';
+				}
+				console.log('읽지않은메일 없음');
+			},
+			error:function(){
+				console.log("ajax 통신 실패");
+			}
+		})
+	})
 	
   </script>
       

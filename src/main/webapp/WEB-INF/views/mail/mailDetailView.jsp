@@ -293,15 +293,16 @@
 	           location.href="mailForwardForm.do?mailNo="+mailNo;
 	     })
 	     
-		/* 삭제 클릭시 : 받은/보낸/예약의 상세 조회에서 */
+		/* 완전삭제 클릭시 : 휴지통에서의 상세 조회에서 */
 		$('#permanentDeleteMailBtn').click(function () {
 			 var mailNo = $('#mailNo').val();
 	         location.href="permanentDeleteMail.do?mailNo="+mailNo;
 		})
-
-		/* 완전삭제 클릭시 : 휴지통에서의 상세 조회에서 */
+		
+		/* 삭제 클릭시 : 받은/보낸/예약의 상세 조회에서 */
 		$('#deleteMail').click(function () {
 			 var mailNo = $('#mailNo').val();
+	         alert('삭제된 메일은 휴지통에서 확인 바랍니다.');
 	         location.href="deleteMail.do?mailNo="+mailNo;
 		})
 		
