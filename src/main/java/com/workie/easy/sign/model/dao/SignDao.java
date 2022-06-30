@@ -245,5 +245,25 @@ public class SignDao {
 		return (ArrayList)sqlSession.selectList("signMapper.selectViewA", deptCode);
 	}
 
+	public int selectCountW(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCountW", empName);
+	}
+
+	public int selectCountP(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCountP", empName);
+	}
+
+	public int selectCountR(SqlSessionTemplate sqlSession, String empName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCountR", empName);
+	}
+
+	public int selectCountA(SqlSessionTemplate sqlSession, String deptCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("signMapper.selectCountA", deptCode);
+	}
+
 		
 }

@@ -1,7 +1,6 @@
 package com.workie.easy.employee.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -17,13 +16,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.workie.easy.employee.model.dto.Employee;
 import com.workie.easy.employee.model.service.EmployeeService;
-import com.workie.easy.mail.model.dto.Mail;
 import com.workie.easy.mail.model.service.MailService;
 import com.workie.easy.personnel.model.service.PersonnelService;
 import com.workie.easy.schedule.model.dto.Schedule;
 import com.workie.easy.schedule.model.service.ScheduleService;
-import com.workie.easy.employee.model.dto.Employee;
+import com.workie.easy.sign.model.service.SignService;
 
 /*
 * <pre>
@@ -57,6 +56,9 @@ public class EmployeeController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	@Autowired
+	public SignService signService;
+	
 	/*메인 화면 연결*/
 	@RequestMapping("main.do")
 	public String mainRead(HttpSession session, Model model){
@@ -71,8 +73,19 @@ public class EmployeeController {
 		/* 김재호 : */
 		ArrayList<Employee> monthEmpList = personnelService.selectMonthEmpList();
 		model.addAttribute("empList", monthEmpList);
-		/* 임현빈 : */
 		
+		/* 임현빈 : */
+		int countW = signService.selectCountW(loginEmp.getEmpName());
+		model.addAttribute("countW", countW);
+		
+		int countP = signService.selectCountP(loginEmp.getEmpName());
+		model.addAttribute("countA", countP);
+		
+		int countR = signService.selectCountR(loginEmp.getEmpName());
+		model.addAttribute("countR", countR);
+		
+		int countA = signService.selectCountA(loginEmp.getDeptCode());
+		model.addAttribute("countA", countA); 
 		
 		/* 전재은 : */
 		/*조회 조건*/
