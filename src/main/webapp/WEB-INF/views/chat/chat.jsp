@@ -350,7 +350,9 @@ $("#status").on('change',function(){
 		
 		selectDeptList();
 		
-		 
+		var reFresh = setInterval(function(){
+        	selectDeptList();
+	    }, 50000)
 		
 	});
 	
@@ -400,8 +402,9 @@ $("#status").on('change',function(){
         
 	});
 		var selectDeptList = function(){
-		
+			
 		var contectList = $("#contectListArea");
+		contectList.empty();
 		
 		$.ajax({
 			url:"chDeptList.do",
@@ -445,8 +448,8 @@ $("#status").on('change',function(){
         		},
         		success : function(list){
               		list.forEach((e => {
-              			if(e.empNo != ${ loginEmp.empNo }){//값이 넘어온 사원 번호가 session에 empNo랑 같지 않으면 
-              		
+              			if(e.empNo != "${ loginEmp.empNo }"){//값이 넘어온 사원 번호가 session에 empNo랑 같지 않으면 
+              		 
               				deptArea.append(`
     								<div style="margin-left:20px;">
             							<a href="chat.do?empNo=\${e.empNo}">
