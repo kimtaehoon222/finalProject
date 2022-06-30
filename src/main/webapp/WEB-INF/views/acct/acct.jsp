@@ -14,46 +14,52 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
   
-  google.charts.load("current", {packages:["corechart"]});
-  google.charts.setOnLoadCallback(drawChart);
-  
-  function drawChart() {
-
-  // Create the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', '상태');
-  data.addColumn('number', '금액');
-  data.addRows([
-    ['사용금액', 1000000],
-    ['잔액', 4000000],
-  ]);
-
-  // Set chart options
-  var options = {
-    /*도넛그래프*/
-    pieHole: 0.4,
-
-    /*크기*/
-    chartArea: { width: '90%', height: '90%' },
-
-    /*색상*/
-    backgroundColor: 'none',
-    legend: 'none',
-    slices: {
-              0: { color: '#FB8A7C' },
-              1: { color: '#E0E0E0' }
-            },
-    pieSliceTextStyle: {
-        color: 'white',
-        fontSize: '11'
-    },
-    // pieSliceText: 'none',
-
-  };
-
-  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-  chart.draw(data, options);
-  }
+	google.charts.load("current", {packages:["corechart"]});
+	google.charts.setOnLoadCallback(drawChart);
+	
+	function drawChart() {
+		
+	/*차트 데이터 호출*/
+	 var jsonData = $.ajax({
+		url: "cardchart.do",
+		dataType:"json",
+		async:false
+	}).responseText;
+	
+	 console.log(jsonData);
+	 
+	 /*차트 데이터*/
+	 var data
+     = new google.visualization.DataTable(jsonData);
+	
+	/*차트 옵션*/
+	var options = {
+	  /*도넛그래프*/
+	  pieHole: 0.4,
+	
+	  /*크기*/
+	  chartArea: { width: '90%', height: '90%' },
+	
+	  /*색상*/
+	  backgroundColor: 'none',
+	  legend: 'none',
+	  slices: {
+	            0: { color: '#FB8A7C' },
+	            1: { color: '#DBDBDB' }
+	          },
+	  pieSliceTextStyle: {
+	      color: 'white',
+	      fontSize: '11'
+	  },
+	  // pieSliceText: 'none',
+	
+	};
+	
+	var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+	
+	chart.draw(data, options);
+	
+	}
 
 </script>
 
@@ -72,25 +78,49 @@
 	        <!-- 카드 잔액 정보 -->
 	        <div class="i0 container c1">
 	          <div class="i1-1">
-	          	<h5>
-		          	<b>${loginEmp.deptName}<br>
-		          	법인카드</b>
+	          	<h4 class="fw-bold" style="margin: 5px 0;">
+		          	${loginEmp.deptName}<br>
+		          	법인카드
 		          	<hr style="margin: 5px 0;">
-	          	</h5>
-	          	<b id="currentMonth">XX월<br></b>
-	          
+		          	<br>
+	          	</h4>
+	          	<h5 class="fw-bold" style="margin: 5px 0; font-size: 22px;">${fn:substring(cardData.thisMonth,5,7)}월</h5>
+	          	<br>
+				<b> 승인 ${cardData.ACount} 건 :<span id="aSum"> ${cardData.ASum} 원</span></b><br>
+				<b> 취소 ${cardData.CCount} 건 :<span id="cSum"> ${cardData.CSum} 원</span></b><br>
+				<br>
+				<hr style="margin:2px 0px;">
 	          </div>
 	          <div class="i1-2">
-	          	<div id="donutchart"style="width: 100%; height: 100%;"></div>
+	          	<div id="donutchart"style="width: 200px; height: 200px;"></div>
 	          </div>
 	          <div class="i1-3">
-	          	<small>결제 건 수</small><br><b>0건</b>
+          		<!-- 승인 금액 / 취소 금액 <br>
+          		<b id="aSum">${cardData.ASum} 원</b> / 
+          		<b id="cSum">${cardData.CSum} 원</b><hr style="margin:2px 0px"> -->
+	          	<h5 style="margin:0;">
+		          	<b>사용금액 / 한도</b><br>
+		          	<b id="add">${cardData.add} 원</b> / <b id="creditLine">${cardData.creditLine} 원</b>
+	          	</h5>
 	          </div>
-	          <div class="i1-4"><small>사용금액 / 한도</small><br><b>0,000,000 원 / 5,000,000 원</b></div>
+	          <script>
+		          var aSum = $('#aSum').text();
+		          var aSum2 = aSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		          $('#aSum').text(aSum2);	
+		          var cSum = $('#cSum').text();
+		          var cSum2 = cSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		          $('#cSum').text(cSum2);	
+		          var add = $('#add').text();
+		          var add2 = add.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		          $('#add').text(add2);	
+		          var creditLine = $('#creditLine').text();
+		          var creditLine2 = creditLine.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		          $('#creditLine').text(creditLine2);	
+	          </script>
 	        </div>
 	        <!-- 카드정보 -->
 	        <div class="i0 container c2">
-	          <div class="i2-1"><h5 style="margin: 0 0 5px 0;"><b>카드정보</b></h5></div>
+	          <div class="i2-1"><h4 class="fw-bold" style="margin: 5px 0;">카드정보</h4></div>
 	          <div class="i2-2" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" 
 	          	   title="<span>상세정보 조회 </span>"
 	          	   style="cursor: pointer" id="cardInfoDetail">
@@ -106,7 +136,7 @@
 	              </tr>
 	              <tr>
 	                <th>카드번호</th>
-	                <td><small>${fn:substring(cardInfo.cardNo,0,5)}****-****${fn:substring(cardInfo.cardNo,14,19)}</small></td>
+	                <td>${fn:substring(cardInfo.cardNo,0,5)}****-****${fn:substring(cardInfo.cardNo,14,19)}</td>
 	              </tr>
 	              <tr>
 	                <th>유효기간</th>
@@ -121,7 +151,7 @@
 	        </div>
 	        <!-- 검색조건 -->
 	        <div class="i0 container c3-1">
-	          <h5 class="fw-bold" style="margin: 5px 0;">검색조건<hr style="margin: 5px 0;"></h5>
+	          <h4 class="fw-bold" style="margin: 5px 0;">&nbsp 검색조건<hr style="margin: 5px 0;"></h4>
 	          
 	          <form class="container c3-2" action="javascript:void(0)"><!-- action="statSearch.do"  method="post" onsubmit="return checkValue();" -->
 	            <div class="i3-1">
@@ -279,7 +309,7 @@
 	    <div class="modal-content">
 	        <!-- 모달 헤더 -->
 	        <div class="modal-header">
-	            <h5 class="modal-title" id="exampleModalLabel4">사용 내역 등록</h5>
+	            <h4 class="modal-title" id="exampleModalLabel4">사용 내역 등록</h4>
 	        </div>
 	        <!-- 모달 바디 -->
 	        <div class="modal-body">
@@ -364,7 +394,7 @@
 	    <div class="modal-content">
 	        <!-- 모달 헤더 -->
 	        <div class="modal-header">
-	            <h5 class="modal-title" id="exampleModalLabel4">사용 내역 등록</h5>
+	            <h4 class="modal-title" id="exampleModalLabel4">사용 내역 등록</h4>
 	        </div>
 	        <!-- 모달 바디 -->
 	        <div class="modal-body">

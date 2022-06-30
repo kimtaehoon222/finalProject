@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.workie.easy.acct.model.dto.Card;
+import com.workie.easy.acct.model.dto.CardChart;
+import com.workie.easy.acct.model.dto.CardData;
 import com.workie.easy.common.model.dto.PageInfo;
 
 /*
@@ -20,6 +22,7 @@ import com.workie.easy.common.model.dto.PageInfo;
 * 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * 2022/06/28 (전재은) 내역삭제 수정, 내역검색, 카드조회 추가
 * 2022/06/28 (전재은) 사용금액 그래프 추가
+* 2022/06/29 (전재은) 사용금액 그래프 수정
 * </pre>
 * @version 1
 * @author 전재은
@@ -48,6 +51,12 @@ public class CardDao {
 
 		return sqlSession.insert("cardMapper.insertCardStat", c);
 	
+	}
+	
+	public int insertCardStatOnly(SqlSessionTemplate sqlSession, Card c) {
+		
+		return sqlSession.insert("cardMapper.insertCardStatOnly", c);
+		
 	}
 
 	public Card selectCardStat(SqlSessionTemplate sqlSession, int statNo) {
@@ -104,6 +113,18 @@ public class CardDao {
 	public Card selectCardInfo(SqlSessionTemplate sqlSession, String deptCode) {
 
 		return sqlSession.selectOne("cardMapper.selectCardInfo", deptCode);
+		
+	}
+
+	public CardData cardData(SqlSessionTemplate sqlSession, String deptCode) {
+
+		return sqlSession.selectOne("cardMapper.cardData", deptCode);
+	
+	}
+
+	public ArrayList<CardChart> cardChart(SqlSessionTemplate sqlSession, String deptCode) {
+		
+		return (ArrayList)sqlSession.selectList("cardMapper.chartData", deptCode);
 		
 	}
 

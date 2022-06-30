@@ -452,6 +452,34 @@
 						</div>
 					</div>
 				</div>
+				<script>
+				function detailClick(e){
+					console.log("찍힘 : "+e);
+					var loginEmpNo=${loginEmp.empNo};
+					var skedNo = e;
+			        $.ajax({ 
+						url: "selectSked.do",
+						data: {
+						 		empNo: loginEmpNo,
+						 		skedNo: skedNo,
+						 		skedCode: skedCode
+						},
+						type: "GET",
+						dataType : "json",
+						success : function(result){
+							/*console.log("id : "+result.id);							 
+							console.log("title : "+result.title);							 
+							console.log("start : "+result.start);							 
+							console.log("end : "+result.end);							 
+							console.log("color : "+result.color);*/
+							clickDetailBtn(result);
+						},
+						error : function(result){
+						 alert('데이터 로딩 실패');
+						}
+				   });
+				}
+				</script>
 				<!-- /간단 일정 목록 -->
 				
 			<!-- 우측화면 -->
@@ -603,7 +631,8 @@
 										time = result[i].startTime + "~" + result[i].endTime;
 									}
 									
-									daylist += "<div class='c1_list t_list mb-2' style='background-color:"+ result[i].color +";'>"
+									daylist += "<div class='c1_list t_list mb-2' style='background-color:"+ result[i].color +";' onclick='detailClick("+result[i].id+")''>"
+	                                    + "<input style='display:none;' value="+result[i].id+">"
 	                                    + "<div class='t_header'>"
 	                                    + "<div class='me-auto fw-bold'>" + result[i].title + "</div>"
 	                                    + "</div>"
