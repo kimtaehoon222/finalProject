@@ -28,6 +28,7 @@
 	        , A.START_DATE
 	        , A.END_DATE
 	        , B.EMP_NAME
+	        , B.DEPT_CODE
 			FROM RESERVATION A
 			LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 			WHERE RES_STATUS = 'Y'

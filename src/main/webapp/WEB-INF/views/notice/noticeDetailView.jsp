@@ -16,7 +16,7 @@ tr>th{
 </head>
 <body>
 
-	<jsp:include page="top.jsp" />
+	<jsp:include page="../common/top.jsp" />
 	
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<div class="card">
@@ -55,7 +55,7 @@ tr>th{
 	   	</div>        
 	</div>
 	
-	<jsp:include page="bottom.jsp" />  
+	<jsp:include page="../common/bottom.jsp" />  
 
 </body>
 </html>

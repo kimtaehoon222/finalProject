@@ -60,7 +60,12 @@
         </select>
         
         <select id="selectEmp" resultMap="personnelResult">
-		    SELECT * FROM EMPLOYEE A 
+		 SELECT 
+			  A.EMP_NO, EMP_NAME ,PHONE, SUBSTR(EMP_REG,1,6) EMP_REG
+            , ADDRESS, A.DEPT_CODE, A.JOB_CODE, DISABLE_YN, EMP_NOTE
+            , HIRE_DATE , TEL_NO , EMP_ID, B.JOB_NAME
+            , C.DEPT_NAME , D.ORIGIN_NAME, D.CHANGE_NAME
+			FROM EMPLOYEE A
 			LEFT JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
 			LEFT JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE
 			LEFT JOIN (SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND CTG_NO= 'E') D ON (A.EMP_NO = D.REF_NO) 
@@ -86,7 +91,7 @@
       </update>
       
       <select id="selectRetiredEmpList" resultMap="personnelResult">
-			SELECT 
+	  SELECT 
 			*
 			FROM EMPLOYEE A
 			JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
@@ -96,8 +101,11 @@
         </select>
         
         <select id="selectRetiredEmp" resultMap="personnelResult">
-		    SELECT 
-			*
+	   SELECT 
+			  A.EMP_NO, EMP_NAME ,PHONE, SUBSTR(EMP_REG,1,6) EMP_REG
+            , ADDRESS, A.DEPT_CODE, A.JOB_CODE, DISABLE_YN, EMP_NOTE
+            , ENT_DATE , TEL_NO , EMP_ID, B.JOB_NAME
+            , C.DEPT_NAME , D.ORIGIN_NAME, D.CHANGE_NAME
 			FROM EMPLOYEE A
 			JOIN JOB B ON A.JOB_CODE = B.JOB_CODE
 			JOIN DEPARTMENT C ON A.DEPT_CODE = C.DEPT_CODE

@@ -2,6 +2,7 @@ package com.workie.easy.personnel.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,15 +55,25 @@ public class PersonnelController {
 	 @RequestMapping(value="updatePwd.do",method=RequestMethod.POST)//비번 수정 페이지
 	 public String updatePwd(HttpSession session,
 			  				 @RequestParam("originPwd") String originPwd,
-			                 @RequestParam("updatePwd") String updatePwd, 
-			                 Model model) {
+			                 @RequestParam("updatePwd") String updatePwd) {
+			                 
 		    
 		    Employee e = (Employee) session.getAttribute("loginEmp");
-		    Employee emp = personnelService.updatePwd(bCryptPasswordEncoder,e,originPwd,updatePwd);
+		    personnelService.updatePwd(bCryptPasswordEncoder,e,originPwd,updatePwd);
 			
-			model.addAttribute("loginEmp", emp);
-		    return "personnel/myPageView";
+		    session.setAttribute("msg", "비밀번호를 변경하셔서 로그아웃 됩니다.");
+		    return "redirect:pwdLogout.do";
 		  	 }
+	 
+	 //비번 수정후 로그아웃을 위한 메소드
+	 @RequestMapping("pwdLogout.do")
+		public String logout(SessionStatus status){
+			
+			status.setComplete();
+            
+			return "login/loginForm";
+			
+		}
 	
 	 @RequestMapping("empList.do")//재직중인 직원 목록
 	 public String selectEmpList(Model model) {
@@ -70,6 +81,7 @@ public class PersonnelController {
 		ArrayList<Employee> list = personnelService.selectEmpList();
 		
 		model.addAttribute("list", list);
+		
 		return "personnel/empListView";		
 	}
 	 
@@ -77,9 +89,7 @@ public class PersonnelController {
      public ModelAndView selectEmp(String eId , ModelAndView mv) {
 		 
 		 Employee e = personnelService.selectEmp(eId);
-		 
-		 String reg = e.getEmpReg().substring(0, 6);
-		 e.setEmpReg(reg);
+		 	 
 		 mv.addObject("e",e).setViewName("personnel/empDetailView");
 
 		 return mv;	
@@ -101,12 +111,15 @@ public class PersonnelController {
 		 
 		    Attachment at = new Attachment();
 		    at.setRefNo(emp.getEmpNo());
+		    at.setChangeName(emp.getChangeName());
+		    at.setOriginName(emp.getOriginName());
 		    String orgChangeName = at.getChangeName();
-		   //기존첨부파일을 orgChangeName변수에 담아주고
+		    //기존첨부파일을 orgChangeName변수에 담아주고
+		    
 		   
 		   if(!file.getOriginalFilename().equals("")) {
 			   //reUploadFile에 파일이 있으면 원본파일명 
-			   
+			  
 		      String changeName = saveFile(file, request, at);
 			   //경로와 바뀐첨부파일명
 			  at.setOriginName(file.getOriginalFilename());
@@ -170,15 +183,17 @@ public class PersonnelController {
 	      return changeName;
 	   }
 	
-
+    //재직 직원 퇴사시키기
 	@RequestMapping("retiredEmp.do")
-	 public String deleteEmp(String eId) {
+	 public String deleteEmp(String eId, HttpSession session) {
 		 
 		 personnelService.deleteEmp(eId);
 		 
-		 return "redirect:empList.do";
+		 session.setAttribute("msg", "사원을 성공적으로 퇴사 시켰습니다.");
+		 return "redirect:retiredEmpList.do";
 	 }
 	
+	//퇴사자 리스트
 	@RequestMapping("retiredEmpList.do") 
 	public String selectRetiredEmpList(Model model) {
         ArrayList<Employee> list = personnelService.selectRetiredEmpList();
@@ -186,6 +201,7 @@ public class PersonnelController {
 		model.addAttribute("list", list);
 		return "personnel/retiredEmpListView";	
 	}
+	 //퇴사자 상세
 	 @RequestMapping("detailRetiredEmp.do") 
      public ModelAndView selectRetiredEmp(String eId , ModelAndView mv) {
 		 
@@ -197,6 +213,7 @@ public class PersonnelController {
 
 		 return mv;	
 	 }
+	 //퇴사자 재직자로 수정
 	 @RequestMapping("returnEmp.do")
 	   public String updateReturnEmp(String eId ,Model model) {
 		   //String eId jsp에서 히든값 emp_id로 받아온 거
@@ -209,33 +226,36 @@ public class PersonnelController {
 		  
 	   }
 	 
+	 //미승인 직원 리스트
 	 @RequestMapping("noApvList.do")
 	 public String selectApvList(Model model) {
 		
 		 ArrayList<Employee> list = personnelService.selectApvList();
 			
-		 
-		 
-			model.addAttribute("list", list);
+		    model.addAttribute("list", list);
+		    
 			return "personnel/noApvListView";		
 	 }
+	 
+	 //미승인 직원 화면전환
 	 @RequestMapping("insertEmpForm.do")
 	 public ModelAndView updateNoApvEmpForm(String eId , ModelAndView mv ) {
 		  
 		 Employee e = personnelService.selectEmp(eId);  
-		 
-		 
+		 		 
 		 mv.addObject("e", e).setViewName("personnel/empInsertView");
 		  
 		 return mv;
 	 }
+	 
+	 //미승인 직원 승인 + 정보 추가
 	 @RequestMapping("insertUpdateEmp.do")
 	 public String insertEmp(Employee e, HttpServletRequest request, 
 			                 @RequestParam(name="uploadFile", required = false)MultipartFile file) {
     
 		 Attachment at = new Attachment();
 		 at.setRefNo(e.getEmpNo());
-		 System.out.println("미승인 직원" + at);
+		
 		 if(!file.getOriginalFilename().equals("")) {
 				String changeName = saveFile(file , request, at);
 				//saveFile 메소드를 만들어서 폴더를 지정해주고 수정된 파일명 리턴
@@ -268,8 +288,7 @@ public class PersonnelController {
 		  
 	 Employee e = personnelService.selectEmp(eId);
 	 
-	 String reg = e.getEmpReg().substring(0, 6);
-	 e.setEmpReg(reg);
+
 	 mv.addObject("e",e).setViewName("personnel/empSeeDetail");
 
 	 return mv;	

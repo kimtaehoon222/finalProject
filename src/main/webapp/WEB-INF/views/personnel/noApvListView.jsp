@@ -60,7 +60,7 @@
                                  <c:forEach items="${list}" var="e">
                                     <tr>
                                         <td>${e.empName}</td>
-                                        <td>${e.empId}</td>
+                                        <td>${e.empId}<%="@easy.co.kr"%></td>
                                         <td>${e.phone}</td>
                                         <td>${e.hireDate}</td>
                                         <td><a  class="btn btn-primary rounded-pill" href="insertEmpForm.do?eId=${e.empId}"> 이동하기</a></td>                                   
