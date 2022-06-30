@@ -378,6 +378,38 @@ private SignDao signDao;
 
 
 
+	@Override
+	public int selectCountW(String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectCountW(sqlSession, empName);
+	}
+
+
+
+	@Override
+	public int selectCountP(String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectCountP(sqlSession, empName);
+	}
+
+
+
+	@Override
+	public int selectCountR(String empName) {
+		// TODO Auto-generated method stub
+		return signDao.selectCountR(sqlSession, empName);
+	}
+
+
+
+	@Override
+	public int selectCountA(String deptCode) {
+		// TODO Auto-generated method stub
+		return signDao.selectCountA(sqlSession, deptCode);
+	}
+
+
+
 
 
 

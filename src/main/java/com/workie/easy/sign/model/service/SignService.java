@@ -81,6 +81,14 @@ public interface SignService {
 
 	ArrayList<Sign> selectViewA(String deptCode);
 
+	int selectCountW(String empName);
+
+	int selectCountP(String empName);
+
+	int selectCountR(String empName);
+
+	int selectCountA(String deptCode);
+
 	
 
 	/* void insertName(int eNo); */

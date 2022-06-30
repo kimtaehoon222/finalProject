@@ -896,6 +896,48 @@
      ]]>
      
 	</select>
+	
+	<select id="selectCountW" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*)  
+			FROM SIGN A
+			WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+			AND A.STATUS_CODE = 'W'
+			AND A.STATUS = 'Y'
+		
+	</select>
+	
+	<select id="selectCountP" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*)  
+			FROM SIGN A
+			WHERE A.FINAL_APPROVER LIKE '%'||#{empName}||'%
+			AND A.STATUS_CODE = 'P'
+			AND A.STATUS = 'Y'
+		
+	</select>
+	
+	<select id="selectCountR" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*)  
+			FROM SIGN A
+			WHERE A.CREATE_NAME LIKE '%'||#{empName}||'%'
+			AND A.STATUS_CODE = 'R'
+			AND A.STATUS = 'Y'
+		
+	</select>
+	
+	<select id="selectCountA" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*)  
+			FROM SIGN A
+			JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
+			WHERE B.DEPT_CODE LIKE '%'||#{deptCode}||'%'
+			AND A.STATUS_CODE = 'A'
+			AND A.STATUS = 'Y'
+		
+	</select>
+	
 	</mapper>
 
 		
