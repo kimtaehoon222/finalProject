@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 
 import com.workie.easy.acct.model.dao.CardDao;
 import com.workie.easy.acct.model.dto.Card;
+import com.workie.easy.acct.model.dto.CardChart;
+import com.workie.easy.acct.model.dto.CardData;
 import com.workie.easy.common.CommException;
 import com.workie.easy.common.model.dto.PageInfo;
 
@@ -22,6 +24,7 @@ import com.workie.easy.common.model.dto.PageInfo;
 * 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * 2022/06/28 (전재은) 내역삭제 수정, 내역검색, 카드조회 추가
 * 2022/06/28 (전재은) 사용금액 그래프 추가
+* 2022/06/29 (전재은) 사용금액 그래프 수정
 * </pre>
 * @version 1
 * @author 전재은
@@ -54,6 +57,17 @@ public class CardServiceImpl implements CardService {
 	public void insertCardStat(Card c) {
 		
 		int result = cardDao.insertCardStat(sqlSession, c);
+		
+		if(result < 0) {
+			throw new CommException("카드내역 등록에 실패했습니다. 관리자에게 문의 바랍니다.");
+		}
+		
+	}
+	
+	@Override
+	public void insertCardStatOnly(Card c) {
+		
+		int result = cardDao.insertCardStatOnly(sqlSession, c);
 		
 		if(result < 0) {
 			throw new CommException("카드내역 등록에 실패했습니다. 관리자에게 문의 바랍니다.");
@@ -146,6 +160,20 @@ public class CardServiceImpl implements CardService {
 	public Card selectCardInfo(String deptCode) {
 
 		return cardDao.selectCardInfo(sqlSession, deptCode);
+		
+	}
+
+	@Override
+	public CardData cardData(String deptCode) {
+
+		return cardDao.cardData(sqlSession, deptCode);
+		
+	}
+
+	@Override
+	public ArrayList<CardChart> cardChart(String deptCode) {
+		
+		return cardDao.cardChart(sqlSession, deptCode);
 		
 	}
 	

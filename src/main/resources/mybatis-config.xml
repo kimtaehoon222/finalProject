@@ -30,7 +30,6 @@
 	    <typeAlias type="com.workie.easy.schedule.model.dto.Schedule" alias="Schedule"/>
 	    
 	    <typeAlias type="com.workie.easy.acct.model.dto.Card" alias="Card"/>
-	    
 
 	    <typeAlias type="com.workie.easy.chat.model.dto.Chat" alias="Chat"/>
 	    <typeAlias type="com.workie.easy.chat.model.dto.Contect" alias="Contect"/>

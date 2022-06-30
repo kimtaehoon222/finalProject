@@ -83,6 +83,21 @@
 		SELECT *
 		  FROM DUAL 	
 	</insert>
+	 
+	<insert id="insertCardStatOnly">
+		INSERT INTO CARD_STATEMENT
+		VALUES( SEQ_CSNO.NEXTVAL 
+		      , ( SELECT A.CARD_REG_NO 
+		            FROM DEP_CARD A 
+		           WHERE DEPT_CODE = ( SELECT B.DEPT_CODE 
+		                                 FROM EMPLOYEE B 
+		                                WHERE EMP_NO = #{empNo}
+		                             ) 
+		        ) 
+		      , #{empNo} , #{paymentStatus} , #{amount} , #{transactionDate} , #{storeName} 
+		      , #{statMemo} , DEFAULT , DEFAULT
+		      )
+	</insert>
 	
 	<select id="selectCardStat" resultMap="cardResult">
 		SELECT 
@@ -227,5 +242,108 @@
 		  JOIN DEPARTMENT D ON (A.DEPT_CODE = D.DEPT_CODE)
 		 WHERE A.CARD_STATUS = 'Y'
 		   AND A.DEPT_CODE = #{deptCode}
+	</select>
+	
+	
+	<resultMap type="com.workie.easy.acct.model.dto.CardData" id="chartResult">
+		<result property="thisMonth" column="THIS_MONTH"/>
+		<result property="aCount" column="A_COUNT"/>
+		<result property="cCount" column="C_COUNT"/>
+		<result property="aSum" column="A_SUM"/>
+		<result property="cSum" column="C_SUM"/>
+		<result property="add" column="ADD"/>
+		<result property="balance" column="BALANCE"/>
+		<result property="creditLine" column="CREDIT_LINE"/>
+	</resultMap>
+	
+	<select id="cardData" resultMap="chartResult">
+		WITH RESULT1 AS
+		(
+		 SELECT 
+		        SUM(A.AMOUNT) AS TEST1
+		      , COUNT(A.AMOUNT) AS TEST2
+		   FROM CARD_STATEMENT A
+		   JOIN DEP_CARD B ON (A.CARD_REG_NO = B.CARD_REG_NO)
+		  WHERE A.STAT_STATUS = 'Y'
+		    AND B.DEPT_CODE = #{deptCode}
+		    AND TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') 
+		    AND A.PAYMENT_STATUS = 'A'
+		),
+		RESULT2 AS
+		(
+		 SELECT 
+		       SUM(A.AMOUNT) AS TEST1
+		     , COUNT(A.AMOUNT) AS TEST2
+		  FROM CARD_STATEMENT A
+		  JOIN DEP_CARD B ON (A.CARD_REG_NO = B.CARD_REG_NO)
+		 WHERE A.STAT_STATUS = 'Y'
+		   AND B.DEPT_CODE = #{deptCode}
+		   AND TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') 
+		   AND A.PAYMENT_STATUS = 'C'
+		),
+		CREDIT_LINE AS
+		(
+		 SELECT 
+		        B.CREDIT_LINE
+		   FROM DEP_CARD A
+		   JOIN CARD_INFO B ON (A.CARD_REG_NO = B.CARD_REG_NO)
+		  WHERE A.DEPT_CODE = #{deptCode}
+		)
+		SELECT 
+		       TO_CHAR(SYSDATE, 'YYYY-MM') AS "THIS_MONTH"
+		     , (SELECT TEST2 FROM RESULT1) AS "A_COUNT"
+		     , (SELECT TEST2 FROM RESULT2) AS "C_COUNT"
+		     , (SELECT TEST1 FROM RESULT1) AS "A_SUM"
+		     , (SELECT TEST1 FROM RESULT2) AS "C_SUM"
+		     , ((SELECT TEST1 FROM RESULT1)-(SELECT TEST1 FROM RESULT2)) AS "ADD"
+		     , (SELECT * FROM CREDIT_LINE) - ((SELECT TEST1 FROM RESULT1)-(SELECT TEST1 FROM RESULT2)) AS "BALANCE"
+		     , (SELECT * FROM CREDIT_LINE) AS "CREDIT_LINE"
+		  FROM DUAL
+	</select>
+	
+	
+	<select id="chartData" resultType="com.workie.easy.acct.model.dto.CardChart">
+		WITH RESULT1 AS
+		(
+		 SELECT 
+		        SUM(A.AMOUNT) AS TEST1
+		      , COUNT(A.AMOUNT) AS TEST2
+		   FROM CARD_STATEMENT A
+		   JOIN DEP_CARD B ON (A.CARD_REG_NO = B.CARD_REG_NO)
+		  WHERE A.STAT_STATUS = 'Y'
+		    AND B.DEPT_CODE = #{deptCode}
+		    AND TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') 
+		    AND A.PAYMENT_STATUS = 'A'
+		),
+		RESULT2 AS
+		(
+		 SELECT 
+		       SUM(A.AMOUNT) AS TEST1
+		     , COUNT(A.AMOUNT) AS TEST2
+		  FROM CARD_STATEMENT A
+		  JOIN DEP_CARD B ON (A.CARD_REG_NO = B.CARD_REG_NO)
+		 WHERE A.STAT_STATUS = 'Y'
+		   AND B.DEPT_CODE = #{deptCode}
+		   AND TO_CHAR(A.TRANSACTION_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') 
+		   AND A.PAYMENT_STATUS = 'C'
+		),
+		CREDIT_LINE AS
+		(
+		 SELECT 
+		        B.CREDIT_LINE
+		   FROM DEP_CARD A
+		   JOIN CARD_INFO B ON (A.CARD_REG_NO = B.CARD_REG_NO)
+		  WHERE A.DEPT_CODE = #{deptCode}
+		)
+		SELECT 
+		       '사용금액' as "NAME"
+		     , ((SELECT TEST1 FROM RESULT1)-(SELECT TEST1 FROM RESULT2)) AS "AMOUNT"
+		     
+		  FROM DUAL
+		 UNION
+		SELECT
+		       '잔액' AS "NAME"
+		     , (SELECT * FROM CREDIT_LINE) - ((SELECT TEST1 FROM RESULT1)-(SELECT TEST1 FROM RESULT2)) AS "AMOUNT"
+		  FROM DUAL
 	</select>
 </mapper>

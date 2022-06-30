@@ -3,6 +3,8 @@ package com.workie.easy.acct.model.service;
 import java.util.ArrayList;
 
 import com.workie.easy.acct.model.dto.Card;
+import com.workie.easy.acct.model.dto.CardChart;
+import com.workie.easy.acct.model.dto.CardData;
 import com.workie.easy.common.model.dto.PageInfo;
 
 public interface CardService {
@@ -12,6 +14,8 @@ public interface CardService {
 	ArrayList<Card> selectCardStatList(String deptCode, PageInfo pi);
 
 	void insertCardStat(Card c);
+	
+	void insertCardStatOnly(Card c);
 
 	Card selectCardStat(int statNo);
 
@@ -24,5 +28,9 @@ public interface CardService {
 	ArrayList<Card> searchStatList(Card c, PageInfo pi);
 
 	Card selectCardInfo(String deptCode);
+
+	CardData cardData(String deptCode);
+
+	ArrayList<CardChart> cardChart(String deptCode);
 
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workie.easy.acct.model.dto.Card;
+import com.workie.easy.acct.model.dto.CardChart;
+import com.workie.easy.acct.model.dto.CardData;
 import com.workie.easy.acct.model.service.CardService;
 import com.workie.easy.common.CommException;
 import com.workie.easy.common.model.Pagination;
@@ -37,6 +40,7 @@ import com.workie.easy.employee.model.dto.Employee;
 * 2022/06/27 (전재은) 상세조회 수정, 내역 수정, 삭제 추가
 * 2022/06/28 (전재은) 내역삭제 수정, 내역검색, 카드조회 추가
 * 2022/06/28 (전재은) 사용금액 그래프 추가
+* 2022/06/29 (전재은) 사용금액 그래프 수정
 * </pre>
 * @version 1
 * @author 전재은
@@ -73,13 +77,32 @@ public class CardController {
 		Card cardInfo = cardService.selectCardInfo(deptCode);
 		
 		/*--사용금액, 한도--*/
+		CardData cardData = cardService.cardData(deptCode);
 		
+		String thisMonth = cardData.getThisMonth();
+		int aCount = cardData.getACount();
+		int cCount = cardData.getCCount();
+		int aSum = cardData.getASum();
+		int cSum = cardData.getCSum();
+		int add = cardData.getAdd();
+		int balance = cardData.getBalance();
+		int creditLine = cardData.getCreditLine();
+		
+		System.out.println("thisMonth : " + thisMonth);
+		System.out.println("aCount : " + aCount);
+		System.out.println("cCount : " + cCount);
+		System.out.println("aSum : " + aSum);
+		System.out.println("cSum : " + cSum);
+		System.out.println("add : " + add);
+		System.out.println("balance : " + balance);
+		System.out.println("creditLine : " + creditLine);
 		
 		/*--공통--*/
 		/*세션에 올리기*/
 		model.addAttribute("cardList", cardList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("cardInfo", cardInfo);
+		model.addAttribute("cardData", cardData);
 		
 		return "acct/acct";
 		
@@ -100,16 +123,24 @@ public class CardController {
 		System.out.println("originName : "+file.getOriginalFilename());
 		System.out.println("statMemo : "+c.getStatMemo());
 		
-		if(!file.getOriginalFilename().equals("")) {
-			String changeName = saveFile(file, request, c);
-			
-			if(changeName != null) {
-				c.setOriginName(file.getOriginalFilename());
-				c.setChangeName(changeName);
+
+//		try {
+			if(!file.getOriginalFilename().equals("")) {
+				String changeName = saveFile(file, request, c);
+				
+				if(changeName != null) {
+					c.setOriginName(file.getOriginalFilename());
+					c.setChangeName(changeName);
+				}
+				
+				cardService.insertCardStat(c);
+			}else {
+				cardService.insertCardStatOnly(c);
 			}
 			
-		}
-		cardService.insertCardStat(c);
+//		}catch(NullPointerException e){
+//			System.out.println("널포인트");
+//		}
 		
 		return "redirect:acct.do";
 		
@@ -329,5 +360,85 @@ public class CardController {
 		return jsonArr;
 	}
 
+	@RequestMapping("cardchart.do")
+	@ResponseBody
+	public JSONObject cardChart2(HttpServletRequest request, HttpSession session) {
+		String deptCode = ((Employee)session.getAttribute("loginEmp")).getDeptCode();
+		
+		ArrayList<CardChart> chartData = cardService.cardChart(deptCode);
+		
+		for(CardChart c2 : chartData) {
+			String name = c2.getName();
+			int amount = c2.getAmount();
+			
+			System.out.println("name : " + name);
+			System.out.println("amount : " + amount);
+		}
+		
+		/*원하는 JSON 형태*/
+		/*
+		 {
+			"cols":[
+				{"label":"상태","type":"string"},
+				{"label":"금액","type":"number"}
+			],
+			"rows" :[
+				{"c":[{"v":"사용금액"},{"v":35000}]},
+				{"c":[{"v":"잔액"},{"v":88000}]}
+			]
+		}
+		*/
+		
+		/*--반환값--*/
+		JSONObject jsonChart = new JSONObject();
+		
+		/*--컬럼--*/
+		
+		JSONObject colStatus = new JSONObject();
+		JSONObject colBalance = new JSONObject();
+		
+		colStatus.put("label","상태");
+		colStatus.put("type", "string");
+		colBalance.put("label", "금액");
+		colBalance.put("type", "number");
+		
+		/*컬럼들(배열)*/
+		JSONArray cols = new JSONArray();
+		cols.add(colStatus);
+		cols.add(colBalance);
+		
+		/*차트에 컬럼 담기*/
+		jsonChart.put("cols", cols);
+		
+		/*--로우--*/
+		JSONArray rows = new JSONArray();
+		for(CardChart c2 : chartData) {
+			
+			/*상태*/
+	        JSONObject name = new JSONObject();
+	        name.put("v", c2.getName());
+	        
+	        /*금액*/
+	        JSONObject amount = new JSONObject();
+	        amount.put("v", c2.getAmount());
+	        
+	        /*value*/
+	        JSONArray row = new JSONArray();
+	        row.add(name);
+	        row.add(amount);
+	        
+	        /*key*/
+	        JSONObject cell = new JSONObject(); 
+	        cell.put("c", row);
+
+	        /*rows 담기*/
+	        rows.add(cell);
+		}
+         
+        /*차트에 로우 담기*/
+        jsonChart.put("rows", rows);
+        
+		return jsonChart;
+	}
 	
 }
