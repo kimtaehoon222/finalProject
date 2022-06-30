@@ -74,7 +74,42 @@
    background-color: #696cff;
    color: white;
    }
+   
+   #center {
+	text-align: center;
+	margin: auto;
+	justify-content: center;
+	display: flex;
+}
   
+  .badge-gradient-success {<!--
+	초록 --> background: -webkit-gradient(linear, left top, right top, from(#84d9d2),
+		to(#07cdae));
+	background: linear-gradient(90deg, #84d9d2, #07cdae);
+	color: #fff;
+}
+
+.badge-gradient-warning {<!--
+	노랑 --> background: -webkit-gradient(linear, left top, right top, from(#f6e384),
+		to(#ffd500));
+	background: linear-gradient(90deg, #f6e384, #ffd500);
+	color: #fff;
+}
+
+.badge-gradient-info {<!--
+	파랑 --> background: -webkit-gradient(linear, left top, right top, from(#90caf9),
+		color-stop(99%, #047edf));
+	background: linear-gradient(90deg, #90caf9, #047edf 99%);
+	color: #fff;
+}
+
+.badge-gradient-danger {<!--
+	복숭아색 --> background: -webkit-gradient(linear, left top, right top, from(#ffbf96),
+		to(#fe7096));
+	background: linear-gradient(90deg, #ffbf96, #fe7096);
+	color: #fff;
+}
+
   </style>
   </head>
 
@@ -86,13 +121,13 @@
             <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
                 <div class="col-lg-8 mb-4 order-0">
-                  <div class="card">
+                  <div class="card" style="height:100%">
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">${loginEmp.empName }</h5>
+                          <h5 class="card-title text-primary"><b>${loginEmp.empName }</b></h5>
                           <p class="mb-4">
-                                                       당신의 <span class="fw-bold">미래를</span>응원합니다. -이지웨어-
+                                                       당신의 <span class="fw-bold">미래를</span>응원합니다. -이지워크-
                           </p>
 
                           <a href="myPage.do" class="btn btn-sm btn-outline-primary">마이페이지로 이동</a>
@@ -172,74 +207,97 @@
                     
                   </div>
                 </div>
+                
                 <!-- 첫 번째 행 끝 -->
 
-                <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-8">
-                        <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-                        <div id="totalRevenueChart" class="px-2"></div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="card-body">
-                          <div class="text-center">
-                            <div class="dropdown">
-                              <button
-                                class="btn btn-sm btn-outline-primary dropdown-toggle"
-                                type="button"
-                                id="growthReportId"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                2022
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div id="growthChart"></div>
-                        <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
-
-                        <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
-                          <div class="d-flex">
-                            <div class="me-2">
-                              <span class="badge bg-label-primary p-2"><i class="bx bx-dollar text-primary"></i></span>
-                            </div>
-                            <div class="d-flex flex-column">
-                              <small>2022</small>
-                              <h6 class="mb-0">$32.5k</h6>
-                            </div>
-                          </div>
-                          <div class="d-flex">
-                            <div class="me-2">
-                              <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
-                            </div>
-                            <div class="d-flex flex-column">
-                              <small>2021</small>
-                              <h6 class="mb-0">$41.2k</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                <div class="col-12 col-lg-4 order-2 order-md-3 order-lg-2 mb-4">
+                  <div class="card" style="height:386.11px">
+                  <div class="card-body"  style="height:386.11px">
+	     
+	                  			 <h5 class="card-title text-primary"><b>전자결재</b></h5>
+	                  			 <hr>
+	                  			<div style="height:386.11px"> 
+	                  			
+	                  			
+	                  			    <table id="center" style="border-collapse: collapse">
+							
+						            <tr>
+						                <td><h6><label class="badge badge-gradient-success"  id="center"><b>요청</b></label></h6></td>
+						              
+						
+						            </tr>
+									<tr border="1">
+										 <td><h6>1</h6></td>
+										 <td><hr></td>
+									</tr>
+						            <tr>
+						            
+									
+						            </tr>
+						      
+						            <tr>
+						                <td><h6><label class="badge badge-gradient-warning"  id="center"><b>진행</b></label></h6></td>
+						              
+						
+						            </tr>
+						
+						           <tr>
+										 <td><h6>4</h6></td>
+										 
+									</tr>
+						            <tr>
+						            
+									
+						            </tr>
+						            
+						              <tr>
+						                <td ><h6><label class="badge badge-gradient-danger"  id="center"><b>반려</b></label></h6></td>
+						              
+						
+						            </tr>
+						            
+						             <tr>
+										 <td><h6>2</h6></td>
+									</tr>
+						            <tr>
+						            
+						
+						            <tr>
+						                <td><h6><label class="badge badge-gradient-info"  id="center"><b>완료(기획영업부)</b></label></h6></td>
+						              
+						
+						            </tr>
+						            
+						             <tr>
+										 <td><h6>3</h6></td>
+									</tr>
+						            <tr>
+ 
+						              </table>
+						             </div> 
+						              
+						      
+						              </div>
+				</div>
+				</div>   
+								
+								
+						
+						  
+               			 
+                  
+                 
+         
+				
 				<!-- 두 번째 행 시작 -->
                 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
                   
                   <div class="row">
                   	<div class="col-12 mb-4">
-	                  	<div class="card mb-4" id="vertical-example" style="height: 160px">
+	                  	<div class="card mb-4" id="vertical-example" style="height: 386.11px">
 	                  		<div class="card-body">
 	                  			<div class="card-title">
-	                  			 <h5 class="card-title text-primary">이번 달 입사 사원</h5>
+	                  			 <h5 class="card-title text-primary"><b>이번 달 입사 사원</b></h5>
 	                  			  <table class="table table-striped kim" id="" >
                                  <tbody >
                                 <c:forEach items="${empList}" var="e">
@@ -256,11 +314,12 @@
 	                  	</div>
                   	</div>
                    </div>
-                   
-                   
-    			<div class="row">
+                  </div> 
+                
+                  <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+    			<div class="row">  <!-- 날씨 -->
     
-    				<!-- 날씨 -->
+    			
                     <div class="col-12 mb-4">
                       <div class="card">
                         <div class="card-body">
@@ -268,7 +327,6 @@
                             <div class="">
                               <div class="card-title">
                                 <h5 class="mb-3 text-primary"><b>오늘의 날씨</b></h5>
-                                <!-- <span class="badge bg-label-warning rounded-pill">Year 2022</span>  -->
                               </div>
                               <div class="weather row">
 	                                <div class="CurrIcon col-md-4"></div>
@@ -283,10 +341,12 @@
                     
                   </div>
                 </div>
-                <!--  -->
-              </div>
-              <div class="row">
+               
+              </div> 
+            
               
+              <div class="row">
+            
                 <!-- 갤러리 시작 -->
                 <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
                   <div class="card h-100">
@@ -358,7 +418,7 @@
                   <div class="card h-100">
                     <div class="card-header">
                      	<div class="card-title mb-0">
-                        <h4 class="m-0 me-2 text-primary mb-3">공지사항</h4>
+                        <h4 class="m-0 me-2 text-primary mb-3"><b>공지사항</b></h4>
                       </div>
                     </div>
                     <div class="card-body px-2">
@@ -421,10 +481,10 @@
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   	<!------ 일정 ------>
 					<div class="card h-100 overflow-hidden" style="height: 185px">
-						<h5 class="card-header" style="text-align: center;">
+						<h5 class="card-header" style="text-align: center" >
 							<a href="schedule.do" style="color: #566a7f"><!--  data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="</i><span>일정 관리 이동</span>" -->
 								<i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>
-								<b>오늘 일정 목록</b>
+								<b style="color:#696cff">오늘 일정 목록</b>
 							</a>
 						</h5>
 						<div class="card-body" id="vertical-example">

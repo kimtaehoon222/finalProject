@@ -79,7 +79,7 @@ public interface SignService {
 
 	ArrayList<Sign> selectViewR(String empName);
 
-	ArrayList<Sign> selectViewA(String empName);
+	ArrayList<Sign> selectViewA(String deptCode);
 
 	
 

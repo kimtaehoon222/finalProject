@@ -827,7 +827,7 @@
 		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
 		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
 		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
-	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	     WHERE A.FINAL_APPROVER LIKE '%'||#{empName}||'%'
 		    AND A.STATUS_CODE = 'P'
 		    AND A.STATUS = 'Y'
 		    ORDER BY A.SIGN_NO DESC
@@ -856,7 +856,7 @@
 		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
 		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
 		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
-	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	     WHERE A.CREATE_NAME LIKE '%'||#{empName}||'%'
 		    AND A.STATUS_CODE = 'R'
 		    AND A.STATUS = 'Y'
 		    ORDER BY A.SIGN_NO DESC
@@ -880,17 +880,19 @@
             A.SIGN_TITLE,
             H.STATUS_NAME,        
 	        A.CREATE_NAME,
+	        C.DEPT_CODE,
 	        TO_CHAR(A.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE
 		FROM SIGN A
 		    JOIN SIGN_TYPE B ON A.TYPE_CODE = B.TYPE_CODE
 		    JOIN EMPLOYEE C ON A.EMP_NO = C.EMP_NO
 		    JOIN SIGN_STATUS H ON A.STATUS_CODE = H.STATUS_CODE
-	     WHERE A.FIRST_APPROVER LIKE '%'||#{empName}||'%'
+	      WHERE C.DEPT_CODE LIKE '%'||#{deptCode}||'%'
 		    AND A.STATUS_CODE = 'A'
 		    AND A.STATUS = 'Y'
 		    ORDER BY A.SIGN_NO DESC
 	        )G
 	        WHERE ROWNUM <= 3
+	
      ]]>
      
 	</select>

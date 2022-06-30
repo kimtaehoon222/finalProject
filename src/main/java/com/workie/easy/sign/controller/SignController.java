@@ -921,6 +921,7 @@ public class SignController {
 		
 
 		String empName = ((Employee)session.getAttribute("loginEmp")).getEmpName();
+		String deptCode = ((Employee)session.getAttribute("loginEmp")).getDeptCode();
 
 		
 		ArrayList<Sign> listW = signService.selectViewW(empName); //대기
@@ -929,7 +930,7 @@ public class SignController {
 		
 		ArrayList<Sign> listR = signService.selectViewR(empName); //반려
 		
-		ArrayList<Sign> listA = signService.selectViewA(empName); //완료
+		ArrayList<Sign> listA = signService.selectViewA(deptCode); //완료
 		
 		
 		
