@@ -86,8 +86,8 @@
           <img id="titleImg" name="rFile"src="${pageContext.request.contextPath}/resources/emp_files/${e.changeName}" alt="user-avatar" 
            class="d-block rounded" height="150" width="200"/>
       		
-          <input type="hidden" name="changeName" value="${ e.changeName }">
-          <input type="hidden" name="originName" value="${ e.originName }">
+          <input type="hidden" name="changeName" value="${e.changeName}">
+          <input type="hidden" name="originName" value="${e.originName}">
           
       		 <div id="topPage" >
                     <div id="title">

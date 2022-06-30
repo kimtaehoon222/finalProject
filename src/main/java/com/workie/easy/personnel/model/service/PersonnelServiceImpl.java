@@ -61,8 +61,7 @@ public class PersonnelServiceImpl implements PersonnelService {
 		int result = personnelDao.updatePwd(sqlSession,selectEmp);
 	
 	    if(result > 0 ) {
-			
-	    	Employee updateEmp = empDao.loginEmp(sqlSession,e);
+			Employee updateEmp = empDao.loginEmp(sqlSession,e);
 	    
 			//새로 업데이트한 비번 담아 와서
 			return updateEmp;

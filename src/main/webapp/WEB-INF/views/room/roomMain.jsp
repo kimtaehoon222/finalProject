@@ -226,33 +226,34 @@
 <body >
 <jsp:include page="../common/top.jsp"/>
 
+<br>
 <div id="allCss" >
 
  <div class="navbar-default sidebar cal_sidebar" role="navigation" style="width: 160px; height: 10px; margin-left: 5%;   margin-top: 3%; " >
       <div class="sidebar-nav navbar-collapse slimscrollsidebar">
            <h2 class="pageTitleText">
-           <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>예약하기</h2>
+           <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>회의실</h2>
            <div class="center p-20" style="padding-top: 0px !important;">
-              <span class="hide-menu addSchedule"><a class="btn btn-danger btn-block btn-rounded waves-effect waves-light" 
+              <span class="hide-menu addSchedule"><a class="btn btn-primary rounded-pill" style="color: white" 
               onclick="addRs()">예약하기</a></span>
           </div>
          
           <ul class="nav" id="side-menu" style="padding-left: 9%;">
               <li style="padding: 10px 0 0;" name ='roomNo'>
-                  <span class="largeText">회의실</span>
+                  <span class="largeText">- 회의실</span>
                   <ul class="nav_ul">
                      <li>
                         <p class='nav_ul_p'>
-                           <label class='smallText firstSmallText' onclick="changeResource(10)" style="margin-top: 5px;">회의실1</label>
+                           <label class='smallText firstSmallText' onclick="changeResource(10)" style="margin-top: 5px;">o회의실1</label>
                         </p>
                         <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(11)" style="margin-top: 2px;">회의실2</label>
+                           <label class='smallText' onclick="changeResource(11)" style="margin-top: 2px;">o회의실2</label>
                         </p>
                          <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(12)"  style="margin-top: 2px;">회의실3</label>
+                           <label class='smallText' onclick="changeResource(12)"  style="margin-top: 2px;">o회의실3</label>
                         </p>
                          <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(13)"  style="margin-top: 2px;">회의실4</label>
+                           <label class='smallText' onclick="changeResource(13)"  style="margin-top: 2px;">o회의실4</label>
                         </p>
                      </li>
                   </ul>
@@ -261,7 +262,7 @@
               <li>
                  <div class="add_calendar_box">
                      <a class="add_calendar" href="myResList.do?" style="color: black;">
-                     <i class="fa fa-cog" style="padding-right: 10px;"></i>나의 예약 목록</a>
+                     <i class="fa fa-cog" style="padding-right: 10px;"></i>- 나의 예약 목록</a>
                   </div>
               </li>         
           </ul>
@@ -294,7 +295,6 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" onclick="window.closeModal()">&times;</button>
           <h4 class="modal-title" style="font-weight: bold;">회의실 예약</h4>
         </div>
         <div class="modal-body">
@@ -381,7 +381,6 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" onclick="window.closeModal()">&times;</button>
           <h4 class="modal-title" style="font-weight: bold;">예약정보</h4>
         </div>
         <div class="modal-body">
@@ -476,7 +475,9 @@ document.addEventListener('DOMContentLoaded', function() {
     new Draggable(containerEl, {
       itemSelector: '.fc-event',
       eventData: function(eventEl) {
+    	  console.log(JSON.stringify(eventEl, null, 2));
         return {
+        	
           title: eventEl.innerText,
           start: eventEl.startDate,
           end: eventEl.endDate,
@@ -558,15 +559,20 @@ document.addEventListener('DOMContentLoaded', function() {
               console.log(json);
               var events = [];
              $.each(json, function(index, item){
-            	   console.log("이치이치");
                   if (json.length > 0) {
-                	  console.log("이프문");
+                	  var color = '';
+                      if("${loginEmp.deptCode}" == item.deptCode) {
+                    	  color = '#696cff';
+                      } else {
+                    	  color = 'rgb(144, 145, 191)';
+                      }
+
                      events.push({
                                title: item.empName,                             
                                start: item.startDate,
                                end: item.endDate,
                                textColor: "white",
-                               color: "rgb(124, 127, 251)",
+                               color: color,
                                id: item.resNo
                             });
                   }else{
@@ -578,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 successCallback(events);  
                 console.log("확인" +events);           
               },
-              error: function(request, status, error){
+              error: function(){
             	  alert('데이터 로딩 실패');
                },
            });

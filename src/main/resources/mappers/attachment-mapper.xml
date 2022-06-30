@@ -22,8 +22,8 @@
 	 
 	 <update id="updateAttachment" parameterType="Attachment">
 		     UPDATE ATTACHMENT SET 
-	        ORIGIN_NAME = #{originName}
-	      , CHANGE_NAME = #{changeName}
+	        ORIGIN_NAME = #{originName},
+	       CHANGE_NAME = #{changeName}
 	        WHERE REF_NO = #{refNo} AND STATUS = 'Y'
       </update>
 	

@@ -30,7 +30,7 @@
 	
 	<select id="loginEmp" parameterType="Employee" resultMap="employeeResultSet">
 		SELECT
-		       A.EMP_NO , A.EMP_NAME , A.PHONE , A.EMP_ID , A.EMP_REG
+		       A.EMP_NO , A.EMP_NAME , A.PHONE , A.EMP_ID , SUBSTR(A.EMP_REG,1,6) EMP_REG
 		     , A.GENDER , A.EMP_PWD , A.ADDRESS , A.DEPT_CODE , A.JOB_CODE
 		     , A.DISABLE_YN , A.EMP_NOTE , A.HIRE_DATE , A.ENT_DATE, A.APV_YN
 		     , A.ENT_YN , A.CTG_NO , B.DEPT_NAME , C.JOB_NAME , C.JOB_VACATION

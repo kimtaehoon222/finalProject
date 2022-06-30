@@ -32,7 +32,8 @@ public class RoomController {
 	RoomService roomService;
 	
 	@RequestMapping("roomList.do")
-	public String selectResListForm() {
+	public String selectResListForm(HttpSession session, Model model) {
+		
 		return "room/roomMain";
 		
 	}
@@ -64,7 +65,7 @@ public class RoomController {
 			hash.put("empName", r.getEmpName());
 			hash.put("startDate", r.getStartDate());
 			hash.put("endDate", r.getEndDate());
-		
+			hash.put("deptCode", r.getDeptCode());
 			
 			jsonObj = new JSONObject(hash); 						
             jsonArr.add(jsonObj);

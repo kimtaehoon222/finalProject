@@ -59,14 +59,18 @@
                                 </thead>
                                 <tbody>
                                  <c:forEach items="${list}" var="e">
+                                 <c:if test="${e.empNo != loginEmp.empNo}">
                                     <tr>
+                                    
                                         <td>${e.empName}</td>
                                         <td>${e.empId}<%="@easy.co.kr"%></td>
                                         <td>${e.telNo}</td>
                                         <td>${e.deptName}</td>
                                         <td>${e.jobName}</td>
                                         <td><a  class="btn btn-primary rounded-pill" href="empSeeDetail.do?eId=${e.empId}">상세보기</a></td>                                   
+                                  
                                     </tr>
+                                     </c:if>
                                  </c:forEach>                              
                                 </tbody>
                             </table>
