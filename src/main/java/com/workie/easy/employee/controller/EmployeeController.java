@@ -79,13 +79,14 @@ public class EmployeeController {
 		model.addAttribute("countW", countW);
 		
 		int countP = signService.selectCountP(loginEmp.getEmpName());
-		model.addAttribute("countA", countP);
+		model.addAttribute("countP", countP);
 		
 		int countR = signService.selectCountR(loginEmp.getEmpName());
 		model.addAttribute("countR", countR);
 		
 		int countA = signService.selectCountA(loginEmp.getDeptCode());
 		model.addAttribute("countA", countA); 
+			
 		
 		/* 전재은 : */
 		/*조회 조건*/
