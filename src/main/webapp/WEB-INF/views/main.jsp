@@ -109,7 +109,10 @@
 	background: linear-gradient(90deg, #ffbf96, #fe7096);
 	color: #fff;
 }
-
+	
+  .jisu{
+  	border: none;
+  }	
   </style>
   </head>
 
@@ -126,8 +129,8 @@
                       <div class="col-sm-7">
                         <div class="card-body">
                           <h5 class="card-title text-primary"><b>${loginEmp.empName }</b></h5>
-                          <p class="mb-4">
-                                                       당신의 <span class="fw-bold">미래를</span>응원합니다. -이지워크-
+                          <p class="mb-3">
+                                                         빛나는 당신의 <span class="fw-bold">미래를&nbsp;</span>응원합니다.<br><span class="text-info">-Easy Work-</span>
                           </p>
 
                           <a href="myPage.do" class="btn btn-sm btn-outline-primary">마이페이지로 이동</a>
@@ -207,119 +210,101 @@
                     
                   </div>
                 </div>
-                
                 <!-- 첫 번째 행 끝 -->
 
+				<!-- 결재현황 시작 -->
                 <div class="col-12 col-lg-4 order-2 order-md-3 order-lg-2 mb-4">
                   <div class="card" style="height:386.11px">
-                  <div class="card-body"  style="height:386.11px">
+                  <div class="card-body" style="height:386.11px">
 	     
-	                  			 <h5 class="card-title text-primary"><b>전자결재</b></h5>
-	                  			 <hr>
-	                  			<div style="height:386.11px"> 
-	                  			
-	                  			
-	                  			    <table id="center" style="border-collapse: collapse">
-							
-						            <tr>
-						                <td><h6><label class="badge badge-gradient-success"  id="center"><b>요청</b></label></h6></td>
-						              
-						
-						            </tr>
-									<tr border="1">
-										 <td><h6>1</h6></td>
-										 <td><hr></td>
-									</tr>
-						            <tr>
-						            
-									
-						            </tr>
-						      
-						            <tr>
-						                <td><h6><label class="badge badge-gradient-warning"  id="center"><b>진행</b></label></h6></td>
-						              
-						
-						            </tr>
-						
-						           <tr>
-										 <td><h6>4</h6></td>
-										 
-									</tr>
-						            <tr>
-						            
-									
-						            </tr>
-						            
-						              <tr>
-						                <td ><h6><label class="badge badge-gradient-danger"  id="center"><b>반려</b></label></h6></td>
-						              
-						
-						            </tr>
-						            
-						             <tr>
-										 <td><h6>2</h6></td>
-									</tr>
-						            <tr>
-						            
-						
-						            <tr>
-						                <td><h6><label class="badge badge-gradient-info"  id="center"><b>완료(기획영업부)</b></label></h6></td>
-						              
-						
-						            </tr>
-						            
-						             <tr>
-										 <td><h6>3</h6></td>
-									</tr>
-						            <tr>
- 
-						              </table>
-						             </div> 
-						              
-						      
-						              </div>
-				</div>
-				</div>   
-								
-								
-						
-						  
-               			 
+              		<h5 class="card-title text-primary"><b>전자결재</b></h5>
+                	<hr>
+					
+					<!-- 위쪽 행 -->
+					<div class="row mb-4">
+                    <div class="col-lg-6 col-md-12 col-6 mb-0">
+                      <div class="card bg-light">
+                        <div class="card-body" style="text-align: center;">
+                          <!-- <button class="btn btn-primary mb-2" style="width:100%;">요청</button> -->
+                          <a href=""><label class="badge badge-gradient-success mb-2" style="width:100%;">요청</label></a>
+                          <h2 class="card-title mb-0 mt-2">1</h2>
+                        </div>
+                      </div>
+                    </div>
+                     <div class="col-lg-6 col-md-12 col-6 mb-0">
+                      <div class="card">
+                        <div class="card-body" style="text-align: center;">
+                          <!-- <button class="badge badge-gradient-warning mb-2" style="width:100%;">진행</button> -->
+                          <a href=""><label class="badge badge-gradient-warning mb-2" style="width:100%;">진행</label></a>
+                          <h2 class="card-title mb-0 mt-2">4</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>	
                   
-                 
-         
+                 <!-- 아래쪽 행 -->                	
+                 <div class="row mb-2">
+                    <div class="col-lg-6 col-md-12 col-6 mb-0">
+                      <div class="card">
+                        <div class="card-body" style="text-align: center;">
+                          <!-- <button class="btn btn-primary mb-2" style="width:100%;">반려</button> -->
+                          <a href=""><label class="badge badge-gradient-danger mb-2" style="width:100%;">반려</label></a>
+                          <h2 class="card-title mb-0 mt-2">2</h2>
+                        </div>
+                      </div>
+                    </div>
+                     <div class="col-lg-6 col-md-12 col-6 mb-0">
+                      <div class="card">
+                        <div class="card-body" style="text-align: center;">
+                          <!-- <button class="btn btn-primary mb-2" style="width:100%;">완료(부서)</button> -->
+                          <a href=""><label class="badge badge-gradient-info mb-2" style="width:100%;">완료(${loginEmp.deptName })</label></a>
+                          <h2 class="card-title mb-0 mt-2">3</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>	
+                 			 
+	               <small><a href="" class="text-primary fw-semibold" style="float:right;">>결재함 바로가기</a></small>
+				   </div> 
+	               </div>
+				 </div>
+				 <!-- 결재현황 끝 -->				
 				
-				<!-- 두 번째 행 시작 -->
+				<!-- 이번달 입사자 시작 -->			
                 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-                  
-                  <div class="row">
+                  <div class="">
                   	<div class="col-12 mb-4">
-	                  	<div class="card mb-4" id="vertical-example" style="height: 386.11px">
+	                  	<div class="card mb-4">
 	                  		<div class="card-body">
 	                  			<div class="card-title">
-	                  			 <h5 class="card-title text-primary"><b>이번 달 입사 사원</b></h5>
-	                  			  <table class="table table-striped kim" id="" >
-                                 <tbody >
-                                <c:forEach items="${empList}" var="e">
-                                    <tr>
-                                        <td>${e.empName}</td>
-                                        <td>${e.deptName}</td>    
-                                     </tr>
-                                 </c:forEach> 
-                                </tbody>
-                            </table>
-	            
+	                  			<h5><i class='bx bx-laugh'></i><b class="text-primary">&nbsp;이번 달 입사자</b></h5>
+	                  			<!-- 스크롤바 영역 --> 
+	                  			<div id="vertical-example" style="height: 290px;">
+		                  			<table class="table kim">
+		                                <tbody>
+			                                <c:forEach items="${empList}" var="e">
+			                                    <tr>
+				                                    <!-- <td class="text-primary jisu">●</td> -->
+				                                    <td class="jisu"><img  data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" data-bs-original-title="${e.jobName }"
+				                                    src="${pageContext.request.contextPath}/resources/emp_files/20220622134723.jpg" alt="avatar" class="rounded-circle" style="width: 30px;"></td>
+				                                    <td class="jisu">${e.empName}</td>
+				                                    <td class="jisu"><span class="badge bg-label-primary me-1">${e.deptName}</span></td>
+			                                    </tr>
+			                                 </c:forEach> 
+		                                </tbody>
+	                            	</table>
+	           					</div> 
 	                  			</div>
 	                  		</div>
 	                  	</div>
                   	</div>
                    </div>
                   </div> 
+                  <!-- 이번달 입사자 끝 -->
                 
-                  <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-    			<div class="row">  <!-- 날씨 -->
-    
-    			
+                <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+                <!-- 날씨 -->
+    			<div class="row">  
                     <div class="col-12 mb-4">
                       <div class="card">
                         <div class="card-body">
@@ -338,7 +323,6 @@
                         </div>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
                
@@ -352,7 +336,7 @@
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                       <div class="card-title mb-0">
-                        <h4 class="m-0 me-2 text-primary mb-3">Last Week</h4>
+                        <h5 class="m-0 me-2 text-primary mb-3"><b>지난주 이슈</b></h5>
                       </div>
                       
                     </div>
@@ -418,7 +402,7 @@
                   <div class="card h-100">
                     <div class="card-header">
                      	<div class="card-title mb-0">
-                        <h4 class="m-0 me-2 text-primary mb-3"><b>공지사항</b></h4>
+                        <h5 class="m-0 me-2 text-primary mb-3"><b>공지사항</b></h5>
                       </div>
                     </div>
                     <div class="card-body px-2">
@@ -559,12 +543,12 @@
 					    success:function(data){
 					    console.log(data)
 					      var $Icon = (data.weather[0].icon).substr(0,2);
-					      var $Temp = Math.floor(data.main.temp) + 'º';
+					      var $Temp = Math.floor(data.main.temp) + 'ºC';
 					      var $city = data.name;
 			
 					      $('.CurrIcon').append('<i class="' + weatherIcon[$Icon] +'"></i>');
 					      $('.CurrTemp').prepend($Temp);
-					      $('.City').append($city).append(',<br>SouthKorea');
+					      $('.City').append($city).append(',<br><span class="mt-1">SouthKorea</span>');
 					      }
 					    })
 				    });
