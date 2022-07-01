@@ -113,7 +113,7 @@
             </div>
            	<div class="mb-3 col-md-6">
               <label for="lastName" class="form-label">내선 번호</label>
-              <input class="form-control" type="text" name="telNo"  value="" />
+              <input class="form-control" type="text" name="telNo"  value="" required />
             </div>
              <div class="mb-3 col-md-6">
               <label for="address" class="form-label">주소</label>
@@ -157,8 +157,8 @@
             </div>
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
-              <select  name="disabledYN" class="select2 form-select">
-              <option>장애여부 선택</option>
+              <select name="disabledYN" class="select2 form-select">
+              <option value=" ">장애여부 선택</option>
     		   <option value="N">N</option>
     		 <option value="Y">Y</option>
            	 </select>

@@ -167,8 +167,7 @@
         </div>
         <!-- Content wrapper -->
       </div>
-      <!-- / Layout page -->
-    
+
     
   <jsp:include page="../common/bottom.jsp" />
   <!-- Core JS -->
