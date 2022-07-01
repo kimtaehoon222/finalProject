@@ -293,12 +293,12 @@
 								<b> 제 목 </b>
 							</p>
 							<input type="text" id="signTitle" name="signTitle" class="mb-3"
-								placeholder="제목을 입력하세요." style="width: 91%; float: right"
+								placeholder="제목을 입력하세요." style="width: 91%; float: right" required
 								value="${signTitle}">
 
 							<textarea name="signContent" id="signContent"
 								style="width: 100%; height: 270px;" placeholder="내용을 입력하세요."
-								value="${signContent}"></textarea>
+								value="${signContent}" required></textarea>
 
 							<input type="file" id="file" name="uploadFile">
 
@@ -440,12 +440,12 @@
 							</select>
 							
 							<input type="text" id="title" name="signTitle" class="mb-3"
-								placeholder="제목을 입력하세요." style="width: 91%; float: right">
+								placeholder="제목을 입력하세요." style="width: 91%; float: right" required>
 							<p style="width: 7%; float: left;">
 								<b> 제 목 </b>
 							</p>
 							<textarea name="signContent" id="content"
-								style="width: 100%; height: 300px;" placeholder="내용을 입력하세요."></textarea>
+								style="width: 100%; height: 300px;" placeholder="내용을 입력하세요." required></textarea>
 
 							<input type="file" id="file" name="uploadFile">
 							
@@ -675,11 +675,11 @@
 				<div style="margin: 22px">
 						<label for="dateIn">휴가 시작일 : </label>
 						<!--포커싱이 어디로 향하는지가 for-->
-						<input type="date" name="firstDate" id="dateIn"><br>
+						<input type="date" name="firstDate" id="dateIn" required><br>
 
 						<br> <label for="dateIn">휴가 종료일 : </label>
 						<!--포커싱이 어디로 향하는지가 for-->
-						<input type="date" name="lastDate" id="dateInn"><br>
+						<input type="date" name="lastDate" id="dateInn" required><br>
 				<!--  	</form> -->
 					
 					</div>
@@ -691,10 +691,10 @@
 							<b> 제 목 </b>
 						</p>
 						<input type="text" id="title" name="title" class="mb-3"
-							placeholder="제목을 입력하세요." style="width: 91%; float: right">
+							placeholder="제목을 입력하세요." style="width: 91%; float: right" required>
 
 						<textarea name="reason" id="reason"
-							style="width: 100%; height: 110px;" placeholder="사유를 입력하세요."></textarea>
+							style="width: 100%; height: 110px;" placeholder="사유를 입력하세요." required></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-secondary"

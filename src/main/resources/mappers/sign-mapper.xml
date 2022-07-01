@@ -78,7 +78,7 @@
 			JOIN DEPARTMENT B ON A.DEPT_CODE = B.DEPT_CODE
             JOIN JOB C ON A.JOB_CODE = C.JOB_CODE
 		WHERE A.JOB_CODE IN ( 'J5', 'J4', 'J3' )
-		AND B.DEPT_NAME IN ( '기획영업부', '마케팅부', '인사관리부')
+		AND B.DEPT_NAME IN ( '인사관리부', '회계관리부', '마케팅부' , '자재관리부' , '기획영업부', '경영관리부' , '기술개발부')
 		ORDER BY B.DEPT_NAME, A.JOB_CODE DESC
 			
 	</select>
@@ -751,12 +751,13 @@
 	
 	<update id="updateAttachment" parameterType="Sign"> <!-- attachment 테이블 업데이트 -->
 		
+
 		UPDATE ATTACHMENT
 			SET ORIGIN_NAME = #{originName} , CHANGE_NAME = #{changeName} , FILE_PATH = #{filePath}
 			WHERE REF_NO = #{signNo}
 			AND CTG_NO = 'SF'
 			AND STATUS = 'Y'
-			
+
 	</update>
 	
 	<insert id="insertAttachment" parameterType="Sign"> <!-- 첨부파일이 없는 경우 attachment insert -->
@@ -933,6 +934,7 @@
 			FROM SIGN A
 			JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 			WHERE B.DEPT_CODE LIKE '%'||#{deptCode}||'%'
+			AND A.FINAL_SIGN_DATE IS NOT NULL
 			AND A.STATUS_CODE = 'A'
 			AND A.STATUS = 'Y'
 		

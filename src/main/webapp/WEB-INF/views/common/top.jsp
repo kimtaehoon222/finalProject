@@ -97,6 +97,13 @@
         position: relative;
         animation: fadeInDown 1s;
     }
+    
+    .text-gradient {
+    background: -o-linear-gradient(40deg, #c381db, #4e92f9);
+    background: linear-gradient(50deg, #c381db, #4e92f9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 	</style>
   </head>
 
@@ -180,7 +187,8 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">2asywork</span>
+              <!--  <span class="app-brand-text demo menu-text fw-bolder ms-2">2asywork</span>-->
+              <span class="fw-bold display-4 fs-4 fs-lg-6 fs-xxl-7 text-gradient">2asyWork</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -217,7 +225,7 @@
                 </li>
                 <li class="menu-item">
                   <a href="signGoView.do?empName=${ loginEmp.empName }" class="menu-link">
-                    <div data-i18n="Without navbar">결재 진행함</div>호
+                    <div data-i18n="Without navbar">결재 진행함</div>
                   </a>
                 </li>
                 <li class="menu-item">

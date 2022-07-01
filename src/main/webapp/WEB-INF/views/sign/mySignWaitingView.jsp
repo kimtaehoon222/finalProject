@@ -154,7 +154,7 @@
 					<c:choose>
 						<c:when test="${ pi.currentPage ne 1 }">
 							<li class="page-item"><a class="page-link"
-								href="signWaitingView.do?currentPage=${ pi.currentPage-1 }">이전</a></li>
+								href="mySignWaitingView.do?currentPage=${ pi.currentPage-1 }">이전</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link" href="">이전</a></li>
@@ -165,7 +165,7 @@
 						<c:choose>
 							<c:when test="${ pi.currentPage ne p }">
 								<li class="page-item"><a class="page-link"
-									href="signWaitingView.do?currentPage=${ p }">${ p }</a></li>
+									href="mySignWaitingView.do?currentPage=${ p }">${ p }</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item disabled"><a class="page-link" href="">${ p }</a></li>
@@ -177,11 +177,11 @@
 					<c:choose>
 						<c:when test="${ pi.currentPage ne pi.maxPage }">
 							<li class="page-item"><a class="page-link"
-								href="signWaitingView.do?currentPage=${ pi.currentPage+1 }">다음</a></li>
+								href="mySignWaitingView.do?currentPage=${ pi.currentPage+1 }">다음</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="page-item disabled"><a class="page-link"
-								href="signWaitingView.do?currentPage=${ pi.currentPage+1 }">다음</a></li>
+								href="mySignWaitingView.do?currentPage=${ pi.currentPage+1 }">다음</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
@@ -281,7 +281,7 @@
 									<th rowspan="2" width="50px" style="background-color: #ffffff;">발신</th>
 									<th><b id="aaJobName"></b></th>
 									<th></th>
-									<!-- 여기에 if문으로 값이 null이 아니라면 안들어가게끔 조거문 주기 -->
+						
 									<th></th>
 
 								</tr>
@@ -474,8 +474,8 @@
 									$("#hideTest2").show();
 									$("#hideTest3").show();
 									$("#hideTest4").show();
-									$('#aaSignTitle').attr('readonly', false); //체크 했을때만 readonly 풀리도록
-									$('#aaSignContent').attr('readonly', false); //체크 했을때만 readonly 풀리도록
+									$('#aaSignTitle').attr('readonly', false).attr('required', true); //체크 했을때만 readonly 풀리도록
+									$('#aaSignContent').attr('readonly', false).attr('required', true); //체크 했을때만 readonly 풀리도록
 									$('#signBack').attr('disabled', false); //체크 후에는 disabled 풀리도록
 								   }else{
 								       $("#hideTest").val(" ");
