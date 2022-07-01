@@ -307,7 +307,7 @@ private SignDao signDao;
 			
 			int result2 = signDao.updateAAstandard(sqlSession, si); //Sign 테이블 성공시 Standard테이블 업데이트 수행
 			
-		if(result2 > 0) {
+		if(result2 > 0 && si.getOriginName() != null) {
 				
 		int count = signDao.selectCountAttachment(sqlSession, si); //결재번호 가지고가서 카운트만 세오기 첨부파일이 없다면 insert를 해주어야하니
 			System.out.println("count : " + count);

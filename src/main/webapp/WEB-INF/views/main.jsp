@@ -227,7 +227,7 @@
                         <div class="card-body" style="text-align: center;">
                           <!-- <button class="btn btn-primary mb-2" style="width:100%;">요청</button> -->
                           <a href=""><label class="badge badge-gradient-success mb-2" style="width:100%;">요청</label></a>
-                          <h2 class="card-title mb-0 mt-2">1</h2>
+                          <h2 class="card-title mb-0 mt-2">${ countW }</h2>
                         </div>
                       </div>
                     </div>
@@ -236,7 +236,7 @@
                         <div class="card-body" style="text-align: center;">
                           <!-- <button class="badge badge-gradient-warning mb-2" style="width:100%;">진행</button> -->
                           <a href=""><label class="badge badge-gradient-warning mb-2" style="width:100%;">진행</label></a>
-                          <h2 class="card-title mb-0 mt-2">4</h2>
+                          <h2 class="card-title mb-0 mt-2">${ countP }</h2>
                         </div>
                       </div>
                     </div>
@@ -249,7 +249,7 @@
                         <div class="card-body" style="text-align: center;">
                           <!-- <button class="btn btn-primary mb-2" style="width:100%;">반려</button> -->
                           <a href=""><label class="badge badge-gradient-danger mb-2" style="width:100%;">반려</label></a>
-                          <h2 class="card-title mb-0 mt-2">2</h2>
+                          <h2 class="card-title mb-0 mt-2">${ countR }</h2>
                         </div>
                       </div>
                     </div>
@@ -258,13 +258,13 @@
                         <div class="card-body" style="text-align: center;">
                           <!-- <button class="btn btn-primary mb-2" style="width:100%;">완료(부서)</button> -->
                           <a href=""><label class="badge badge-gradient-info mb-2" style="width:100%;">완료(${loginEmp.deptName })</label></a>
-                          <h2 class="card-title mb-0 mt-2">3</h2>
+                          <h2 class="card-title mb-0 mt-2">${ countA }</h2>
                         </div>
                       </div>
                     </div>
                   </div>	
                  			 
-	               <small><a href="" class="text-primary fw-semibold" style="float:right;">>결재함 바로가기</a></small>
+	               <small><a href="signView.do" class="text-primary fw-semibold" style="float:right;">>결재함 바로가기</a></small>
 				   </div> 
 	               </div>
 				 </div>
