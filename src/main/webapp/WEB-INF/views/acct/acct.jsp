@@ -79,15 +79,15 @@
 	        <div class="i0 container c1">
 	          <div class="i1-1">
 	          	<h4 class="fw-bold" style="margin: 5px 0;">
-		          	${loginEmp.deptName}<br>
+		          	<p style="margin-bottom:5px;">${loginEmp.deptName}</p>
 		          	법인카드
 		          	<hr style="margin: 5px 0;">
 		          	<br>
 	          	</h4>
 	          	<h5 class="fw-bold" style="margin: 5px 0; font-size: 22px;">${fn:substring(cardData.thisMonth,5,7)}월</h5>
 	          	<br>
-				<b> 승인 ${cardData.ACount} 건 :<span id="aSum"> ${cardData.ASum} 원</span></b><br>
-				<b> 취소 ${cardData.CCount} 건 :<span id="cSum"> ${cardData.CSum} 원</span></b><br>
+				<p class="fw-bold" style="margin-bottom:5px; color: #7373ca;"> 승인 ${cardData.ACount} 건 :<span id="aSum"> ${cardData.ASum} 원</span></p>
+				<p class="fw-bold" style="margin-bottom:5px; color: #ec8787;"> 취소 ${cardData.CCount} 건 :<span id="cSum"> ${cardData.CSum} 원</span></p>
 				<br>
 				<hr style="margin:2px 0px;">
 	          </div>
@@ -99,8 +99,8 @@
           		<b id="aSum">${cardData.ASum} 원</b> / 
           		<b id="cSum">${cardData.CSum} 원</b><hr style="margin:2px 0px"> -->
 	          	<h5 style="margin:0;">
-		          	<b>사용금액 / 한도</b><br>
-		          	<b id="add">${cardData.add} 원</b> / <b id="creditLine">${cardData.creditLine} 원</b>
+		          	<p style="margin-bottom:5px;"><b>사용금액 / 한도</b></p>
+		          	<b id="add"">${cardData.add} 원</b> / <b id="creditLine">${cardData.creditLine} 원</b> <!-- style="color:#FB8A7C; -->
 	          	</h5>
 	          </div>
 	          <script>
