@@ -38,11 +38,10 @@
 		  FROM EMPLOYEE A
 		  LEFT JOIN DEPARTMENT B ON(A.DEPT_CODE=B.DEPT_CODE)
 		  LEFT JOIN JOB C ON(A.JOB_CODE=C.JOB_CODE)
-		  LEFT JOIN ATTACHMENT D ON (A.EMP_NO = D.REF_NO)
+		  LEFT JOIN ATTACHMENT D ON (A.EMP_NO = D.REF_NO AND A.CTG_NO = D.CTG_NO)
 		 WHERE A.EMP_ID = #{empId}
 		   AND A.APV_YN = 'Y'
 		   AND A.ENT_YN = 'Y'
-		   AND D.CTG_NO = 'E'
 	</select>
 	
 	<insert id="insertEmp" parameterType="Employee">
