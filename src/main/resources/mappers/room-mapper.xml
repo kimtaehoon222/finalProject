@@ -32,7 +32,7 @@
 			FROM RESERVATION A
 			LEFT JOIN EMPLOYEE B ON A.EMP_NO = B.EMP_NO
 			WHERE RES_STATUS = 'Y'
-			AND TO_DATE(START_DATE, 'yyyy-MM-dd HH24:MI:SS') > SYSDATE
+			AND TO_DATE(END_DATE, 'yyyy-MM-dd HH24:MI:SS') > SYSDATE
 			AND ROOM_NO =  #{roomNo}
 			]]>
         </select>

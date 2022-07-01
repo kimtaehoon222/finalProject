@@ -135,17 +135,18 @@
    }
    
    .fc-row > table > thead > tr > th.fc-today{
-      background: #b5a8b9 !important;
+      background-color: rgba(105, 108, 255, 0.16) !important;
+
    }
    
    <%-- 오늘날짜 cell 색상 없애기 --%>
    .fc-unthemed .fc-today {
-        background: #f1f1f1 !important;
+       background-color: rgba(105, 108, 255, 0.16) !important;
        border-top: 1px solid #ddd !important;
        font-weight: bold !important;
-       color: black;
+       color: #696cff;
    }
-   
+  
    .table-borderless > tbody > tr > td,
    .table-borderless > tbody > tr > th,
    .table-borderless > tfoot > tr > td,
@@ -155,11 +156,8 @@
        border: none;
    }
    
-   <%-- 일정등록 Modal css --%>
-   input.datepicker{
-      width: 130px;
-   }
-   
+
+
    input.modal_input{
       height: 30px;
    }
@@ -176,8 +174,8 @@
    
  
    
-   .detailTbody th tr{
-      font-size: 12pt;
+   .detailTbody {
+      font-size:larger;
    }
    
    .container{
@@ -220,7 +218,8 @@
    width: 700px;
    background-color: white;
  }
-   
+
+
 </style>
 </head>
 <body >
@@ -254,6 +253,9 @@
                         </p>
                          <p class='nav_ul_p'>
                            <label class='smallText' onclick="changeResource(13)"  style="margin-top: 2px;">o회의실4</label>
+                        </p>
+                          <p class='nav_ul_p'>
+                           <label class='smallText' onclick="changeResource(14)"  style="margin-top: 2px;">o회의실5</label>
                         </p>
                      </li>
                   </ul>
@@ -475,9 +477,9 @@ document.addEventListener('DOMContentLoaded', function() {
     new Draggable(containerEl, {
       itemSelector: '.fc-event',
       eventData: function(eventEl) {
-    	  console.log(JSON.stringify(eventEl, null, 2));
+         console.log(JSON.stringify(eventEl, null, 2));
         return {
-        	
+           
           title: eventEl.innerText,
           start: eventEl.startDate,
           end: eventEl.endDate,
@@ -496,12 +498,14 @@ document.addEventListener('DOMContentLoaded', function() {
         right: 'next today',
       },
       locale: 'ko',
+      slotMinTime: '08:00', // Day 캘린더에서 시작 시간        
+      slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+
       dateClick: function(info) {
           
           // 이전날짜에 예약 불가
           var sysdate = new Date();
           sysdate = moment(sysdate).format("YYYY-MM-DD HH:mm:ss");
-          
           var date = moment(info.dateStr).format("YYYY-MM-DD HH:mm:ss");
           
           // 현재 시간 기준으로 지난 시간에 예약은 불가능
@@ -511,7 +515,8 @@ document.addEventListener('DOMContentLoaded', function() {
           addRs();   // 모달을 초기화하고 자원명을 불러오는 함수
           
           // 클릭한 시각으로 모달의 datepicker를 변경시킴
-            $("input[name=startDate]").val(date);   
+           var date = moment(info.dateStr).format("YYYY-MM-DD");
+           $("input[name=startDate]").val(date);   
            $("input[name=endDate]").val(date);
             
            var hhmm = moment(info.dateStr).format("HH:mm");
@@ -524,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
       eventClick: function(info) {
               viewRsv(info.event.id);
       },
-      selectable: true,
+      selectable: true,          // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
       navLinks: false,             // 달력의 날짜 텍스트를 선택할 수 있는지 유무
       editable: false,
       eventLimit: true,            // 셀에 너무 많은 일정이 들어갔을 시 more로 처리
@@ -560,11 +565,11 @@ document.addEventListener('DOMContentLoaded', function() {
               var events = [];
              $.each(json, function(index, item){
                   if (json.length > 0) {
-                	  var color = '';
+                     var color = '';
                       if("${loginEmp.deptCode}" == item.deptCode) {
-                    	  color = '#696cff';
+                         color = '#696cff';
                       } else {
-                    	  color = 'rgb(144, 145, 191)';
+                         color = 'rgb(144, 145, 191)';
                       }
 
                      events.push({
@@ -585,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("확인" +events);           
               },
               error: function(){
-            	  alert('데이터 로딩 실패');
+                 alert('데이터 로딩 실패');
                },
            });
             
@@ -596,7 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 // 자원을 변경했을 시 자원 변수값을 변경해주는 함수
 function changeResource(rsNo) {
-   roomNo = rsNo;
+     roomNo = rsNo;
     calendar.refetchEvents();
  } 
 function viewRsv(resNo){
@@ -687,35 +692,41 @@ function addRsvModalBtn(){
     var startDate = $("input[name=startDate]").val() + " " + $("select.startDate_hour").val() + ":00";
     var endDate = "";
     
+    var today = new Date();
+    today = moment(today).format("YYYY-MM-DD HH:mm:ss");
+    var startDate = new Date(startDate);
+    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
     // 종일 체크 시 시작 날짜를 기준으로 변경
     if ($("input#allday:checked").val()) {
-    	startDate = $("input[name=startDate]").val() + " 00:00:00";
+       startDate = $("input[name=startDate]").val() + " 00:00:00";
        endDate = $("input[name=endDate]").val() + " 23:59:59";
     }else{
-    	endDate = $("input[name=endDate]").val() + " " + $("select.endDate_hour").val() + ":00";
+       endDate = $("input[name=endDate]").val() + " " + $("select.endDate_hour").val() + ":00";
     }
-    
+    console.log("현재 시간" + today);
+    console.log("예약 시간" + startDate);
     // true: 통과   false: 불통
-    if (!(startDate < endDate && startDate != endDate)) {
-       alert("올바른 일시를 선택해주세요.");
+    if (!(startDate < endDate && startDate != endDate && today <= startDate)) {
+       alert("예약 시간을 다시 확인해 주세요");
+       
        return false;
     }
 
     var roomNo = $("select[name=roomNo]").val();
     if (roomNo.trim() == "") {
-       alert("자원을 선택해주세요.");
+       alert("회의실 선택을 확인해 주세요");
        return false;
     }
     
     var meetTitle = $("input[name=meetTitle]").val();
     if (meetTitle.trim() == "") {
-       alert("예약 제목을 입력해주세요.");
+       alert("예약 제목을 입력해 주세요.");
        $("input[name=meetTitle]").focus();
        return false;
     }
     var meetGoal = $("input[name=meetGoal]").val();
     if (meetGoal.trim() == "") {
-       alert("회의 목적을 입력해주세요.");
+       alert("예약 목적을 입력해 주세요.");
        $("input[name=meetGoal]").focus();
        return false;
     }
@@ -760,7 +771,7 @@ function cancelRsv() {
        success:function(json){
           
           if (json.n == 1) {
-        	  alert("회의실 예약이 취소되었습니다");
+             alert("회의실 예약이 취소되었습니다");
              calendar.refetchEvents();
              window.closeModal();
           }else{
@@ -772,7 +783,7 @@ function cancelRsv() {
           alert("예약취소에 실패하였습니다. 관리자에 문의바랍니다.");
         }
     });
-    $("#cancelRsvCheckModal").modal('show');
+   
 }
 </script>
 </body>

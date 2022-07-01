@@ -286,7 +286,7 @@
 			                                    <tr>
 				                                    <!-- <td class="text-primary jisu">●</td> -->
 				                                    <td class="jisu"><img  data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" data-bs-original-title="${e.jobName }"
-				                                    src="${pageContext.request.contextPath}/resources/emp_files/20220622134723.jpg" alt="avatar" class="rounded-circle" style="width: 30px;"></td>
+				                                    src="${pageContext.request.contextPath}/resources/emp_files/${e.changeName}" alt="avatar" class="rounded-circle" style="width: 45px; height:45px;  border-radius: 70%;  overflow: hidden;"></td>
 				                                    <td class="jisu">${e.empName}</td>
 				                                    <td class="jisu"><span class="badge bg-label-primary me-1">${e.deptName}</span></td>
 			                                    </tr>

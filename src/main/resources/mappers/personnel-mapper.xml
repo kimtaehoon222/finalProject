@@ -141,12 +141,14 @@
          
          <select id="selectMonthEmpList" resultMap="personnelResult">
 	        SELECT 
-			EMP_NAME ,DEPT_NAME
+			EMP_NAME ,DEPT_NAME , CHANGE_NAME
 			FROM EMPLOYEE A 
 			LEFT JOIN DEPARTMENT B ON A.DEPT_CODE = B.DEPT_CODE
+			LEFT JOIN (SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND CTG_NO= 'E') D ON (A.EMP_NO = D.REF_NO) 
 			WHERE TO_CHAR(SYSDATE, 'yymm') = TO_CHAR(HIRE_DATE, 'yymm') 
 			AND APV_YN = 'Y'
 			AND ENT_YN = 'Y'
+			ORDER BY EMP_NAME
          </select>
          
 </mapper>

@@ -113,10 +113,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     
-    
-
-
-
   
 
   <!-- Layout wrapper -->
@@ -359,25 +355,12 @@
               </ul>
             </li> -->
             
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-buildings"></i>
-                <div data-i18n="Form Layouts">부서정보</div>
+             <li class="menu-item">
+              <a href="empSeeList.do" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-line-chart"></i>
+                <div data-i18n="Tables">직원 주소록</div>
               </a>
-                 <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="empSeeList.do" class="menu-link">
-                    <div data-i18n="Vertical Form">주소록</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="oChartView.do" class="menu-link">
-                    <div data-i18n="Horizontal Form">조직도</div>
-                  </a>
-                </li>
-              </ul>
-            </li> 
-            
+            </li>
             <!-- Tables -->
             <li class="menu-item">
               <a href="chartHome.do" class="menu-link">
