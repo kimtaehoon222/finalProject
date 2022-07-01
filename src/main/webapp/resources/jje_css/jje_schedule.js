@@ -125,12 +125,10 @@ function sked_update_submit(){
                 
                 console.log("시작시간 "+detail_start_date+" "+detail_start_time);
                 console.log("종료시간 "+detail_start_date+" "+detail_end_time);
-                return false;
             }
         }else{
             if(!detail_start_time){//시작 시간도 없는 경우
                 console.log("시작일 "+detail_start_date);
-                return false;
             }
         }
     }else{ //시작일과 종료일이 둘 다 있는 경우
@@ -155,7 +153,6 @@ function sked_update_submit(){
             if(detail_start_time && !detail_end_time){ //시작시간만 있는 경우 (종료시간이 없는 경우)
                 console.log("시작일 "+detail_start_date+" "+detail_start_time);
                 console.log("종료일 "+detail_end_date+" "+detail_start_time);
-                return false;
             }
             if(!detail_start_time && detail_end_time){ //종료시간만 있는 경우 (시작시간이 없는 경우)  -> 오류
                 alert("시작 시간 누락");
@@ -171,7 +168,6 @@ function sked_update_submit(){
                 console.log(date+"일 "+time);
                 console.log("시작일 "+detail_start_date+" "+detail_start_time);
                 console.log("시작일 "+detail_end_date+" "+detail_end_time);
-                return false;
             }
         }
     }
