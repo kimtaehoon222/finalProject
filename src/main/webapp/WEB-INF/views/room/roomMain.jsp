@@ -243,19 +243,19 @@
                   <ul class="nav_ul">
                      <li>
                         <p class='nav_ul_p'>
-                           <label class='smallText firstSmallText' onclick="changeResource(10)" style="margin-top: 5px;">o회의실1</label>
+                           <label class='smallText firstSmallText' onclick="changeResource(1)" style="margin-top: 5px;">o회의실1</label>
                         </p>
                         <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(11)" style="margin-top: 2px;">o회의실2</label>
+                           <label class='smallText' onclick="changeResource(2)" style="margin-top: 2px;">o회의실2</label>
                         </p>
                          <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(12)"  style="margin-top: 2px;">o회의실3</label>
+                           <label class='smallText' onclick="changeResource(3)"  style="margin-top: 2px;">o회의실3</label>
                         </p>
                          <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(13)"  style="margin-top: 2px;">o회의실4</label>
+                           <label class='smallText' onclick="changeResource(4)"  style="margin-top: 2px;">o회의실4</label>
                         </p>
                           <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(14)"  style="margin-top: 2px;">o회의실5</label>
+                           <label class='smallText' onclick="changeResource(5)"  style="margin-top: 2px;">o회의실5</label>
                         </p>
                      </li>
                   </ul>
@@ -445,7 +445,7 @@
 // 캘린더 전역변수 설정
 var calendar;
 // 처음 초기값은 1 => 회의실1 정보를 불러옴
-var roomNo = 10;
+var roomNo = 1;
 //전체 모달 닫기(전역함수인듯)
 window.closeModal = function(){
     $('.modal').modal('hide');

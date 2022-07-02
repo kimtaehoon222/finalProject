@@ -206,9 +206,7 @@ public class PersonnelController {
      public ModelAndView selectRetiredEmp(String eId , ModelAndView mv) {
 		 
 		 Employee e = personnelService.selectRetiredEmp(eId);
-		 
-		 String reg = e.getEmpReg().substring(0, 6);
-		 e.setEmpReg(reg);
+		
 		 mv.addObject("e",e).setViewName("personnel/retiredEmpDetailView");
 
 		 return mv;	

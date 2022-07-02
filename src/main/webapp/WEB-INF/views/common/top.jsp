@@ -365,7 +365,7 @@
             
              <li class="menu-item">
               <a href="empSeeList.do" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-line-chart"></i>
+                <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Tables">직원 주소록</div>
               </a>
             </li>
