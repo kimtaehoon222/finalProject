@@ -243,19 +243,19 @@
                   <ul class="nav_ul">
                      <li>
                         <p class='nav_ul_p'>
-                           <label class='smallText firstSmallText' onclick="changeResource(1)" style="margin-top: 5px;">o회의실1</label>
+                           <label class='smallText firstSmallText' onclick="changeResource(1)" style="margin-top: 5px;">● 1층 소회의실</label>
                         </p>
                         <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(2)" style="margin-top: 2px;">o회의실2</label>
+                           <label class='smallText' onclick="changeResource(2)" style="margin-top: 2px;">● 2층 대회의실</label>
                         </p>
                          <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(3)"  style="margin-top: 2px;">o회의실3</label>
+                           <label class='smallText' onclick="changeResource(3)"  style="margin-top: 2px;">● 2층 소회의실</label>
                         </p>
                          <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(4)"  style="margin-top: 2px;">o회의실4</label>
+                           <label class='smallText' onclick="changeResource(4)"  style="margin-top: 2px;">● 1층 영상회의실</label>
                         </p>
                           <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(5)"  style="margin-top: 2px;">o회의실5</label>
+                           <label class='smallText' onclick="changeResource(5)"  style="margin-top: 2px;">● 2층 영상회의실</label>
                         </p>
                      </li>
                   </ul>
@@ -290,7 +290,7 @@
    <div id='calendar'>
    </div>
   </div>
-</div>  >
+</div>  
   <%-- 예약하기 모달 --%>
    <div id="addRsvModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">

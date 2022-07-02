@@ -126,7 +126,6 @@
                <div class="mb-3 col-md-6">
               <label for="deptName" class="form-label">부서</label>
              <select name ="deptCode" id="deptCode" class="select2 form-select">
-                <option value="">부서선택</option>
                 <option value="D1">인사관리부</option>
                 <option value="D2">회계관리부</option>
                 <option value="D3">마케팅부</option>
@@ -139,7 +138,6 @@
             <div class="mb-3 col-md-6">
               <label for="jobName" class="form-label">직위</label>
              <select name ="jobCode" id="jobCode" class="select2 form-select">
-                <option>직위 선택</option>
                 <option value="J1">사장</option>
                 <option value="J2">부사장</option>
                 <option value="J3">부장</option>
@@ -158,7 +156,6 @@
 			    <div class="mb-3 col-md-6">
               <label for="disabledYN" class="form-label">장애여부</label>
               <select name="disabledYN" class="select2 form-select">
-              <option value=" ">장애여부 선택</option>
     		   <option value="N">N</option>
     		 <option value="Y">Y</option>
            	 </select>
@@ -172,7 +169,7 @@
           <!-- 수정하는 부분 끝 -->
           <div class="mt-2">
             <button type="submit" class="btn btn-primary me-2">승인하기</button>
-            <button type="reset" class="btn btn-outline-secondary">취소하기</button>
+            <button type="reset" class="btn btn-outline-secondary">다시작성</button>
           </div>
        
       </div>
