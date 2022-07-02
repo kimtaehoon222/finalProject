@@ -52,17 +52,19 @@
                                         <th>핸드폰</th>
                                         <th>퇴사전 부서</th>
                                         <th>퇴사전 직위</th>
-                                        
+                                        <th>   </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${ list }" var="e">
                                     <tr>
-                                       <td>${e.empName}</td>
-                                        <td onclick="emp(this)">${e.empId}</td>
-                                        <td> ${e.phone}</td>
-                                        <td>${e.deptName}</td>
-                                       	<td>${e.jobName}</td>
+                                     <td>${e.empName}</td>
+                                      <td >${e.empId}</td>
+                                      <td> ${e.phone}</td>
+                                      <td>${e.deptName}</td>
+                                     	<td>${e.jobName}</td>
+               <td><a  class="btn btn-primary rounded-pill" href="detailRetiredEmp.do?eId=${e.empId}">상세보기</a></td>                                   
+                                       	
                                     </tr>
                                 
                                    </c:forEach> 

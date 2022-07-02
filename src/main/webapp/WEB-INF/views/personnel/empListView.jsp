@@ -79,13 +79,6 @@
         
     </div>
 
-    <!--이름은 동명이인이 있을 수 있어서 id로 -->
-      <script>
-      function emp(e){
-  		console.log(e.innerText)
-  	    location.href="detailEmp.do?eId=" +e.innerText;
-    	};
-    </script>
  
     <jsp:include page="../common/bottom.jsp" />
     <script src="${pageContext.request.contextPath}/resources/kjh123/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>

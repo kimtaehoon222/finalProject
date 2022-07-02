@@ -1,5 +1,0 @@
-alt + ctrl + shift + t : 리팩토링 메소드 
-ctrl + shift + enter : 해당 라인 종료(세미콜론 바로 붙여줌)
-ctrl + alt + v : 반환 값 자동 설정 
-ctrl + shift +t : 테스트 클래스 자동 생성 
-alt + insert : getter & setter 자동 생성 list
