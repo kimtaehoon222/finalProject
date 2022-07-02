@@ -73,7 +73,7 @@ picture-area{
 <body>
 	<jsp:include page="../common/top.jsp" />
    	<br>
-    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
   
         <div class="page-wrapper">
@@ -128,7 +128,7 @@ picture-area{
                             	<div id=allButton>
                             		<a class="btn rounded-pill btn-secondary" id="pwdBut" data-toggle="modal" data-target="#passModal">비밀번호 수정하기</a>
                             		<button type="submit" class="off btn waves-effect waves-light btn-success"> 수정하기 </button>
-									<button type="button" class="cancle btn waves-effect waves-light btn-danger" onclick="history.back(-1);"> 목록으로</button>    
+                                     <a type="button"  id= "home" class="btn btn-dark" href="main.do">메인으로</a>
                             		</div>
                             	</form>
             <div class="modal fade" id="passModal">

@@ -181,8 +181,7 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" onclick="window.closeModal()">&times;</button>
-          <h4 class="modal-title">회의실 예약 삭제</h4>
+     
         </div>
         <div class="modal-body">
           <label>정말 예약을 취소하시겠습니까?</label>

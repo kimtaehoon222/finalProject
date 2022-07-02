@@ -135,7 +135,7 @@
           <div class="mt-2">
           <a type="button"  id= "home" class="btn btn-dark" href="empList.do">목록으로</a>
           <button type="submit" class="btn btn-primary me-2" onclick="postFormSubmit(1);">수정하기</button>
-           <button type="submit" id ="o_butt" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">퇴사하기</button>
+           <button type="submit" id ="o_butt" class="btn btn-outline-secondary" onclick="postFormSubmit(2);">퇴사처리</button>
           </div>
               
 			 <form id="postForm" action="" method="post">
