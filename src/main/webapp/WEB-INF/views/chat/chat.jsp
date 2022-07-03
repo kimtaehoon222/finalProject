@@ -125,7 +125,7 @@
 							<div class="row no-gutters">
 
 								<!-- 주소록 -->
-								<div class="col-lg-5 col-xl-3 border-right">
+								<div class="col-lg-5 col-xl-3 border-right" style="padding-left: 13px">
 									<div class="card-body">
 										<h3
 											style="color: #1C2D41; font-weight: bold; display: inline;">주소록</h3>
@@ -151,7 +151,7 @@
 									</div>
 								</div>
 								<!--  채팅화면 -->
-								<div class="col-lg-7  col-xl-9">
+								<div class="col-lg-7  col-xl-9" style="padding-right: 13px">
 
 									<div class="border-bottom" style="padding: 15px; height: 90px;">
 

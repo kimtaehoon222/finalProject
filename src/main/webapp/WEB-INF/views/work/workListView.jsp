@@ -58,7 +58,6 @@
 		padding: 1px;
 	}
 	
-
 </style>
 </head>
 
@@ -127,16 +126,16 @@
 						<p class="text-center m-auto text-primary">52h 00m 00s</p>
 					</div>
 
-				
+
 			</div>
 		</div>
 	</div>
 	<br><br>
-	
+
 	<!-- 이번달 wlist 출력  -->
 	<c:set var="begin" value="0"/>
 	<c:set var="end" value="6"/>
-	
+
 	<!-- 이번달이 4주인지 5주인지 구분 -->
 	<c:choose>
 		<c:when test="${wlist.size() / 7 == 4 && wlist.size() % 7 == 0}">
@@ -154,7 +153,7 @@
 					<h5 class="chevron cl" id="chevron${week }"><i data-feather="chevron-down" class="feather-icon inner"></i>&nbsp;&nbsp;${week }주차</h5>
 				</div>
 			</div>
-			
+
 			<!-- 헤더 표시, 접었다 펼 수 있음 -->
 			<div class="col-12 week${week } header" id="week${week }" style="border-bottom: 1px solid rgba(0,0,0,.125);">
 				<div class="col-1 text-center">
@@ -171,7 +170,7 @@
 				</div>
 
 			</div>
-			
+
 			<!-- 일자 표시 (7일) -->
 			<c:forEach var="date" items="${wlist }" begin ="${begin }" end ="${end }" varStatus ="status">
 			<div class="col-12 select week${week }" id="${date.workNo }">
@@ -211,8 +210,8 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-				
-				
+
+
 			</div>
 			</c:forEach>
 			<c:set var="begin" value="${begin+7 }"/>
@@ -220,15 +219,23 @@
 
 		<br>
 	</c:forEach>
+
+
+
+<script>
 	
-	<script>
+	
+	
+	
+	
+	
+	
 		$(function(){
 			
 			//근무시간 형식 맞추기
 			var length = $('.date').length;//해당 달에 총 날짜를 가져옴
 			var totalTime = null;//근무 누적을 담기위한 변수
 			var totalTimeArr = null;//날짜별로 총 근무시간이 있기때문에 배열 변수
-
 			for(var i = 0; i < length; i++){
 				totalTime = $('.totalTime').eq(i).text()
 				totalTimeArr = totalTime.split(" ");
@@ -255,8 +262,13 @@
 			var toMonth = month[currentDate.getMonth()];
 			
 			var date = currentDate.getDate();
+			if(date < 10){
+				var toDate = today + " " + toMonth + " " + "0" + date;
+			}else{
+				var toDate = today + " " + toMonth + " " + date;
+			}
 			
-			var toDate = today + " " + toMonth + " " + date;
+			
 			console.log("main toDate : " + toDate)
 			//리스트
 			var classDate;
@@ -269,9 +281,9 @@
 				
 				
 				if(toDate.substr(5, 10) == classDate.substr(8, 10)){
-					console.log("main if : " )
+					console.log("main if :" + toDate )
+					console.log("main if :" + toDate )
 					$('.date').eq(i).addClass('today')
-
 				}
 			}
 			
@@ -324,7 +336,6 @@
 					
 					time = h + "h " + m + "m " + s + "s"
 					console.log("time+++++" + time)
-
 				}
 			}
 			
@@ -337,7 +348,6 @@
 			//리스트
 			var classDate;
 			
-
 			
 			//주별, 일별 누적 근무시간
 			var weekNum = "${weekNum}"; //몇주 인지 구하기.
@@ -357,7 +367,6 @@
 					
 					var total = $('.totalTime').eq(num); //totalTime
 					console.log("zzzzzdsds" + total)
-
 					
 					//accumulation
 					var h1 = Number(accumulation.substr(0,2));
@@ -414,7 +423,6 @@
 					
 					if(s4 - s < 60){
 						s4 = s4-s;
-
 						m4 = m4 -1;
 					}
 					if(m4 - m < 60){
@@ -442,7 +450,6 @@
 				
 					console.log("leftTime" + leftTime)
 					
-
 					h = zero(h)
 					m = zero(m)
 					s = zero(s)
@@ -451,7 +458,7 @@
 					console.log("accumulation 1111" + accumulation)
 					
 					//오늘 날짜이고, 총 근무시간이 00h 00m 00s이면(출퇴근 x) -> 누적시간 표시x
-					if($('.date').eq(num).attr('class').includes('today')&&total.text() == '00h 00m 00s'){
+					if($('.date').eq(num).attr('class').includes('today')&&total.text() == '00h 00m 00s'){ // 다 0으로 나옴
 						console.log("if문 확인")
 						$('#thisweek').children().eq(0).children().eq(1).text(accumulation2)
 						console.log("if문 확인" + accumulation2)
@@ -460,7 +467,7 @@
 				
 					}
 					//오늘 날짜이면 -> 누적시간 표시o
-					else if($('.date').eq(num).attr('class').includes('today')){
+					else if($('.date').eq(num).attr('class').includes('today')){ //accumulation : 52h 60m 60 s 나머지 0
 						console.log("if문 확인2")
 						$('#thisweek').children().eq(0).children().eq(1).text(accumulation)
 						console.log("if문 확인2 : " + accumulation)
@@ -514,8 +521,12 @@
 		})
 		
 	</script>
+
+
+
 	
-	
+
+
 
 	<!-- ============================================================== -->
 	<!-- End PAge Content -->
@@ -546,7 +557,7 @@
 	<!-- All Jquery -->
 	<!-- ============================================================== -->
 
-	
+
 	<script
 		src="${ pageContext.servletContext.contextPath }/resources/kth_assets/libs/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap tether Core JavaScript -->
@@ -586,4 +597,4 @@
 		src="${pageContext.request.contextPath}/resources/kjs_assets/js/main.js"></script>
 
 </body>
-</html>
+</html> 
