@@ -89,7 +89,7 @@ public class SignController {
 
 		signService.insertSign(si);
 		
-		String view = "redirect:signView.do";
+		String view = "redirect:mySignWaitingView.do";
 		
 		return view;
 	}
@@ -136,7 +136,7 @@ public class SignController {
 		
 		signService.insertHelp(si);
 		
-		String view = "redirect:signView.do";
+		String view = "redirect:mySignWaitingView.do";
 		
 		return view;
 	}
@@ -148,7 +148,7 @@ public class SignController {
 		
 		signService.insertDay(si);
 		
-		String view = "redirect:signView.do";
+		String view = "redirect:mySignWaitingView.do";
 		
 		return view;
 	}

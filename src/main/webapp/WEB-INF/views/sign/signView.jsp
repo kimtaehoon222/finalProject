@@ -147,7 +147,7 @@
 
 
 						<div class="modal-header">
-							<h6 class="modal-title" id="exampleModalLabel">결재번호 :</h6>
+							
 						</div>
 
 						<div>
@@ -339,7 +339,7 @@
 							name="empNo" value="${ loginEmp.empNo }">
 
 						<div class="modal-header">
-							<h6 class="modal-title" id="exampleModalLabel">결재번호 :</h6>
+					
 						</div>
 
 						<br> <b style="margin: 22px; color: rgb(124, 127, 251)">결재선
@@ -526,7 +526,7 @@
 						
 						
 					<div class="modal-header">
-						<h6 class="modal-title" id="exampleModalLabel">결재번호 : </h6>
+						
 					</div>
 					
 					<div>
