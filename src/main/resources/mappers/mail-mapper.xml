@@ -352,6 +352,7 @@
 		                      FROM EASYWORK.DEPARTMENT
 		                      WHERE DEPT_NAME = #{selectDept})
 		   AND ENT_YN = 'Y'
+		   ORDER BY EMP_NAME
 	</select>
 	
 	<!-- 처리해야할 예약메일 count : 수신용 -->
