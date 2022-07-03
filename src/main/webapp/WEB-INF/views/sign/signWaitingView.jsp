@@ -323,9 +323,9 @@
 								  dataType: "JSON",
 								  
 								  success: function(result) {
-							  	
-								//	  console.log("signNo : " +result.signNo)
-								/*	  console.log("createName : " +result.createName)
+							  			
+									  console.log("signNo : " +result.signNo)
+									  console.log("createName : " +result.createName)
 									  console.log("createDate : " +result.createDate)
 									  console.log("jobName : " +result.jobName)
 									  console.log("expiryDate : " +result.expiryDate)
@@ -334,7 +334,7 @@
 									  console.log("signContent : " +result.signContent)
 									  console.log("changeName : " +result.changeName)
 									  console.log("originName : " +result.originName)
-								*/	
+									
 									  DetailBtn(result);
 
 								  },   //품의 양식을 조회해오기 위한  script success 닫는괄호
