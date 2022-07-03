@@ -346,6 +346,7 @@
 							   	$("#updateP").val(signNo);
 							    $("#aaFirstSignDate").html(firstSignDate);
 							    $("#aaFirstSignName").html(firstSignName);
+							    $("#aaFirstSignName").val(firstSignName);
 							    $("#aaFirstSignJob").html(firstSignJob);
 							}
 							
@@ -388,10 +389,11 @@
 							style="background-color: red" id="signBack">반려</button>
 				</form>
 				<!-- 품의 updateR Form 끝 태그 -->
-
-
+				 
+				
 				<button type="submit" class="btn btn-primary" id="endSign"
 					onclick="javascript: form.action='updateA.do';">상신</button>
+				
 				<!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
 
