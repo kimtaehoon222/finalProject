@@ -69,7 +69,7 @@
 								<th style="color: rgb(124, 127, 251)"><b>No</b></th>
 								<th style="color: rgb(124, 127, 251)"><b>분류</b></th>
 								<th style="color: rgb(124, 127, 251)"><b>기안문</b></th>
-								<th style="color: rgb(124, 127, 251)"><b style="color:red">문서 만료  </b><b style="color:black">/ </b><b style="color: rgb(124, 127, 251)">휴가코드</b></th>
+								<th style="color: rgb(124, 127, 251)"><b style="color:red">문서 만료  </b><b style="color:black">/ </b><b style="color: rgb(124, 127, 251)">휴가 분류</b></th>
 								<th style="color: rgb(124, 127, 251)"><b>기안부서</b></th>
 								<th style="color: rgb(124, 127, 251)"><b>기안자</b></th>
 								<th style="color: rgb(124, 127, 251)"><b>기안일</b></th>
@@ -84,8 +84,8 @@
 									<td>${ s.signNo }</td>
 									<td>${ s.typeName }</td>
 									<td style="width: 200px">${ s.signTitle }</td>
-								<c:if test="${ !empty s.VCode }">
-									<td style="color: rgb(124, 127, 251)">${ s.VCode }</td>
+								<c:if test="${ !empty s.VName }">
+									<td style="color: rgb(124, 127, 251)">${ s.VName }</td>
 								</c:if>	
 								<c:if test="${ !empty s.expiryDate }">
 									<td style="color:red">${ s.expiryDate }</td>

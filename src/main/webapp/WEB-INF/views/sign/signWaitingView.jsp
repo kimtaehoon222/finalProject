@@ -418,7 +418,7 @@
 								</form> <!-- 품의 updateR Form 끝 태그 -->
 								
 								
-							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">상신</button> <!-- form이 현재 하나이기에 액션 경로를 수정 -->
+							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">승인</button> <!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
 
 						</div>
@@ -606,7 +606,7 @@
 					</form>
 					<!-- 협조 update Form 끝 태그 -->
 					
-							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">상신</button> 
+							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">승인</button> 
 
 						</div>
 
@@ -814,7 +814,7 @@
 					</form>
 					<!-- 휴가 update Form 끝 태그 -->
 					
-							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">상신</button>
+							<button type="submit" class="btn btn-primary" id="endSign"  onclick="javascript: form.action='updateP.do';">승인</button>
 
 
 			</div>
