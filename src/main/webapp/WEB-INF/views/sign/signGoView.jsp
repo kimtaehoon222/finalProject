@@ -392,7 +392,7 @@
 				 
 				
 				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateA.do';">상신</button>
+					onclick="javascript: form.action='updateA.do';">승인</button>
 				
 				<!-- form이 현재 하나이기에 액션 경로를 수정 -->
 
@@ -592,7 +592,7 @@
 				<!-- 협조 update Form 끝 태그 -->
 
 				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateA.do';">상신</button>
+					onclick="javascript: form.action='updateA.do';">승인</button>
 
 			</div>
 
@@ -812,7 +812,7 @@
 				<!-- 휴가 update Form 끝 태그 -->
 
 				<button type="submit" class="btn btn-primary" id="endSign"
-					onclick="javascript: form.action='updateA.do';">상신</button>
+					onclick="javascript: form.action='updateA.do';">승인</button>
 
 
 			</div>

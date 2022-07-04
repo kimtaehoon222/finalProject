@@ -340,7 +340,7 @@ public class SignController {
 		
 		signService.updateP(si);
 		
-		String view = "redirect:signView.do";
+		String view = "redirect:signWaitingView.do";
 		
 		return view;
 		
@@ -506,7 +506,7 @@ public class SignController {
 		
 		signService.updateRR(si);
 				
-		String view = "redirect:signView.do";
+		String view = "redirect:signGoView.do";
 		
 		return view;
 	}
@@ -534,7 +534,7 @@ public class SignController {
 		
 		signService.updateA(si);
 		
-		String view = "redirect:signView.do";
+		String view = "redirect:signGoView.do";
 		
 		return view;
 		

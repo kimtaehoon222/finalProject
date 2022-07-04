@@ -58,6 +58,7 @@ public class Sign {
 	private String firstDate; //휴가 시작일
 	private String lastDate; //휴가 종료일
 	private String vCode; //휴가종류
+	private String vName; //휴가종류
 	
 	/* 결재 유형 */
 	private String typeName; //유형명 (품의, 협조, 휴가)
