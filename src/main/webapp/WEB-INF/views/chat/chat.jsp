@@ -230,9 +230,7 @@
 												<c:if test="${ c.fromChat ne loginEmp.empNo }">
 													<li class="chat-item list-style-none mt-3">
 														<div class="chat-img d-inline-block">
-															<img
-																src="${pageContext.request.contextPath}/resources/emp_files/${c.changeName}"
-																alt="user" class="rounded-circle" width="45">
+															
 														</div>
 														<div class="chat-content d-inline-block pl-3">
 															<div class="msg p-2 d-inline-block mb-1">${c.message}</div>
@@ -352,7 +350,7 @@ $("#status").on('change',function(){
 		
 		var reFresh = setInterval(function(){
         	selectDeptList();
-	    }, 50000)
+	    }, 5000)
 		
 	});
 	
@@ -498,7 +496,7 @@ $("#status").on('change',function(){
 	                    	 socket.send(senderId +"," + receiverId+","+fromChat +"," + message);
 	                    	console.log("socket 들어오나 확인" + socket)
 	                     }else{
-	                        alert("현재 서버오류로 채팅이 불가합니다.");
+	                        alert("메세지를 입력해주세요.");
 	                     }
 	                  }
 	               }) 
