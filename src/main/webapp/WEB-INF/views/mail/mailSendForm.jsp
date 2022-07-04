@@ -147,7 +147,7 @@
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="title">제목</label>
-                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" placeholder="제목은 30자 이내로 작성해주세요." maxlength="30" required/>
+                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" oninput="maxLengthCheck(this);" placeholder="제목은 30자 이내로 작성해주세요." required/>
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="content">내용</label>
@@ -584,7 +584,7 @@
       });
       
       /* 제목 길이 제한 */
-      $(document).ready(function(){
+      /*$(document).ready(function(){
           $('#title').keyup(function(){
               if ($(this).val().length > $(this).attr('maxlength')) {
             	  console.log('글자수확인')
@@ -593,9 +593,18 @@
                   $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
               }
           });
-      });
+      });*/
       
-      
+      function maxLengthCheck(object) {
+    	  if (object.value.length > 30){
+			  console.log(object.value.length);
+			  alert('제목은 30자 이내로 입력해주세요. 초과된 글자는 삭제됩니다.');
+			  //$(this).val($(this).val().substr(0, object.value.length));
+    		  //object.value = object.value.slice(0, object.max.length)
+    		  object.value = object.value.substr(0, 29);
+    	  }    
+    	}
+
    </script>
    
    <!-- bottom -->
