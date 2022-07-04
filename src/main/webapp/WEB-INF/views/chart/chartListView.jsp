@@ -445,7 +445,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	               				+ '<th width="200">' + '자재관리부' + '</th>'
 	               				+ '<th width="200">' + '기획영업부' + '</th>'
 	               				+ '<th width="200">' + '경영관리부' + '</th>'
-	               				+ '<th width="200">' + '경영관리부' + '</th>'
+	               				+ '<th width="200">' + '기술개발부' + '</th>'
 	               			    + '</thead>' 
 	               			    + '</tr>' + '<tbody>';   				
 	                
@@ -551,7 +551,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
 	               				+ '<th width="200">' + '자재관리부' + '</th>'
 	               				+ '<th width="200">' + '기획영업부' + '</th>'
 	               				+ '<th width="200">' + '경영관리부' + '</th>'
-	               				+ '<th width="200">' + '경영관리부' + '</th>'
+	               				+ '<th width="200">' + '기술개발부' + '</th>'
 	               			    + '</thead>' 
 	               			    + '</tr>' + '<tbody>';   				
 	                

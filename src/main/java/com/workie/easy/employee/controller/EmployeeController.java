@@ -67,6 +67,14 @@ public class EmployeeController {
 		model.addAttribute("loginEmp", loginEmp);
 		
 		/* 김지수 : 읽지 않은 메일 개수 조회 */
+		int toMail = loginEmp.getEmpNo();
+		boolean toMeReserveMailList = mailService.checkReserveMail(toMail);
+		/* 처리해야 할 메일이 있는 경우 (true) */
+		if(toMeReserveMailList) {
+			/* 예약 메일 update => 발송처리상태를 발송예정에서 발송완료로 변경 해야한다. */
+			mailService.updateReserveMail(toMail);
+		}
+		
 		int unReadmailListCount = mailService.selectMailListNoRead(loginEmp.getEmpNo()).size();
 		model.addAttribute("mailCount", unReadmailListCount);
 		

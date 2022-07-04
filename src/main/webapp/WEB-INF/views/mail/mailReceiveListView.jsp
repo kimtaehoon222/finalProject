@@ -171,16 +171,26 @@
 
 												<!-- 페이징 처리 시작 -->
 												<span class="d-none d-sm-block">
-												${ mpi.currentPage*mpi.mailLimit-9 }
+												<c:if test="${mpi.listCount ne 0 }">
+													${ mpi.currentPage*mpi.mailLimit-9 }
+												</c:if>
+												<c:if test="${mpi.listCount eq 0 }">
+													${mpi.listCount }
+												</c:if>
 												-
-												<c:choose>
-													<c:when test="${mpi.currentPage ne mpi.maxPage }">
-														${mpi.currentPage*mpi.mailLimit }
-													</c:when>
-													<c:when test="${mpi.currentPage eq mpi.maxPage }">
-														${mpi.listCount }
-													</c:when>
-												</c:choose>
+												<c:if test="${mpi.listCount ne 0 }">
+													<c:choose>
+														<c:when test="${mpi.currentPage ne mpi.maxPage }">
+															${mpi.currentPage*mpi.mailLimit }
+														</c:when>
+														<c:when test="${mpi.currentPage eq mpi.maxPage }">
+															${mpi.listCount }
+														</c:when>
+													</c:choose>
+												</c:if>			
+												<c:if test="${mpi.listCount eq 0 }">
+													${mpi.listCount }
+												</c:if>									
 												of 
 												${ mpi.listCount } </span>
 												<c:choose>
