@@ -282,7 +282,7 @@
 				
 				if(toDate.substr(5, 10) == classDate.substr(8, 10)){
 					console.log("main if :" + toDate )
-					console.log("main if :" + toDate )
+					console.log("main if :" + classDate )
 					$('.date').eq(i).addClass('today')
 				}
 			}
@@ -408,12 +408,13 @@
 						var h3 = h - 52;
 						var m3 = m;
 						var s3 = s;
-						
+						console.log("확인@@" + h3)
 						h3 = zero(h3)
 						m3 = zero(m3)
 						s3 = zero(s3)
 						
 						overtime = h3 + "h " + m3 + "m " + s3 + "s"
+						console.log("확인@@" + overtime)
 					}
 					
 					//이번주 잔여
@@ -448,7 +449,7 @@
 					leftTime = h4 + "h " + m4 + "m " + s4 + "s"
 					
 				
-					console.log("leftTime" + leftTime)
+					console.log("leftTime확인" + leftTime)
 					
 					h = zero(h)
 					m = zero(m)

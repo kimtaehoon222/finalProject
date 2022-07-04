@@ -85,7 +85,7 @@
        AND FROM_CHAT= #{fromChat} 
        OR TO_CHAT= #{fromChat} 
        AND FROM_CHAT = #{toChat})
-	   AND ROUND((SYSDATE-TO_DATE(SENDTIME,'YYYY-MM-DD HH24:MI:SS'))*24,2) <= 1
+	   AND ROUND((SYSDATE-TO_DATE(SENDTIME,'YYYY-MM-DD HH24:MI:SS'))*24,2) <= 168
   ORDER BY SENDTIME
 	   ]]>
 	</select>

@@ -549,9 +549,7 @@
 	         $('.chat-list').append(`
 						<li class="chat-item list-style-none mt-3">
 						<div class="chat-img d-inline-block">
-							<img
-								src="${ pageContext.servletContext.contextPath }/resources/assets/img/avatars/5.png"
-								alt="user" class="rounded-circle" width="45">
+							
 						</div>
 						<div class="chat-content d-inline-block pl-3">
 							<div class="msg p-2 d-inline-block mb-1">\${ msgArr[1]}</div>
