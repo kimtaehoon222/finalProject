@@ -212,10 +212,10 @@
     width:90%;
     }
    .modal-body{
-   width: 700px;
+   width: 750px;
    background-color: white;}
  .modal-header{
-   width: 700px;
+   width: 750px;
    background-color: white;
  }
 
@@ -246,7 +246,7 @@
                            <label class='smallText firstSmallText' onclick="changeResource(1)" style="margin-top: 5px;">● 1층 소회의실</label>
                         </p>
                         <p class='nav_ul_p'>
-                           <label class='smallText' onclick="changeResource(2)" style="margin-top: 2px;">● 2층 대회의실</label>
+                           <label class='smallText' onclick="changeResource(2)" style="margin-top: 2px;">● 1층 대회의실</label>
                         </p>
                          <p class='nav_ul_p'>
                            <label class='smallText' onclick="changeResource(3)"  style="margin-top: 2px;">● 2층 소회의실</label>
