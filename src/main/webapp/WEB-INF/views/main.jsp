@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
@@ -30,7 +29,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>2asy Work</title>
 
     <meta name="description" content="" />
 
@@ -464,7 +463,7 @@
                 <!-- Transactions -->
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   	<!------ 일정 ------>
-					<div class="card h-100 overflow-hidden" style="height: 185px">
+					<div class="card overflow-hidden" style="height: 602.15px">
 						<h5 class="card-header" style="text-align: center" >
 							<a href="schedule.do" style="color: #566a7f"><!--  data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="</i><span>일정 관리 이동</span>" -->
 								<i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>

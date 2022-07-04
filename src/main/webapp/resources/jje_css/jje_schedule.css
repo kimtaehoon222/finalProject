@@ -240,6 +240,21 @@ html, body {
 #detail_color_darkGray {background-color: rgba(69, 69, 69);}
 
 /* 필수 입력 */
-#detail_sked_code, .detail_color_radio, #detail_sked_title, #detail_start_date, #sdetail_ked_content{
+#detail_sked_code, .detail_color_radio, #detail_sked_title, #detail_start_date, #detail_sked_content{
     border: 1px solid rgb(251, 138, 124);
+}
+
+/* ----------검색 모달창---------- */
+#modal-key, #modal-keyword{
+	background-color: #ffff;
+    border-color: #696cff;
+}
+#modal-key{
+	font-weight: bold;
+    color: #696cff;
+    border-right: 2px solid #696cff;
+}
+#modal-keyword{
+	width: 25%;
+	padding-left: 14px;
 }
