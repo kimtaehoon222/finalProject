@@ -16,7 +16,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 
+
 <style type="text/css">
+.btn-danger {
+  color: #fff !important;
+  background-color: #e6381a !important;
+  border-color: #e6381a !important;  
+}
 
 #ckbox:checked + div{
  display:none;
@@ -141,7 +147,7 @@
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="title">제목</label>
-                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" placeholder="제목은 30자 이내로 작성해주세요." maxlength="33" required/>
+                 <input class="form-control" type="text" name="title" id="title" value="${ originTitle }" placeholder="제목은 30자 이내로 작성해주세요." maxlength="30" required/>
                </div>
                <div class="mb-3 col-md-12">
                  <label class="form-label" for="content">내용</label>
@@ -191,7 +197,7 @@
 			  <div class="col-md mb-4 mb-md-0">
 			    <small class="text-light fw-semibold">수신인은 1명만 지정이 가능합니다. 이외의 수신인은 참조인으로 선택해주세요.</small><br>
 			    <button class="btn btn-outline-primary mt-2" id="selectListDept">부서조회</button>
-			    <button class="btn btn-outline-primary mt-2" id="choiceEmployee">직원추가/수정</button>
+			    <!-- <button class="btn btn-outline-primary mt-2" id="choiceEmployee">직원추가/수정</button> -->
 			    
 			    <!-- 부서리스트 영역 시작 -->
 			    <div class="accordion mt-3" id="accordionExample">
@@ -207,8 +213,8 @@
          
          <!-- Modal footer -->
          <div class="modal-footer">
-           <button type="button" class="btn btn-secondary" onclick="insertAddress1();" data-dismiss="modal">선택완료</button>
-           <button type="button" class="btn btn-secondary" onclick="deleteAddress1();" data-dismiss="modal">선택취소</button>
+           <button type="button" class="btn btn-primary" onclick="insertAddress1();" data-dismiss="modal">선택완료</button>
+           <button type="button" class="btn btn-danger" onclick="deleteAddress1();" data-dismiss="modal">선택취소</button>
          </div>
            
          </div>
@@ -237,9 +243,9 @@
 			<input type="text" class="form-control mt-1" id="setCcEmail" value="" readonly style="border: 1px solid #696cff; color:#696cff;">
 			<div class="row">
 			  <div class="col-md mb-4 mb-md-0">
-			    <small class="text-light fw-semibold">참조인은 여러명 지정이 가능합니다.</small><br>
+			    <small class="text-light fw-semibold">참조인은 여러명 지정이 가능합니다. 반드시 직원선택 버튼을 클릭해주세요!</small><br>
 			    <button class="btn btn-outline-primary mt-2" id="selectListDept2">부서조회</button>
-			    <button class="btn btn-outline-primary mt-2" id="choiceEmployeeList">직원추가/수정</button>
+			    <button class="btn btn-outline-primary mt-2" id="choiceEmployeeList">직원선택</button>
 			    
 			    <!-- 부서리스트 영역 시작 -->
 			    <div class="accordion mt-3" id="accordionExampleList">
@@ -256,8 +262,8 @@
            
            <!-- Modal footer -->
            <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" onclick="insertAddress2();" data-dismiss="modal">선택완료</button>
-             <button type="button" class="btn btn-secondary" onclick="deleteAddress2();" data-dismiss="modal">선택취소</button>
+             <button type="button" class="btn btn-primary" onclick="insertAddress2();" data-dismiss="modal">선택완료</button>
+             <button type="button" class="btn btn-danger" onclick="deleteAddress2();" data-dismiss="modal">선택취소</button>
            </div>
            
          </div>
@@ -265,6 +271,14 @@
    </div>
 		
    <script type="text/javascript">
+   
+   $(document).on("click",".getToEmail", function(e) {
+		
+	   var value = $(this).val();
+	  
+	   $('#setToEmail').val(value);
+	})
+   
       /* 마이 페이지로 이동 */
 	  $(document).ready(function() {
 	    $('#myPageUpdate').click(function() {
@@ -573,7 +587,8 @@
       $(document).ready(function(){
           $('#title').keyup(function(){
               if ($(this).val().length > $(this).attr('maxlength')) {
-                  alert('제목은 30자 이내로 입력해주세요.');
+            	  console.log('글자수확인')
+                  alert('제목은 30자 이내로 입력해주세요. 초과된 글자는 삭제됩니다.');
                   //chrome에선 maxlength가 5라면 한글이 6자까지 들어가게 되므로 필히 keyup에서 substr을 통해 maxlength의 글자까지 끊어줘야 한다.
                   $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
               }

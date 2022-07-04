@@ -695,6 +695,18 @@ public class MailController {
 		redirectAttributes.addFlashAttribute("topMsg", "메일이  영구적으로 삭제되었습니다.");
 		return "redirect:deleteMailList.do"; 
 	}
+
+	/* 메일 복원 : 휴지통 상세에서만 호출 */
+	@RequestMapping("restoreMailOne.do") 
+	public String restoreMailOne(int mailNo, RedirectAttributes redirectAttributes) {
+		
+		mailService.restoreMail(mailNo);
+		
+		redirectAttributes.addFlashAttribute("topMsg", "메일이  복원되었습니다.");
+		return "redirect:deleteMailList.do"; 
+	}
+	
+
 	
 	
 	/* 부서 조회 : 주소록에서 호출 */

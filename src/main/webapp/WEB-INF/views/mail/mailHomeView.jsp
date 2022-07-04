@@ -27,7 +27,7 @@
    type="image/x-icon">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style type="text/css">
-tr:hover{
+#em:hover{
    cursor: pointer;
    background-color: #696cff;
    color: white;
@@ -278,7 +278,7 @@ tr:hover{
                         <!-- 읽지 않은 메일이 있는 경우 -->
                         <c:if test="${ !empty mailList }">
                           <c:forEach items="${ mailList }" var="mail">
-                             <tr>
+                             <tr id="em">
                                <td class="d-none">${mail.mailNo }</td>
                                <td>${mail.rowNum }</td>
                                <c:if test="${ mail.typeName == '중요' }">
@@ -294,13 +294,11 @@ tr:hover{
                           </c:forEach>
                         </c:if>
                         <!-- 읽지 않은 메일이 없는 경우 -->
-                        <c:if test="${ empty mailList }">
-                           <tr>
-                              <td colspan="6" style="text-align: center;">읽지 않은 메일이 없습니다.</td>
-                           </tr>
-                        </c:if>
                         </tbody>
                       </table>
+                        <c:if test="${ empty mailList }">
+                              <div class="mt-2" style="text-align: center;">읽지 않은 메일이 없습니다.</div>
+                        </c:if>
                     </div>
                   </div>
                 </div>

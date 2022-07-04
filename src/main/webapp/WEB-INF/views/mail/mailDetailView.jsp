@@ -155,6 +155,7 @@
 														</c:if>
 														<c:if test="${ mail.status == 'N' }">
 															<button type="button" class="btn btn-outline-danger mt-2" id="" data-bs-toggle="modal" data-bs-target="#deleteCheckModal">완전삭제</button>
+															<button type="button" class="btn btn-outline-success mt-2" id="restoreMailBtn">복원</button>
 														</c:if>
 													</li>
 												</ul>
@@ -173,7 +174,12 @@
 											  <input type="hidden" id="mailNo" name="mailNo" value="${ mail.mailNo }">
 									          <div class="row">
 									          	<div class="col-md-12 mb-1">
-									              <b class="text-danger">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
+									          	  <c:if test="${ mail.typeName == '중요' }">
+									              	<b class="text-danger">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
+									              </c:if>
+									              <c:if test="${ mail.typeName == '일반' }">
+									              	<b class="text-secondary">[${ mail.typeName }]</b><span class="mx-2">${ mail.sendDate }</span>
+									              </c:if>
 									            </div>
 									            
 									            <!-- 제목 영역 -->
@@ -297,6 +303,14 @@
 		$('#permanentDeleteMailBtn').click(function () {
 			 var mailNo = $('#mailNo').val();
 	         location.href="permanentDeleteMail.do?mailNo="+mailNo;
+		})
+		
+		/* 복원 클릭시 */
+		$(function () {
+			$('#restoreMailBtn').click(function () {
+				 var mailNo = $('#mailNo').val();
+		         location.href="restoreMailOne.do?mailNo="+mailNo;
+			})
 		})
 		
 		/* 삭제 클릭시 : 받은/보낸/예약의 상세 조회에서 */

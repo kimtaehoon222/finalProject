@@ -125,7 +125,8 @@
 	 LEFT JOIN SALARY B ON B.EMP_NO = A.EMP_NO
 	 LEFT JOIN DEPARTMENT C ON C.DEPT_CODE = A.DEPT_CODE
 	 LEFT JOIN JOB D ON D.JOB_CODE = A.JOB_CODE
-	       AND A.ENT_YN = 'Y'
+	     WHERE A.ENT_YN = 'Y'
+	     AND A.APV_YN = 'Y'
 	</select>
 
 	<!-- 부서 묶음 조회 -->
