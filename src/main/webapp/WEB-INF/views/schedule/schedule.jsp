@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%--@page import="java.util.ArrayList" import="com.workie.easy.schedule.model.dto.Schedule"--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -56,139 +55,6 @@
 				          </button>
 				          </li>
 				      </ul>
-				      <!------------------- 등록 모달 ------------------->
-				      <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do"  onsubmit="return sked_submit()"method="POST">
-				          <div class="modal-dialog modal-l" role="document">
-				          <div class="modal-content">
-				              <!-- 모달 헤더 -->
-				              <div class="modal-header">
-				                  <h5 class="modal-title" id="insert_head">일정 등록</h5>
-				              </div>
-				              <!-- 모달 바디 -->
-				              <div class="modal-body">
-				              
-				             	  <!-- 작성자 정보 -->
-		                          <input type="hidden" id="empNo" name="empNo" class="form-control" value="${ loginEmp.empNo }" required/>
-				              
-				                  <!-- 1번줄 -->
-				                  <div class="row">
-				                  <!-- 카테고리 -->
-				                      <div class="col mb-3">
-				                      <label for="sked_code" class="form-label">카테고리</label>
-				                          <select id="sked_code" name="skedCode" class="form-select" autofocus required>
-				                              <option value="P" id="sked_code_P">개인</option>
-				                              <option value="D" id="sked_code_D">부서</option>
-				                          </select>
-				                      </div>
-				                      
-				                      <!-- P 색상 -->
-				                      <div class="col mb-3"  id="color_group_P">
-				                        <label for="sked_color" class="form-label">색상</label>
-				                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
-				                        <div class="form-control color_radio">
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_pink" value="C1" required />
-				                            </div>
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_blue" value="C2" />
-				                            </div>
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_yellow" value="C3" />
-				                            </div>
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_purple" value="C4" />
-				                            </div>
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_red" value="C5" />
-				                            </div>
-				                        </div>
-			                   		  </div>
-				                      <!-- / P 색상 -->
-				                      
-				                      <!-- D 색상 -->
-				                      <div class="col mb-3" style="display:none;" id="color_group_D">
-				                        <label for="sked_color" class="form-label">색상</label>
-				                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
-				                        <div class="form-control color_radio">
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_lightGray" value="C6"/>
-				                            </div>
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_gray" value="C7"/>
-				                            </div>
-				                            <div class="form-check form-check-inline">
-				                                <input class="form-check-input" type="radio" name="colorCode" id="color_darkGray" value="C8"/>
-				                            </div>
-				                        </div>
-				                    </div>
-				                    <!-- / D 색상 -->
-				                    
-				                  </div>
-				                  
-				                  <!-- 2번줄 -->
-				                  <div class="row">
-				                      <div class="col mb-3">
-				                          <label for="sked_title" class="form-label">제목</label>
-				                          <input type="text" id="sked_title" name="skedTitle" class="form-control" placeholder="제목을 입력하세요." required/>
-				                      </div>
-				                  </div>
-				                  
-				                  <!-- 3번줄 -->
-				                  <div class="row" id="line3">
-				                  <!-- 시작 날짜 -->
-				                      <div class="col mb-3">
-				                          <label for="start_date" class="form-label">날짜</label>
-				                          <input id="start_date" name="skedStart" type="date" class="form-control" required>
-				                          <label for="end_date" class="form-label">종료날짜</label>
-				                          <input id="end_date" name="skedEnd" type="date" class="form-control">
-				                      </div>
-				                      <!--시간 -->
-				                      <div class="col mb-3">
-				                          <div class="row">
-				                              <label for="start_time" class="form-label">시작 시간</label>
-				                              <input id="start_time" name="skedStartTime" type="time" class="form-control"/>
-				                              <label for="end_time" class="form-label">종료 시간</label>
-				                              <input id="end_time" name="skedEndTime" type="time" class="form-control"/>
-				                          </div>
-				                      </div>
-				                  </div>
-				                  
-				                  <!-- 4번줄 -->
-				                  <div class="row">
-				                      <div class="col mb-3">
-				                          <label for="sked_content" class="form-label">내용</label>
-				                          <input type="text" name="skedContent" id="sked_content" class="form-control" placeholder="내용을 입력하세요." required/>
-				                      </div>
-				                  </div>
-				                  
-				                  <!-- 5번줄 -->
-				                  <div class="row">
-				                      <div class="col mb-3">
-				                          <label for="sked_place" class="form-label">장소</label>
-				                          <input type="text" name="skedPlace" id="sked_place" class="form-control" placeholder="장소 입력"/>
-				                      </div>
-				                  </div>
-				                  
-				                  <!-- 6번줄 -->
-				                  <div class="row">
-				                      <div class="col mb-3">
-				                          <label for="sked_meno" class="form-label">메모</label>
-				                          <textarea id="sked_meno" name="skedMemo" class="form-control" placeholder="메모 입력"></textarea>
-				                      </div>
-				                  </div>
-				                  
-				              </div>
-				              <!-- 모달 풋터 -->
-				              <div class="modal-footer">
-				                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-	                      			취소
-				                  </button>
-				                  <button type="submit" class="btn btn-primary" id="sked_insert_btn">등록</button>
-				              </div>
-				          </div>
-				          </div>
-				      </form>
-				      <!------------------- / 등록 모달 ------------------->
 				      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sked-insert-modal" id="insert_btn">
 				         	 일정 등록
 				      </button>
@@ -208,13 +74,12 @@
 				
 				</div>
 				
-			
-		
 			<!-- 우측화면 -->
 			    
 			    <!-- 검색 -->
 			    <div class="i0 i0-2">
 			        <div class="card" style="height:100%">
+			        	<h4 class="card-header" style="text-align: center; padding-top:20px; padding-bottom:18px;">키워드 검색</h4>
 			            <div class="card-body">
 			            
 			            	<!-- 검색창 -->
@@ -358,88 +223,6 @@
                 
 			    <button type=button" data-bs-toggle="modal" data-bs-target="#search-modal" style="display:none;" id="search-modal-btn"></button>
 			    
-			    <!------------------- 검색 결과 모달 ------------------->
-				<form class="modal fade" id="search-modal" tabindex="-1" aria-hidden="true" >
-                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                      
-                      <!-- 모달 헤더 -->
-                      <div class="modal-header">
-                        <div class="input-group input-group-merge" style="width: 50%;">
-                          <input type="text" name="modal-keyword"class="form-control" placeholder="Search..." aria-label=" Search..." aria-describedby="basic-addon-search31">
-                          <button type="submit" class="btn btn-primary" id="basic-addon-search31"><i class="bx bx-search"></i></button>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <!-- / 모달 헤더 -->
-
-                      <!-- 모달 바디 -->
-                      <div class="modal-body" style="padding-bottom: 0px;">
-                        <!-- <div class="row"> -->
-                          <div class="col mb-3">
-                            <div class="input-group input-group-merge">
-                              <!-- 검색 결과 테이블 -->
-                              <table class="table table-bordered table-striped"  style="text-align: center;">
-                                <!-- 테이블 헤드 -->
-                                <thead>
-                                  <tr>
-                                    <th style="font-size: 15px;">시작일</th>
-                                    <th style="font-size: 15px;">종료일</th>
-                                    <th style="font-size: 15px;">제목</th>
-                                    <th style="font-size: 15px;">내용</th>
-                                    <th style="font-size: 15px;">종류</th>
-                                  </tr>
-                                </thead>
-                                <!-- / 테이블 헤드 -->
-
-                                <!-- 테이블 바디 -->
-                                <tbody id="resultTable">
-                  
-                                </tbody>
-                                <!-- / 테이블 바디 -->
-
-                              </table>
-                              <!-- / 검색 결과 테이블 -->
-                            </div>
-                          </div>
-                        <!-- </div> -->
-                      </div>
-                      <!-- / 모달 바디 -->
-                      
-                      <!-- 모달 풋터 -->
-                      <div class="modal-footer">
-                        <nav aria-label="Page navigation">
-                          <ul class="pagination" id="pageUl">
-							
-							<!-- prev -->
-							<li class="page-item prev disabled" id="prevLi">
-							  <a class="page-link" href="javascript:void(0);" id="prevA">
-								<i class="tf-icon bx bx-chevron-left"></i>
-							  </a>
-							</li>
-							<!-- / prev -->
-							
-							<li id='navList' style="display: flex; margin-left:3px"></li>
-							
-							<!-- next -->
-							<li class="page-item next disabled" id="nextLi">
-							  <a class="page-link" href="javascript:void(0);" id="nextA">
-								<i class="tf-icon bx bx-chevron-right"></i>
-							  </a>
-							</li>
-							<!-- / next -->
-							
-                          </ul>
-                        </nav>
-                      </div>
-                      <!-- / 모달 풋터 -->
-
-                    </div>
-                  </div>
-                  
-                </form>
-			    <!------------------- / 검색 결과 모달 ------------------->
-			    
 			
 				<!-- 간단 일정 목록 -->
 				<div class="i0 i0-3">
@@ -447,7 +230,7 @@
 						<div class="card overflow-hidden" style="height: 590px;">
 							<h4 class="card-header" style="text-align: center;">일정 목록</h4>
 							<div class="card-body" id="vertical-example">
-								
+								<div style="text-align: center;">일정이 없습니다.<div>
 							</div>
 						</div>
 					</div>
@@ -488,7 +271,6 @@
 		<!----------------------------------- / 본문 ----------------------------------->
 		
 		<!----------------------------- 달력 스크립트 ----------------------------->
-		<script src='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.js'></script>
 		
 		<script>
 		
@@ -544,7 +326,10 @@
 					    locale: 'ko',
 					    slotMinTime: '08:00',
 					    slotMaxTime: '24:00:00',
-					    businessHours: true,
+					    businessHours:{
+					    	 startTime: '09:00',
+					    	  endTime: '18:60'
+					    },
 					    dayMaxEventRows: true,
 					    dateClick: function(e) { //날짜 클릭 이벤트
 					        //skedDayList(e);	//선택 일자 간편 조회 이벤트 
@@ -614,6 +399,11 @@
 								
 								var daylist = "";
 								
+								if(result.length == 0){
+									alert("없지롱");	
+									daylist = "<div style='text-align: center;'>일정이 없습니다.<div>"
+								}
+									
 								$.each(result, function(i){
 									/*console.log([i]+" id : "+result[i].id);							 
 									console.log([i]+" title : "+result[i].title);							 
@@ -621,7 +411,6 @@
 									console.log([i]+" startTime : "+result[i].startTime);							 
 									console.log([i]+" endTime : "+result[i].endTime);
 									console.log([i]+" color : "+result[i].color);*/
-									
 									var time="-";
 									
 									if(result[i].startTime){ //시작시간만 있는 경우
@@ -689,9 +478,143 @@
 		   });
 			*/
 		</script>
+		
 		<!----------------------------- / 달력 스크립트 ----------------------------->
 		
 		<!----------------------------- 상세 조회 -------------------------------------->
+		
+		<!------------------- 등록 모달 ------------------->
+        <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do"  onsubmit="return sked_submit()"method="POST">
+          <div class="modal-dialog modal-l" role="document">
+            <div class="modal-content">
+              <!-- 모달 헤더 -->
+              <div class="modal-header">
+                  <h5 class="modal-title" id="insert_head">일정 등록</h5>
+              </div>
+              <!-- 모달 바디 -->
+              <div class="modal-body">
+              
+             	  <!-- 작성자 정보 -->
+                        <input type="hidden" id="empNo" name="empNo" class="form-control" value="${ loginEmp.empNo }" required/>
+              
+                  <!-- 1번줄 -->
+                  <div class="row">
+                  <!-- 카테고리 -->
+                      <div class="col mb-3">
+                      <label for="sked_code" class="form-label">카테고리</label>
+                          <select id="sked_code" name="skedCode" class="form-select" autofocus required>
+                              <option value="P" id="sked_code_P">개인</option>
+                              <option value="D" id="sked_code_D">부서</option>
+                          </select>
+                      </div>
+                      
+                      <!-- P 색상 -->
+                      <div class="col mb-3"  id="color_group_P">
+                        <label for="sked_color" class="form-label">색상</label>
+                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
+                        <div class="form-control color_radio">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_pink" value="C1" required />
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_blue" value="C2" />
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_yellow" value="C3" />
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_purple" value="C4" />
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_red" value="C5" />
+                            </div>
+                        </div>
+                  		  </div>
+                      <!-- / P 색상 -->
+                      
+                      <!-- D 색상 -->
+                      <div class="col mb-3" style="display:none;" id="color_group_D">
+                        <label for="sked_color" class="form-label">색상</label>
+                        <!-- <input type="text" id="sked_color" class="form-control" placeholder="DD / MM / YY" /> -->
+                        <div class="form-control color_radio">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_lightGray" value="C6"/>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_gray" value="C7"/>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="colorCode" id="color_darkGray" value="C8"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / D 색상 -->
+                    
+                  </div>
+                  
+                  <!-- 2번줄 -->
+                  <div class="row">
+                      <div class="col mb-3">
+                          <label for="sked_title" class="form-label">제목</label>
+                          <input type="text" id="sked_title" name="skedTitle" class="form-control" placeholder="제목을 입력하세요." maxlength="10" required/>
+                      </div>
+                  </div>
+                  
+                  <!-- 3번줄 -->
+                  <div class="row" id="line3">
+                  <!-- 시작 날짜 -->
+                      <div class="col mb-3">
+                          <label for="start_date" class="form-label">날짜</label>
+                          <input id="start_date" name="skedStart" type="date" class="form-control" required>
+                          <label for="end_date" class="form-label">종료날짜</label>
+                          <input id="end_date" name="skedEnd" type="date" class="form-control">
+                      </div>
+                      <!--시간 -->
+                      <div class="col mb-3">
+                          <div class="row">
+                              <label for="start_time" class="form-label">시작 시간</label>
+                              <input id="start_time" name="skedStartTime" type="time" class="form-control"/>
+                              <label for="end_time" class="form-label">종료 시간</label>
+                              <input id="end_time" name="skedEndTime" type="time" class="form-control"/>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <!-- 4번줄 -->
+                  <div class="row">
+                      <div class="col mb-3">
+                          <label for="sked_content" class="form-label">내용</label>
+                          <input type="text" name="skedContent" id="sked_content" class="form-control" placeholder="내용을 입력하세요." maxlength="50" required/>
+                      </div>
+                  </div>
+                  
+                  <!-- 5번줄 -->
+                  <div class="row">
+                      <div class="col mb-3">
+                          <label for="sked_place" class="form-label">장소</label>
+                          <input type="text" name="skedPlace" id="sked_place" class="form-control" placeholder="장소 입력"/>
+                      </div>
+                  </div>
+                  
+                  <!-- 6번줄 -->
+                  <div class="row">
+                      <div class="col mb-3">
+                          <label for="sked_meno" class="form-label">메모</label>
+                          <textarea id="sked_meno" name="skedMemo" class="form-control" placeholder="메모 입력"></textarea>
+                      </div>
+                  </div>
+                  
+              </div>
+              <!-- 모달 풋터 -->
+              <div class="modal-footer">
+                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+                  <button type="submit" class="btn btn-primary" id="sked_insert_btn">등록</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!------------------- / 등록 모달 ------------------->
+		
 		<!------------------- 상세 조회 모달 ------------------->
 		<form class="modal fade" id="sked-detail-modal" tabindex="-1" aria-hidden="true" action="updateSked.do" onsubmit="return sked_update_submit()" method="POST">
 		    <div class="modal-dialog modal-l" role="document">
@@ -830,7 +753,90 @@
 		<!------------------- / 상세 조회 모달 ------------------->
 		<button data-bs-toggle="modal" data-bs-target="#sked-detail-modal" id="detail_btn" style="display:none;"></button>
 		<!----------------------------- /상세 조회 -------------------------------------->
-	
+		
+		<!------------------- 검색 결과 모달 ------------------->
+		<form class="modal fade" id="search-modal" tabindex="-1" aria-hidden="true" >
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              
+              <!-- 모달 헤더 -->
+              <div class="modal-header">
+                <div class="input-group input-group-merge" style="width: 25%;">
+                  <input type="text" id ="modal-key" class="form-control" value="검색어  " readOnly>
+                  <input type="text" id ="modal-keyword" name="modal-keyword" class="form-control" placeholder="검색어" readOnly>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- / 모달 헤더 -->
+
+              <!-- 모달 바디 -->
+              <div class="modal-body" style="padding-bottom: 0px;">
+                <!-- <div class="row"> -->
+                  <div class="col mb-3">
+                    <div class="input-group input-group-merge">
+                      <!-- 검색 결과 테이블 -->
+                      <table class="table table-bordered table-striped"  style="text-align: center;">
+                        <!-- 테이블 헤드 -->
+                        <thead>
+                          <tr>
+                            <th style="font-size: 15px;">시작일</th>
+                            <th style="font-size: 15px;">종료일</th>
+                            <th style="font-size: 15px;">제목</th>
+                            <th style="font-size: 15px;">내용</th>
+                            <th style="font-size: 15px;">종류</th>
+                          </tr>
+                        </thead>
+                        <!-- / 테이블 헤드 -->
+
+                        <!-- 테이블 바디 -->
+                        <tbody id="resultTable">
+          
+                        </tbody>
+                        <!-- / 테이블 바디 -->
+
+                      </table>
+                      <!-- / 검색 결과 테이블 -->
+                    </div>
+                  </div>
+                <!-- </div> -->
+              </div>
+              <!-- / 모달 바디 -->
+              
+              <!-- 모달 풋터 -->
+              <div class="modal-footer">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination" id="pageUl">
+
+<!-- prev -->
+<li class="page-item prev disabled" id="prevLi">
+  <a class="page-link" href="javascript:void(0);" id="prevA">
+	<i class="tf-icon bx bx-chevron-left"></i>
+  </a>
+</li>
+<!-- / prev -->
+
+<li id='navList' style="display: flex; margin-left:3px"></li>
+
+<!-- next -->
+<li class="page-item next disabled" id="nextLi">
+  <a class="page-link" href="javascript:void(0);" id="nextA">
+	<i class="tf-icon bx bx-chevron-right"></i>
+  </a>
+</li>
+<!-- / next -->
+
+                  </ul>
+                </nav>
+              </div>
+              <!-- / 모달 풋터 -->
+
+            </div>
+          </div>
+                
+         </form>
+	    <!------------------- / 검색 결과 모달 ------------------->
+		
+		<script src='${pageContext.request.contextPath}/resources/jje_css/jje_schedule.js'></script>
 	</div>
 	
 	<jsp:include page="../common/bottom.jsp"/>

@@ -438,14 +438,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
                
                if(list.length > 0){
 	               var result = '<thead>' + '<tr>'
-	               				+ '<th width="200">' + '월' + '</th>'
-	               				+ '<th width="200">' + '인사관리부' + '</th>'
-	               				+ '<th width="200">' + '회계관리부' + '</th>'
-	               				+ '<th width="200">' + '마케팅부' + '</th>'
-	               				+ '<th width="200">' + '자재관리부' + '</th>'
-	               				+ '<th width="200">' + '기획영업부' + '</th>'
-	               				+ '<th width="200">' + '경영관리부' + '</th>'
-	               				+ '<th width="200">' + '기술개발부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '월' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '인사관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '회계관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '마케팅부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '자재관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '기획영업부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '경영관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '기술개발부' + '</th>'
 	               			    + '</thead>' 
 	               			    + '</tr>' + '<tbody>';   				
 	                
@@ -544,14 +544,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
                
                if(list.length > 0){
 	               var result = '<thead>' + '<tr>'
-	               				+ '<th width="200">' + '월' + '</th>'
-	               				+ '<th width="200">' + '인사관리부' + '</th>'
-	               				+ '<th width="200">' + '회계관리부' + '</th>'
-	               				+ '<th width="200">' + '마케팅부' + '</th>'
-	               				+ '<th width="200">' + '자재관리부' + '</th>'
-	               				+ '<th width="200">' + '기획영업부' + '</th>'
-	               				+ '<th width="200">' + '경영관리부' + '</th>'
-	               				+ '<th width="200">' + '기술개발부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '월' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '인사관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '회계관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '마케팅부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '자재관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '기획영업부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '경영관리부' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '기술개발부' + '</th>'
 	               			    + '</thead>' 
 	               			    + '</tr>' + '<tbody>';   				
 	                
@@ -651,14 +651,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=
                
                if(list.length > 0){
 	               var result = '<thead>' + '<tr>'
-	               				+ '<th width="200">' + '부서' + '</th>'
-	               				+ '<th width="200">' + '직급' + '</th>'
-	               				+ '<th width="200">' + '이름' + '</th>'
-	               				+ '<th width="200">' + '입사일' + '</th>'
-	               				+ '<th width="200">' + '급여' + '</th>'
-	               				+ '<th width="200">' + '비율' + '</th>'
-	               				+ '<th width="200">' + '누적합계' + '</th>'
-	               				+ '<th width="200">' + '총합계' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '부서' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '직급' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '이름' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '입사일' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '급여' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '비율' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '누적합계' + '</th>'
+	               				+ '<th width="200" style="background-color:lightgrey">' + '총합계' + '</th>'
 	               			    + '</thead>' 
 	               			    + '</tr>' + '<tbody>';   				
 	                

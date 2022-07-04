@@ -156,8 +156,8 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" onclick="window.closeModal()">&times;</button>
           <h4 class="modal-title" style="font-weight: bold;">예약정보</h4>
+          <button type="button" class="close" data-dismiss="modal" onclick="window.closeModal()">&times;</button>
         </div>
         <div class="modal-body">
           <div class="container">

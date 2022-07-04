@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
@@ -30,7 +29,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>2asy Work</title>
 
     <meta name="description" content="" />
 
@@ -305,6 +304,42 @@
                 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
                 <!-- 날씨 -->
     			<div class="row">  
+    			
+    				<!-- 채팅 -->
+    			      <div class="col-lg-6 col-md-12 col-6 mb-4">
+                      <div class="card">
+                      <!-- 여기서 구현 -->
+                        <div class="card-body" style="width: 220px; height: 180px;">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                               <i class='bx bx-message-rounded-dots bx-md bx-tada-hover' id="chatIcon"></i>
+                            </div>
+
+                          </div>
+                            <a class="btn btn-primary" style="color:white; width: 150px" href="chat.do">채팅하러가기</a>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- 근태 -->
+                    <div class="col-lg-6 col-md-12 col-6 mb-4">
+                      <div class="card">
+                      <!-- 여기서 구현 -->
+                        <div class="card-body" style="width: 220px; height: 180px;">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                              <i class="menu-icon tf-icons bx bx-briefcase-alt-2"></i>
+                            </div>
+
+                          </div>     
+                            <a class="btn btn-primary" style="color:white; width: 150px"" href="work.do">근태관리</a>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                    
+                    
                     <div class="col-12 mb-4">
                       <div class="card">
                         <div class="card-body">
@@ -464,7 +499,7 @@
                 <!-- Transactions -->
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   	<!------ 일정 ------>
-					<div class="card h-100 overflow-hidden" style="height: 185px">
+					<div class="card overflow-hidden" style="height: 602.15px">
 						<h5 class="card-header" style="text-align: center" >
 							<a href="schedule.do" style="color: #566a7f"><!--  data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="</i><span>일정 관리 이동</span>" -->
 								<i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>

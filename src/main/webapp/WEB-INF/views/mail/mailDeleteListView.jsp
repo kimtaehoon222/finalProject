@@ -224,7 +224,7 @@
 											<ul class="users-list-wrapper media-list">
 												<!-- 메일 1개 시작 -->
 												<c:forEach items="${ list }" var="mail">
-												<li class="media mail-read">
+												<li class="media mail-read noDetail">
 												<input type="hidden" value="${ mail.mailNo }">
 													<!-- 체크박스 및 중요표시 -->
 													<div class="user-action noDetail">
