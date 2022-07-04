@@ -538,15 +538,15 @@
 					
 					<div class="col-md-12">
 						
-							<fieldset style="width: 30%; float: right; margin: 22px;">
+							<fieldset  style="width: 30%; float: right; margin: 22px;">
 							<p>
 								<b id="center">휴가 종류</b>
 							</p>
 
-							&nbsp<input type="radio" id="huey" name="vCode" value="Y" checked>
-							<label for="huey">'Y'=연차</label> &nbsp&nbsp <input type="radio"
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="radio" id="huey" name="vCode" value="Y" checked>
+							<label for="huey">연차</label> &nbsp&nbsp <input type="radio"
 								id="dewey" name="vCode" value="H"> <label
-								for="dewey">'H'= 반차</label>
+								for="dewey">반차</label>
 
 						</fieldset>
 						
