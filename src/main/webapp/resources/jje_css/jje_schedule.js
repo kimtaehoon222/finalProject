@@ -260,3 +260,21 @@ function clickDetailBtn(result)  {
 	document.getElementById('detail_btn').click();
 }
 
+
+/*카테고리별 색상 변경*/
+var sked_code = document.getElementById('detail_sked_code');
+sked_code.addEventListener('input',function(e){		//Form Event
+	
+	var codeValue = sked_code.options[sked_code.selectedIndex].value;
+	
+	var groupP = document.getElementById('detail_color_group_P');
+	var groupD = document.getElementById('detail_color_group_D');
+
+	if(codeValue=="P"){
+    	groupD.style.display="none";
+    	groupP.style.display="block";
+    }else{
+    	groupP.style.display="none";
+    	groupD.style.display="block";
+    }
+});
