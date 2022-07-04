@@ -105,13 +105,12 @@
        
         <div id="main">
             <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
+                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
 
-            <div class="page-heading">
-                
+                   <div class="page-heading">
            
                     <div class="card">
                         <div class="card-header">
@@ -143,11 +142,11 @@
 
              
             </div>
-
+</div>
          
         </div>
         
-    </div>
+
     
     <%-- ---------------- 모달 ---------------- --%>
    

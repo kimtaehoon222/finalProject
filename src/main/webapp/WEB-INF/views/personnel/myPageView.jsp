@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,6 +63,7 @@ picture-area{
 	opacity:0.5;
 	color:rgba(255,255,255,0.57);
 }
+#kim{margin-top: 1%;}
 #mainImg{float: left;}
 #title{margin-left: 350px; margin-top: 15px;}
 #allButton{margin-left:550px; margin-bottom: 20px;}
@@ -73,6 +73,7 @@ picture-area{
 <body>
 	<jsp:include page="../common/top.jsp" />
    	<br>
+   	<div id= "kim">
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
   
@@ -163,7 +164,7 @@ picture-area{
         </div>
     </div>
                     </div>
-                  
+           </div>       
        
     
       <jsp:include page="../common/bottom.jsp" />
