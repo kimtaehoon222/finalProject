@@ -11,9 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/kjh_assets/assets/images/favicon.png">
-    <title>Groupware</title>
+   
+    <title>마이페이지</title>
+     <!-- Favicon icon -->
+     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/kjh_assets/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/kjh_assets/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">

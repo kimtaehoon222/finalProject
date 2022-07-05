@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회의실</title>
-<!---------------------------------------------달력----------------------------------------------------------------->
+ <title>회의실 예약</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> <!---------------------------------------------달력----------------------------------------------------------------->
 <link href='${ pageContext.request.contextPath }/resources/kjhPackages/core/main.css' rel='stylesheet' />  
 <link href='${pageContext.request.contextPath }/resources/kjhPackages/daygrid/main.css' rel='stylesheet' />
 <link href='${ pageContext.request.contextPath}/resources/kjhPackages/timegrid/main.min.css' rel='stylesheet' />
