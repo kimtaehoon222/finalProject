@@ -400,7 +400,6 @@
 								var daylist = "";
 								
 								if(result.length == 0){
-									alert("없지롱");	
 									daylist = "<div style='text-align: center;'>일정이 없습니다.<div>"
 								}
 									
@@ -484,7 +483,7 @@
 		<!----------------------------- 상세 조회 -------------------------------------->
 		
 		<!------------------- 등록 모달 ------------------->
-        <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do"  onsubmit="return sked_submit()"method="POST">
+        <form class="modal fade" id="sked-insert-modal" tabindex="-1" aria-hidden="true" action="insertSked.do" onsubmit="return sked_submit()" method="POST">
           <div class="modal-dialog modal-l" role="document">
             <div class="modal-content">
               <!-- 모달 헤더 -->
@@ -571,12 +570,10 @@
                       </div>
                       <!--시간 -->
                       <div class="col mb-3">
-                          <div class="row">
                               <label for="start_time" class="form-label">시작 시간</label>
                               <input id="start_time" name="skedStartTime" type="time" class="form-control"/>
                               <label for="end_time" class="form-label">종료 시간</label>
                               <input id="end_time" name="skedEndTime" type="time" class="form-control"/>
-                          </div>
                       </div>
                   </div>
                   
@@ -701,12 +698,10 @@
 						    </div>
 						    <!--시간 -->
 						    <div class="col mb-3">
-						        <div class="row">
 						            <label for="detail_start_time" class="form-label">시작 시간</label>
 						            <input id="detail_start_time" name="skedStartTime" type="time" class="form-control"/>
 						            <label for="detail_end_time" class="form-label">종료 시간</label>
 						            <input id="detail_end_time" name="skedEndTime" type="time" class="form-control"/>
-						        </div>
 						    </div>
 						</div>
 						

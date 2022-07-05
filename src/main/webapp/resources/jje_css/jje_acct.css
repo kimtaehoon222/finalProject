@@ -75,7 +75,7 @@
 	margin-right: 5px;
 }
 .i3-2>input,.i3-4>input{width:140px;}
-.i3-9{grid-column: 3/4; grid-row: 1/5;}
+.i3-9{grid-column: 3/4; grid-row: 1/5; }
 /*.i3-9 button{
     padding: 0px 10px;
     height: 35px;
@@ -117,4 +117,12 @@
 #insert_btn{
 	margin-top: 10px;
 	margin-right: 10px;
+}
+
+/* 필수 입력 */
+#payment_status, #amount, #transaction_date, #store_name{
+    border: 1px solid rgb(251, 138, 124);
+}
+#detail_payment_status, #detail_amount, #detail_transaction_date, #detail_store_name{
+    border: 1px solid rgb(251, 138, 124);
 }
