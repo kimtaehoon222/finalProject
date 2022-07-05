@@ -172,9 +172,9 @@
 		 WHERE A.SKED_STATUS = 'Y'
 		   AND A.EMP_NO = #{empNo}
 		<![CDATA[ 
-		   AND (B.SKED_START BETWEEN #{skedStart} AND #{skedStart})
+		   AND ((B.SKED_START BETWEEN #{skedStart} AND #{skedStart})
 		    OR (B.SKED_END BETWEEN #{skedStart} AND #{skedStart})
-		    OR (B.SKED_START <= #{skedStart} AND B.SKED_END >=#{skedStart})
+		    OR (B.SKED_START <= #{skedStart} AND B.SKED_END >=#{skedStart}))
 		]]>
 	</select>
 	

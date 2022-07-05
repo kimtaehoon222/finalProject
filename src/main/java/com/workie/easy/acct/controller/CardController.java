@@ -176,9 +176,9 @@ public class CardController {
 	/*카드내역 수정*/
 	@RequestMapping("updateStat.do")
 	public String updateCardStat(Card c , HttpServletRequest request , 
-								  @RequestParam(name = "reUploadFile" , required = false) MultipartFile file) {
+								 @RequestParam(name = "reUploadFile" , required = false) MultipartFile file) {
 		
-		System.out.println(c.toString());
+		System.out.println("updateStat.do : "+c.toString());
 		
 		/*새로운 첨부파일이 있는 경우*/
 		if(!file.getOriginalFilename().equals("")) {
@@ -222,6 +222,10 @@ public class CardController {
 		}else { /*새로운 첨부파일이 없는 경우*/
 			/*기존 첨부파일을 삭제하는 경우*/
 			/*기존 첨부파일을 삭제하지 않는 경우*/
+			System.out.println("파일 수정 없이 수정 합니다.");
+			
+			cardService.updateCardStatOnly(c);
+			
 		}
 		
 		return "redirect:acct.do";
