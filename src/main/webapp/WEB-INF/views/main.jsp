@@ -30,7 +30,8 @@
     />
 
     <title>2asy Work</title>
-
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
+    
     <meta name="description" content="" />
 
     <!-- Favicon -->
@@ -320,7 +321,7 @@
                 
                 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
                 <!-- 날씨 -->
-    			<div class="row">  
+    			<div class="row h-100">  
     			
     				<!-- 채팅 -->
     			      <div class="col-lg-6 col-md-12 col-6 mb-4">
@@ -333,6 +334,7 @@
                             </div>
 
                           </div>
+                            <h4><b>이지톡</b></h4>
                             <a class="btn btn-primary" style="color:white; width: 150px" href="chat.do">채팅하러가기</a>
                         </div>
                       </div>
@@ -345,20 +347,20 @@
                         <div class="card-body" style="width: 220px; height: 180px;">
                           <div class="card-title d-flex align-items-start justify-content-between">
                             <div class="avatar flex-shrink-0">
-                              <i class="menu-icon tf-icons bx bx-briefcase-alt-2"></i>
+                              <i class="menu-icon tf-icons bx bx-briefcase-alt-2 bx-md  "></i>
+        
                             </div>
 
-                          </div>     
-                            <a class="btn btn-primary" style="color:white; width: 150px"" href="work.do">근태관리</a>
+                          </div>   
+                          <h4><b>나의 근태관리 </b></h4>  
+                          <a class="btn btn-primary" style="color:white; width: 150px" href="work.do">바로가기</a>
                         </div>
                       </div>
                     </div>
                     
                     
-                    
-                    
-                    <div class="col-12 mb-4">
-                      <div class="card">
+                   <div class="col-12 mb-4">
+                      <div class="card" style="height: 180px;">
                         <div class="card-body">
                           <div class="">
                             <div class="">

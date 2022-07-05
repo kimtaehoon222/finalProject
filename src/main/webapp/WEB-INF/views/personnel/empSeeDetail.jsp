@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-   <title>직원 주소록</title>
+   <title>직원 상세</title>
      <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/kjh_assets/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
