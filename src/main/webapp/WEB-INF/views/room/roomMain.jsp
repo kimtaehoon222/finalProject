@@ -569,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       if("${loginEmp.deptCode}" == item.deptCode) {
                          color = '#696cff';
                       } else {
-                         color = 'rgb(144, 145, 191)';
+                         color = 'rgb(70, 72, 106)';
                       }
 
                      events.push({
