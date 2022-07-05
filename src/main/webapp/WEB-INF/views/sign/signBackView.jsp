@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>반려 문서함</title>
-
+ <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
 <style>
 #center {
 	text-align: center;
