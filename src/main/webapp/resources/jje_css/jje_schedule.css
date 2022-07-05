@@ -258,3 +258,14 @@ html, body {
 	width: 25%;
 	padding-left: 14px;
 }
+
+/*기타*/
+.btn-danger {
+  color: #fff;
+  background-color: #e6381a;
+  border-color: #e6381a;  
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%);
+}
+
+  
+}

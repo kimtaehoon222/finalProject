@@ -62,7 +62,15 @@
 	}
 
 </script>
+<style>
+.btn-danger {
+  color: #fff !important; 
+  background-color: #e6381a !important;
+  border-color: #e6381a !important;  
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%) !important;
+}
 
+</style>
 <title>sked_detail</title>
 </head>
 <body>
@@ -162,25 +170,27 @@
 	              <input id="end_date" type="date" class="form-control" name="endDate" required>
 	            </div>
 	            <div class="i3-3">
-	              <b>금액</b>
+	              <b>최소 금액</b>
 	            </div>
 	            <div class="i3-4">
-	              <input id="m_range" type="range" class="form-range" min="0" max="1000000" step="10000" name="amount" value="0" onchange="SetValue(this)" required>
+	              <input id="m_range" type="range" class="form-range" min="0" max="500000" step="10000" name="amount" value="0" onchange="SetValue(this)" required>
 	              <input type="text" value="0" id="m_no" class="form-control" readOnly>
 	            </div>
 	            <div class="i3-5">
-	              <b>단어</b>
-	            </div>
-	            <div class="i3-6">
-	              <input type="text" class="form-control" name="keyWord">
-	            </div>
-	            <div class="i3-7">
 	              <b>사용자</b>
 	            </div>
-	            <div class="i3-8">
+	            <div class="i3-6">
 	              <input type="text" class="form-control" name="empName">
 	            </div>
-	            <div class="i3-9"><button type="submit" class="btn btn-primary" onclick="checkValue()">검색</button></div>
+	            <div class="i3-7">
+	              <b>검색어</b>
+	            </div>
+	            <div class="i3-8">
+	              <input type="text" class="form-control" name="keyWord">
+	            </div>
+	            <div class="i3-9">
+		            <button type="submit" class="btn btn-primary" onclick="checkValue()">검색</button><br>
+	            </div>
 	            
 	          </form>
 	          <script>
@@ -219,7 +229,14 @@
 	                        <td>${ c.transactionDate }</td>
 	                        <td>${ c.amount }</td>
 	                        <td>${ c.storeName }</td>
-	                        <td>${ c.paymentStatus }</td>
+	                        <c:choose> 
+		                        <c:when test="${c.paymentStatus eq '취소'}">
+		                        	<td style="color:#ec8787;">${ c.paymentStatus }</td>
+		                        </c:when>
+		                        <c:otherwise>
+		                        	<td style="color:#7373ca;">${ c.paymentStatus }</td>
+		                        </c:otherwise>
+	                        </c:choose>
 	                        <td><button type="button" class="btn btn-primary detail_btn" onclick="detailModal(this)">확인</button></td>
 	                    </tr>
                     </c:forEach>
@@ -304,7 +321,7 @@
 	<!----------------------------------------------------------------------------------------------------------->
 	<!-------------------모달------------------->
 	<!-- 등록 -->
-	<form class="modal fade" id="stat-insert-modal" tabindex="-1" aria-hidden="true" action="insertStat.do"  enctype="multipart/form-data" method="POST">
+	<form class="modal fade" id="stat-insert-modal" tabindex="-1" aria-hidden="true" action="insertStat.do" onsubmit="return stat_submit()" enctype="multipart/form-data" method="POST">
 	  <div class="modal-dialog modal-l" role="document">
 	    <div class="modal-content">
 	        <!-- 모달 헤더 -->
@@ -338,7 +355,7 @@
 	            <!-- 승인금액 -->
 	            <div class="col mb-3">
 	              <label for="amount" class="form-label">승인 금액</label>
-	              <input id="amount" type="text" class="form-control" name="amount" autofocus required/>
+	              <input id="amount" type="text" class="form-control" name="amount" maxlength="7" autofocus required/>
 	            </div>
 	          </div>
 	          
@@ -359,7 +376,7 @@
 	          
 	          <!-- 4번줄 -->
 	          <div class="row" id="line3">
-	            <!-- 시작 날짜 -->
+	            <!-- 영수증 -->
 	            <div class="col mb-6">
 	                <label for="bill_file" class="form-label">영수증 첨부</label>
 	                <input id="bill_file" class="form-control" type="file" name="uploadFile">
@@ -378,9 +395,7 @@
 	        
 	        <!-- 모달 풋터 -->
 	        <div class="modal-footer">
-	            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-	               	 취소
-	            </button>
+	            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
 	            <button type="submit" class="btn btn-primary" id="stat_insert_btn">등록</button>
 	        </div>
 	    </div>
@@ -394,7 +409,7 @@
 	    <div class="modal-content">
 	        <!-- 모달 헤더 -->
 	        <div class="modal-header">
-	            <h4 class="modal-title" id="exampleModalLabel4">사용 내역 등록</h4>
+	            <h4 class="modal-title" id="exampleModalLabel4">사용 내역</h4>
 	        </div>
 	        <!-- 모달 바디 -->
 	        <div class="modal-body">
@@ -426,7 +441,7 @@
 	            <!-- 승인금액 -->
 	            <div class="col mb-3">
 	              <label for="detail_amount" class="form-label">승인 금액</label>
-	              <input id="detail_amount" type="text" class="form-control" name="amount" autofocus required/>
+	              <input id="detail_amount" type="text" class="form-control" name="amount" maxlength="7" autofocus required/>
 	            </div>
 	          </div>
 	          
@@ -531,7 +546,6 @@
 			        }
 			        
 					$("#detailFooter").html(footerBtns);
-			        
 
 				},
 				error : function(result){
@@ -556,6 +570,7 @@
 		function checkValue(){
 			var startD = $("#start_date").val();
 			var endD = $("#end_date").val();
+			var amount = $("#m_range").val();
 			var empName = $("input[name=empName]").val();
 			var amount = $("#m_no").val();
 			var keyWord = $("input[name=keyWord]").val();
@@ -723,7 +738,36 @@
 				alert("비밀번호가 틀렸습니다.");  				
   			}
   		});*/
-
+		
+  		/*등록 모달 데이터 검사*/
+  		function stat_submit(){
+  			var chkBalance = ${cardData.balance};
+	        var chkBalance2 = chkBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        
+        	if( chkBalance < $('#amount').val() ){
+				alert("승인금액은 " + chkBalance2 + "원 이하로 등록해주세요.");
+				$('#empName').focus();
+				return false;
+        	}
+  		}
+  		$(function(){
+	  		var thisYear = new Date().toISOString().slice(0, 4);
+	  		var thisMonth = Number(new Date().toISOString().slice(5, 7));
+	  		var firstDate = new Date(thisYear, (thisMonth-1), 2).toISOString().slice(0, 10);
+	  		//var lastDate = new Date(thisYear, thisMonth, 1).toISOString().slice(0, 10);
+	  		var today = new Date().toISOString().slice(0, 10);
+	  		/*alert("thisYear : "+thisYear);
+	  		alert("thisMonth : "+thisMonth);
+	  		alert("firstDate : "+firstDate);
+	  		alert("lastDate : "+lastDate);*/
+	  		
+	  		$("#transaction_date").attr("min",firstDate);
+	  		$("#transaction_date").attr("max",today);
+	  		
+	  		$("#detail_transaction_date").attr("min",firstDate);
+	  		$("#detail_transaction_date").attr("max",today);
+  			
+  		});
 	</script>
 	<jsp:include page="../common/bottom.jsp"/>
 </body>

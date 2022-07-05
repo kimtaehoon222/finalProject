@@ -117,6 +117,18 @@ public class CardServiceImpl implements CardService {
 		}
 		
 	}
+	
+	@Override
+	public void updateCardStatOnly(Card c) {
+		
+		int result = cardDao.updateCardStat(sqlSession, c);
+		
+		if(result < 0) {
+			
+			throw new CommException("카드내역 수정에 실패했습니다. 관리자에게 문의 바랍니다.");
+			
+		}
+	}
 
 	@Override
 	public void deleteCardStat(int statNo) {

@@ -21,6 +21,8 @@ public interface CardService {
 
 	void updateCardStat(Card c, String string);
 
+	void updateCardStatOnly(Card c);
+
 	void deleteCardStat(int statNo);
 
 	int searchStatCount(Card c);
