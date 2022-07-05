@@ -376,6 +376,7 @@
                 <div data-i18n="Tables">통계</div>
               </a>
             </li>
+            <c:if test="${loginEmp.deptCode =='D1'}">
            <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-group"></i>
@@ -399,6 +400,7 @@
                 </li>
               </ul>
             </li>
+            </c:if>
             
           
           </ul>
