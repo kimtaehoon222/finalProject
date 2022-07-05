@@ -35,7 +35,7 @@ data-template="vertical-menu-template-free"
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

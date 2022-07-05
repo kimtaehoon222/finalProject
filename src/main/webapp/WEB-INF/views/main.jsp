@@ -30,7 +30,6 @@
     />
 
     <title>2asy Work</title>
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
     
     <meta name="description" content="" />
 
