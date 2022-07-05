@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
 <title>예약 메일함</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
