@@ -314,8 +314,8 @@
                             <div class="avatar flex-shrink-0">
                                <i class='bx bx-message-rounded-dots bx-md bx-tada-hover' id="chatIcon"></i>
                             </div>
-
                           </div>
+							<h4 class="card-title mb-3 text-info">EASY TALK</h4>	
                             <a class="btn btn-primary" style="color:white; width: 150px" href="chat.do">채팅하러가기</a>
                         </div>
                       </div>
@@ -328,11 +328,11 @@
                         <div class="card-body" style="width: 220px; height: 180px;">
                           <div class="card-title d-flex align-items-start justify-content-between">
                             <div class="avatar flex-shrink-0">
-                              <i class="menu-icon tf-icons bx bx-briefcase-alt-2"></i>
+                              <i class="menu-icon tf-icons bx bx-md bx-briefcase-alt-2 bx-tada-hover" style="color:#696cff;"></i>
                             </div>
-
                           </div>     
-                            <a class="btn btn-primary" style="color:white; width: 150px"" href="work.do">근태관리</a>
+                          	<h4 class="card-title mb-3 text-primary"><b>나의 근태관리</b></h4>	
+                            <a class="btn btn-primary" style="color:white; width: 150px"" href="work.do">바로가기</a>
                         </div>
                       </div>
                     </div>
