@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 결재 대기함</title>
-
+ <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
 <style>
 #center {
 	text-align: center;

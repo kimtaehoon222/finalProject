@@ -9,6 +9,8 @@
 <head>
 <meta charset="UTF-8">
 
+   <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
+
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
