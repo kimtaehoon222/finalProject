@@ -24,6 +24,7 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/kjs_assets/images/favicon.svg"
 	type="image/x-icon">
+	   <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
 
 <title>연차 조회</title>
 

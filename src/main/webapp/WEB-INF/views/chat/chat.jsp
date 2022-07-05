@@ -10,8 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="${ pageContext.servletContext.contextPath }/resources/kth_assets/images/favicon.png">
+   <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
 
 <style>
 .ps-scrollbar-x-rail {
@@ -44,10 +43,10 @@
 .contectDeptList button:hover {
 	font-weight: bold;
 }
-.accordion {<%-- 지워도 된다.--%>
+.accordion 
 	height: 80px;
 }
-.accordion-button { <%-- 지워도 된다.--%>
+.accordion-button { 
 	height: 60px;
 }
 </style>
