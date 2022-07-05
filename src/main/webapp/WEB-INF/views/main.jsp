@@ -34,8 +34,11 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon/favicon.ico" />
+    <!-- <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/favicon/favicon.ico" /> -->
 
+	<!-- 파비콘 넣기!!!! -->
+	<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
+	
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -112,6 +115,20 @@
   .jisu{
   	border: none;
   }	
+  .mailCnt::-webkit-scrollbar {
+    width: 8px;  /* 스크롤바의 너비 */
+}
+
+.mailCnt::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #696cff; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.mailCnt::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
   </style>
   </head>
 
@@ -314,8 +331,8 @@
                             <div class="avatar flex-shrink-0">
                                <i class='bx bx-message-rounded-dots bx-md bx-tada-hover' id="chatIcon"></i>
                             </div>
+
                           </div>
-							<h4 class="card-title mb-3 text-info">EASY TALK</h4>	
                             <a class="btn btn-primary" style="color:white; width: 150px" href="chat.do">채팅하러가기</a>
                         </div>
                       </div>
@@ -328,11 +345,11 @@
                         <div class="card-body" style="width: 220px; height: 180px;">
                           <div class="card-title d-flex align-items-start justify-content-between">
                             <div class="avatar flex-shrink-0">
-                              <i class="menu-icon tf-icons bx bx-md bx-briefcase-alt-2 bx-tada-hover" style="color:#696cff;"></i>
+                              <i class="menu-icon tf-icons bx bx-briefcase-alt-2"></i>
                             </div>
+
                           </div>     
-                          	<h4 class="card-title mb-3 text-primary"><b>나의 근태관리</b></h4>	
-                            <a class="btn btn-primary" style="color:white; width: 150px"" href="work.do">바로가기</a>
+                            <a class="btn btn-primary" style="color:white; width: 150px"" href="work.do">근태관리</a>
                         </div>
                       </div>
                     </div>
@@ -499,14 +516,14 @@
                 <!-- Transactions -->
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   	<!------ 일정 ------>
-					<div class="card overflow-hidden" style="height: 602.15px">
+					<div class="card overflow-hidden" style="height: 510px">
 						<h5 class="card-header" style="text-align: center" >
 							<a href="schedule.do" style="color: #566a7f"><!--  data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title data-bs-original-title="</i><span>일정 관리 이동</span>" -->
 								<i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>
 								<b style="color:#696cff">오늘 일정 목록</b>
 							</a>
 						</h5>
-						<div class="card-body" id="vertical-example">
+						<div class="card-body mailCnt" style="overflow: auto;">
 							<c:forEach items="${skedList}" var="s">
 								<div class="c1_list t_list mb-2" style="background-color:${s.rgbCode};">
 									<div class="t_header">
@@ -544,12 +561,12 @@
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                 <div class="mb-2 mb-md-0">
-                  Â©
+                  
                   <script>
-                    document.write(new Date().getFullYear());
+                    //document.write(new Date().getFullYear());
                   </script>
-                  , made with â¤ï¸ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
+                  Copyright © 2022 EASYWORK GROUPWARE All Right Reserved
+                  <a href="main.do" target="_blank" class="footer-link fw-bolder text-primary">EASYWORK</a>
                 </div>
 
               </div>
