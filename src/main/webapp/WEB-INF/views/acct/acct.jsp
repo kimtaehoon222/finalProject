@@ -9,8 +9,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" />
+<title>회계 관리</title>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
   
@@ -71,7 +71,6 @@
 }
 
 </style>
-<title>sked_detail</title>
 </head>
 <body>
 	<jsp:include page="../common/top.jsp"/>

@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Schedule</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/img/logo/W.png" /> 
+<title>일정 관리</title>
 <!---------------------------------------------달력----------------------------------------------------------------->
 <link href='${pageContext.request.contextPath}/resources/jje_css/FullCalendar/lib/main.css' rel='stylesheet' />
 <script src='${pageContext.request.contextPath}/resources/jje_css/FullCalendar/lib/main.js'></script>
