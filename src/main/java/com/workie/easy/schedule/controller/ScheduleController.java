@@ -105,7 +105,8 @@ public class ScheduleController {
 //	@RequestMapping(value="skedSelect.do", produces = "application/text; charset=utf8")		//text(String)타입 한글 인코딩
 	@RequestMapping("selectSked.do")
 	@ResponseBody
-	public JSONObject selectSchedule(int empNo, int skedNo, @RequestParam(value="skedCode", required=false) String skedCode) {
+	public JSONObject selectSchedule(int empNo, int skedNo, 
+									 @RequestParam(value="skedCode", required=false) String skedCode) {
 		
 		/*파라미터값 정리*/
 		Schedule sked = new Schedule();

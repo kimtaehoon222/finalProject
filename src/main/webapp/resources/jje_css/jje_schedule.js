@@ -174,23 +174,6 @@ function sked_update_submit(){
 
 }
 
-/*카테고리별 색상 변경*/
-var sked_code = document.getElementById('sked_code');
-sked_code.addEventListener('input',function(e){		//Form Event
-	
-	var codeValue = sked_code.options[sked_code.selectedIndex].value;
-	
-	var groupP = document.getElementById('color_group_P');
-	var groupD = document.getElementById('color_group_D');
-
-	if(codeValue=="P"){
-    	groupD.style.display="none";
-    	groupP.style.display="block";
-    }else{
-    	groupP.style.display="none";
-    	groupD.style.display="block";
-    }
-});
 
 /*상세조회 모달*/
 function clickDetailBtn(result)  {
@@ -208,7 +191,7 @@ function clickDetailBtn(result)  {
 	var end = result.end;
 	var endTime = result.endTime;
 	
-	$("#detail_head").text(start);		//헤더
+	$("#detail_head").text(start);			//헤더
 	$("#detail_sked_code").val(skedCode);	//일정코드
 	
 	/*표시 색상 변경*/
@@ -260,15 +243,14 @@ function clickDetailBtn(result)  {
 	document.getElementById('detail_btn').click();
 }
 
-
 /*카테고리별 색상 변경*/
-var sked_code = document.getElementById('detail_sked_code');
+var sked_code = document.getElementById('sked_code');
 sked_code.addEventListener('input',function(e){		//Form Event
 	
 	var codeValue = sked_code.options[sked_code.selectedIndex].value;
 	
-	var groupP = document.getElementById('detail_color_group_P');
-	var groupD = document.getElementById('detail_color_group_D');
+	var groupP = document.getElementById('color_group_P');
+	var groupD = document.getElementById('color_group_D');
 
 	if(codeValue=="P"){
     	groupD.style.display="none";
@@ -276,5 +258,24 @@ sked_code.addEventListener('input',function(e){		//Form Event
     }else{
     	groupP.style.display="none";
     	groupD.style.display="block";
+    }
+});
+
+
+/*카테고리별 색상 변경*/
+var detail_sked_code = document.getElementById('detail_sked_code');
+detail_sked_code.addEventListener('input',function(e){		//Form Event
+	
+	var detail_codeValue = detail_sked_code.options[detail_sked_code.selectedIndex].value;
+	
+	var detail_groupP = document.getElementById('detail_color_group_P');
+	var detail_groupD = document.getElementById('detail_color_group_D');
+
+	if(detail_codeValue=="P"){
+		detail_groupD.style.display="none";
+    	detail_groupP.style.display="block";
+    }else{
+    	detail_groupP.style.display="none";
+    	detail_groupD.style.display="block";
     }
 });
