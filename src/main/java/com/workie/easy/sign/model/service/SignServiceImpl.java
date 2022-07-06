@@ -299,37 +299,30 @@ private SignDao signDao;
 
 	@Override
 	public void updateAAsign(Sign si) {  //업데이트를 3개 한번에 하는게 아닌 하나씩 실행   [ 첨부가 만약 안되면  
-		// TODO Auto-generated method stub
 		
 		int result = signDao.updateAAsign(sqlSession, si); //Sign 테이블 업데이트 수행
 		
-		if(result > 0 ) {
+		if(result > 0) {
 			
 			int result2 = signDao.updateAAstandard(sqlSession, si); //Sign 테이블 성공시 Standard테이블 업데이트 수행
 			
-		if(result2 > 0 && si.getOriginName() != null) {
+			if(result2 > 0 && si.getOriginName() != null) {
 				
-		int count = signDao.selectCountAttachment(sqlSession, si); //결재번호 가지고가서 카운트만 세오기 첨부파일이 없다면 insert를 해주어야하니
-			System.out.println("count : " + count);
-		if( count > 0 ) {  //카운트가 0이상이면 업데이트 ( 카운트해올때 주의해올게 CTG_NO = 'SF' 랑 STATUS= Y 인거 꼭 조건주기  
-					
-		int result3 = signDao.updateAttachment(sqlSession, si); //카운트가 0이상이면 업데이트 ( 카운트해올때 주의해올게 CTG_NO = 'SF' 랑 STATUS= Y 인거 꼭 조건주기  
-			
-				} else { // 조회해온게 0이하면 인설트
-					
-		int addFile = signDao.insertAttachment(sqlSession, si); 
-			
+				int count = signDao.selectCountAttachment(sqlSession, si); //결재번호 가지고가서 카운트만 세오기 첨부파일이 없다면 insert를 해주어야하니
+		
+				if(count > 0) {  //카운트가 0이상이면 업데이트 ( 카운트해올때 주의해올게 CTG_NO = 'SF' 랑 STATUS= Y 인거 꼭 조건주기  
+					signDao.updateAttachment(sqlSession, si); //카운트가 0이상이면 업데이트 ( 카운트해올때 주의해올게 CTG_NO = 'SF' 랑 STATUS= Y 인거 꼭 조건주기  			
+				}else{ // 조회해온게 0이하면 인설트
+					signDao.insertAttachment(sqlSession, si); 
 				}
 			}
 			
 		}else { //Sign 테이블 업데이트 성공 시 
 			
 			throw new CommException("품의 수정 실패");
-			
-			
+
 		}
-		
-	
+
 	}
 
 

@@ -417,7 +417,7 @@
 								$("#aaOriginName").val(originName); //val로 한 이유는 값이 없으면 뿌려지면 안되어서 (html의 경우 값이 없고 1개의 값만 있어도 뿌려짐)
 							    $("#updateSign").val(signNo)
 							    $("#updateP").val(signNo)
-							    //$("#goSign").val(signNo)
+							  
 							}
 							
 										
