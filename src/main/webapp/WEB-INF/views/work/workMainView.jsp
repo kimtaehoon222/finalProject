@@ -44,9 +44,7 @@
 			</div>
 			
 			<script>
-
 		
-
 			
 			$(function(){
 				var currentDate = new Date();
