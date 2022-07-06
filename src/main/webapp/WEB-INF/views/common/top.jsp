@@ -577,7 +577,6 @@
   
 	$('#msgBox').fadeIn(1000).delay(1000).fadeOut(1000);
 	
-	/*상단bar 메일 이모티콘 : 읽지않은메일이 있는경우 아이콘 흔들흔들 */
 	$(document).ready(function (){
 		$.ajax({
 			url: "unReadMailCount.do",
@@ -585,14 +584,9 @@
 			success:function(count){
 				var emogiElement = $('#mailEmoji');
 				if(count > 0){
-					console.log('읽지않은메일 있음');
-					/* 색상 레드로 */
 					emogiElement.css("color", "red");
-					
-					/* 흔들흔들 기능 추가*/
 					document.getElementById('mailEmoji').className += ' bx-tada';
 				}
-				console.log('읽지않은메일 없음');
 			},
 			error:function(){
 				console.log("ajax 통신 실패");

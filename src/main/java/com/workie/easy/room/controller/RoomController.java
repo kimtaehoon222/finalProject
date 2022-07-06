@@ -34,16 +34,14 @@ public class RoomController {
 	@RequestMapping("roomList.do")
 	public String selectResListForm(HttpSession session, Model model) {
 		
-		return "room/roomMain";
+		return "room/roomMainView";
 		
 	}
 	
 
 	@ResponseBody
 	@RequestMapping(value ="selectResList.do", produces="application/json; charset=utf-8")
-	/*consumes는 클라이언트가 서버에게 보내는 데이터 타입을 명시한다.
-	  produces는 서버가 클라이언트에게 반환하는 데이터 타입을 명시한다 response.setContentType
-	  charset=utf-8 한글이 들어올 수 있으므로 인코딩*/
+
 	public List<Map<String, Object>> selectResList(int roomNo) {
 		
         Room room = new Room();
@@ -142,13 +140,13 @@ public class RoomController {
        
         JSONObject jsonObj = new JSONObject();
         if (checkDate != 0) {
-			// 사용자가 선택한 시간대에 이미 예약이 있을 경우
+			
 			jsonObj.put("n", -1);
 			
 			return jsonObj.toString();
 			
 		}else {
-			// 예약이 가능한 경우 예약테이블에 데이터 insert 진행
+			
 			int newRes = roomService.insertRes(room);
 			jsonObj.put("n", newRes);
 			
@@ -177,7 +175,7 @@ public class RoomController {
 	@RequestMapping("myResList.do")
 	public String selectMyResListForm() {
 		
-		return "room/myResList";
+		return "room/myResListView";
 		
 	}
 	

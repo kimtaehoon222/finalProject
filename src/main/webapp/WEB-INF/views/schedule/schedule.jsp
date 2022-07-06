@@ -294,7 +294,7 @@
 				var skedList;							//조회 한 일정 목록을 담을 변수
 				var loginEmpNo=${loginEmp.empNo};		//로그인 사원번호
 				
-				/*최초 조회 데이터 호출 ajax*/
+				/*데이터 호출 ajax*/
 				var skedSelectList = $.ajax({ 
 										url: "selectSkedList.do",
 										data: {
@@ -304,9 +304,7 @@
 										type: "GET",
 										dataType: "JSON",
 										success : function(result){
-										 //alert("연결됨");
 										 skedList = result;
-										 //console.log(skedList);
 										},
 										error : function(result){
 										 alert('데이터 로딩 실패');
@@ -434,7 +432,7 @@
 								$('#vertical-example').html(daylist);
 							},
 							error : function(result){
-							 alert('데이터 로딩 실패');
+							 alert('해당시간에는 일정이 존재하지 않습니다.');
 							}
 					   }); // 끝  ajax
 					   

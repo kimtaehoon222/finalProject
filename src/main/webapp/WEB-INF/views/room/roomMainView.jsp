@@ -596,7 +596,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
          },
     });
-    
     calendar.render();
   });
 // 자원을 변경했을 시 자원 변수값을 변경해주는 함수

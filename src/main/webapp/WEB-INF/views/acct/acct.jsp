@@ -744,21 +744,18 @@
 	        var chkBalance2 = chkBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        
         	if( chkBalance < $('#amount').val() ){
-				alert("승인금액은 " + chkBalance2 + "원 이하로 등록해주세요.");
+				alert("현재 승인금액은 " + chkBalance2 + "원 이하로 등록이 가능합니다.");
 				$('#empName').focus();
 				return false;
         	}
   		}
+  		
+  		/*등록 가능 날짜 제한*/
   		$(function(){
 	  		var thisYear = new Date().toISOString().slice(0, 4);
 	  		var thisMonth = Number(new Date().toISOString().slice(5, 7));
 	  		var firstDate = new Date(thisYear, (thisMonth-1), 2).toISOString().slice(0, 10);
-	  		//var lastDate = new Date(thisYear, thisMonth, 1).toISOString().slice(0, 10);
 	  		var today = new Date().toISOString().slice(0, 10);
-	  		/*alert("thisYear : "+thisYear);
-	  		alert("thisMonth : "+thisMonth);
-	  		alert("firstDate : "+firstDate);
-	  		alert("lastDate : "+lastDate);*/
 	  		
 	  		$("#transaction_date").attr("min",firstDate);
 	  		$("#transaction_date").attr("max",today);
