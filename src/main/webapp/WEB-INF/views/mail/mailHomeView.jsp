@@ -171,7 +171,7 @@
                         
                         <!-- 원형 차트 -->
                         <div class="mt-3"> 
-                       		<canvas id="mailChart" style="width: 200px; height: 150px;"></canvas>
+                             <canvas id="mailChart" style="width: 200px; height: 150px;"></canvas>
                         </div> 
                       </div>
                       <!-- 통계 내용 상단 시작 -->
@@ -328,104 +328,107 @@
                var mailNo = $(this).children().eq(0).text(); 
                location.href = "detailMail.do?mailNo="+mailNo; 
             })
-         })
+       })
          
-       /* controller에서 보내주는 데이터 가져오기 */  
-       var jsonData = ${json}; /* controller에서 model 객체에 담아준 데이터가 들어있는 json 객체를 jsonData에 담아준다. */
-       var jsonObject = JSON.stringify(jsonData); /* stringify : 매개변수로 담겨있는 데이터를 String 객체로 변환한다. */
-       console.log(jsonObject);
-       var jData = JSON.parse(jsonObject); /* parse : String 객체를 json 객체로 변환한다. */
-       console.log(jData);
+       /* controller에서 model 객체에 담아준 데이터가 들어있는 json 객체를 jsonData에 담아준다. */
+       //var jsonData = ${json}; 
+       
+       /* stringify : 매개변수로 담겨있는 데이터를 String 객체로 변환한다. */
+       //var jsonObject = JSON.stringify(jsonData); 
+       
+       /* parse : String 객체를 json 객체로 변환한다. */
+       //var jData = JSON.parse(jsonObject); 
+       
+       var jData = ${json}; 
        
        var labelList = new Array();
        var valueList = new Array();
        var colorList = new Array();
        
        for(var i = 0; i<jData.length; i++) {
-    		var d = jData[i]; /* jData 인덱스순서대로 얻어오기 */
-    		
-    		labelList.push(d.result); /* 수신, 발신*/
-    		valueList.push(d.count); /* 17, 29*/
-    		colorList.push(colorize()); /* 랜덤 컬러 넣어주기. 아래 colorize() 함수를 통해 */
+          var d = jData[i];           /* jData 인덱스 순서대로 추출 */
+          labelList.push(d.result);   /* 수신, 발신*/
+          valueList.push(d.count);    /* ex.17, 29*/
+          colorList.push(colorize()); /* 랜덤 컬러 넣어주기. 아래 colorize() 함수를 통해 */
        }
        
        var data = {
-				labels: labelList,
-				datasets: [{
-						backgroundColor: colorList,
-						data : valueList
-				}]
-		};
+            labels: labelList,
+            datasets: [{
+                  backgroundColor: colorList,
+                  data : valueList
+            }]
+      };
        
        var chart = document.getElementById('mailChart').getContext('2d');
        new Chart(chart, {
-       	      type: 'pie',
-       		  data: data
+                type: 'pie',
+               data: data
        });
        
        /* 그래프의 랜덤 컬러를 생성해주는 함수*/
        function colorize() {
-    		var r = Math.floor(Math.random()*105);
-    		var g = Math.floor(Math.random()*108);
-    		var b = Math.floor(Math.random()*255);
-    		var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.7)';
-    		return color;
-    	}
+          var r = Math.floor(Math.random()*105);
+          var g = Math.floor(Math.random()*108);
+          var b = Math.floor(Math.random()*255);
+          var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.7)';
+          return color;
+       }
        
        /* 실시간 시계 */
        function clock(){
-		var date = new Date();
-	
-		//년도
-		var nowYear = date.getFullYear();
-	
-		// date Object
-		var month = date.getMonth();
-	
-		// 월
-		var clockDate = date.getDate();
-	
-		// 날짜
-		var day = date.getDay();
-	
-	    // 요일은 숫자형태로 리턴되기때문에 미리 배열로 
-		var week = ['일', '월', '화', '수', '목', '금', '토'];
-	
-		// 시간
-		var hours = date.getHours();
-	
-		// 분
-		var minutes = date.getMinutes();
-	
-		// 초
-		var seconds = date.getSeconds();
-		
-	    // 시간 분 초는 한자리 수 이면 앞에0을 붙임
-	    var hours_str = hours < 10 ? "0"+hours : hours;
-		var minutes_str = minutes < 10 ? "0"+minutes : minutes;
-		var seconds_str = seconds < 10 ? "0"+seconds : seconds;
-		
-	    // 월은 0부터 1월이기때문에 +1일을 해주고
-	    $("#currentDate").html(nowYear+"년 "+(month+1)+"월 "+clockDate+"일 "+week[day]+"요일");
-		$("#currentTime").html(hours_str+"시"+minutes_str+"분"+seconds_str+"초 기준");
-	        
-	}
-	
-	
-	function init() {
-		// 최초에 함수를 한번 실행
-	    clock();
-		
-	    //1초마다 반복
-		setInterval(clock, 1000);
-	}
-	
-	$(document).ready(function(){
-		init();
-	});
-		
+      var date = new Date();
+   
+      //년도
+      var nowYear = date.getFullYear();
+   
+      // date Object
+      var month = date.getMonth();
+   
+      // 월
+      var clockDate = date.getDate();
+   
+      // 날짜
+      var day = date.getDay();
+   
+       // 요일은 숫자형태로 리턴되기때문에 미리 배열로 
+      var week = ['일', '월', '화', '수', '목', '금', '토'];
+   
+      // 시간
+      var hours = date.getHours();
+   
+      // 분
+      var minutes = date.getMinutes();
+   
+      // 초
+      var seconds = date.getSeconds();
+      
+       // 시간 분 초는 한자리 수 이면 앞에0을 붙임
+       var hours_str = hours < 10 ? "0"+hours : hours;
+      var minutes_str = minutes < 10 ? "0"+minutes : minutes;
+      var seconds_str = seconds < 10 ? "0"+seconds : seconds;
+      
+       // 월은 0부터 1월이기때문에 +1일을 해주고
+       $("#currentDate").html(nowYear+"년 "+(month+1)+"월 "+clockDate+"일 "+week[day]+"요일");
+      $("#currentTime").html(hours_str+"시"+minutes_str+"분"+seconds_str+"초 기준");
+           
+   }
+   
+   
+   function init() {
+      // 최초에 함수를 한번 실행
+       clock();
+      
+       //1초마다 반복
+      setInterval(clock, 1000);
+   }
+   
+   $(document).ready(function(){
+      init();
+   });
+      
    </script>
-	
+   
    <jsp:include page="../common/bottom.jsp"/>
    
 </body>
