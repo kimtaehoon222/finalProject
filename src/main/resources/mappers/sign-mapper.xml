@@ -504,7 +504,7 @@
 	        TO_CHAR(A.REJECT_DATE, 'YY.MM.DD') AS REJECT_DATE
 	    FROM SIGN A
 		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
-		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    LEFT JOIN ATTACHMENT D ON ( A.SIGN_NO = D.REF_NO AND C.CTG_NO = D.CTG_NO )
 		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
 		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
 		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
@@ -611,7 +611,7 @@
             A.FINAL_SIGN_JOB
 	    FROM SIGN A
 		    JOIN STANDARD_FORM C ON A.SIGN_NO = C.SIGN_NO
-		    LEFT JOIN ATTACHMENT D ON A.SIGN_NO = D.REF_NO
+		    LEFT JOIN ATTACHMENT D ON ( A.SIGN_NO = D.REF_NO AND C.CTG_NO = D.CTG_NO )
 		    JOIN EMPLOYEE F ON A.EMP_NO = F.EMP_NO
 		    JOIN JOB B ON F.JOB_CODE = B.JOB_CODE
 		    JOIN SIGN_TYPE E ON A.TYPE_CODE = E.TYPE_CODE
@@ -623,7 +623,7 @@
 	
 	</select>	
 	
-	<select id="selectBBAlist" resultMap="singResultSet"> <!-- 완료 상태 품의 조회 -->
+	<select id="selectBBAlist" resultMap="singResultSet"> <!-- 완료 상태 협조 조회 -->
 	
 		SELECT
 		    A.SIGN_NO,
@@ -655,7 +655,7 @@
 	
 	</select>	
 	
-	<select id="selectCCAlist" resultMap="singResultSet"> <!-- 진행 상태 휴가 조회 -->
+	<select id="selectCCAlist" resultMap="singResultSet"> <!-- 완료 상태 휴가 조회 -->
 	
   		SELECT 
         A.SIGN_NO,
