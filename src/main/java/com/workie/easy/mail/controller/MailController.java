@@ -197,7 +197,7 @@ public class MailController {
       }
       
       String originTitle = "[RE:]" + mail.getTitle();
-      String originContent = "\n\n\n-----원본메일----\n" 
+      String originContent = "\n\n\n-------원본메일-------\n" 
                      + "| 보낸사람 : " + originFromName + "<" + mail.getFromId() + ">" + "\n"
                      + "| 받는사람 : " + originToName + "<" + mail.getToId() + ">" + "\n"
                      + "| 날짜 : "   + mail.getSendDate() + "\n"
@@ -225,7 +225,7 @@ public class MailController {
       String originToName = mail.getToName();
       
       String originTitle = "[FW:]" + mail.getTitle();
-      String originContent = "\n\n\n-----원본메일----\n" 
+      String originContent = "\n\n\n-------원본메일-------\n" 
                      + "| 보낸사람 : " + originFromName + "<" + mail.getFromId() + ">" + "\n"
                      + "| 받는사람 : " + originToName + "<" + mail.getToId() + ">" + "\n"
                      + "| 날짜 : "   + mail.getSendDate() + "\n"
