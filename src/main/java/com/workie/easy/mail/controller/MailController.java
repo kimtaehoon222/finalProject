@@ -757,6 +757,7 @@ public class MailController {
             
             /* 생성된 JSON 객체에 list의 자바 데이터 를 put 해준다. */
             jsonObject.put("empName", emp.getEmpName());
+            jsonObject.put("jobName", emp.getJobName());
             jsonObject.put("empId", emp.getEmpId()+"@easy.co.kr");
             
             /* 데이터가 담긴 JSON 객체를 JSON배열에 추가해준다. */
