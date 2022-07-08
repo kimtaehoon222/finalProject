@@ -100,6 +100,7 @@
 		<id property="empNo" column="EMP_NO"/>
 		<result property="empName" column="EMP_NAME"/>
 		<result property="empId" column="EMP_ID"/>
+		<result property="jobName" column="JOB_NAME"/>
 	</resultMap>
 	
 	<!-- 메일 리스트 조회(받은 메일함) -->
@@ -346,12 +347,14 @@
 
 	<!-- 직원 조회 -->
 	<select id="seletEmployeeList" resultMap="employeeResultSet">
-		SELECT EMP_NAME, EMP_ID
-		  FROM EASYWORK.EMPLOYEE
+		SELECT EMP_NAME, EMP_ID, JOB_NAME
+		  FROM EASYWORK.EMPLOYEE A
+		  JOIN EASYWORK.JOB B ON B.JOB_CODE = A.JOB_CODE
 		 WHERE DEPT_CODE = (SELECT DEPT_CODE
 		                      FROM EASYWORK.DEPARTMENT
 		                      WHERE DEPT_NAME = #{selectDept})
 		   AND ENT_YN = 'Y'
+		   AND APV_YN = 'Y'
 		   ORDER BY EMP_NAME
 	</select>
 	

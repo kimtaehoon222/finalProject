@@ -380,7 +380,7 @@
 	
 					$.each(list, function(i) {
 						//console.log(result);
-						result += '<input type="radio" name="empToId" class="getToEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>'
+						result += '<input type="radio" name="empToId" class="getToEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;' + list[i].jobName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>'
 					})
 					
 				}else{
@@ -493,7 +493,7 @@
 				if(list.length > 0){
 	
 					$.each(list, function(i) {
-						result += '<input type="checkbox" name="empCcId" class="getCcEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>';
+						result += '<input type="checkbox" name="empCcId" class="getCcEmail mx-2 mb-1" value="' + list[i].empId + '">' + list[i].empName + '&nbsp;' + list[i].jobName + '&nbsp;&nbsp;['+ list[i].empId + ']<br>';
 						//console.log(result);
 					})
 					
