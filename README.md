@@ -73,7 +73,7 @@
 
 ## 🖥️ **프로젝트 화면**
 
-![메인 홈 ](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/142051c2-7afe-4953-9978-6c1ae7286968/Untitled.png)
+![mainHome](https://user-images.githubusercontent.com/81502408/178286818-afa0aadc-4ec5-4097-bc0f-d24c34e6867e.png)
 
 메인 홈 
 
