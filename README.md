@@ -12,10 +12,6 @@
 3. 구현 기능
 4. 팀원 및 주 담당 기능
 5. 프로젝트 화면
-6. 첨부 자료
-- [파이널 2팀_DB설계서.xlsx](https://github.com/kimtaehoon222/finalProject/files/9085025/2._DB.xlsx)
-- [파이널 2팀_통합 테스트.xlsx](https://github.com/kimtaehoon222/finalProject/files/9085026/2._.xlsx)
-- [파이널 2팀_ppt.pdf](https://github.com/kimtaehoon222/finalProject/files/9085028/2._ppt.pdf)
 
 ## ⚙️ **개발 환경**
 
@@ -79,7 +75,7 @@
 ![로그인](https://user-images.githubusercontent.com/81502408/178290692-42da72c7-c16b-416f-85a5-9952a3e79101.JPG)
 ### [메인 페이지]
 ![mainHome](https://user-images.githubusercontent.com/81502408/178286818-afa0aadc-4ec5-4097-bc0f-d24c34e6867e.png)
-### [메일 홈]
+### [메일관리 홈]
 ![메일홈](https://user-images.githubusercontent.com/81502408/178290652-28d38bc4-bb6e-4323-ba95-3e2d61757c3c.JPG)
 ### [받은 메일함]
 ![받은메일함](https://user-images.githubusercontent.com/81502408/178290667-bfb481a1-7aa7-47c7-b9cd-522d5a445117.JPG)4
@@ -95,4 +91,4 @@
 ![메일상세](https://user-images.githubusercontent.com/81502408/178290734-eb59ebef-58cb-4126-a3ce-8b9b02a8ab19.JPG)
 ### [수신인 및 참조인 주소록]
 ![메일주소록](https://user-images.githubusercontent.com/81502408/178290742-fa071268-183c-482e-bbb1-755d07a46399.JPG)
-
+### [결재관리 홈]
