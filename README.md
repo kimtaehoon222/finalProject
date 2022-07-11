@@ -69,22 +69,8 @@
 
 ## 👥 **팀원 및 주 담당 기능**
 
-![](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7dbf9cc0-f434-4104-b2e4-b3a9ae3ce2c6/Untitled.png)
+
 
 ## 🖥️ **프로젝트 화면**
-
+###[메인 홈]
 ![mainHome](https://user-images.githubusercontent.com/81502408/178286818-afa0aadc-4ec5-4097-bc0f-d24c34e6867e.png)
-
-메인 홈 
-
-![메일 홈 ](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/79db6df5-2aa3-4545-8fb2-9c719a3f74ae/Untitled.png)
-
-메일 홈 
-
-![메일 작성](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b1adbe7e-f8a5-4022-b7c9-cae729daec0d/Untitled.png)
-
-메일 작성
-
-![받은 메일함](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6310033c-48e7-4a85-b547-94ccb0c8cb43/Untitled.png)
-
-받은 메일함
