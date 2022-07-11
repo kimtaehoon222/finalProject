@@ -12,6 +12,9 @@
 3. 구현 기능
 4. 팀원 및 주 담당 기능
 5. 프로젝트 화면
+[파이널 2팀_DB설계서.xlsx](https://github.com/kimtaehoon222/finalProject/files/9085025/2._DB.xlsx)
+[파이널 2팀_통합 테스트.xlsx](https://github.com/kimtaehoon222/finalProject/files/9085026/2._.xlsx)
+[파이널 2팀_ppt.pdf](https://github.com/kimtaehoon222/finalProject/files/9085028/2._ppt.pdf)
 
 ## ⚙️ **개발 환경**
 
