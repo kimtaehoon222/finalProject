@@ -69,6 +69,26 @@
 
 ## 🖥️ **프로젝트 화면**
 
+### [회원가입]
+![회원가입](https://user-images.githubusercontent.com/81502408/178290689-6d499681-a1b8-4744-8ea4-ed08ad034c5b.JPG)
+### [로그인]
+![로그인](https://user-images.githubusercontent.com/81502408/178290692-42da72c7-c16b-416f-85a5-9952a3e79101.JPG)
 ### [메인 페이지]
 ![mainHome](https://user-images.githubusercontent.com/81502408/178286818-afa0aadc-4ec5-4097-bc0f-d24c34e6867e.png)
 ### [메일 홈]
+![메일홈](https://user-images.githubusercontent.com/81502408/178290652-28d38bc4-bb6e-4323-ba95-3e2d61757c3c.JPG)
+### [받은 메일함]
+![받은메일함](https://user-images.githubusercontent.com/81502408/178290667-bfb481a1-7aa7-47c7-b9cd-522d5a445117.JPG)4
+### [보낸 메일함]
+![보낸메일함](https://user-images.githubusercontent.com/81502408/178290672-aae7f906-cab7-418f-b793-1535e7440d10.JPG)
+### [예약 메일함]
+![예약메일함](https://user-images.githubusercontent.com/81502408/178290679-2e212328-3622-4c3d-8ddf-5ff3621cc92f.JPG)
+### [휴지통]
+![휴지통](https://user-images.githubusercontent.com/81502408/178290703-72489f88-d682-4a3d-acae-6ddf005ccbb0.JPG)
+### [메일 작성]
+![메일작성하기](https://user-images.githubusercontent.com/81502408/178290724-caa9cfd8-84b0-42af-98a5-72ef59c5162c.JPG)
+### [예약 상세조회]
+![메일상세](https://user-images.githubusercontent.com/81502408/178290734-eb59ebef-58cb-4126-a3ce-8b9b02a8ab19.JPG)
+### [수신인 및 참조인 주소록]
+![메일주소록](https://user-images.githubusercontent.com/81502408/178290742-fa071268-183c-482e-bbb1-755d07a46399.JPG)
+
