@@ -17,8 +17,7 @@
 
 - **Language**
     - JAVA 8
-    - HTML5
-    - CSS3
+    - HTML5, CSS3,
     - JavaScript
     - JSP
     - SQL
@@ -30,13 +29,10 @@
     - Spring Framework(STS 3)
     - MyBatis 3.5.6
     - jQuery 3.6.0
-    - Gson
-    - Json
+    - Gson, Json
     - FullCalendar
-    - GoogleChart.js
-    - Chart.js
-    - JSTL Core
-    - EL
+    - GoogleChart.js, Chart.js
+    - JSTL Core, EL
     - Ajax
     - Lombok
 - **Tools & ETC**
