@@ -69,7 +69,7 @@
 
 ## 👥 **팀원 및 주 담당 기능**
 
-![1](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7dbf9cc0-f434-4104-b2e4-b3a9ae3ce2c6/Untitled.png)
+![](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7dbf9cc0-f434-4104-b2e4-b3a9ae3ce2c6/Untitled.png)
 
 ## 🖥️ **프로젝트 화면**
 
