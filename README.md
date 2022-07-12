@@ -73,31 +73,31 @@
 ![회원가입](https://user-images.githubusercontent.com/81502408/178290689-6d499681-a1b8-4744-8ea4-ed08ad034c5b.JPG)
 ### [로그인]
 ![로그인](https://user-images.githubusercontent.com/81502408/178290692-42da72c7-c16b-416f-85a5-9952a3e79101.JPG)
-### [메일 관리 - 메인 페이지]
+### [메일관리 - 메인 페이지]
 ![mainHome](https://user-images.githubusercontent.com/81502408/178286818-afa0aadc-4ec5-4097-bc0f-d24c34e6867e.png)
-### [메일 관리 - 메일관리 홈]
+### [메일관리 - 홈]
 ![메일홈](https://user-images.githubusercontent.com/81502408/178290652-28d38bc4-bb6e-4323-ba95-3e2d61757c3c.JPG)
-### [메일 관리 - 받은 메일함]
+### [메일관리 - 받은 메일함]
 ![받은메일함](https://user-images.githubusercontent.com/81502408/178290667-bfb481a1-7aa7-47c7-b9cd-522d5a445117.JPG)
-### [메일 관리 - 보낸 메일함]
+### [메일관리 - 보낸 메일함]
 ![보낸메일함](https://user-images.githubusercontent.com/81502408/178290672-aae7f906-cab7-418f-b793-1535e7440d10.JPG)
-### [메일 관리 - 예약 메일함]
+### [메일관리 - 예약 메일함]
 ![예약메일함](https://user-images.githubusercontent.com/81502408/178290679-2e212328-3622-4c3d-8ddf-5ff3621cc92f.JPG)
-### [메일 관리 - 휴지통]
+### [메일관리 - 휴지통]
 ![휴지통](https://user-images.githubusercontent.com/81502408/178290703-72489f88-d682-4a3d-acae-6ddf005ccbb0.JPG)
-### [메일 관리 - 메일 작성]
+### [메일관리 - 메일 작성]
 ![메일작성하기](https://user-images.githubusercontent.com/81502408/178290724-caa9cfd8-84b0-42af-98a5-72ef59c5162c.JPG)
-### [메일 관리 - 예약 상세조회]
+### [메일관리 - 메일 상세조회]
 ![메일상세](https://user-images.githubusercontent.com/81502408/178290734-eb59ebef-58cb-4126-a3ce-8b9b02a8ab19.JPG)
-### [메일 관리 - 수신인 및 참조인 주소록]
+### [메일관리 - 수신인 및 참조인 주소록]
 ![메일주소록](https://user-images.githubusercontent.com/81502408/178290742-fa071268-183c-482e-bbb1-755d07a46399.JPG)
-### [결재 관리 - 홈]
+### [결재관리 - 홈]
 ![결재홈](https://user-images.githubusercontent.com/81502408/178412597-e10b5998-2fae-45d1-bc46-62580e93d9ab.JPG)
-### [결재 관리 - 결재 대기함]
+### [결재관리 - 결재 대기함]
 ![내결재대기](https://user-images.githubusercontent.com/81502408/178412605-b69da396-6c7c-4072-8336-061e0d52358a.JPG)
-### [결재 관리 - 요청 결재함]
+### [결재관리 - 요청 결재함]
 ![요청결재함](https://user-images.githubusercontent.com/81502408/178412620-f423c19c-83e9-4449-995d-ca2ecf39ed78.JPG)
-### [결재 관리 - 결재 상세조회]
+### [결재관리 - 결재 상세조회]
 ![결재상세](https://user-images.githubusercontent.com/81502408/178412599-6bfc7ec0-6e83-49cc-b300-d084cfa5b746.JPG)
 ### [회의실 예약 - 예약 현황조회]
 ![회의실](https://user-images.githubusercontent.com/81502408/178412713-24772c3c-3072-4180-9660-56d01c8126c1.JPG)
@@ -105,9 +105,9 @@
 ![회의실예약](https://user-images.githubusercontent.com/81502408/178412717-43ec12e3-e5d6-43ce-8935-4af6ac6394ab.JPG)
 ### [회의실 예약 - 예약 상세조회]
 ![회의실상세](https://user-images.githubusercontent.com/81502408/178412725-f520950f-2ccb-476c-ad20-f6766247477a.JPG)
-### [근태 관리 - 근태 현황조회]
+### [근태관리 - 근태 현황조회]
 ![근태홈](https://user-images.githubusercontent.com/81502408/178412624-6b495f6a-6fd5-499e-916e-75e19e914610.JPG)
-### [근태 관리 - 연차 내역조회]
+### [근태관리 - 연차 내역조회]
 ![연차내역](https://user-images.githubusercontent.com/81502408/178412638-10c1cf2f-1e7c-47af-a87c-12f16f4067d7.JPG)
 ### [채팅 - 1:1 실시간 채팅]
 ![채팅](https://user-images.githubusercontent.com/81502408/178412653-c94de6a1-4863-467d-a827-75f4626ed667.JPG)
