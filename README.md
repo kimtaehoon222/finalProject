@@ -33,7 +33,7 @@
     - Spring
     - MyBatis
     - Ajax
-- **Collaboration Tools
+- **Collaboration Tools**
     - GitHub
     - Notion
     - Bootstrap
