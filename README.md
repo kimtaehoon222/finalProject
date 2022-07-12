@@ -11,33 +11,30 @@
 2. 프로젝트 설계 주안점
 3. 구현 기능
 4. 팀원 및 주 담당 기능
-5. 프로젝트 화면
+5. ERD
+6. 프로젝트 화면
 
 ## ⚙️ **개발 환경**
 
 - **Language**
     - JAVA 8
-    - HTML5, CSS3,
     - JavaScript
-    - JSP
-    - SQL
 - **Database**
     - Oracle 11g
 - **Web Server & WAS**
     - Apache-Tomcat 9.0.60
-- **Framework & Library**
-    - Spring Framework(STS 3)
-    - MyBatis 3.5.6
+- **Library**
     - jQuery 3.6.0
     - Gson, Json
     - FullCalendar
     - GoogleChart.js, Chart.js
-    - JSTL Core, EL
-    - Ajax
     - Lombok
-- **Tools & ETC**
+- **Skill Stack**
+    - Spring
+    - MyBatis
+    - Ajax
+- **Collaboration Tools
     - GitHub
-    - Oracle SQL Developer
     - Notion
     - Bootstrap
 
