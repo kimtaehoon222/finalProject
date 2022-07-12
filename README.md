@@ -78,7 +78,7 @@
 ### [메일관리 홈]
 ![메일홈](https://user-images.githubusercontent.com/81502408/178290652-28d38bc4-bb6e-4323-ba95-3e2d61757c3c.JPG)
 ### [받은 메일함]
-![받은메일함](https://user-images.githubusercontent.com/81502408/178290667-bfb481a1-7aa7-47c7-b9cd-522d5a445117.JPG)4
+![받은메일함](https://user-images.githubusercontent.com/81502408/178290667-bfb481a1-7aa7-47c7-b9cd-522d5a445117.JPG)
 ### [보낸 메일함]
 ![보낸메일함](https://user-images.githubusercontent.com/81502408/178290672-aae7f906-cab7-418f-b793-1535e7440d10.JPG)
 ### [예약 메일함]
