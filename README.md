@@ -97,7 +97,7 @@
 ![내결재대기](https://user-images.githubusercontent.com/81502408/178412605-b69da396-6c7c-4072-8336-061e0d52358a.JPG)
 ### [결재관리 - 요청 결재함]
 ![요청결재함](https://user-images.githubusercontent.com/81502408/178412620-f423c19c-83e9-4449-995d-ca2ecf39ed78.JPG)
-### [결재관리 - 결재 상세조회]
+### [결재관리 - 결재 상세조회(등록 및 수정)]
 ![결재상세](https://user-images.githubusercontent.com/81502408/178412599-6bfc7ec0-6e83-49cc-b300-d084cfa5b746.JPG)
 ### [결재관리 - 결재 상세조회(협조문-반려)]
 ![협조문](https://user-images.githubusercontent.com/81502408/178467657-f1f1d168-f513-4c93-9ffc-3ae44e5d630c.jpg)
