@@ -67,7 +67,7 @@
 ## 🏗️ **ERD**
 ![2asy work (2)](https://user-images.githubusercontent.com/81502408/178409279-fe8c4bd0-1a6f-4b3c-b303-8faf187f1a39.png)
 
-## 🖥️ **프로젝트 화면**
+## 🖥️ **서비스 화면**
 
 ### [회원가입]
 ![회원가입](https://user-images.githubusercontent.com/81502408/178290689-6d499681-a1b8-4744-8ea4-ed08ad034c5b.JPG)
