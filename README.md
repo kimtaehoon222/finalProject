@@ -65,7 +65,7 @@
 ![Untitled (1)](https://user-images.githubusercontent.com/81502408/178287588-43a47912-4a19-43c0-b122-0c7c8532213d.png)
 
 ## 🏗️ **ERD**
-
+![2asy work (2)](https://user-images.githubusercontent.com/81502408/178409279-fe8c4bd0-1a6f-4b3c-b303-8faf187f1a39.png)
 
 ## 🖥️ **프로젝트 화면**
 
