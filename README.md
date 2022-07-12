@@ -99,6 +99,10 @@
 ![요청결재함](https://user-images.githubusercontent.com/81502408/178412620-f423c19c-83e9-4449-995d-ca2ecf39ed78.JPG)
 ### [결재관리 - 결재 상세조회]
 ![결재상세](https://user-images.githubusercontent.com/81502408/178412599-6bfc7ec0-6e83-49cc-b300-d084cfa5b746.JPG)
+### [결재관리 - 결재 등록(협조문)]
+![협조문](https://user-images.githubusercontent.com/81502408/178467657-f1f1d168-f513-4c93-9ffc-3ae44e5d630c.jpg)
+### [결재관리 - 결재 등록(품의서]
+![품의서](https://user-images.githubusercontent.com/81502408/178467667-c7ac72a2-81d8-42b0-bc18-95ce70785a8e.jpg)
 ### [회의실 예약 - 예약 현황조회]
 ![회의실](https://user-images.githubusercontent.com/81502408/178412713-24772c3c-3072-4180-9660-56d01c8126c1.JPG)
 ### [회의실 예약 -예약하기]
