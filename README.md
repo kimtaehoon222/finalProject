@@ -92,3 +92,22 @@
 ### [수신인 및 참조인 주소록]
 ![메일주소록](https://user-images.githubusercontent.com/81502408/178290742-fa071268-183c-482e-bbb1-755d07a46399.JPG)
 ### [결재관리 홈]
+![결재홈](https://user-images.githubusercontent.com/81502408/178412597-e10b5998-2fae-45d1-bc46-62580e93d9ab.JPG)
+### [결재 대기함]
+![내결재대기](https://user-images.githubusercontent.com/81502408/178412605-b69da396-6c7c-4072-8336-061e0d52358a.JPG)
+### [요청 결재함]
+![요청결재함](https://user-images.githubusercontent.com/81502408/178412620-f423c19c-83e9-4449-995d-ca2ecf39ed78.JPG)
+### [결재 상세조회]
+![결재상세](https://user-images.githubusercontent.com/81502408/178412599-6bfc7ec0-6e83-49cc-b300-d084cfa5b746.JPG)
+### [회의실 예약 현황]
+![회의실](https://user-images.githubusercontent.com/81502408/178412713-24772c3c-3072-4180-9660-56d01c8126c1.JPG)
+### [회의실 예약]
+![회의실예약](https://user-images.githubusercontent.com/81502408/178412717-43ec12e3-e5d6-43ce-8935-4af6ac6394ab.JPG)
+### [예약 상세조회]
+![회의실상세](https://user-images.githubusercontent.com/81502408/178412725-f520950f-2ccb-476c-ad20-f6766247477a.JPG)
+### [근태 현황]
+![근태홈](https://user-images.githubusercontent.com/81502408/178412624-6b495f6a-6fd5-499e-916e-75e19e914610.JPG)
+### [연차 내역]
+![연차내역](https://user-images.githubusercontent.com/81502408/178412638-10c1cf2f-1e7c-47af-a87c-12f16f4067d7.JPG)
+### [1:1 ]
+![채팅](https://user-images.githubusercontent.com/81502408/178412653-c94de6a1-4863-467d-a827-75f4626ed667.JPG)
