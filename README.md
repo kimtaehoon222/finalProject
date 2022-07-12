@@ -109,5 +109,18 @@
 ![근태홈](https://user-images.githubusercontent.com/81502408/178412624-6b495f6a-6fd5-499e-916e-75e19e914610.JPG)
 ### [연차 내역]
 ![연차내역](https://user-images.githubusercontent.com/81502408/178412638-10c1cf2f-1e7c-47af-a87c-12f16f4067d7.JPG)
-### [1:1 ]
+### [1:1 채팅]
 ![채팅](https://user-images.githubusercontent.com/81502408/178412653-c94de6a1-4863-467d-a827-75f4626ed667.JPG)
+### [월간 일정]
+![월간일정](https://user-images.githubusercontent.com/81502408/178413641-9d043f25-399b-4ed9-bac3-e90299afeae5.JPG)
+### [주간 일정]
+![주간일정](https://user-images.githubusercontent.com/81502408/178413647-963e82f0-299f-40ba-a942-f1dd8489d13c.JPG)
+### [일정 목록 조회]
+![일정목록](https://user-images.githubusercontent.com/81502408/178413669-98cd3cdd-bf42-4721-8b2d-1e8afd2a5aad.JPG)
+### [일정 검색]
+![일정검색](https://user-images.githubusercontent.com/81502408/178413686-01f619d9-74e0-441e-8e8b-5c1768b62c45.JPG)
+### [일정 등록]
+![일정등록](https://user-images.githubusercontent.com/81502408/178413697-74e76770-dccc-4aa8-a0a1-9f2caa7ce6c5.JPG)
+### [일정 상세조회]
+![일정상세](https://user-images.githubusercontent.com/81502408/178413808-7c466183-d956-46e4-bac1-33375d039f80.JPG)
+### [회계]
